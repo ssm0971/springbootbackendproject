@@ -1,0 +1,220 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-main-size{
+  width: 1080px;
+  min-height: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.review-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.review-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.review-detail-box1{
+  width: 1080px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #9B805D;
+}
+
+.review-detail-title{
+  width: 745px;
+  height: 60px;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.review-detail-info{
+  width: 745px;
+  height: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-detail-box2{
+  width: 1080px;
+  min-height: 500px;
+  border-bottom: 2px solid #9B805D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-detail-content{
+  background-color: white;
+  width: 745px;
+  min-height: 450px;
+  padding: 20px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-detail-box3{
+  width: 745px;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-modify-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.review-modify-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.review-delete-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.review-delete-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.review-end-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.review-end-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.review-detail-box4{
+  width: 745px;
+  height: auto;
+}
+
+.review-detail-commentNum{
+  width: 745px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.review-detail-commentbox{
+  width: 745px;
+  height: auto;
+}
+
+.review-detail-name{
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.review-detail-comment{
+  font-size: 14px;
+}
+
+.review-detail-date{
+  font-size: 12px;
+}
+
+.review-detail-commentregi{
+  width: 620px;
+  height: 50px;
+}
+
+.review-commentregi-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.review-commentregi-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 댓글버튼 */
+.review-comment-button{
+  width: 50px;
+  height: 25px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.review-comment-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 댓글수정 input 박스 */
+.review-modify-comment{
+  width: 300px;
+  height: 30px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; 
+}

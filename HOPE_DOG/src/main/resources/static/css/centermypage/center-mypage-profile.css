@@ -1,0 +1,103 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+/* 마이페이지 목록 */
+.center-member-profile-navbox{
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  border-bottom: 2px solid #9B805D;
+  border-top: 2px solid #9B805D;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-member-profile-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+}
+
+.center-member-profile-nav-ul li{
+  margin: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.center-member-profile-infobox{
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1080px;
+  /* border: 1px solid black; */
+}
+
+.center-member-profile-info{
+  width: 550px;
+  height: 250px;
+  margin: 30px;
+  border: 5px solid #F5EAD9;
+  display: flex;  
+}
+
+.center-member-profile-infoarea{
+  width: 600px;
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+}
+
+/* 프로필 사진 */
+.center-member-profile-infoimg img{
+  width: 150px;
+  height: 150px;
+  border-radius: 100px;
+  border: 2px solid #9B805D;
+}
+
+.center-member-profile-info-textarea{
+  width: 300px;
+  /* border: 1px solid black; */
+  margin: 50px;
+}
+
+.center-member-profile-info-textarea li{
+  margin: 20px 0px 20px 0px;
+  list-style: none;
+}
+
+/* 버튼 */
+.center-member-profile-button{
+  display: flex;
+  justify-content: center;
+}
+
+.center-member-profile-button button{
+  width: 180px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #F5EAD9;
+  margin: 20px;
+  cursor: pointer;
+}
+
+/* 페이지선택 */
+#choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #9B805D;
+  transform: translate(-30px, 15px);
+  position: relative;
+  z-index: -1;
+}

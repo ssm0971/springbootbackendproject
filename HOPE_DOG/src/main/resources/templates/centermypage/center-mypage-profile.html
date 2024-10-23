@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>센터 프로필 페이지</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style/center-mypage-profile.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main/header.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main/footer.css}">
+</head>
+
+<body>
+<header class="header">
+  <div class="logo-nav">
+    <div class="logo">
+      <a th:href="@{/html/main/main.html}">
+        <img th:src="@{/img/header-logo.png}" alt="로고 이미지">
+      </a>
+    </div>
+    <nav>
+      <ul class="nav-items">
+        <li class="nav-item">
+          <a th:href="@{/dogmap/dogmap.html}">유기견 보호소</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/volun/volun-main.html}">봉사</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/donation/donation-main-guest.html}">기부</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/adopt/adopt-main.html}">입양</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/commu/comu-main-guest.html}">커뮤니티</a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/notice/notice-list.html}">공지사항</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="user-section">
+    <ul class="user-actions">
+      <li class="user-action"><a th:href="@{/member/login-select.html}">로그인</a></li>
+      <li class="user-action"><a th:href="@{/member/signup-select.html}">회원가입</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <div class="center-member-profile-navbox">
+    <nav>
+      <ul class="center-member-profile-nav-ul">
+        <li id="profile"><a th:href="@{/center-mypage-profile-update.html}">개인정보 수정</a></li>
+        <li id="mywrite"><a th:href="@{/center-mypage-writeinfo-my.html}">작성글 조회</a></li>
+        <li id="volunteer"><a th:href="@{/center-mypage-volun-list.html}">봉사</a></li>
+        <li id="adopt"><a th:href="@{/center-mypage-adopt-adopt-list.html}">입양</a></li>
+        <li id="notebox"><a th:href="@{/center-mypage-notebox-send.html}">쪽지함</a></li>
+        <li id="withdrawal"><a th:href="@{/center-mypage-withdrawal.html}">회원 탈퇴</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="center-member-profile-infobox">
+    <div class="center-member-profile-info">
+      <div class="center-member-profile-infoarea">
+        <div class="center-member-profile-info-textarea">
+          <ul>
+            <li>홍길동</li>
+            <li>010-1111-2222</li>
+            <li>hong@naver.com</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a th:href="@{/member/term.html}">이용약관</a> |
+    <a th:href="@{/member/term.html}">개인정보 처리방침</a>
+  </div>
+  <h6>(06236) 서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호 104-81-4522690 |<br>
+    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인 호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
+    © NEXT LEVEL. All Rights Reserved</h6>
+</footer>
+
+<script defer th:src="@{/js/main/main.js}"></script>
+<script defer th:src="@{/js/main/header.js}"></script>
+<script defer th:src="@{/js/main/footer.js}"></script>
+</body>
+</html>

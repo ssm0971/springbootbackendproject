@@ -1,0 +1,177 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adoptrequest-main-size{
+  width: 1080px;
+  min-height: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.adoptrequest-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.adoptrequest-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.adoptrequest-wirtebanner{
+  background-color: #F5EAD9;
+  width: 1080px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.adoptrequest-write-area{
+  width: 800px;
+  min-height: 3300px;
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.adoptrequest-content-box{
+  width: 680px;
+  height: 50px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.adoptrequest-content-title{
+  width: 170px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.adoptrequest-input-small{
+  width: 400px;
+  height: 25px;
+}
+
+.adoptrequest-input-small2{
+  width: 300px;
+  height: 25px;
+}
+
+.adoptrequest-agreement-box{
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  width: 680px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+p{
+  font-size: 12px;
+}
+
+.adoptrequest-agreement-box2{
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  width: 680px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.adoptrequest-content-title2{
+  width: 650px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.adoptrequest-input-big{
+  width: 600px;
+  height: 70px;
+}
+
+.adoptrequest-agreement-box2{
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  width: 680px;
+  height: 430px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.adoptrequest-search-button{
+  width: 50px;
+  height: 28px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.adoptrequest-search-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.adoptrequest-buttonbox{
+  width: 680px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+}
+
+.adoptrequest-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adoptrequest-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.Error{
+  display: flex;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; 
+}

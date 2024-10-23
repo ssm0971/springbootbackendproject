@@ -1,0 +1,139 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-main-size{
+  width: 1080px;
+  min-height: 1300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.review-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.review-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.review-title1{
+  width: 1080px;
+  height: 45px;
+  background-color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  display: flex;
+  align-items: center;
+
+}
+
+.review-title2{
+  width: 1080px;
+  height: 35px;
+  background-color: white;
+  font-size: 16px;
+  display: flex; 
+  justify-content: flex-end; 
+}
+
+.review-postlist{
+  width: 1000px;
+  height: 1200px;
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 10px;
+}
+
+.review-post{
+  height: 350px;
+  background-color: #F5EAD9;
+  text-align: center;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.review-post-intro{
+  display: flex;
+  gap: 5px;
+}
+
+.review-post-title{
+  font-weight: bold;
+}
+
+.review-post-content{
+  width: 250px;
+  height: 79px;
+  font-size: 12px;
+  word-wrap: break-word; 
+}
+
+.review-post-date{
+  font-size: 12px;
+}
+
+.review-button-box{
+  width: 1000px;
+  height: 100px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.review-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  color: black;
+}
+
+.review-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.review-pagenation{
+  width: 1000px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; 
+}
+
+.review-nav a:hover {
+  text-decoration: none; 
+  color: inherit; 
+}

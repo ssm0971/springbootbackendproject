@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마이페이지-봉사</title>
+  <link rel="stylesheet" href="../../css/mypage/mypage-volun-form.css">
+  <link rel="stylesheet" href="../../css/main/header.css">
+  <link rel="stylesheet" href="../../css/main/footer.css">
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="logo-nav">
+      <div class="logo">
+        <a href="../../html/main/main.html">
+          <img src="../../img/header-logo.png" alt="로고이미지">
+        </a>
+      </div>
+      <nav>
+        <ul class="nav-items">
+          <li class="nav-item">
+            <a href="../dogmap/dogmap.html">유기견 보호소</a>
+            <div class="dropdown-content">
+              <a href="../dogmap/dogmap.html">유기견 보호소</a>
+            </div>
+          </li>
+          <ul class="nav-items">
+            <li class="nav-item">
+              <a href="../volun/volun-main.html">봉사</a>
+              <div class="dropdown-content">
+                <a href="../volun/volun-main.html">봉사 메인</a>
+                <a href="../volun/volun-volun-main.html">봉사 신청</a>
+                <a href="../../html/volun/volun-car-main-guest.html">카풀</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../donation/donation-main-guest.html">기부</a>
+              <div class="dropdown-content">
+                <a href="../donation/donation-main-guest.html">기부 게시판</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../adopt/adopt-main.html">입양</a>
+              <div class="dropdown-content">
+                <a href="../adopt/adopt-adopt.html">안심 입양</a>
+                <a href="../adopt/adopt-protection.html">임시 보호</a>
+                <a href="../adopt/adopt-review.html">후기</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../commu/comu-main-guest.html">커뮤니티</a>
+              <div class="dropdown-content">
+                <a href="../commu/comu-main-guest.html">자유게시판</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../notice/notice-list.html">공지사항</a>
+              <div class="dropdown-content">
+                <a href="../notice/notice-list.html">공지</a>
+              </div>
+            </li>
+          </ul>
+      </nav>
+    </div>
+    <div class="user-section">
+      <ul class="user-actions">
+        <li class="user-action"><a href="../member/login-select.html">로그인</a></li>
+        <li class="user-action"><a href="../member/signup-select.html">회원가입</a></li>
+      </ul>
+    </div>
+  </header>
+  <main>
+    <div class="member-profile-navbox">
+      <nav>
+        <ul class="member-profile-nav-ul">
+          <li id="profile"><a href="../../html/mypage/mypage-update.html">개인정보수정</li></a>
+          <li id="posts"><a href="../../html/mypage/mypage-posts.html">작성글조회</li></a>
+          <li id="volunteer"><a href="../../html/mypage/mypage-volunteer.html">봉사</li>
+          <div id="choice"></div></a>
+          <li id="adopt"><a href="../../html/mypage/mypage-adopt.html">입양</li></a>
+          <li id="inbox"><a href="../../html/mypage/mypage-inbox.html">쪽지함</li></a>
+          <li id="auth"><a href="../../html/mypage/mypage-auth.html">2차인증</li></a>
+          <li id="withdrawal"><a href="../../html/mypage/mypage-quit.html">회원탈퇴</li></a>
+        </ul>
+      </nav>
+    </div>
+    <div class="member-volun-navbox">
+      <div>인천봉사신청서</div>
+
+    </div>
+    <div id="line"></div>
+
+  <div class="member-volun-form">
+      <!-- 글작성 박스 -->
+      <div class="volunrequest-write-area">
+        <br>
+        <div style="font-weight: bold;">봉사 신청서</div>
+        <!-- 이름 -->
+        <form>
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">성명</div><input class="volunrequest-input-small" id="nameInput"
+              type="text" onblur="checkNameInput()">
+          </div>
+          <!-- 이름 미입력 에러메세지 -->
+          <div class="Error">
+            <div class="volunrequest-content-title" id="nameError2" style="display: none;"></div>
+            <div id="nameError" style="color: red; display: none;">성명을 정확히 입력해주세요</div>
+          </div>
+
+          <!-- 연락처 -->
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">연락처</div><input class="volunrequest-input-small" id="phoneInput"
+              type="text" onblur="checkPhoneInput()" placeholder="　-을 제외한 숫자만 입력해주세요">
+          </div>
+          <!-- 연락처 미입력 에러메세지 -->
+          <div class="Error">
+            <div class="volunrequest-content-title" id="phoneError2" style="display: none;"></div>
+            <div id="phoneError" style="color: red; display: none;">연락처를 정확히 입력해주세요</div>
+          </div>
+
+          <!-- 대체 연락처 -->
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">대체 연락처</div><input class="volunrequest-input-small" type="text"
+              id="phone2Input" onblur="checkPhone2Input()" placeholder="　-을 제외한 숫자만 입력해주세요">
+          </div>
+          <!-- 대체 연락처 미입력 에러메세지 -->
+          <div class="Error">
+            <div class="volunrequest-content-title" id="phone2Error2" style="display: none;"></div>
+            <div id="phone2Error" style="color: red; display: none;">대체 연락처를 정확히 입력해주세요</div>
+          </div>
+
+          <!-- 이메일 주소 -->
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">이메일 주소</div><input class="volunrequest-input-small" type="text"
+              id="emailInput" onblur="checkEmailInput()">
+          </div>
+          <!-- 대체 연락처 미입력 에러메세지 -->
+          <div class="Error">
+            <div class="volunrequest-content-title" id="emailError2" style="display: none;"></div>
+            <div id="emailError" style="color: red; display: none;">이메일 주소를 정확히 입력해주세요</div>
+          </div>
+
+          <!-- 성별 -->
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">성별</div>
+            <div class="gender-options">
+              <input type="radio" name="gender" value="male" checked> 남자
+              <input type="radio" name="gender" value="female"> 여자
+            </div>
+          </div>
+
+          <!-- 나이 -->
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">나이</div><input class="volunrequest-input-small" type="date"
+              id="ageInput" onblur="checkAgeInput()">
+          </div>
+          <!-- 나이 미입력 에러메세지 -->
+          <div class="Error">
+            <div class="volunrequest-content-title" id="ageError2" style="display: none;"></div>
+            <div id="ageError" style="color: red; display: none;">나이를 정확히 입력해주세요</div>
+          </div>
+
+          <!-- 우편번호 -->
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">우편번호</div>
+            <input id="zipcode" class="volunrequest-input-small2" type="text">　　　
+            <button id="addressSearch" class="volunrequest-search-button" type="button">주소찾기</button>
+          </div>
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">주소</div>
+            <input id="address" class="volunrequest-input-small" type="text">
+          </div>
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">상세주소</div>
+            <input id="detailAddress" class="volunrequest-input-small" type="text" onblur="checkAddressInput()">
+          </div>
+          <!-- 주소 미입력 에러메세지 -->
+          <div class="Error">
+            <div class="volunrequest-content-title" id="addressError2" style="display: none;"></div>
+            <div id="addressError" style="color: red; display: none;">상세주소를 정확히 입력해주세요</div>
+          </div>
+
+          <!-- 직장 -->
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">직업/직장명</div><input class="volunrequest-input-small" type="text"
+              id="jobInput" onblur="checkJobInput()">
+          </div>
+          <!-- 직장 미입력 에러메세지 -->
+          <div class="Error">
+            <div class="volunrequest-content-title" id="jobError2" style="display: none;"></div>
+            <div id="jobError" style="color: red; display: none;">직업/직장명을 입력해주세요</div>
+          </div>
+          
+          <!-- 개인정보수집이용동의 -->
+          <div class="volunrequest-content-box">
+            <div class="volunrequest-content-title">개인정보수집이용동의</div>
+          </div>
+          <div class="volunrequest-agreement-box">
+            <p>수집하는 개인정보의 항목: 성명, 주소, 이메일, 휴대전화번호</p>
+            <p>개인정보의 수집 이용 목적: 본 서명의 목적에 맞는 희멍의집 캠페인에 활용하고, 추후 전개되는 바에 대한 소식을 전달하기 위함</p>
+            <p>개인정보의 보유 및 이용기간: 5년(관계법령에서 정한 일정한 기간)</p>
+          </div>
+          <div class="agreement-checkbox">
+            <input type="checkbox" id="info-agreement">
+            <label for="info-agreement">위 약관에 동의합니다.</label>
+          </div>
+
+          <br><br>
+
+          <div style="font-weight: bold;">봉사 질문</div>
+          <br>
+          <!-- 봉사질문1 -->
+          <div class="volunrequest-content-box2">
+            <div class="volunrequest-content-title2">어떤 경로로 봉사를 신청하게 되었나요?</div><input class="volunrequest-input-big"
+              type="text" id="quest1Input" onblur="checkQuest1Input()">
+          </div>
+          <!-- 에러메세지 -->
+          <div class="Error">
+            <div id="quest1Error" style="color: red; display: none;">필수입력사항입니다</div>
+          </div>
+          <br>
+
+          <!-- 봉사질문2 -->
+          <div class="volunrequest-content-box2">
+            <div class="volunrequest-content-title2">유기견 봉사 또는 비슷한 봉사 경험이 있나요?</div><input class="volunrequest-input-big"
+              type="text" id="quest2Input" onblur="checkQuest2Input()">
+          </div>
+          <!-- 에러메세지 -->
+          <div class="Error">
+            <div id="quest2Error" style="color: red; display: none;">필수입력사항입니다</div>
+          </div>
+          <br>
+
+          <!-- 봉사질문3 -->
+          <div class="volunrequest-content-box2">
+            <div class="volunrequest-content-title2">유기견 봉사를 신청하게된 이유가 있나요?</div><input
+              class="volunrequest-input-big" type="text" id="quest3Input" onblur="checkQuest3Input()">
+          </div>
+          <!-- 에러메세지 -->
+          <div class="Error">
+            <div id="quest3Error" style="color: red; display: none;">필수입력사항입니다</div>
+          </div>
+          <br>
+
+          <!-- 봉사질문4 -->
+          <div class="volunrequest-content-box2">
+            <div class="volunrequest-content-title2">궁금하신 점이 있다면 적어주세요.</div><input class="volunrequest-input-big" type="text"
+              id="quest4Input" onblur="checkQuest4Input()">
+          </div>
+          <!-- 에러메세지 -->
+          <div class="Error">
+            <div id="quest4Error" style="color: red; display: none;">필수입력사항입니다</div>
+          </div>
+
+          <br><br>
+
+          <div class="volunrequest-buttonbox">
+            <button class="volunrequest-button" onclick="validateInputs()" type="button">수정</button>
+            <button class="volunrequest-button">취소</button>
+          </div>
+          <br>
+
+        </form>
+      </div>
+
+      <br>
+    </div>
+
+  </main>
+</body>
+
+<footer>
+  <div class="footer-links">
+    <a href="../member/term.html">이용약관</a> |
+    <a href="../member/term.html">개인정보처리방침</a>
+  </div>
+  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
+    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
+    © NEXT LEVEL. All Rights Reserved</h6>
+</footer>
+
+<script defer src="../../js/main/header.js"></script>
+<script defer src="../../js/mypage/mypage-volun-form.js"></script>
+
+</html>

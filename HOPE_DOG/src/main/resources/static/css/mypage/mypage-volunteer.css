@@ -1,0 +1,142 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+main{
+  background-color: white;
+  width: 1080px;
+  height: 800px;
+  margin: auto;
+}
+
+/* 마이페이지 목록 */
+.member-profile-navbox{
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  border-bottom: 2px solid #9B805D;
+  border-top: 2px solid #9B805D;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-profile-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 0;
+}
+
+.member-profile-nav-ul a{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  color: black;
+}
+
+#choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  background-color: #9B805D;
+  transform: translate(-30px, 15px);
+  position: relative;
+  z-index: -1;
+}
+
+.member-profile-nav-ul li{
+  margin: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.member-volun-navbox {
+  margin-top: 50px;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  align-items: center; /* 세로 중앙 정렬 (필요시) */
+  margin-right: 50px;
+}
+
+.member-volun-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 1;
+  margin-right: 150px;
+  font-size: 25px;
+}
+
+.member-volun-nav-ul a{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  color: black;
+  margin-right: 10px;
+}
+
+#volun-choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  background-color: #9B805D;
+  transform: translate(-20px, -5px);
+  position: relative;
+  z-index: -1;
+}
+
+#line {
+  width: 850px;
+  height: 4px;
+  background-color: #9B805D;
+  margin: 0 auto;
+}
+
+#volun-hours-title h3{
+  font-size: 25px;
+  font-weight: 400;
+  margin-top: 80px;
+  margin-left: 150px;
+}
+
+
+.member-profile-infobox{
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1080px;
+  
+  /* border: 1px solid black; */
+}
+
+.member-profile-info{
+  width: 650px;
+  height: 250px;
+  margin: 30px;
+  border: 5px solid #F5EAD9;
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+}
+
+.member-profile-info h1 {
+  font-size: 45px;
+  font-weight: 400;
+  color: rgb(105, 105, 105);
+  margin: 5px;
+}
+
+.member-profile-info h2 {
+  font-size: 45px;
+  font-weight: 400;
+  color: #F5EAD9;
+}
+

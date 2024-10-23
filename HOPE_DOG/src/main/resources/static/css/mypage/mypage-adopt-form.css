@@ -1,0 +1,274 @@
+main{
+  background-color: white;
+  width: 1080px;
+  height: auto;
+  margin: auto;
+}
+
+/* 마이페이지 목록 */
+.member-profile-navbox{
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  border-bottom: 2px solid #9B805D;
+  border-top: 2px solid #9B805D;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-profile-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 0;
+}
+
+.member-profile-nav-ul a{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  color: black;
+}
+
+#choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  background-color: #9B805D;
+  transform: translate(-30px, 15px);
+  position: relative;
+  z-index: -1;
+}
+
+.member-profile-nav-ul li{
+  margin: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.member-adopt-navbox {
+  margin-top: 50px;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  align-items: center; /* 세로 중앙 정렬 (필요시) */
+  margin-right: 50px;
+}
+
+.member-adopt-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 1;
+  margin-right: 150px;
+  font-size: 25px;
+}
+
+.member-adopt-nav-ul a{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  color: black;
+  margin-right: 10px;
+}
+
+#adopt-choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  background-color: #9B805D;
+  transform: translate(-20px, -5px);
+  position: relative;
+  z-index: -1;
+}
+
+#protect-list {
+  margin-left: 10px;
+}
+
+#line {
+  width: 850px;
+  height: 4px;
+  background-color: #9B805D;
+  margin-bottom: 10px;
+  margin-left: 110px;
+}
+
+
+.adoptrequest-main-size{
+  width: 1080px;
+  min-height: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.adoptrequest-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.adoptrequest-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.adoptrequest-wirtebanner{
+  background-color: #F5EAD9;
+  width: 1080px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.mypage-adopt-content {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.adoptrequest-write-area{
+  width: 800px;
+  min-height: 3300px;
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.adoptrequest-content-box{
+  width: 680px;
+  height: 50px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.adoptrequest-content-title{
+  width: 170px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.adoptrequest-input-small{
+  width: 400px;
+  height: 25px;
+}
+
+.adoptrequest-input-small2{
+  width: 300px;
+  height: 25px;
+}
+
+.adoptrequest-agreement-box{
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  width: 680px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+p{
+  font-size: 12px;
+}
+
+.adoptrequest-agreement-box2{
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  width: 680px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.adoptrequest-content-title2{
+  width: 650px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.adoptrequest-input-big{
+  width: 600px;
+  height: 70px;
+}
+
+.adoptrequest-agreement-box2{
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  width: 680px;
+  height: 430px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.adoptrequest-search-button{
+  width: 50px;
+  height: 28px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adoptrequest-search-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.adoptrequest-buttonbox{
+  width: 680px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+}
+
+.adoptrequest-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adoptrequest-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.Error{
+  display: flex;
+}

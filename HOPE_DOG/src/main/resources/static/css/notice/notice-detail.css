@@ -1,0 +1,149 @@
+.post-guest-main{
+  width: 1080px;
+  height: 600px;
+  background-color:white;
+  margin: 0 auto;
+}
+
+.post-guest{
+  width: 800px;
+  height: 400px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+#line {
+  width: 800px;
+  height: 4px;
+  background-color: #9B805D;
+  margin: 5px auto;
+}
+
+
+/* 게시글 컨테이너 */
+.notice-addetail-main {
+  margin-top: 20px;
+  border-top: 2px solid rgb(51, 51, 51);
+  color: rgb(51, 51, 51);
+}
+
+/* 제목/작성자/작성일 컨테이너 */
+.notice-addetail-content {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid rgb(244, 244, 244);
+}
+
+/* 제목/작성자/작성일 */
+.notice-addetail-tcontent {
+  width: 130px;
+  padding: 13px 0px 13px 20px;
+  background-color: #F5EAD9;
+  border-top: 1px solid #F5EAD9;
+  text-align: left;
+  font-weight: 500;
+}
+
+/* 제목/작성자/작성일 상세내용 */
+.notice-addetail-ttxt {
+  padding-left: 25px;
+  align-self: center;
+}
+
+/* 게시글 상세 내용 파트 */
+.notice-addetail-maincont {
+  padding: 30px 10px 100px;
+  height: 250px;
+}
+
+
+.topTitle {
+  text-align: left;
+  margin: 80px 0 0 0px;
+  justify-content: space-between;
+  align-items: center;
+  /* border-bottom: 4px solid #9B805D; */
+  padding-bottom: 10px; /* 여백 추가 */
+}
+
+.topTitle h1 {
+  font-size: 30px;
+  letter-spacing: -0.5px;
+  line-height: 30px;
+  text-align: center;
+}
+
+
+.topTitle-mainbox{
+  justify-content: right;
+  align-items: center;
+}
+
+.topTitle-name {
+  text-align: right; /* 텍스트 정렬을 오른쪽으로 설정 (선택 사항) */
+  margin-top: 10px;
+}
+
+.post-textarea{
+  margin: 50px 0px;
+  line-height: 40px;
+  text-align: left;
+}
+
+/* 수정 , 취소,신고 버튼들*/
+.volun-button{
+  display: flex; /* 수평 정렬을 위한 flexbox 사용 */
+  justify-content: flex-end; /* 버튼들을 왼쪽으로 정렬 */
+  gap: 10px; /* 버튼 간 간격 조절 */
+  /* margin-left: 136px; */
+  border-top: 2px solid #9B805D; /* 아래쪽 경계선 추가 */
+  padding-bottom: 10px; /* 여백 추가 */
+  width: 800px;
+  height: 20px;
+}
+
+/* 버튼 */
+
+.volun-admain-btuall-complaint{
+  margin-left: 540px; 
+}
+.volun-admain-btu-complaint {
+  display: block;
+  padding: 0px 10px;
+  text-align: center;
+  overflow: hidden;
+  width: 80px;
+  height: 40px;
+  border-radius: 15px;
+  color: black;
+  background-color:#F5EAD9;
+  border: 0px none;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+/* 폰트사이즈 */
+.volun-admain-btuall-complaint span {
+  font-size: 13px;
+}
+
+/* 폰트 두께 */
+.volun-admain-btu-complaint-sp {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.volun-admain-btu-complaint:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 배경색 */
+  color: white; /* 마우스를 올렸을 때 텍스트 색상 */
+}
+
+.volun-admain-btu-complaint a{
+  color: black;
+}
+
+.volun-admain-btuall-complaint a:hover{
+  color: white;
+}

@@ -1,0 +1,176 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+/* 마이페이지 목록 */
+.center-member-profile-navbox{
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  border-bottom: 2px solid #9B805D;
+  border-top: 2px solid #9B805D;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.center-member-profile-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 0;
+}
+
+.center-member-profile-nav-ul li{
+  margin: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* 페이지선택 */
+#choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #9B805D;
+  transform: translate(-30px, 15px);
+  position: relative;
+  z-index: -1;
+}
+
+.center-member-profile-infobox{
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1080px;
+  /* border: 1px solid black; */
+}
+
+.center-member-profile-info{
+  /* width: 600px; */
+  /* height: 600px; */
+  margin: 30px;
+  /* border: 5px solid #F5EAD9; */
+  /* display: flex;   */
+}
+
+.center-member-profile-infoarea{
+  width: 700px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 프로필 사진 */
+.center-member-profile-infoimg{
+  cursor: pointer;
+}
+
+.center-member-profile-infoimg img{
+  width: 150px;
+  height: 150px;
+  border-radius: 100px;
+  border: 2px solid #9B805D;
+}
+
+.center-member-profile-info-textarea{
+  width: 600px;
+  /* border: 1px solid black; */
+  margin: 30px;
+}
+
+/* 프로필 입력란 서식 */
+.center-member-profile-inputbox{
+  margin: 20px;
+  align-items: center;
+}
+
+.center-member-profile-infobox input[type=text]{
+  margin: 10px 0px 10px 0px;
+  width: 250px;
+  height: 30px;
+  border: none;  
+}
+
+.center-member-profile-infobox input[type=password]{
+  margin: 10px 0px 10px 0px;
+  width: 250px;
+  height: 30px;
+  border: none;  
+}
+.center-member-profile-infobox input[type=text]{
+  margin: 10px 0px 10px 0px;
+  width: 250px;
+  height: 30px;
+  border: none;  
+}
+
+.center-member-profile-info-textarea input[type=radio]{
+  margin: 10px 15px 10px 15px;
+  height: 30px;
+  
+}
+
+#contents{
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #9B805D ;
+  font-size: 18px;
+}
+
+#labelname{
+  width: 150px;
+}
+
+.alert{
+  margin-left: 15px;
+}
+
+/* 버튼 */
+.center-member-profile-button-small{
+  width: 110px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #F5EAD9;
+  cursor: pointer;
+  margin-left: 30px;
+}
+
+
+.center-member-profile-button{
+  display: flex;
+  justify-content: center;
+}
+
+.center-member-profile-button button{
+  width: 180px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #F5EAD9;
+  margin: 20px;
+  cursor: pointer;
+}
+
+/* 페이지선택 */
+#choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #9B805D;
+  transform: translate(-30px, 15px);
+  position: relative;
+  z-index: -1;
+}

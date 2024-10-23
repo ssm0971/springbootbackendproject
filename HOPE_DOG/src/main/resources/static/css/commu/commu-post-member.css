@@ -1,0 +1,213 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 커뮤니티 메인 크기 */
+.comm-main-size{
+  width: 1080px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*게시글 상단*/
+a {
+  text-decoration: none;
+  color: black;
+}
+
+ul{
+  display: flex; /* 가로로 나열 */
+  list-style-type: none;
+  margin: 0 auto; /* 중앙 정렬 */
+}
+
+
+.comm-header{
+  height: 50px;
+  width: 1080px;
+  border-bottom: 2px solid #9B805D; /* 아래쪽 경계선 추가 */
+}
+
+.navcontainer {
+  height: 30px;
+  display: flex;
+  margin: 10px 0 1px 0;
+  align-items: center;
+}
+
+#navlist {
+  display: flex;
+  gap: 78px;
+}
+
+#navlist li{
+  margin: 0 10px;
+}
+
+/* 제목,작성자,등록일 크기 */
+.comm-detail-box1{
+  width: 1080px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #9B805D;
+}
+
+.comm-detail-title{
+  width: 745px;
+  height: 60px;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.comm-detail-info{
+  width: 745px;
+  height: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 글내용크기 */
+.comm-detail-box2{
+  width: 1080px;
+  min-height: 500px;
+  border-bottom: 2px solid #9B805D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comm-detail-content{
+  background-color: white;
+  width: 745px;
+  min-height: 450px;
+  padding: 20px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comm-detail-basicinfo{
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.comm-detail-basicinfo-title{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* 글쓰기 */
+.comm-detail-box3{
+  width: 745px;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comm-modify-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comm-modify-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.comm-delete-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comm-delete-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.comm-end-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comm-end-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 글쓰기 버튼 */
+.comm-detail-box4{
+  width: 745px;
+  height: auto;
+}
+
+
+.comm-detail-commentbox{
+  width: 745px;
+  height: auto;
+}
+
+.comm-detail-name{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.comm-detail-comment{
+  font-size: 14px;
+}
+
+.comm-detail-date{
+  font-size: 12px;
+}
+
+.comm-detail-commentregi{
+  width: 620px;
+  height: 50px;
+}
+
+.comm-commentregi-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comm-commentregi-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}

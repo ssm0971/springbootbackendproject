@@ -1,0 +1,113 @@
+.volun-main{
+  width: 1080px;
+  height: 1000px;
+  background-color: white;
+  margin: 0 auto;
+}
+
+/* 봉사, 카풀 게시판 바 */
+.volun-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.volun-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 300px;
+  text-align: center;
+}
+
+.volun-navList1{
+  font-size: 18px;
+  font-weight: bold;
+  width: 300px;
+  text-align: center;
+}
+
+/* 글작성 */
+.car-wirtebanner{
+  background-color: #F5EAD9;
+  width: 1080px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-top: 2px solid #9B805D;
+}
+
+/* 글작성박스 */
+.car-write-area{
+  width: 800px;
+  height: auto;
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+/* 등록 버튼 */
+.car-write-button-box{
+  width: 780px;
+  height: 70px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 20px;
+}
+
+.review-write-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.review-write-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 취소버튼 */
+.review-cancle-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.review-cancle-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+
+/* 썸머노트 */
+.content{
+  width: 780px;
+  height: 670px;
+}
+
+.adoptwrite-title{
+  width: 780px;
+  height: 50px;
+}
+

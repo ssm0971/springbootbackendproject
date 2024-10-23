@@ -1,0 +1,169 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.protect-main-size{
+  width: 1080px;
+  min-height: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.protect-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.protect-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.protect-wirtebanner{
+  background-color: #F5EAD9;
+  width: 1080px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.protect-write-area{
+  width: 800px;
+  height: auto;
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.protect-write-box{
+  width: 780px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.protect-write-subtitle{
+  width: 170px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.protect-write-breed{
+  width: 180px;
+  height: 20px;
+}
+
+.breadError{
+  display: flex;
+}
+
+.protect-write-weight{
+  width: 180px;
+  height: 20px;
+}
+
+.weightError{
+  display: flex;
+}
+
+.protect-write-birth{
+  width: 180px;
+  height: 20px;
+}
+
+.protect-brirth-ex{
+  font-size: 12px;
+  color: gray;
+}
+
+.protect-write-introduce{
+  width: 500px;
+  height: 20px;
+}
+
+.introduceError{
+  display: flex;
+}
+
+.protect-write-button-box{
+  width: 780px;
+  height: 70px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 20px;
+}
+
+.protect-write-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.protect-write-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.protect-cancle-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.protect-cancle-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 썸머노트 크기 js에서도 설정해야함 */
+.content{
+  width: 780px;
+  height: 670px;
+}
+
+.adoptwrite-title{
+  width: 780px;
+  height: 50px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; 
+}
+
+.protect-nav a:hover {
+  text-decoration: none; 
+  color: inherit; 
+}

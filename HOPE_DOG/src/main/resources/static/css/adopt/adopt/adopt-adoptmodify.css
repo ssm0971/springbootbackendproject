@@ -1,0 +1,163 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adopt-main-size{
+  width: 1080px;
+  min-height: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.adopt-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.adopt-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.adopt-wirtebanner{
+  background-color: #F5EAD9;
+  width: 1080px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.adopt-write-area{
+  width: 800px;
+  height: auto;
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.adopt-write-box{
+  width: 780px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.adopt-write-subtitle{
+  width: 170px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adopt-write-breed{
+  width: 180px;
+  height: 20px;
+}
+
+.breadError{
+  display: flex;
+}
+
+.adopt-write-weight{
+  width: 180px;
+  height: 20px;
+}
+
+.weightError{
+  display: flex;
+}
+
+.adopt-write-birth{
+  width: 180px;
+  height: 20px;
+}
+
+.adopt-brirth-ex{
+  font-size: 12px;
+}
+
+.adopt-write-introduce{
+  width: 500px;
+  height: 20px;
+}
+
+.introduceError{
+  display: flex;
+}
+
+.adopt-write-button-box{
+  width: 780px;
+  height: 70px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 20px;
+}
+
+.adopt-write-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adopt-write-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.adopt-cancle-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adopt-cancle-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 썸머노트 크기 js에서도 설정해야함 */
+.content{
+  width: 780px;
+  height: 670px;
+}
+
+.adoptwrite-title{
+  width: 780px;
+  height: 50px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; 
+}

@@ -1,0 +1,281 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+main{
+  background-color: white;
+  width: 1080px;
+  height: auto;
+  margin: 0 auto;
+}
+
+
+.member-volun-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 마이페이지 목록 */
+.member-profile-navbox{
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  border-bottom: 2px solid #9B805D;
+  border-top: 2px solid #9B805D;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-profile-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 0;
+}
+
+.member-profile-nav-ul a{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  color: black;
+}
+
+#choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  background-color: #9B805D;
+  transform: translate(-30px, 15px);
+  position: relative;
+  z-index: -1;
+}
+
+.member-profile-nav-ul li{
+  margin: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.member-volun-navbox {
+  margin-top: 50px;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start; /* 오른쪽 정렬 */
+  align-items: center; /* 세로 중앙 정렬 (필요시) */
+  margin-left: 170px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.member-volun-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 1;
+  margin-right: 150px;
+  font-size: 25px;
+}
+
+.member-volun-nav-ul a{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  color: black;
+  margin-right: 10px;
+}
+
+#volun-choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  background-color: #9B805D;
+  transform: translate(-20px, -5px);
+  position: relative;
+  z-index: -1;
+}
+
+#volun-list {
+  margin-left: 10px;
+}
+
+#line {
+  width: 850px;
+  height: 4px;
+  background-color: #9B805D;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.volunrequest-main-size{
+
+  width: 1080px;
+  min-height: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.volunrequest-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.volunrequest-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.volunrequest-wirtebanner{
+  background-color: #F5EAD9;
+  width: 1080px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.volunrequest-write-area{
+  width: 800px;
+  min-height: 1450px;
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.volunrequest-content-box{
+  width: 680px;
+  height: 50px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.volunrequest-content-title{
+  width: 170px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.volunrequest-input-small{
+  width: 400px;
+  height: 25px;
+}
+
+.volunrequest-input-small2{
+  width: 300px;
+  height: 25px;
+}
+
+.volunrequest-agreement-box{
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  width: 680px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+p{
+  font-size: 12px;
+}
+
+.volunrequest-agreement-box2{
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  width: 680px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.volunrequest-content-title2{
+  width: 650px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.volunrequest-input-big{
+  width: 600px;
+  height: 70px;
+}
+
+.volunrequest-agreement-box2{
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  width: 680px;
+  height: 430px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.volunrequest-search-button{
+  width: 50px;
+  height: 28px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.volunrequest-search-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.volunrequest-buttonbox{
+  width: 680px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+}
+
+.volunrequest-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.volunrequest-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.Error{
+  display: flex;
+}

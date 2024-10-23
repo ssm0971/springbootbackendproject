@@ -1,0 +1,131 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.volun-main-size{
+  width: 1080px;
+  min-height: 1300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.volun-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.volun-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.volun-title1{
+  width: 1080px;
+  height: 45px;
+  background-color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.volun-title2{
+  width: 1080px;
+  height: 35px;
+  background-color: white;
+  font-size: 16px;
+  display: flex; 
+  justify-content: flex-end; 
+  gap: 15px;
+}
+
+.volun-postlist{
+  width: 1000px;
+  height: 1200px;
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 10px;
+}
+
+.volun-post{
+  height: 350px;
+  background-color: #F5EAD9;
+  text-align: center;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.volun-post-intro{
+  display: flex;
+  gap: 5px;
+}
+
+.volun-post-status{
+  font-weight: bold;
+}
+
+.volun-post-title{
+  font-weight: bold;
+}
+
+.volun-post-content{
+  font-size: 12px;
+}
+
+.volun-button-box{
+  width: 1000px;
+  height: 100px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.volun-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  color: black;
+}
+
+.volun-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.volun-pagenation{
+  width: 1000px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; 
+}

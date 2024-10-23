@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마이페이지-받은쪽지</title>
+  <link rel="stylesheet" href="../../css/mypage/mypage-inbox.css">
+  <link rel="stylesheet" href="../../css/main/header.css">
+  <link rel="stylesheet" href="../../css/main/footer.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo-nav">
+      <div class="logo">
+        <a href="../../html/main/main.html">
+          <img src="../../img/header-logo.png" alt="로고이미지">
+        </a>
+      </div>
+      <nav>
+        <ul class="nav-items">
+          <li class="nav-item">
+            <a href="../dogmap/dogmap.html">유기견 보호소</a>
+            <div class="dropdown-content">
+              <a href="../dogmap/dogmap.html">유기견 보호소</a>
+            </div>
+          </li>
+          <ul class="nav-items">
+            <li class="nav-item">
+              <a href="../volun/volun-main.html">봉사</a>
+              <div class="dropdown-content">
+                <a href="../volun/volun-main.html">봉사 메인</a>
+                <a href="../volun/volun-volun-main.html">봉사 신청</a>
+                <a href="../../html/volun/volun-car-main-guest.html">카풀</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../donation/donation-main-guest.html">기부</a>
+              <div class="dropdown-content">
+                <a href="../donation/donation-main-guest.html">기부 게시판</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../adopt/adopt-main.html">입양</a>
+              <div class="dropdown-content">
+                <a href="../adopt/adopt-adopt.html">안심 입양</a>
+                <a href="../adopt/adopt-protection.html">임시 보호</a>
+                <a href="../adopt/adopt-review.html">후기</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../commu/comu-main-guest.html">커뮤니티</a>
+              <div class="dropdown-content">
+                <a href="../commu/comu-main-guest.html">자유게시판</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../notice/notice-list.html">공지사항</a>
+              <div class="dropdown-content">
+                <a href="../notice/notice-list.html">공지</a>
+              </div>
+            </li>
+          </ul>
+      </nav>
+    </div>
+    <div class="user-section">
+      <ul class="user-actions">
+        <li class="user-action"><a href="../member/login-select.html">로그인</a></li>
+        <li class="user-action"><a href="../member/signup-select.html">회원가입</a></li>
+      </ul>
+    </div>
+  </header>
+  <main>
+    <div class="member-profile-navbox">
+      <nav>
+        <ul class="member-profile-nav-ul">
+          <li id="profile"><a href="../../html/mypage/mypage-update.html">개인정보수정</li></a>
+          <li id="posts"><a href="../../html/mypage/mypage-posts.html">작성글조회</li></a>
+          <li id="volunteer"><a href="../../html/mypage/mypage-volunteer.html">봉사</li></a>
+          <li id="adopt"><a href="../../html/mypage/mypage-adopt.html">입양</li></a>
+          <li id="inbox"><a href="#">쪽지함</li>          
+          <div id="choice"></div></a>
+          <li id="auth"><a href="../../html/mypage/mypage-auth.html">2차인증</li></a>
+          <li id="withdrawal"><a href="../../html/mypage/mypage-quit.html">회원탈퇴</li></a>
+        </ul>
+      </nav>
+    </div>
+    <div class="member-inbox-navbox">
+      <nav>
+        <ul class="member-inbox-nav-ul">
+          <li id="member-inbox"><a href="../../html/mypage/mypage-inbox.html">받은 쪽지</li>
+            <div id="inbox-choice"></div></a>
+          <li id="member-outbox"><a href="../../html/mypage/mypage-outbox.html">보낸 쪽지</li></a>
+        </ul>
+      </nav>
+    </div>
+    <div id="line"></div>
+
+        <!-- 게시글 리스트 영역 -->
+    <div class="member-notebox-container">
+      <!-- 게시글 제목 -->
+      <div>
+        <ul class="member-notebox-titlebox">
+          <li><b>상태</b></li>
+          <li><b>송신자</b></li>
+          <li><b>수신자</b></li>
+          <li><b>제목</b></li>
+          <li><b>내용</b></li>
+          <li><b>날짜</b></li>
+        </ul>
+      </div>
+      <!-- 게시글 목록 -->
+      <div class="member-notebox-contentsbox">
+        <ul class="member-notebox-content">
+          <li>
+            <div>
+              <ul class="member-notebox-contentbox">
+                <li>[읽음]</li>
+                <li>슈슈</li>
+                <li>아가다</li>
+                <li><a href="../../html/mypage/mypage-notebox-detail.html">아가다!</li></a>
+                <li><a href="../../html/mypage/mypage-notebox-detail.html">우리 코코 너무 예쁘지</li></a>
+                <li>24.07.29 14:20</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div>
+              <ul class="member-notebox-contentbox">
+                <li>[읽음]</li>
+                <li>슈슈</li>
+                <li>아가다</li>
+                <li><a href="../../html/mypage/mypage-notebox-detail.html">아가다!</li></a>
+                <li><a href="../../html/mypage/mypage-notebox-detail.html">우리 코코 너무 예쁘지</li></a>
+                <li>24.07.29 14:20</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div>
+              <ul class="member-notebox-contentbox">
+                <li>[읽음]</li>
+                <li>슈슈</li>
+                <li>아가다</li>
+                <li><a href="../../html/mypage/mypage-notebox-detail.html">아가다!</li></a>
+                <li><a href="../../html/mypage/mypage-notebox-detail.html">우리 코코 너무 예쁘지</li></a>
+                <li>24.07.29 14:20</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div>
+              <ul class="member-notebox-contentbox">
+                <li>[읽음]</li>
+                <li>슈슈</li>
+                <li>아가다</li>
+                <li><a href="../../html/mypage/mypage-notebox-detail.html">아가다!</li></a>
+                <li><a href="../../html/mypage/mypage-notebox-detail.html">우리 코코 너무 예쁘지</li></a>
+                <li>24.07.29 14:20</li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      
+      
+          <!-- 페이지네이션 -->
+          <div class="pagination">
+            <button class="prev">◀</button>
+            <button class="page">1</button>
+            <button class="page">2</button>
+            <button class="page">3</button>
+            <button class="page">4</button>
+            <button class="page">5</button>
+            <button class="next">▶</button>
+    
+          </div>
+          <div class="inbox-admain-btuall">
+            <button class="inbox-admain-btu" type="button">
+              <a href="../../html/mypage/mypage-notebox-write.html"><span class="inbox-admain-btu-sp">쪽지쓰기</span></a>
+            </button>
+          </div>
+      </div>
+
+
+  </main>
+
+</body>
+<footer>
+  <div class="footer-links">
+    <a href="../member/term.html">이용약관</a> |
+    <a href="../member/term.html">개인정보처리방침</a>
+  </div>
+  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
+    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
+    © NEXT LEVEL. All Rights Reserved</h6>
+</footer>
+
+
+<script defer src="../../js/main/header.js"></script>
+<script defer src="../../js/mypage/mypage-inbox.js"></script>
+
+</html>

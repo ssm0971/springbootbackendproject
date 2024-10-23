@@ -1,0 +1,192 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+main{
+  background-color: white;
+  width: 1080px;
+  height: 1000px;
+  margin: auto;
+}
+
+/* 마이페이지 목록 */
+.member-profile-navbox{
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  border-bottom: 2px solid #9B805D;
+  border-top: 2px solid #9B805D;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-profile-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 0;
+}
+
+.member-profile-nav-ul a{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  color: black;
+}
+
+#choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  background-color: #9B805D;
+  transform: translate(-30px, 15px);
+  position: relative;
+  z-index: -1;
+}
+
+.member-profile-nav-ul li{
+  margin: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+/* 게시판 목록 */
+.member-profile-navboard{
+  margin: 0 auto;
+  border-bottom: 5px solid #9B805D;
+  width: 850px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-profile-navboard-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+}
+
+.member-profile-navboard-ul li{
+  margin: 20px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* 탈퇴 영역 */
+.withdrawal-container{
+  margin: 0 auto;
+  width: 800px;
+  height: 600px;
+  border: 1px solid #9B805D;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* 약관 */
+.withdrawal-terms{
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.withdrawal-terms b{
+  margin: 20px;
+  font-size: 20px;
+}
+
+.withdrawal-terms p{
+  margin: 10px;
+  font-size: 16px;
+}
+
+.withdrawal-agreeinput{
+  width: 200px;
+  height: 30px;
+  margin: 30px 0 10px;
+}
+
+
+.button {
+  background-color: #F5EAD9;
+  color: black;
+  width: 120px;
+  height: 50px;
+  margin: 20px;
+  border: none;
+  border-radius: 15px;
+  /* cursor: not-allowed; */
+}
+
+button:hover {
+  background-color: #9B805D;
+  color: white;
+}
+
+.button.active {
+  background-color: #9B805D;
+  color: white;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  width: 400px;
+  height: 200px;
+  text-align: center;
+  
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal div{
+  margin-top: 50px;
+}
+
+.modal button{
+  width: 90px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #F5EAD9;
+  color: black;
+  margin: 50px 20px;
+  border: none;
+}
+
+
+.modal button:hover {
+  background-color: #9B805D;
+  color: white;
+}
+
+input {
+  color: gray;
+}

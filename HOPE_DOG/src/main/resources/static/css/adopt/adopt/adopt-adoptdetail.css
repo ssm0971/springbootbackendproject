@@ -1,0 +1,260 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adopt-main-size{
+  width: 1080px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.adopt-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.adopt-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.adopt-detail-box1{
+  width: 1080px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #9B805D;
+}
+
+.adopt-detail-title{
+  width: 745px;
+  height: 60px;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.adopt-detail-info{
+  width: 745px;
+  height: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adopt-detail-box2{
+  width: 1080px;
+  min-height: 500px;
+  border-bottom: 2px solid #9B805D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adopt-detail-content{
+  background-color: white;
+  width: 745px;
+  min-height: 450px;
+  padding: 20px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.adopt-detail-basicinfo{
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.adopt-detail-basicinfo-title{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.adopt-detail-box3{
+  width: 745px;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adopt-modify-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adopt-modify-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.adopt-delete-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adopt-delete-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.adopt-end-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adopt-end-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.adopt-detail-box4{
+  width: 745px;
+  height: auto;
+}
+
+.adopt-detail-commentNum{
+  width: 745px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.adopt-detail-commentbox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 745px;
+  min-height: 95px;
+}
+
+.adopt-detail-name{
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.adopt-detail-comment{
+  font-size: 14px;
+}
+
+.adopt-detail-date{
+  font-size: 12px;
+}
+
+.adopt-detail-commentregi{
+  width: 620px;
+  height: 50px;
+}
+
+.adopt-commentregi-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adopt-commentregi-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 댓글버튼 */
+.adopt-comment-button{
+  width: 50px;
+  height: 25px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adopt-comment-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 댓글수정 input 박스 */
+.adopt-modify-comment{
+  width: 300px;
+  height: 30px;
+}
+
+/* 신청버튼박스 */
+.adopt-submit-box{
+  width: 745px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adopt-submit-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adopt-submit-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; 
+}

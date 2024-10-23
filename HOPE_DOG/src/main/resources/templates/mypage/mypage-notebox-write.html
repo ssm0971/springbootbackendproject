@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마이페이지-쪽지</title>
+  <link rel="stylesheet" href="../../css/mypage/mypage-notebox-write.css">
+  <link rel="stylesheet" href="../../css/main/header.css">
+  <link rel="stylesheet" href="../../css/main/footer.css">
+  <script defer src="../../js/main.js"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo-nav">
+      <div class="logo">
+        <a href="../../html/main/main.html">
+          <img src="../../img/header-logo.png" alt="로고이미지">
+        </a>
+      </div>
+      <nav>
+        <ul class="nav-items">
+          <li class="nav-item">
+            <a href="../dogmap/dogmap.html">유기견 보호소</a>
+            <div class="dropdown-content">
+              <a href="../dogmap/dogmap.html">유기견 보호소</a>
+            </div>
+          </li>
+          <ul class="nav-items">
+            <li class="nav-item">
+              <a href="../volun/volun-main.html">봉사</a>
+              <div class="dropdown-content">
+                <a href="../volun/volun-main.html">봉사 메인</a>
+                <a href="../volun/volun-volun-main.html">봉사 신청</a>
+                <a href="../../html/volun/volun-car-main-guest.html">카풀</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../donation/donation-main-guest.html">기부</a>
+              <div class="dropdown-content">
+                <a href="../donation/donation-main-guest.html">기부 게시판</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../adopt/adopt-main.html">입양</a>
+              <div class="dropdown-content">
+                <a href="../adopt/adopt-adopt.html">안심 입양</a>
+                <a href="../adopt/adopt-protection.html">임시 보호</a>
+                <a href="../adopt/adopt-review.html">후기</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../commu/comu-main-guest.html">커뮤니티</a>
+              <div class="dropdown-content">
+                <a href="../commu/comu-main-guest.html">자유게시판</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../notice/notice-list.html">공지사항</a>
+              <div class="dropdown-content">
+                <a href="../notice/notice-list.html">공지</a>
+              </div>
+            </li>
+          </ul>
+      </nav>
+    </div>
+    <div class="user-section">
+      <ul class="user-actions">
+        <li class="user-action"><a href="../member/login-select.html">로그인</a></li>
+        <li class="user-action"><a href="../member/signup-select.html">회원가입</a></li>
+      </ul>
+    </div>
+  </header>
+  <main>
+    <div class="member-profile-navbox">
+      <nav>
+        <ul class="member-profile-nav-ul">
+          <li id="profile"><a href="../../html/mypage/mypage-update.html">개인정보수정</li></a>
+          <li id="posts"><a href="../../html/mypage/mypage-posts.html">작성글조회</li></a>
+          <li id="volunteer"><a href="../../html/mypage/mypage-volunteer.html">봉사</li></a>
+          <li id="adopt"><a href="../../html/mypage/mypage-adopt.html">입양</li></a>
+          <li id="inbox"><a href="#">쪽지함</li>          
+          <div id="choice"></div></a>
+          <li id="auth"><a href="../../html/mypage/mypage-auth.html">2차인증</li></a>
+          <li id="withdrawal"><a href="../../html/mypage/mypage-quit.html">회원탈퇴</li></a>
+        </ul>
+      </nav>
+    </div>
+    <div class="note-wrap">
+      <div class="note-title">
+        <h1>쪽지 쓰기</h1>
+      </div>
+      <form method="get">
+        <div class="note-write-wrap">
+          <div class="note-write">
+            <div class="note-title">
+              <input id="note-board-title" name="notbTitle" type="text" placeholder="제목을 입력해 주세요" />
+            </div>
+            <div class="note-title">
+              <input id="note-board-title" name="notbTitle" type="text" placeholder="보내실 분의 닉네임을 입력해 주세요" />
+            </div>
+            <div class="note-cont">
+              <textarea id="note-board-content" name="notbContent" inputmode="text" placeholder="내용을 입력하세요">
+                </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="notebox-admain-btuall">
+          <button class="notebox-admain-btu" type="button" onclick="cancleClick()">
+            <span class="notebox-admain-btu-sp">이전</span>
+          </button>
+          <button class="notebox-admain-btu" type="button">
+            <a href="../../html/mypage/mypage-outbox.html"><span class="notebox-admain-btu-sp">보내기</span></a>
+          </button>
+        </div>
+      </form>
+    </div>
+    
+
+  </main>
+</body>
+
+<footer>
+  <div class="footer-links">
+    <a href="../member/term.html">이용약관</a> |
+    <a href="../member/term.html">개인정보처리방침</a>
+  </div>
+  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
+    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
+    © NEXT LEVEL. All Rights Reserved</h6>
+</footer>
+
+
+<script defer src="../../js/main/header.js"></script>
+<script defer src="../../js/mypage/mypage-notebox-write.js"></script>
+
+
+</html>

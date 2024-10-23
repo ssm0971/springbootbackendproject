@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카풀 게시판(회원)</title>
+  <link rel="stylesheet" href="../../css/volun/volun-car.css">
+  <link rel="stylesheet" href="../../css/main/header.css">
+  <link rel="stylesheet" href="../../css/main/footer.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo-nav">
+      <div class="logo">
+        <a href="../../html/main/main.html">
+          <img src="../../img/header-logo.png" alt="로고이미지">
+        </a>
+      </div>
+      <nav>
+        <ul class="nav-items">
+          <li class="nav-item">
+            <a href="../dogmap/dogmap.html">유기견 보호소</a>
+            <div class="dropdown-content">
+              <a href="../dogmap/dogmap.html">유기견 보호소</a>
+            </div>
+          </li>
+          <ul class="nav-items">
+            <li class="nav-item">
+              <a href="../volun/volun-main.html">봉사</a>
+              <div class="dropdown-content">
+                <a href="../volun/volun-main.html">봉사 메인</a>
+                <a href="../volun/volun-volun-main.html">봉사 신청</a>
+                <a href="../../html/volun/volun-car-main-guest.html">카풀</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../donation/donation-main-guest.html">기부</a>
+              <div class="dropdown-content">
+                <a href="../donation/donation-main-guest.html">기부 게시판</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../adopt/adopt-main.html">입양</a>
+              <div class="dropdown-content">
+                <a href="../adopt/adopt-adopt.html">안심 입양</a>
+                <a href="../adopt/adopt-protection.html">임시 보호</a>
+                <a href="../adopt/adopt-review.html">후기</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../commu/comu-main-guest.html">커뮤니티</a>
+              <div class="dropdown-content">
+                <a href="../commu/comu-main-guest.html">자유게시판</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="../notice/notice-list.html">공지사항</a>
+              <div class="dropdown-content">
+                <a href="../notice/notice-list.html">공지</a>
+              </div>
+            </li>
+          </ul>
+      </nav>
+    </div>
+    <div class="user-section">
+      <ul class="user-actions">
+        <li class="user-action"><a href="../member/login-select.html">로그인</a></li>
+        <li class="user-action"><a href="../member/signup-select.html">회원가입</a></li>
+      </ul>
+    </div>
+  </header>
+  <main>
+    <div class="volun-main">
+      <div class="volun">
+      <!-- 봉사/카풀 게시판 바 -->
+        <div class="volun-header">
+          <ul id="volun-header2">
+            <li>봉사</li>
+            <li>카풀</li>
+          </ul>
+        </div>
+        <!--게시글 칼럼 구분-->
+        <div class="volun-container">
+          <div class="volun-container-cate">분류</div>
+          <div class="volun-container-title">제목</div>
+          <div class="volun-container-audate">닉네임</div>
+          <div class="volun-container-audate">작성일</div>
+        </div>
+        <!--게시글-->
+        <div class="volun-catalog-all">
+          <div class="volun-catalog-main">
+            <div class="volun-cate">[태워줄게요]</div>
+            <div class="volun-title"><a href="../../html/volun/volun-car-post-member.html">10월 18일 남양주 행복한 유기견 센터 카풀 구해요</a></div>
+            <div class="volun-author">프린세스</div>
+            <div class="volun-date">2024-10-08</div>
+          </div>
+        </div>
+        <div class="volun-catalog-all">
+          <div class="volun-catalog-main">
+            <div class="volun-cate">[태워줄게요]</div>
+            <div class="volun-title"><a href="../../html/volun/volun-car-post-member.html">10월 18일 남양주 행복한 유기견 센터 카풀 구해요</a></div>
+            <div class="volun-author">프린세스</div>
+            <div class="volun-date">2024-10-08</div>
+          </div>
+        </div>
+        <div class="volun-catalog-all">
+          <div class="volun-catalog-main">
+            <div class="volun-cate">[태워줄게요]</div>
+            <div class="volun-title"><a href="../../html/volun/volun-car-post-member.html">10월 18일 남양주 행복한 유기견 센터 카풀 구해요</a></div>
+            <div class="volun-author">프린세스</div>
+            <div class="volun-date">2024-10-08</div>
+          </div>
+        </div>
+        <div class="volun-catalog-all">
+          <div class="volun-catalog-main">
+            <div class="volun-cate">[태워주세요]</div>
+            <div class="volun-title"><a href="../../html/volun/volun-car-post-member.html">10월 18일 남양주 행복한 유기견 센터 카풀 구해요</a></div>
+            <div class="volun-author">프린세스</div>
+            <div class="volun-date">2024-10-08</div>
+          </div>
+        </div>
+        <div class="volun-catalog-all">
+          <div class="volun-catalog-main">
+            <div class="volun-cate">[태워줄게요]</div>
+            <div class="volun-title"><a href="../../html/volun/volun-car-post-member.html">10월 18일 남양주 행복한 유기견 센터 카풀 구해요</a></div>
+            <div class="volun-author">프린세스</div>
+            <div class="volun-date">2024-10-08</div>
+          </div>
+        </div>
+        <div class="volun-catalog-all">
+          <div class="volun-catalog-main">
+            <div class="volun-cate">[태워주세요]</div>
+            <div class="volun-title"><a href="../../html/volun/volun-car-post-member.html">10월 18일 남양주 행복한 유기견 센터 카풀 구해요</a></div>
+            <div class="volun-author">프린세스</div>
+            <div class="volun-date">2024-10-08</div>
+          </div>
+        </div>
+        <div class="volun-catalog-all">
+          <div class="volun-catalog-main">
+            <div class="volun-cate">[태워주세요]</div>
+            <div class="volun-title"><a href="../../html/volun/volun-car-post-member.html">10월 18일 남양주 행복한 유기견 센터 카풀 구해요</a></div>
+            <div class="volun-author">프린세스</div>
+            <div class="volun-date">2024-10-08</div>
+          </div>
+        </div>
+        <div class="volun-catalog-all">
+          <div class="volun-catalog-main">
+            <div class="volun-cate">[태워줄게요]</div>
+            <div class="volun-title"><a href="../../html/volun/volun-car-post-member.html">10월 18일 남양주 행복한 유기견 센터 카풀 구해요</a></div>
+            <div class="volun-author">프린세스</div>
+            <div class="volun-date">2024-10-08</div>
+          </div>
+        </div>
+        <div class="volun-catalog-all">
+          <div class="volun-catalog-main">
+            <div class="volun-cate">[태워줄게요]</div>
+            <div class="volun-title"><a href="../../html/volun/volun-car-post-member.html">10월 18일 남양주 행복한 유기견 센터 카풀 구해요</a></div>
+            <div class="volun-author">프린세스</div>
+            <div class="volun-date">2024-10-08</div>
+          </div>
+        </div>
+        <div class="volun-catalog-all">
+          <div class="volun-catalog-main">
+            <div class="volun-cate">[태워줄게요]</div>
+            <div class="volun-title"><a href="../../html/volun/volun-car-post-member.html">10월 18일 남양주 행복한 유기견 센터 카풀 구해요</a></div>
+            <div class="volun-author">프린세스</div>
+            <div class="volun-date">2024-10-08</div>
+          </div>
+        </div>
+      <!-- 검색 창-->
+        <div class="bottom-search">
+          <form method="get" name="search" action="/zboard/zboard.php">
+            <select name="search-type" id="search-type">
+            <option value="sub-memo">태워줄게요</option>
+            <option value="subject">태워주세요</option>
+          </select>
+          <span class="default">
+            <input type="hidden" name="id" value="publictransport"><input type="hidden" name="page-num" value="25">
+            <input type="text" name="keyword" id="keyword" value="">
+            <input type="submit" onfocus="blur()" value="검색"></span>
+            <!-- </span> -->
+          </form>
+        </div>
+        <div class="volun-write">
+          <button class="volun-write-botton" type="button" onclick="location.href='../../html/volun/volun-car-post-write.html'">
+            <span class="volun-write-botton-sp">글쓰기</span>
+          </button>
+        </div>
+        <!-- 페이지네이션 -->
+        <div class="Pagination-all">
+          <div class="bottom-list">
+            <a class="prev" onfocus="blur()" href="#"></a>
+            <a class="num on" onfocus="blur()" href="#">1</a>
+            <a class="num" onfocus="blur()" href="#">2</a>
+            <a class="num" onfocus="blur()" href="#">3</a>
+            <a class="num" onfocus="blur()" href="#">4</a>
+            <a class="num" onfocus="blur()" href="#">5</a>
+            <a class="next" onfocus="blur()" href="#"></a>
+          </div>
+        </div>
+    </div>
+  </main>
+</body>
+<footer>
+  <div class="footer-links">
+    <a href="../member/term.html">이용약관</a> |
+    <a href="../member/term.html">개인정보처리방침</a>
+  </div>
+  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
+    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
+    © NEXT LEVEL. All Rights Reserved</h6>
+</footer>
+<script defer src="../../js/main/header.js"></script>
+
+</html>

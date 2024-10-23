@@ -1,0 +1,245 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.volun-main-size{
+  width: 1080px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.volun-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.volun-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 300px;
+  text-align: center;
+}
+
+.volun-navList1{
+  font-size: 18px;
+  font-weight: bold;
+  width: 300px;
+  text-align: center;
+}
+
+.volun-detail-box1{
+  width: 1080px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #9B805D;
+}
+
+.volun-detail-title{
+  width: 745px;
+  height: 60px;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.volun-detail-info{
+  width: 745px;
+  height: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.volun-detail-box2{
+  width: 1080px;
+  min-height: 500px;
+  border-bottom: 2px solid #9B805D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.volun-detail-content{
+  background-color: white;
+  width: 745px;
+  min-height: 450px;
+  padding: 20px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.volun-detail-basicinfo{
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.volun-detail-basicinfo-title{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.volun-detail-box3{
+  width: 745px;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.volun-modify-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.volun-modify-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.volun-delete-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.volun-delete-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.volun-end-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.volun-end-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.volun-detail-commentbox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 745px;
+  min-height: 95px;
+}
+
+.volun-detail-name{
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.volun-detail-comment{
+  font-size: 14px;
+}
+
+.volun-detail-date{
+  font-size: 12px;
+}
+
+.volun-detail-commentregi{
+  width: 620px;
+  height: 50px;
+}
+
+.volun-commentregi-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.volun-commentregi-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 댓글버튼 */
+.volun-comment-button{
+  width: 50px;
+  height: 25px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.volun-comment-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+
+
+/* 댓글수정 input 박스 */
+.review-modify-comment{
+  width: 300px;
+  height: 30px;
+}
+
+.volun-detail-commentregi{
+  width: 620px;
+  height: 50px;
+}
+
+.volun-commentregi-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.volun-commentregi-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}

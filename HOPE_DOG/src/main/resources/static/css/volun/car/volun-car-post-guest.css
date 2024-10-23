@@ -1,0 +1,155 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.volun-main-size{
+  width: 1080px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 봉사/카풀 게시판 바 */
+.volun-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.volun-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 300px;
+  text-align: center;
+}
+
+.volun-navList1{
+  font-size: 18px;
+  font-weight: bold;
+  width: 300px;
+  text-align: center;
+}
+
+/* 제목/작성자/등록일 크기  */
+.volun-detail-box1{
+  width: 1080px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #9B805D;
+}
+
+.volun-detail-title{
+  width: 745px;
+  height: 60px;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.volun-detail-info{
+  width: 745px;
+  height: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 글내용 크기 */
+.volun-detail-box2{
+  width: 1080px;
+  min-height: 500px;
+  border-bottom: 2px solid #9B805D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.volun-detail-content{
+  background-color: white;
+  width: 745px;
+  min-height: 450px;
+  padding: 20px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.volun-detail-basicinfo{
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.volun-detail-basicinfo-title{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* 댓글창 */
+.volun-detail-box4{
+  width: 745px;
+  height: auto;
+}
+
+.volun-detail-commentNum{
+  width: 745px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.volun-detail-commentbox{
+  width: 745px;
+  height: auto;
+}
+
+.volun-detail-name{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.volun-detail-comment{
+  font-size: 14px;
+}
+
+.volun-detail-date{
+  font-size: 12px;
+}
+
+.volun-detail-commentregi{
+  width: 620px;
+  height: 50px;
+}
+
+.volun-commentregi-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.volun-commentregi-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}

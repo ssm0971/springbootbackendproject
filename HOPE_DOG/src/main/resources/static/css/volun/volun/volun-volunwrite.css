@@ -1,0 +1,168 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.volun-main-size{
+  width: 1080px;
+  min-height: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.volun-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+
+.volun-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.volun-wirtebanner{
+  background-color: #F5EAD9;
+  width: 1080px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.volun-write-area{
+  width: 800px;
+  height: auto;
+  border: solid 1px #9B805D;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.volun-write-box{
+  width: 780px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.volun-write-subtitle{
+  width: 170px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.volun-write-local{
+  width: 180px;
+  height: 20px;
+}
+
+.localError{
+  display: flex;
+}
+
+.volun-write-time{
+  width: 180px;
+  height: 20px;
+}
+
+.timeError{
+  display: flex;
+}
+
+.volun-write-birth{
+  width: 180px;
+  height: 20px;
+}
+
+.volun-brirth-ex{
+  font-size: 12px;
+}
+
+.volun-write-people{
+  width: 180px;
+  height: 20px;
+}
+
+.peopleError{
+  display: flex;
+}
+
+.volun-write-button-box{
+  width: 780px;
+  height: 70px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 20px;
+}
+
+.volun-write-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.volun-write-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+.volun-cancle-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.volun-cancle-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 썸머노트 크기 js에서도 설정해야함 */
+.content{
+  width: 780px;
+  height: 670px;
+}
+
+.volunwrite-title{
+  width: 780px;
+  height: 50px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; 
+}
+
+.volun-nav a:hover {
+  text-decoration: none; 
+  color: inherit; 
+}

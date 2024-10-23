@@ -1,0 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+main{
+  background-color: white;
+  width: 1080px;
+  height: 1000px;
+  margin: auto;
+}
+
+/* 마이페이지 목록 */
+.member-profile-navbox{
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  border-bottom: 2px solid #9B805D;
+  border-top: 2px solid #9B805D;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-profile-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 0;
+}
+
+.member-profile-nav-ul a{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  color: black;
+}
+
+#choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  background-color: #9B805D;
+  transform: translate(-30px, 15px);
+  position: relative;
+  z-index: -1;
+}
+
+.member-profile-nav-ul li{
+  margin: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.member-auth-navbox {
+  margin-top: 50px;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.member-auth-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  /* z-index: 1; */
+}
+
+.member-auth-nav-ul a{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  color: black;
+  font-size: 30px;
+}
+
+#line {
+  width: 850px;
+  height: 4px;
+  background-color: #9B805D;
+  margin: 0 auto;
+}
+
+.auth-title {
+  width: 850px;
+  height: 700px;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  margin-left: 50px;
+}
+
+.auth-title h3{
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 80px;
+  margin-left: 150px;
+}
+
+
+/* 수정 버튼 */
+.auth-admain-btu {
+  display: block;
+  padding: 0px 10px;
+  text-align: center;
+  overflow: hidden;
+  width: 180px;
+  height: 40px;
+  border-radius: 15px;
+  color: black;
+  background-color:#F5EAD9;
+  border: 0px none;
+  cursor: pointer;
+  margin-left: 170px;
+}
+
+/* 수정 폰트사이즈 */
+.auth-admain-btuall span {
+  font-size: 16px;
+}
+
+/* 수정 폰트 두께 */
+.auth-admain-btu-sp {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.auth-admain-btu:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 배경색 */
+  color: white; /* 마우스를 올렸을 때 텍스트 색상 */
+}

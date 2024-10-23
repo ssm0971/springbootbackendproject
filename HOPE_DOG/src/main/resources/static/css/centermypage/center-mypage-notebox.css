@@ -1,0 +1,199 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+/* 마이페이지 목록 */
+.center-member-profile-navbox{
+  margin: 0 auto;
+  /* border: 1px solid black; */
+  border-bottom: 2px solid #9B805D;
+  border-top: 2px solid #9B805D;
+  width: 1080px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.center-member-profile-nav-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 0;
+}
+
+.center-member-profile-nav-ul li{
+  margin: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* 게시판 제목 목록 */
+.center-member-profile-navboard{
+  margin: 0 auto;
+  border-bottom: 5px solid #9B805D;
+  width: 850px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.center-member-profile-navboard-ul{
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+  position: relative;
+  z-index: 0;
+}
+
+.center-member-profile-navboard-ul li{
+  margin: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* 페이지선택 */
+#choice {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #9B805D;
+  transform: translate(-30px, 15px);
+  position: relative;
+  z-index: -1;
+}
+
+/* 쪽지 리스트 영역 */
+.center-member-profile-noteboard-container{
+  margin: 0 auto;
+  width: 800px;
+  /* height: 600px; */
+  /* border: 1px solid black; */
+}
+
+.center-member-profile-noteboard-container ul{
+  list-style: none;
+}
+
+/* 쪽지 목록 */
+.notebox-list-contents {
+  border-bottom: 1px solid #9B805D;
+  display: flex;
+  padding: 20px 0;
+}
+
+.note-status{
+  text-align: center;
+  margin: 30px 0px;
+  width: 8%;
+}
+
+.note-profile-namebox {
+  width: 25%;
+}
+
+.note-profile-name {
+  margin : 10px;
+  text-align: center;
+  align-items: center;
+}
+
+.note-note-content {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+}
+
+.note-title {
+  font-weight: bold;
+  font-size: 20px; 
+}
+
+.note-content {
+  font-size: 18px; 
+  color: #555;
+}
+
+.note-note-date {
+  width: 15%;
+  align-self: center; 
+  font-size: 18px; 
+}
+
+/* 답장/삭제 버튼 */
+.button-box{
+  display: flex;
+  margin-left: 20px;
+}
+
+.button-box button{
+  background-color: #F5EAD9;
+  color: black;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 70px;
+  height: 40px;
+  margin: 20px 5px;
+}
+
+/* 쪽지보내기 버튼 */
+.send-button{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  
+}
+
+.send-button button{
+  background-color: #F5EAD9;
+  color: black;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 80px;
+  height: 50px;
+  margin: 20px 10px;
+}
+
+/* 페이지네이션 */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0 20px 0;
+}
+
+/* 버튼 */
+.pagination button {
+  background-color: #F5EAD9;
+  color: black;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #9B805D;
+  color: white;
+}
+
+button.prev, button.next {
+  font-weight: bold;
+}
