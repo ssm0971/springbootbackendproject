@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>입양메인</title>
-  <link rel="stylesheet" href="../../css/adopt/adopt-protect.css">
+  <link rel="stylesheet" th:href="@{/css/adopt/protect/adopt-protect.css}" />
   <link rel="stylesheet" href="../../css/main/header.css">
   <link rel="stylesheet" href="../../css/main/footer.css">
 </head>
@@ -76,15 +76,9 @@
     <div class="protect-main-size">
       <!-- 입양/임보/후기 게시판 바 -->
       <div class="protect-nav">
-        <a href="../../html/adopt/adopt-adopt.html">
-          <div class="protect-navList">안심입양</div>
-        </a>
-        <a href="../../html/adopt/adopt-protect.html">
-          <div class="protect-navList">임시보호</div>
-        </a>
-        <a href="../../html/adopt/adopt-review.html">
-          <div class="protect-navList">후기</div>
-        </a>
+          <div class="protect-navList" id="adoptPage">안심입양</div>
+          <div class="protect-navList" id="protectPage">임시보호</div>
+          <div class="protect-navList" id="reviewPage">후기</div>
       </div>
       <!-- 안심입양 소제목 -->
       <div class="protect-title1">
@@ -266,7 +260,7 @@
 </footer>
 
 <script defer src="../../js/main/header.js"></script>
-
+<script defer th:src="@{/js/adopt/protect/adopt-protect.js}"></script>
 
 
 </html>

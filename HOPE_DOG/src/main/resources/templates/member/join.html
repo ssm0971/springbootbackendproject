@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/member/join.css}">
+</head>
+<body>
+<header th:replace="~{fragment/header :: header}"></header>
+
+<div class="container">
+    <h1>회원가입</h1>
+    <form id="signupForm" th:action="@{/member/join}" method="post">
+        <div class="form-group">
+            <label for="memberName">이름 <span class="required">*</span></label>
+            <input type="text" id="memberName" name="memberName" required>
+            <span class="error-message" id="name-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="memberNickname">닉네임 <span class="required">*</span></label>
+            <div class="input-button-group">
+                <input type="text" id="memberNickname" name="memberNickname" required>
+                <button type="button" id="nicknameCheck">중복 확인</button>
+            </div>
+            <span class="error-message" id="nickname-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>성별 <span class="required">*</span></label>
+            <div class="gender-buttons">
+                <button type="button" class="gender-btn" data-gender="M">남</button>
+                <button type="button" class="gender-btn" data-gender="F">여</button>
+            </div>
+            <input type="hidden" id="memberGender" name="memberGender" required>
+            <span class="error-message" id="gender-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="memberId">아이디 <span class="required">*</span></label>
+            <input type="text" id="memberId" name="memberId" required>
+            <span class="error-message" id="userid-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="memberPw">비밀번호 <span class="required">*</span></label>
+            <input type="password" id="memberPw" name="memberPw" required>
+            <span class="error-message" id="password-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="passwordConfirm">비밀번호 확인 <span class="required">*</span></label>
+            <input type="password" id="passwordConfirm" required>
+            <span class="error-message" id="passwordConfirm-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="memberPhoneNumber">연락처 <span class="required">*</span></label>
+            <div class="input-button-group">
+                <input type="tel" id="memberPhoneNumber" name="memberPhoneNumber" required>
+                <button type="button" id="phoneVerify">인증번호 발송</button>
+            </div>
+            <span class="error-message" id="phone-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="phoneVerifyCode">연락처 인증번호 <span class="required">*</span></label>
+            <div class="input-button-group">
+                <input type="text" id="phoneVerifyCode" required>
+                <button type="button" id="phoneVerifyConfirm">연락처 인증</button>
+            </div>
+            <span class="error-message" id="phoneVerifyCode-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="memberEmail">이메일 <span class="required">*</span></label>
+            <div class="input-button-group">
+                <input type="email" id="memberEmail" name="memberEmail" required>
+                <button type="button" id="emailCheck">중복 확인</button>
+            </div>
+            <span class="error-message" id="email-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="memberZipcode">우편번호 <span class="required">*</span></label>
+            <div class="input-button-group">
+                <input type="text" id="memberZipcode" name="memberZipcode" required readonly>
+                <button type="button" id="addressSearch">우편번호 찾기</button>
+            </div>
+            <span class="error-message" id="zipcode-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="memberAddress">주소 <span class="required">*</span></label>
+            <input type="text" id="memberAddress" name="memberAddress" required readonly>
+            <span class="error-message" id="address-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="memberDetailAddress">상세주소</label>
+            <input type="text" id="memberDetailAddress" name="memberDetailAddress">
+            <span class="error-message" id="detailAddress-error"></span>
+        </div>
+
+        <!-- 숨겨진 필드들 -->
+        <input type="hidden" name="memberTwoFactorEnabled" value="N">
+        <input type="hidden" name="memberStatus" value="1">
+        <input type="hidden" name="memberLoginStatus" value="HOPEDOG">
+
+        <div class="button-group">
+            <button type="button" id="cancelBtn">취소</button>
+            <button type="submit" id="submitBtn">확인</button>
+        </div>
+    </form>
+</div>
+
+<!-- 다음 우편번호 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script th:src="@{/js/member/join.js}"></script>
+</body>
+</html>

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>임시보호 신청</title>
-  <link rel="stylesheet" href="../../css/adopt/adopt-protectrequest.css">
+  <link rel="stylesheet" th:href="@{/css/adopt/protect/adopt-protectrequest.css}" />
   <link rel="stylesheet" href="../../css/main/header.css">
   <link rel="stylesheet" href="../../css/main/footer.css">
 </head>
@@ -76,15 +76,9 @@
     <div class="protectrequest-main-size">
       <!-- 입양/임보/후기 게시판 바 -->
       <div class="protectrequest-nav">
-        <a href="../../html/adopt/adopt-adopt.html">
-          <div class="protectrequest-navList">안심입양</div>
-        </a>
-        <a href="../../html/adopt/adopt-protect.html">
-          <div class="protectrequest-navList">임시보호</div>
-        </a>
-        <a href="../../html/adopt/adopt-review.html">
-          <div class="protectrequest-navList">후기</div>
-        </a>
+        <div class="protectrequest-navList" id="adoptPage">안심입양</div>
+        <div class="protectrequest-navList" id="protectPage">임시보호</div>
+        <div class="protectrequest-navList" id="reviewPage">후기</div>
       </div>
 
       <!-- 입양신청 글 등록 -->

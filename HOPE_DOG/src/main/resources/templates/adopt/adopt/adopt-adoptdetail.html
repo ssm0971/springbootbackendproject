@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>안심입양 글 상세</title>
-  <link rel="stylesheet" href="../../css/adopt/adopt-adoptdetail.css">
+  <link rel="stylesheet" th:href="@{/css/adopt/adopt/adopt-adoptdetail.css}" />
   <link rel="stylesheet" href="../../css/main/header.css">
   <link rel="stylesheet" href="../../css/main/footer.css">
 </head>
@@ -76,15 +76,9 @@
     <div class="adopt-main-size">
       <!-- 입양/임보/후기 게시판 바 -->
       <div class="adopt-nav">
-        <a href="../../html/adopt/adopt-adopt.html">
-          <div class="adopt-navList">안심입양</div>
-        </a>
-        <a href="../../html/adopt/adopt-protection.html">
-          <div class="adopt-navList">임시보호</div>
-        </a>
-        <a href="../../html/adopt/adopt-review.html">
-          <div class="adopt-navList">후기</div>
-        </a>
+        <div class="adopt-navList" id="adoptPage">안심입양</div>
+        <div class="adopt-navList" id="protectPage">임시보호</div>
+        <div class="adopt-navList" id="reviewPage">후기</div>
       </div>
 
       <!-- 제목/작성자/등록일 크기 -->
@@ -197,7 +191,7 @@
 </footer>
 
 <script defer src="../../js/main/header.js"></script>
-<script defer src="../../js/adopt/adopt-adoptdetail.js"></script>
+<script defer th:src="@{/js/adopt/adopt/adopt-adoptdetail.js}"></script>
 
 
 

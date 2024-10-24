@@ -33,6 +33,10 @@ main{
   text-align: center;
 }
 
+.review-navList:hover {
+  cursor: pointer; /* 마우스 오버 시 커서를 포인터로 변경 */
+}
+
 .review-wirtebanner{
   background-color: #F5EAD9;
   width: 1080px;

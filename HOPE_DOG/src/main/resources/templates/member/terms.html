@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>약관동의</title>
+    <link rel="stylesheet" th:href="@{/css/member/terms.css}" />
+</head>
+<body>
+
+<div class="container">
+    <h1>회원 약관동의</h1>
+    <form id="termsForm" th:action="@{/member/join}" method="get">
+        <div class="term-item">
+            <label>
+                <input type="checkbox" id="allAgree"> 전체 동의하기
+            </label>
+        </div>
+        <div class="term-item">
+            <label>
+                <input type="checkbox" name="agreement" required> [필수] 이용약관 동의
+            </label>
+            <div class="term-content" th:text="${terms.serviceTerms}">
+                <!-- 이용약관 내용 -->
+            </div>
+        </div>
+        <div class="term-item">
+            <label>
+                <input type="checkbox" name="agreement" required> [필수] 개인정보 수집 및 이용 동의
+            </label>
+            <div class="term-content" th:text="${terms.privacyTerms}">
+                <!-- 개인정보 수집 및 이용 동의 내용 -->
+            </div>
+        </div>
+        <div class="term-item">
+            <label>
+                <input type="checkbox" name="optionalAgreement"> [선택] 이메일 수신 동의
+            </label>
+        </div>
+        <div class="button-group">
+            <button type="button" id="cancelBtn">취소</button>
+            <button type="submit" id="nextBtn" disabled>다음</button>
+        </div>
+        <input type="hidden" name="emailAgreed" id="emailAgreed" value="false">
+    </form>
+</div>
+<script th:src="@{/js/member/terms.js}"></script>
+</body>
+</html>

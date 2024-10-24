@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인페이지</title>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/member/login.css}" />
+    <script defer th:src="@{/js/member/login.js}"></script>
+</head>
+<body>
+<header class="header" th:replace="~{/fragment/header :: header}"></header>
+<main class="main-content">
+    <div class="login-container">
+        <h1>회원 로그인</h1>
+        <form class="login-form" th:action="@{/member/login}" method="post">
+            <div class="input-group">
+                <input type="text" id="memberId" name="memberId" placeholder="아이디" required>
+                <p class="error-message" id="username-error"></p>
+            </div>
+            <div class="input-group">
+                <input type="password" id="memberPw" name="memberPw" placeholder="비밀번호" required>
+                <p class="error-message" id="password-error"></p>
+            </div>
+            <div class="forgot-password">
+                <a th:href="@{/member/find-id}">아이디 찾기 /</a>
+                <a th:href="@{/member/find-pw}">비밀번호 찾기 </a>
+            </div>
+            <button type="submit" class="login-btn">회원 로그인</button>
+        </form>
+        <div class="social-login">
+            <p>소셜 로그인</p>
+            <div class="social-buttons">
+                <button class="social-btn kakao">
+                    <a href="https://kauth.kakao.com/oauth/authorize">
+                        <img th:src="@{/img/login-sns-kakao.png}" alt="카카오 로그인">
+                    </a>
+                </button>
+                <button class="social-btn naver">
+                    <a href="https://nid.naver.com/nidlogin.login">
+                        <img th:src="@{/img/login-sns-naver.png}" alt="네이버 로그인">
+                    </a>
+                </button>
+            </div>
+        </div>
+        <div class="signup-link">
+            <span>회원이 아니세요? =></span>
+            <a th:href="@{/member/terms}">희멍의집 회원가입</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>

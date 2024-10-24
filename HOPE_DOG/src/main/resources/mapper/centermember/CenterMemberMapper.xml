@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.centermember.CenterMemberMapper">
+    <!-- 센터 회원 등록 -->
+    <insert id="insertCenterMember" parameterType="CenterMemberDTO">
+        <!-- 회원 번호 생성 -->
+        <selectKey keyProperty="centerMemberNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_CENTER_MEMBER.nextVal FROM DUAL
+        </selectKey>
+
+        <!-- 회원 정보 등록 -->
+        INSERT INTO TBL_CENTER_MEMBER (CENTER_MEMBER_NO,CENTER_MEMBER_ID,CENTER_MEMBER_NAME,CENTER_MEMBER_PW,CENTER_MEMBER_ZIPCODE,
+        CENTER_MEMBER_EMAIL,CENTER_MEMBER_ADDRESS,CENTER_MEMBER_DETAIL_ADDRESS,CENTER_MEMBER_PHONE_NUMBER,TBL_CENTER_MEMBER_STATUS
+        ) VALUES ( #{centerMemberNo}, #{centerMemberId}, #{centerMemberName},  #{centerMemberPw}, #{centerMemberZipcode},
+        #{centerMemberEmail},  #{centerMemberAddress}, #{centerMemberDetailAddress}, #{centerMemberPhoneNumber}, 'N')
+    </insert>
+
+
+    <!-- 센터 파일 등록 -->
+    <insert id="insertCenterFile" parameterType="CenterFileDTO">
+        <selectKey keyProperty="centerFileNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_CENTER_FILE.nextVal FROM DUAL
+        </selectKey>
+
+        INSERT INTO TBL_CENTER_FILE (CENTER_FILE_NO,CENTER_FILE_NAME,CENTER_FILE_UUID,CENTER_FILE_PATH,CENTER_MEMBER_NO
+        ) VALUES (#{centerFileNo}, #{centerFileName}, #{centerFileUuid}, #{centerFilePath}, #{centerMemberNo})
+    </insert>
+
+    <!-- 로그인 정보 조회 -->
+    <select id="selectCenterLoginInfo" resultType="CenterMemberSessionDTO">
+        SELECT CENTER_MEMBER_NO,CENTER_MEMBER_ID
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_ID = #{centerId} AND CENTER_MEMBER_PW = #{centerPw}
+    </select>
+
+    <!-- 이메일 중복 체크 -->
+    <select id="checkCenterEmail" resultType="int">
+        SELECT COUNT(*)
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_EMAIL = #{centerMemberEmail}
+    </select>
+
+    <!-- 아이디 중복 체크 -->
+    <select id="checkCenterId" resultType="int">
+        SELECT COUNT(*)
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_ID = #{centerMemberId}
+    </select>
+
+
+
+</mapper>

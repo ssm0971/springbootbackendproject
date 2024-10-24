@@ -26,6 +26,10 @@ main{
   border-bottom: solid 2px #9B805D;
 }
 
+.adopt-navList:hover {
+  cursor: pointer; /* 마우스 오버 시 커서를 포인터로 변경 */
+}
+
 .adopt-navList{
   font-size: 18px;
   font-weight: bold;

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>안심입양 글목록</title>
-  <link rel="stylesheet" href="../../css/adopt/adopt-main.css">
+  <link rel="stylesheet" th:href="@{/css/adopt/adopt-main.css}" />
   <link rel="stylesheet" href="../../css/main/header.css">
   <link rel="stylesheet" href="../../css/main/footer.css">
 </head>
@@ -76,15 +76,9 @@
     <div class="adopt-main-size">
       <!-- 입양/임보/후기 게시판 바 -->
       <div class="adopt-nav">
-        <a href="../../html/adopt/adopt-adopt.html">
-          <div class="adopt-navList">안심입양</div>
-        </a>
-        <a href="../../html/adopt/adopt-protect.html">
-          <div class="adopt-navList">임시보호</div>
-        </a>
-        <a href="../../html/adopt/adopt-review.html">
-          <div class="adopt-navList">후기</div>
-        </a>
+          <div class="adopt-navList" id="adoptPage">안심입양</div>
+          <div class="adopt-navList" id="protectPage">임시보호</div>
+          <div class="adopt-navList" id="reviewPage">후기</div>
       </div>
 
       <!-- 입양메인배너1 -->
@@ -101,99 +95,17 @@
 
       <!-- 입양메인배너1 -->
       <div class="adopt-banner3">
-        <div><img src="../../img/adopt-main.jpg" width="900px" height="550px"></div>
+        <div><img th:src="@{/img/adopt-main.jpg}" width="900px" height="550px"></div>
         <div class="adopt-banner3-notice">입양혜택 안내</div>
         <div class="adopt-banner3-inner">
-          <a href="../../html/adopt/adopt-adoptdetail.html">
-            <div class="adopt-banner3-list">
-              <div class="adopt-banner3-cate">[안심입양]</div>
-              <div class="adopt-banner3-title">말티즈 여아 3세 데려가주세요</div>
-              <div class="adopt-banner3-nickname">에드워드리</div>
-              <div class="adopt-banner3-date">2024-10-27</div>
-              <div class="adopt-banner3-status">[진행중]</div>
-            </div>
-          </a>
-          <a href="../../html/adopt/adopt-adoptdetail.html">
-            <div class="adopt-banner3-list">
-              <div class="adopt-banner3-cate">[안심입양]</div>
-              <div class="adopt-banner3-title">말티즈 여아 3세 데려가주세요</div>
-              <div class="adopt-banner3-nickname">에드워드리</div>
-              <div class="adopt-banner3-date">2024-10-27</div>
-              <div class="adopt-banner3-status">[진행중]</div>
-            </div>
-          </a>
-          <a href="../../html/adopt/adopt-adoptdetail.html">
-            <div class="adopt-banner3-list">
-              <div class="adopt-banner3-cate">[안심입양]</div>
-              <div class="adopt-banner3-title">말티즈 여아 3세 데려가주세요</div>
-              <div class="adopt-banner3-nickname">에드워드리</div>
-              <div class="adopt-banner3-date">2024-10-27</div>
-              <div class="adopt-banner3-status">[진행중]</div>
-            </div>
-          </a>
-          <a href="../../html/adopt/adopt-adoptdetail.html">
-            <div class="adopt-banner3-list">
-              <div class="adopt-banner3-cate">[안심입양]</div>
-              <div class="adopt-banner3-title">말티즈 여아 3세 데려가주세요</div>
-              <div class="adopt-banner3-nickname">에드워드리</div>
-              <div class="adopt-banner3-date">2024-10-27</div>
-              <div class="adopt-banner3-status">[진행중]</div>
-            </div>
-          </a>
-          <a href="../../html/adopt/adopt-adoptdetail.html">
-            <div class="adopt-banner3-list">
-              <div class="adopt-banner3-cate">[안심입양]</div>
-              <div class="adopt-banner3-title">말티즈 여아 3세 데려가주세요</div>
-              <div class="adopt-banner3-nickname">에드워드리</div>
-              <div class="adopt-banner3-date">2024-10-27</div>
-              <div class="adopt-banner3-status">[진행중]</div>
-            </div>
-          </a>
-          <a href="../../html/adopt/adopt-adoptdetail.html">
-            <div class="adopt-banner3-list">
-              <div class="adopt-banner3-cate">[안심입양]</div>
-              <div class="adopt-banner3-title">말티즈 여아 3세 데려가주세요</div>
-              <div class="adopt-banner3-nickname">에드워드리</div>
-              <div class="adopt-banner3-date">2024-10-27</div>
-              <div class="adopt-banner3-status">[진행중]</div>
-            </div>
-          </a>
-          <a href="../../html/adopt/adopt-adoptdetail.html">
-            <div class="adopt-banner3-list">
-              <div class="adopt-banner3-cate">[안심입양]</div>
-              <div class="adopt-banner3-title">말티즈 여아 3세 데려가주세요</div>
-              <div class="adopt-banner3-nickname">에드워드리</div>
-              <div class="adopt-banner3-date">2024-10-27</div>
-              <div class="adopt-banner3-status">[진행중]</div>
-            </div>
-          </a>
-          <a href="../../html/adopt/adopt-adoptdetail.html">
-            <div class="adopt-banner3-list">
-              <div class="adopt-banner3-cate">[안심입양]</div>
-              <div class="adopt-banner3-title">말티즈 여아 3세 데려가주세요</div>
-              <div class="adopt-banner3-nickname">에드워드리</div>
-              <div class="adopt-banner3-date">2024-10-27</div>
-              <div class="adopt-banner3-status">[진행중]</div>
-            </div>
-          </a>
-          <a href="../../html/adopt/adopt-adoptdetail.html">
-            <div class="adopt-banner3-list">
-              <div class="adopt-banner3-cate">[안심입양]</div>
-              <div class="adopt-banner3-title">말티즈 여아 3세 데려가주세요</div>
-              <div class="adopt-banner3-nickname">에드워드리</div>
-              <div class="adopt-banner3-date">2024-10-27</div>
-              <div class="adopt-banner3-status">[진행중]</div>
-            </div>
-          </a>
-          <a href="../../html/adopt/adopt-adoptdetail.html">
-            <div class="adopt-banner3-list">
-              <div class="adopt-banner3-cate">[안심입양]</div>
-              <div class="adopt-banner3-title">말티즈 여아 3세 데려가주세요</div>
-              <div class="adopt-banner3-nickname">에드워드리</div>
-              <div class="adopt-banner3-date">2024-10-27</div>
-              <div class="adopt-banner3-status">[진행중]</div>
-            </div>
-          </a>
+          <div th:each="adopt : ${adoptList}" class="adopt-banner3-list">
+            <div class="adopt-banner3-cate">[안심입양]</div>
+            <div class="adopt-banner3-title" th:text="${adopt.adoptTitle}"></div>
+            <div class="adopt-banner3-nickname" th:text="${adopt.centerMemberNo}"></div>
+            <div class="adopt-banner3-date" th:text="${#dates.format(adopt.adoptRegidate, 'yyyy-MM-dd')}"></div>
+            <div class="adopt-banner3-status" th:if="${adopt.adoptStatus == 'T'}" th:text="[모집중]"></div>
+            <div class="adopt-banner3-status" th:if="${adopt.adoptStatus != 'T'}" th:text="[마감]"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -208,5 +120,6 @@
 </footer>
 
 <script defer src="../../js/main/header.js"></script>
+<script defer th:src="@{/js/adopt/adopt-main.js}"></script>
 
 </html>

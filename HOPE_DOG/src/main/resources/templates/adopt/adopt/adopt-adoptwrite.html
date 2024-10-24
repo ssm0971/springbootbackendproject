@@ -14,7 +14,7 @@
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
 
-  <link rel="stylesheet" href="../../css/adopt/adopt-adopwrite.css">
+  <link rel="stylesheet" th:href="@{/css/adopt/adopt/adopt-adoptwrite.css}" />
   <link rel="stylesheet" href="../../css/main/header.css">
   <link rel="stylesheet" href="../../css/main/footer.css">
 </head>
@@ -85,15 +85,9 @@
     <div class="adopt-main-size">
       <!-- 입양/임보/후기 게시판 바 -->
       <div class="adopt-nav">
-        <a href="../../html/adopt/adopt-adopt.html">
-          <div class="adopt-navList">안심입양</div>
-        </a>
-        <a href="../../html/adopt/adopt-protect.html">
-          <div class="adopt-navList">임시보호</div>
-        </a>
-        <a href="../../html/adopt/adopt-review.html">
-          <div class="adopt-navList">후기</div>
-        </a>
+        <div class="adopt-navList" id="adoptPage">안심입양</div>
+        <div class="adopt-navList" id="protectPage">임시보호</div>
+        <div class="adopt-navList" id="reviewPage">후기</div>
       </div>
 
       <!-- 입양신청 글 등록 -->
@@ -110,6 +104,16 @@
             <div class="adopt-write-subtitle">*입양 기한</div>
             시작일 : 　<input class="adopt-write-period" type="date" name="start-date">　　
             종료일 : 　<input class="adopt-write-period" type="date" name="end-date">
+          </div>
+          <!-- 이름입력 -->
+          <div class="adopt-write-box">
+            <div class="adopt-write-subtitle">*이름</div>
+            <input class="adopt-write-breed" type="text" id="nameInput" onblur="checkNameInput()">　　
+          </div>
+          <!-- 이름 미입력 에러메세지 -->
+          <div class="breadError">
+            <div class="adopt-write-subtitle" id="nameError2" style="display: none;"></div>
+            <div id="nameError" style="color: red; display: none;">이름을 입력해주세요</div>
           </div>
           <!-- 견종입력 -->
           <div class="adopt-write-box">
@@ -190,7 +194,7 @@
 </footer>
 
 <script defer src="../../js/main/header.js"></script>
-<script defer src="../../js/adopt/adopt-adoptwrite.js"></script>
+<script defer th:src="@{/js/adopt/adopt/adopt-adoptwrite.js}"></script>
 
 
 

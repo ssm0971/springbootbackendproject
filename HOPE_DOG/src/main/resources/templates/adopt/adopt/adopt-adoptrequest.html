@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>안심입양 신청</title>
-  <link rel="stylesheet" href="../../css/adopt/adopt-adoptrequest.css">
+  <link rel="stylesheet" th:href="@{/css/adopt/adopt/adopt-adoptrequest.css}" />
   <link rel="stylesheet" href="../../css/main/header.css">
   <link rel="stylesheet" href="../../css/main/footer.css">
 </head>
@@ -76,13 +76,13 @@
     <div class="adoptrequest-main-size">
       <!-- 입양/임보/후기 게시판 바 -->
       <div class="adoptrequest-nav">
-        <div class="adoptrequest-navList">안심입양</div>
-        <div class="adoptrequest-navList">임시보호</div>
-        <div class="adoptrequest-navList">후기</div>
+        <div class="adoptrequest-navList" id="adoptPage">안심입양</div>
+        <div class="adoptrequest-navList" id="protectPage">임시보호</div>
+        <div class="adoptrequest-navList" id="reviewPage">후기</div>
       </div>
 
       <!-- 입양신청 글 등록 -->
-      <div class="adoptrequest-wirtebanner">안심입양 신청</div>
+      <div class="adoptrequest-writebanner">안심입양 신청</div>
 
       <br>
 
@@ -436,8 +436,8 @@
 </footer>
 
 <script defer src="../../js/main/header.js"></script>
-<script defer src="../../js/adopt/adopt-adoptrequest.js"></script>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script defer th:src="@{/js/adopt/adopt/adopt-request.js}"></script>
+<script th:src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="../../js/member/center-signup.js"></script>
 
 

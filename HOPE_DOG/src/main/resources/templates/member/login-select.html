@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 선택</title>
+  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+  <link rel="stylesheet" th:href="@{/css/member/login-select.css}">
+</head>
+<body>
+<header th:replace="~{fragment/header :: header}"></header>
+<section class="login-section">
+  <h2>로 그 인</h2>
+  <p>회원을 선택해주세요</p>
+  <div class="login-buttons">
+    <a th:href="@{/member/login}" class="login-link">
+      <button class="login-btn beige-btn">일반 로그인</button>
+    </a>
+    <a th:href="@{/member/center-login}" class="login-link">
+      <button class="login-btn brown-btn">센터 로그인</button>
+    </a>
+  </div>
+</section>
+</body>
+</html>

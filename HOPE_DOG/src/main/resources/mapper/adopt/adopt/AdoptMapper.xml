@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.adopt.adopt.AdoptMapper">
+    <select id="adoptMain" resultType="AdoptMainDTO">
+    <![CDATA[
+        SELECT ADOPT_NO, ADOPT_TITLE, ADOPT_REGIDATE, CENTER_MEMBER_NO, ADOPT_STATUS
+        FROM (
+                 SELECT ADOPT_NO, ADOPT_TITLE, ADOPT_REGIDATE, CENTER_MEMBER_NO, ADOPT_STATUS,
+                        ROW_NUMBER() OVER (ORDER BY ADOPT_REGIDATE DESC) AS row_num
+                 FROM TBL_ADOPT
+             )
+        WHERE row_num < 11
+        ]]>
+</select>
+</mapper>

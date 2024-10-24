@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 선택페이지</title>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/member/join-select.css}">
+</head>
+<body>
+<header class="header" th:replace="~{/fragment/header :: header}"></header>
+<section class="signup-section">
+    <h2>회원가입</h2>
+    <p>회원을 선택해주세요</p>
+    <div class="signup-buttons">
+        <a th:href="@{/member/terms}" class="login-link">
+            <button class="signup-btn beige-btn">일반 회원가입</button>
+        </a>
+        <a th:href="@{/member/center-terms}" class="login-link">
+            <button class="signup-btn brown-btn">센터 회원가입</button>
+        </a>
+    </div>
+</section>
+</body>
+</html>

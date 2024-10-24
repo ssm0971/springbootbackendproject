@@ -1,3 +1,17 @@
+function checkNameInput() {
+  const inputField = document.getElementById('nameInput');
+  const nameError = document.getElementById('nameError');
+  const nameError2 = document.getElementById('nameError2');
+
+  if (inputField.value.trim() === '') {
+    nameError.style.display = 'block'; // 메시지 표시
+    nameError2.style.display = 'block'; // 메시지 표시
+  } else {
+    nameError.style.display = 'none'; // 메시지 숨김
+    nameError2.style.display = 'none'; // 메시지 숨김
+  }
+}
+
 function checkBreedInput() {
   const inputField = document.getElementById('breedInput');
   const breadError = document.getElementById('breadError');
@@ -75,3 +89,25 @@ $(function () {
     ]
   });
 });
+
+
+{
+  let adoptPageBtn = document.getElementById('adoptPage');
+  adoptPageBtn.addEventListener('click', function(){
+    location.href='/adopt/adopt';
+  });
+}
+
+{
+  let protectPageBtn = document.getElementById('protectPage');
+  protectPageBtn.addEventListener('click', function(){
+    location.href='/adopt/protect';
+  });
+}
+
+{
+  let reviewPageBtn = document.getElementById('reviewPage');
+  reviewPageBtn.addEventListener('click', function(){
+    location.href='/adopt/review';
+  });
+}

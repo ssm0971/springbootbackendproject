@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 완료</title>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/member/joinOk.css}">
+</head>
+<body>
+<header th:replace="~{fragment/header :: header}"></header>
+
+<div class="container">
+    <div class="content">
+        <h1><span th:text="${memberNickname}">회원</span>님의 회원가입을 환영합니다!</h1>
+        <a th:href="@{/member/login}" class="btn">로그인 하러가기</a>
+    </div>
+</div>
+</body>
+</html>

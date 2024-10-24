@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메인페이지</title>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/main/main.css}">
+    <script defer th:src="@{/js/main/main.js}"></script>
+</head>
+<body>
+<div class="page-container">
+    <!-- 헤더를 main 밖으로 이동 -->
+    <header th:replace="~{fragment/header :: header}"></header>
+
+    <main>
+        <section class="first-section">
+            <div class="first-section-content">
+                <h1>희멍의 집에 오신것을 환영합니다!</h1>
+            </div>
+        </section>
+
+        <section class="donation-options">
+            <div class="donation-cards">
+                <div class="donation-card">
+                    <div class="card-content">
+                        <h3>궁금한점이 있다면? </h3>
+                        <h2>커뮤니티</h2>
+                        <p>커뮤니티에서 자유롭게 질문하며 소통하세요!</p>
+                        <p>희멍의집 회원님들이 친절하게 답변해드릴겁니다!</p>
+                        <a th:href="@{/commu/commu-main-guest}" class="more-link">더 알아보기 →</a>
+                    </div>
+                </div>
+                <div class="donation-card">
+                    <div class="card-content">
+                        <h3>센터에 기부하고 싶다면?</h3>
+                        <h2>기부게시판</h2>
+                        <p>기부게시판에서 센터에 기부를 할 수 있습니다.</p>
+                        <p>유기동물을 위해 기부할동에 참여해주세요!</p>
+                        <a th:href="@{/donation/donation-main-guest}" class="more-link">더 알아보기 →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section3">
+            <div class="section3-content">
+                <h2>함께 유기동물 문제를 해결해요!</h2>
+                <p class="section3-description">우리는 유기동물이 새 가족을 찾기 전까지 안락한 환경을 제공하는데 도움을 주고 있어요</p>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-text">
+                            <h3>유기동물을 구조하고 보호하는데는 많은 비용이 들어가요.</h3>
+                            <p>구조 장비, 보호 시설, 사료/간식, 약품, 치료비, 보호소 직원 인건비, 봉사자가 필요해요.</p>
+                        </div>
+                        <img th:src="@{/img/main-card.png}" alt="강아지 이미지" class="info-image">
+                    </div>
+                    <div class="info-card">
+                        <div class="info-text">
+                            <h3>보호소의 유기동물은 스트레스 관리도 필요하다는 사실, 알고 계신가요?</h3>
+                            <p>장난감과 안락한 방석, 훈련 그리고 산책이 필요해요.</p>
+                        </div>
+                        <img th:src="@{/img/main-card2.png}" alt="강아지 이미지" class="info-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section4">
+            <div class="section4-content">
+                <h2>어떻게 참여하나요?</h2>
+                <div class="participation-cards">
+                    <div class="participation-card">
+                        <h3>봉사게시판에서 신청할 수 있어요.</h3>
+                        <p>유기동물에게 관심을 가져주세요!</p>
+                        <p>봉사자가 되어 유기동물에게 함께하는 시간을 선물해주세요.</p>
+                        <p class="note">※봉사 시간 인정 가능</p>
+                        <a th:href="@{/volun/volun-main}" class="more-link">더 알아보기 →</a>
+                    </div>
+                    <div class="participation-card">
+                        <h3>유기동물의 새로운 가족이 되어주세요.</h3>
+                        <p>임시보호 및 입양을 통해서 임시동물들의 새로운 가족이 되실 수 있습니다.</p>
+                        <a th:href="@{/adopt/adopt-adopt}" class="more-link">더 알아보기 →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section5">
+            <div class="section5-content">
+                <h2>봉사 통계</h2>
+                <div class="chart-container">
+                    <div class="chart-item">
+                        <h3>봉사 통계 제목1</h3>
+                        <img th:src="@{/img/main-cart1.png}" alt="봉사 통계 차트1" class="chart-image">
+                    </div>
+                    <div class="chart-item">
+                        <h3>봉사 통계 제목2</h3>
+                        <img th:src="@{/img/main-cart2.png}" alt="봉사 통계 차트2" class="chart-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section6">
+            <div class="section6-content">
+                <h2>봉사 활동</h2>
+                <p class="section-description">봉사자분들과 이렇게 봉사하고 있어요.</p>
+                <div class="donation-grid">
+                    <div class="donation-item" th:each="month : ${#numbers.sequence(9, 1)}">
+                        <a th:href="${month == 9} ? @{/volun/volun-volundetail} : '#'" class="donation-link">
+                            <img th:src="@{/img/main-dum{imgNum}.png(imgNum=${month % 3 == 0 ? 3 : month % 3})}"
+                                 th:alt="|2024년 ${month}월 봉사활동|"
+                                 class="donation-image">
+                            <p class="donation-date" th:text="|2024년 ${month}월 봉사|"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="chat-container">
+        <div class="chat-icon" id="chatIcon" role="button" aria-label="채팅 시작하기">
+            <div class="chat-bubble"></div>
+        </div>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h3>무엇을 도와드릴까요?</h3>
+                <button class="close-btn" id="closeChat">X</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <!-- 메세지 -->
+            </div>
+            <div class="chat-questions" id="chatQuestions">
+                <!-- 질문 -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

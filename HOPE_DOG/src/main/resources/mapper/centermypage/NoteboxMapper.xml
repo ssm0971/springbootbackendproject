@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.centermypage.notebox.NoteBoxMapper">
+
+    <select id="selectSendList" parameterType="Long" resultType="NoteboxSendListDTO">
+        SELECT NOTEBOX_SEND_NO, NOTEBOX_SEND_TITLE, NOTEBOX_SEND_CONTENT, NOTEBOX_SEND_REGIDATE, NOTEBOX_SEND_S, NOTEBOX_SEND_R
+        FROM TBL_NOTEBOX_SEND
+        WHERE NOTEBOX_SEND_R = #{centerMemberNo}
+    </select>
+
+</mapper>
