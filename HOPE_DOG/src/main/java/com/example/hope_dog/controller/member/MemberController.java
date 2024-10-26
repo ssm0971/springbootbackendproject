@@ -110,6 +110,7 @@ public class MemberController {
      */
     @GetMapping("/login-select")
     public String loginSelect() {
+        log.info("로그인 선택 페이지 요청");
         return "member/login-select";
     }
 
@@ -120,7 +121,7 @@ public class MemberController {
     @GetMapping("/join-select")
     public String joinSelect() {
         log.info("회원가입 선택 페이지 요청");
-        return "member/join-select";  // templates/member/join-select.html을 찾음
+        return "member/join-select";
     }
 
 
@@ -292,12 +293,10 @@ public class MemberController {
      * 이메일 중복 체크
      */
     @GetMapping("/check-email")
-    public ResponseEntity<Map<String, Boolean>> checkEmail(
-            @RequestParam("email") String email
-    ) {
-        boolean isAvailable = memberService.checkEmail(email);
-        Map<String, Boolean> response = Map.of("available", isAvailable);
-        return ResponseEntity.ok(response);
+    @ResponseBody
+    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam(name = "email") String email) {
+        boolean available = memberService.checkEmail(email);
+        return ResponseEntity.ok(Map.of("available", available));
     }
 
 }

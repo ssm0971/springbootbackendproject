@@ -2,237 +2,153 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>받은 쪽지함</title>
-  <link rel="stylesheet" th:href="@{/css/centermypage/center-mypage-notebox.css}">
-  <link rel="stylesheet" th:href="@{/css/main/header.css}">
-  <link rel="stylesheet" th:href="@{/css/main/footer.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>받은 쪽지함</title>
+    <link rel="stylesheet" th:href="@{/css/centermypage/center-mypage-notebox.css}">
+    <link rel="stylesheet" th:href="@{/css/main/header.css}">
+    <link rel="stylesheet" th:href="@{/css/main/footer.css}">
 </head>
 
 <body>
-  <header class="header">
+<header class="header">
     <div class="logo-nav">
-      <div class="logo">
-        <a href="../../html/main/main.html">
-          <img src="../../img/header-logo.png" alt="로고이미지">
-        </a>
-      </div>
-      <nav>
-        <ul class="nav-items">
-          <li class="nav-item">
-            <a href="../../dogmap/dogmap.html">유기견 보호소</a>
-            <div class="dropdown-content">
-              <a href="../../dogmap/dogmap.html">유기견 보호소</a>
-            </div>
-          </li>
-          <ul class="nav-items">
-            <li class="nav-item">
-              <a href="../volun/volun-main.html">봉사</a>
-              <div class="dropdown-content">
-                <a href="../volun/volun-main.html">봉사 메인</a>
-                <a href="../volun/volun-volun-main.html">봉사 신청</a>
-                <a href="../../html/volun/volun-car-main-guest.html">카풀</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="../../donation/donation-main-guest.html">기부</a>
-              <div class="dropdown-content">
-                <a href="../../donation/donation-main-guest.html">기부 게시판</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="../../adopt/adopt-main.html">입양</a>
-              <div class="dropdown-content">
-                <a href="../adopt/adopt-adopt.html">안심 입양</a>
-                <a href="../adopt/adopt-protection.html">임시 보호</a>
-                <a href="../adopt/adopt-review.html">후기</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="../commu/comu-main-guest.html">커뮤니티</a>
-              <div class="dropdown-content">
-                <a href="../commu/comu-main-guest.html">자유게시판</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="../../notice/notice-list.html">공지사항</a>
-              <div class="dropdown-content">
-                <a href="../../notice/notice-list.html">공지</a>
-              </div>
-            </li>
-          </ul>
-      </nav>
+        <div class="logo">
+            <a href="../../html/main/main.html">
+                <img src="../../img/header-logo.png" alt="로고이미지">
+            </a>
+        </div>
+        <nav>
+            <ul class="nav-items">
+                <li class="nav-item">
+                    <a href="../../dogmap/dogmap.html">유기견 보호소</a>
+                    <div class="dropdown-content">
+                        <a href="../../dogmap/dogmap.html">유기견 보호소</a>
+                    </div>
+                </li>
+                <ul class="nav-items">
+                    <li class="nav-item">
+                        <a href="../volun/volun-main.html">봉사</a>
+                        <div class="dropdown-content">
+                            <a href="../volun/volun-main.html">봉사 메인</a>
+                            <a href="../volun/volun-volun-main.html">봉사 신청</a>
+                            <a href="../../html/volun/volun-car-main-guest.html">카풀</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../../donation/donation-main-guest.html">기부</a>
+                        <div class="dropdown-content">
+                            <a href="../../donation/donation-main-guest.html">기부 게시판</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../../adopt/adopt-main.html">입양</a>
+                        <div class="dropdown-content">
+                            <a href="../adopt/adopt-adopt.html">안심 입양</a>
+                            <a href="../adopt/adopt-protection.html">임시 보호</a>
+                            <a href="../adopt/adopt-review.html">후기</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../commu/comu-main-guest.html">커뮤니티</a>
+                        <div class="dropdown-content">
+                            <a href="../commu/comu-main-guest.html">자유게시판</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../../notice/notice-list.html">공지사항</a>
+                        <div class="dropdown-content">
+                            <a href="../../notice/notice-list.html">공지</a>
+                        </div>
+                    </li>
+                </ul>
+        </nav>
     </div>
     <div class="user-section">
-      <ul class="user-actions">
-        <li class="user-action"><a href="../member/login-select.html">로그인</a></li>
-        <li class="user-action"><a href="../member/signup-select.html">회원가입</a></li>
-      </ul>
+        <ul class="user-actions">
+            <li class="user-action"><a href="../member/login-select.html">로그인</a></li>
+            <li class="user-action"><a href="../member/signup-select.html">회원가입</a></li>
+        </ul>
     </div>
-  </header>
-  <main>
+</header>
+<main>
     <!-- 마이페이지 목록 -->
     <div class="center-member-profile-navbox">
-      <nav>
-        <ul class="center-member-profile-nav-ul">
-          <li id="profile"><a href="../center-mypage-profile-update.html"> 개인정보수정</a></li>
-          <li id="mywrite"><a href="../center-mypage-writeinfo-my.html"> 작성글조회</a></li>
-          <li id="volunteer"><a href="../center-mypage-volun-list.html"> 봉사</a></li>
-          <li id="adopt"><a href="../center-mypage-adopt-adopt-list.html"> 입양</a></li>
-          <li id="notebox"><a href="center-mypage-notebox-send.html"> 쪽지함</a></li>
-          <div id="choice"></div>
-          <li id="withdrawal"><a href="../center-mypage-withdrawal.html"> 회원탈퇴</a></li>
-        </ul>
-      </nav>
+        <nav>
+            <ul class="center-member-profile-nav-ul">
+                <li id="profile"><a href="../center-mypage-profile-update.html"> 개인정보수정</a></li>
+                <li id="mywrite"><a href="../center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+                <li id="volunteer"><a href="../center-mypage-volun-list.html"> 봉사</a></li>
+                <li id="adopt"><a href="../center-mypage-adopt-adopt-list.html"> 입양</a></li>
+                <li id="notebox"><a href="center-mypage-notebox-send.html"> 쪽지함</a></li>
+                <div id="choice"></div>
+                <li id="withdrawal"><a href="../center-mypage-withdrawal.html"> 회원탈퇴</a></li>
+            </ul>
+        </nav>
     </div>
     <!-- 게시판 제목 -->
     <div class="center-member-profile-navboard">
-      <nav>
-        <ul class="center-member-profile-navboard-ul">
-          <li><a href="center-mypage-notebox-send.html">보낸쪽지함</a></li>
-          <li><a href="./center-mypage-notebox-receive.html">받은쪽지함</a></li>
-          <div id="choice"></div>
-        </ul>
-      </nav>
+        <nav>
+            <ul class="center-member-profile-navboard-ul">
+                <li><a th:href="@{/Notebox/SendList}">보낸쪽지함</a></li>
+                <li><a th:href="@{/Notebox/ReceiveList}">받은쪽지함</a></li>
+                <div id="choice"></div>
+            </ul>
+
+
+        </nav>
     </div>
     <!-- 쪽지 목록 -->
     <div class="center-member-profile-noteboard-container">
-      <ul>
-        <li>
-          <div class="notebox-list-contents">
-            <div class="note-status">
-              안읽음
-            </div>
-            <div class="note-profile-namebox">
-              <div class="note-profile-name">
-                a
-              </div>
-            </div>
-            <div class="note-note-content">
-              <div class="note-title"><b>제목1</b></div>
-              <div class="note-body">내용입니다</div>
-            </div>
-            <div class="note-note-date">
-              2024-10-10
-            </div>
-            <div class="button-box">
-              <button>답장</button>
-              <button>삭제</button>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="notebox-list-contents">
-            <div class="note-status">
-              안읽음
-            </div>
-            <div class="note-profile-namebox">
-              <div class="note-profile-name">
-                b
-              </div>
-            </div>
-            <div class="note-note-content">
-              <div class="note-title"><b>제목2</b></div>
-              <div class="note-body">내용입니다</div>
-            </div>
-            <div class="note-note-date">
-              2024-10-10
-            </div>
-            <div class="button-box">
-              <button>답장</button>
-              <button>삭제</button>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="notebox-list-contents">
-            <div class="note-status">
-              안읽음
-            </div>
-            <div class="note-profile-namebox">
-              <div class="note-profile-name">
-                c
-              </div>
-            </div>
-            <div class="note-note-content">
-              <div class="note-title"><b>제목3</b></div>
-              <div class="note-body">내용입니다</div>
-            </div>
-            <div class="note-note-date">
-              2024-10-10
-            </div>
-            <div class="button-box">
-              <a href="center-mypage-notebox-write.html"><button>답장</button></a>
-              <button>삭제</button>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="notebox-list-contents">
-            <div class="note-status" data-status="false">안읽음</div>
-            <div class="note-profile-namebox">
-              <div class="note-profile-name">
-                d
-              </div>
-            </div>
-            <div class="note-note-content">
-              <div class="note-title"><b>제목4</b></div>
-              <div class="note-body">내용입니다</div>
-            </div>
-            <div class="note-note-date">2024-10-10</div>
-            <div class="button-box">
-              <a href="center-mypage-notebox-write.html"><button>답장</button></a>
-              <button class="delete-button">삭제</button>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="notebox-list-contents">
-            <div class="note-status" data-status="true">읽음</div>
-            <div class="note-profile-namebox">
-              <div class="note-profile-name">
-                f
-              </div>
-            </div>
-            <div class="note-note-content">
-              <div class="note-title"><b>제목5</b></div>
-              <div class="note-body">내용입니다</div>
-            </div>
-            <div class="note-note-date">2024-10-10</div>
-            <div class="button-box">
-              <a href="center-mypage-notebox-write.html"><button>답장</button></a>
-              <button class="delete-button">삭제</button>
-            </div>
-          </div>
-        </li>
-      </ul>
+        <ul>
+            <li th:each="note : ${noteboxReceiveList}"> <!-- noteboxReceiveList는 컨트롤러에서 전달된 모델 속성 -->
+                <div class="notebox-list-contents">
+                    <div class="note-status" th:text="${note.readStatus}"></div> <!-- 읽음/안읽음 상태 -->
+                    <div class="note-profile-namebox">
+                        <div class="note-profile-name" th:text="${note.noteboxSendName}"></div> <!-- noteboxSendName -->
+                    </div>
+                    <div class="note-note-content">
+                        <div class="note-title">
+                            <b th:text="${note.noteboxReceiveTitle}">제목</b> <!-- 제목 -->
+                        </div>
+                        <div class="note-body" th:text="${note.noteboxReceiveContent}"></div> <!-- 내용 -->
+                    </div>
+                    <div class="note-note-date" th:text="${note.noteboxReceiveRegiDate}"></div> <!-- 작성일 -->
+                    <div class="button-box">
+                        <a th:href="@{/center-mypage-notebox-write.html}">
+                            <button>답장</button>
+                        </a>
+                        <button class="delete-button">삭제</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
 
-      <div class="send-button">
-        <a href="center-mypage-notebox-write.html"><button>쪽지보내기</button></a>
-      </div>
+        <div class="send-button">
+            <button onclick="window.location.href='/Notebox/Write'">쪽지 보내기</button>
+        </div>
     </div>
     <!-- 페이지네이션 -->
     <div class="pagination">
-      <button class="prev">◀</button>
-      <button class="page">1</button>
-      <button class="page">2</button>
-      <button class="page">3</button>
-      <button class="page">4</button>
-      <button class="page">5</button>
-      <button class="next">▶</button>
+        <button class="prev">◀</button>
+        <button class="page">1</button>
+        <button class="page">2</button>
+        <button class="page">3</button>
+        <button class="page">4</button>
+        <button class="page">5</button>
+        <button class="next">▶</button>
     </div>
 
-  </main>
-  <footer>
+</main>
+<footer>
     <div class="footer-links">
-      <a href="../member/term.html">이용약관</a> |
-      <a href="../member/term.html">개인정보처리방침</a>
+        <a href="../member/term.html">이용약관</a> |
+        <a href="../member/term.html">개인정보처리방침</a>
     </div>
     <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
-      통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
-      © NEXT LEVEL. All Rights Reserved</h6>
-  </footer>
+        통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
+        © NEXT LEVEL. All Rights Reserved</h6>
+</footer>
 </body>
 <script th:src="@{/js/centermypage/center-mypage-notebox-receive.js}"></script>
 <script defer th:src="@{/js/main/main.js}"></script>

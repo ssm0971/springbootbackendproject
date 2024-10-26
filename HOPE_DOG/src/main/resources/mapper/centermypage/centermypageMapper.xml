@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.hope_dog.mapper.centermypage.CenterMypageMapper">
 <!--프로필 조회-->
-    <select id="MyProfile" parameterType="Long" resultType="CenterMemberDTO">
-        SELECT CENTER_MEMBER_NAME , CENTER_MEMBER_EMAIL ,CENTER_MEMBER_PHONE_NUMBER , CENTER_MEMBER_ADDRESS,CENTER_MEMBER_DETAIL_ADDRESS
-        FROM TBL_CENTER_MEMBER
-        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+<!--    <select id="MyProfile" parameterType="Long" resultType="CenterMemberDTO">-->
+<!--        SELECT CENTER_MEMBER_NAME , CENTER_MEMBER_EMAIL ,CENTER_MEMBER_PHONE_NUMBER , CENTER_MEMBER_ADDRESS,CENTER_MEMBER_DETAIL_ADDRESS-->
+<!--        FROM TBL_CENTER_MEMBER-->
+<!--        WHERE CENTER_MEMBER_NO = #{centerMemberNo}-->
 
-    </select>
+<!--    </select>-->
 </mapper>

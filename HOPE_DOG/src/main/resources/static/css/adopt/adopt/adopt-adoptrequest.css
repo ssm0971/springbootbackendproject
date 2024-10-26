@@ -33,6 +33,10 @@ main{
   text-align: center;
 }
 
+.adoptrequest-navList:hover {
+  cursor: pointer;
+}
+
 .adoptrequest-writebanner{
   background-color: #F5EAD9;
   width: 1080px;
@@ -92,7 +96,8 @@ main{
 }
 
 p{
-  font-size: 12px;
+  font-size: 11px;
+  margin: 0;
 }
 
 .adoptrequest-agreement-box2{
@@ -128,7 +133,7 @@ p{
 }
 
 .adoptrequest-search-button{
-  width: 50px;
+  width: 70px;
   height: 28px;
   background-color: #F5EAD9;
   border: none;

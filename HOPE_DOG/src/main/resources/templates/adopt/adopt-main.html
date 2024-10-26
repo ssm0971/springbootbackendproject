@@ -98,13 +98,14 @@
         <div><img th:src="@{/img/adopt-main.jpg}" width="900px" height="550px"></div>
         <div class="adopt-banner3-notice">입양혜택 안내</div>
         <div class="adopt-banner3-inner">
-          <div th:each="adopt : ${adoptList}" class="adopt-banner3-list">
+          <div th:each="adopt : ${MainList}" class="adopt-banner3-list">
             <div class="adopt-banner3-cate">[안심입양]</div>
             <div class="adopt-banner3-title" th:text="${adopt.adoptTitle}"></div>
-            <div class="adopt-banner3-nickname" th:text="${adopt.centerMemberNo}"></div>
+            <div class="adopt-banner3-nickname" th:text="${adopt.centerMemberName}"></div>
             <div class="adopt-banner3-date" th:text="${#dates.format(adopt.adoptRegidate, 'yyyy-MM-dd')}"></div>
             <div class="adopt-banner3-status" th:if="${adopt.adoptStatus == 'T'}" th:text="[모집중]"></div>
-            <div class="adopt-banner3-status" th:if="${adopt.adoptStatus != 'T'}" th:text="[마감]"></div>
+            <div class="adopt-banner3-status" th:if="${adopt.adoptStatus == 'F'}" th:text="[마감]"></div>
+            <div class="adoptNo" th:text="${adopt.adoptNo}" style="display: none;"></div>
           </div>
         </div>
       </div>

@@ -16,6 +16,33 @@
                 END AS noteboxReceiveName
         FROM TBL_NOTEBOX_SEND tns
         WHERE tns.NOTEBOX_SEND_S = #{centerMemberNo}
+        ORDER BY tns.NOTEBOX_SEND_REGIDATE DESC
     </select>
 
+
+    <select id="ReceiveList" parameterType="Long" resultType="NoteboxReceiveListDTO">
+        SELECT
+            tnr.NOTEBOX_RECEIVE_NO,
+            tnr.NOTEBOX_RECEIVE_TITLE,
+            tnr.NOTEBOX_RECEIVE_CONTENT,
+            tnr.NOTEBOX_RECEIVE_REGIDATE,
+            tnr.NOTEBOX_RECEIVE_S,
+            CASE
+                WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NAME FROM TBL_MEMBER WHERE MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)
+                WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 20) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)
+                WHEN tnr.NOTEBOX_RECEIVE_S = 3 THEN '관리자'
+                END AS noteboxSendName,
+            CASE
+                WHEN tnr.NOTEBOX_RECEIVE_READ = 'Y' THEN '읽음'
+                ELSE '안읽음'
+                END AS READ_STATUS
+        FROM TBL_NOTEBOX_RECEIVE tnr
+        WHERE tnr.NOTEBOX_RECEIVE_R = #{centerMemberNo}
+        ORDER BY
+            CASE
+                WHEN tnr.NOTEBOX_RECEIVE_READ = 'N' THEN 0  -- 안읽음이 우선
+                ELSE 1
+                END,
+            tnr.NOTEBOX_RECEIVE_REGIDATE DESC  -- 최신순 정렬
+    </select>
 </mapper>

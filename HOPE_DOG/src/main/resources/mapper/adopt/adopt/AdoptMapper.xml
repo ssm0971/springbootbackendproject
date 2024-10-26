@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.hope_dog.mapper.adopt.adopt.AdoptMapper">
-    <select id="adoptMain" resultType="AdoptMainDTO">
+    <select id="main" resultType="MainDTO">
     <![CDATA[
-        SELECT ADOPT_NO, ADOPT_TITLE, ADOPT_REGIDATE, CENTER_MEMBER_NO, ADOPT_STATUS
-        FROM (
-                 SELECT ADOPT_NO, ADOPT_TITLE, ADOPT_REGIDATE, CENTER_MEMBER_NO, ADOPT_STATUS,
-                        ROW_NUMBER() OVER (ORDER BY ADOPT_REGIDATE DESC) AS row_num
-                 FROM TBL_ADOPT
-             )
-        WHERE row_num < 11
+        SELECT a.ADOPT_NO, a.ADOPT_TITLE, a.ADOPT_REGIDATE, a.CENTER_MEMBER_NO, a.ADOPT_STATUS, c.CENTER_MEMBER_NAME
+        FROM(
+                SELECT ADOPT_NO, ADOPT_TITLE, ADOPT_REGIDATE, CENTER_MEMBER_NO, ADOPT_STATUS,
+                       ROW_NUMBER() OVER ( ORDER BY ADOPT_REGIDATE DESC) AS row_num
+                FROM TBL_ADOPT) a
+                JOIN TBL_CENTER_MEMBER c ON a.CENTER_MEMBER_NO = c.CENTER_MEMBER_NO
+        WHERE a.row_num <= 10
         ]]>
-</select>
+    </select>
+
+    <select id="adoptDetail" resultType="AdoptDetailDTO">
+        SELECT a.ADOPT_TITLE, c.CENTER_MEMBER_NAME, a.ADOPT_REGIDATE, a.ADOPT_PERIODSTART , a.ADOPT_PERIODEND , a.ADOPT_NAME ,
+               a.ADOPT_BREED , a.ADOPT_NEUTERING , a.ADOPT_GENDER , a.ADOPT_WEIGHT , a.ADOPT_BIRTH , a.ADOPT_INTRODUCE , a.ADOPT_CONTENT
+        FROM TBL_ADOPT a JOIN TBL_CENTER_MEMBER c ON a.CENTER_MEMBER_NO = c.CENTER_MEMBER_NO
+        WHERE ADOPT_NO = #{adoptNo}
+    </select>
+
+<!--    임시-->
+    <select id="adoptRequest" resultType="AdoptRequestDTO">
+        SELECT ADOPT_TITLE
+        FROM TBL_ADOPT
+        WHERE ADOPT_NO = #{adoptNo}
+    </select>
 </mapper>

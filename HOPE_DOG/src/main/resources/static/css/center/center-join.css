@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.center-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.center-form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.center-input-button-group {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.center-input-button-group input {
+    flex-grow: 1;
+    width: calc(100% - 120px);
+}
+
+.center-input-button-group button {
+    width: 110px;
+    white-space: nowrap;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #F5EAD9;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #9B805D;
+    color: white;
+}
+
+.center-button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#center-cancelBtn {
+    background-color: #F5EAD9;
+}
+
+#center-cancelBtn:hover {
+    background-color: #9B805D;
+}
+
+.center-required {
+    color: red;
+}
+
+.center-error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
+input.error {
+    border-color: red;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#center-businessFileUpload {
+    width: 100%;
+    padding: 10px;
+    background-color: #F5EAD9;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#center-businessFileUpload:hover {
+    background-color: #9B805D;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .center-container {
+        margin: 20px;
+    }
+
+    .center-input-button-group {
+        flex-direction: column;
+    }
+
+    .center-input-button-group input,
+    .center-input-button-group button {
+        width: 100%;
+    }
+}

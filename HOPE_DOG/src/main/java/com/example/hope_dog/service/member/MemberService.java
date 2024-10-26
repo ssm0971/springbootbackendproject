@@ -48,11 +48,11 @@ public class MemberService {
         // 추가 유효성 검사 가능
         return memberMapper.checkNickname(nickname) == 0;
     }
-//  이메일 중복체크
+    /**
+     * 이메일 중복 체크 (모든 회원 테이블 검사)
+     */
     public boolean checkEmail(String email) {
-        if (email == null || !email.contains("@")) {
-            throw new IllegalArgumentException("유효하지 않은 이메일 형식입니다.");
-        }
-        return memberMapper.checkEmail(email) == 0;
+        int count = memberMapper.checkMemberEmail(email);
+        return count == 0;  // 중복된 이메일이 없으면 true 반환
     }
 }

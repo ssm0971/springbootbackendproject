@@ -82,40 +82,40 @@
       </div>
 
       <!-- 제목/작성자/등록일 크기 -->
-      <div class="adopt-detail-box1">
-        <div class="adopt-detail-title">웰시코기 데려가세요</div>
-        <div class="adopt-detail-info"><span>작성자 : 안성재</span>
-          <sapn>등록일 : 2024-10-05</sapn>
+      <div class="adopt-detail-box1" th:each="adopt : ${adoptDetailList}">
+        <div class="adopt-detail-title" th:text="${adopt.adoptTitle}"></div>
+        <div class="adopt-detail-info">
+          <span th:text="'작성자 : ' + ${adopt.centerMemberName}">작성자 : 안성재</span>
+          <span th:text="'등록일 : ' + ${#dates.format(adopt.adoptRegidate, 'yyyy-MM-dd')}"></span>
         </div>
       </div>
 
       <!-- 글내용 크기 -->
-      <div class="adopt-detail-box2">
+      <div class="adopt-detail-box2" th:each="adopt : ${adoptDetailList}">
         <div class="adopt-detail-content">
           <div class="adopt-detail-basicinfo">
             <div class="adopt-detail-basicinfo-title">기본정보</div>
-            <div>입양기한 : 2024-10-15 ~ 2024-10-31</div>
-            <div>견종 : 시츄</div>
-            <div>중성화 여부 : O</div>
-            <div>성별 : 남자</div>
-            <div>몸무게 : 3.8kg</div>
-            <div>생년월일 : 2021-01-14</div>
+            <div th:text="'입양기한 : ' + ${#dates.format(adopt.adoptPeriodStart, 'yyyy-MM-dd')} + ' ~ ' + ${#dates.format(adopt.adoptPeriodEnd, 'yyyy-MM-dd')}"></div>
+            <div th:text="'이름 : ' + ${adopt.adoptName}"></div>
+            <div th:text="'견종 : ' + ${adopt.adoptBreed}"></div>
+            <div th:if="${adopt.adoptNeutering == 'Y'}" th:text="'중성화여부 : ' + 'O'"></div>
+            <div th:if="${adopt.adoptNeutering == 'N'}" th:text="'중성화여부 : ' + 'X'"></div>
+            <div th:if="${adopt.adoptGender == 'M'}" th:text="'성별 : ' + '남자'"></div>
+            <div th:if="${adopt.adoptGender == 'F'}" th:text="'성별 : ' + '여자'"></div>
+            <div th:text="'몸무게 : ' + ${adopt.adoptWeight}"></div>
+            <div th:text="'생년월일 : ' + ${#dates.format(adopt.adoptBirth, 'yyyy-MM-dd')}"></div>
+            <div th:text="adopt.adoptNo" style="display: none" class="adoptNo"></div>
           </div>
 
           <br>
 
-          <img src="../../img/adopt-main.jpg" width="200px" height="200px">
-          <img src="../../img/adopt-main.jpg" width="200px" height="200px">
-          <img src="../../img/adopt-main.jpg" width="200px" height="200px">
-          <div>모수에서 킥이었어요</div>
+          <div th:text="${adopt.adoptContent}"></div>
 
           <br>
 
           <!-- 신청버튼 -->
           <div class="adopt-submit-box">
-            <a href="../../html/adopt/adopt-adoptrequest.html">
-            <button class="adopt-submit-button" type="button">신청</button>
-          </a>
+            <button class="adopt-submit-button" type="button" onclick="requestClick()">신청</button>
           </div>
         </div>
       </div>

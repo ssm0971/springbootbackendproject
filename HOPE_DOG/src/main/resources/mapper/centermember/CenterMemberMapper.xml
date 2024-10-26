@@ -33,11 +33,18 @@
         WHERE CENTER_MEMBER_ID = #{centerId} AND CENTER_MEMBER_PW = #{centerPw}
     </select>
 
-    <!-- 이메일 중복 체크 -->
+    <!-- 센터 회원 이메일 중복 체크 -->
     <select id="checkCenterEmail" resultType="int">
         SELECT COUNT(*)
-        FROM TBL_CENTER_MEMBER
-        WHERE CENTER_MEMBER_EMAIL = #{centerMemberEmail}
+        FROM (
+                 SELECT CENTER_MEMBER_EMAIL
+                 FROM TBL_CENTER_MEMBER
+                 WHERE CENTER_MEMBER_EMAIL = #{centerMemberEmail}
+                 UNION ALL
+                 SELECT MEMBER_EMAIL
+                 FROM TBL_MEMBER
+                 WHERE MEMBER_EMAIL = #{centerMemberEmail}
+             )
     </select>
 
     <!-- 아이디 중복 체크 -->

@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.term-item {
+    margin-bottom: 20px;
+}
+
+.term-content {
+    height: 100px;
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#cancelBtn {
+    background-color: #F5EAD9;
+    color: #333;
+}
+
+#nextBtn {
+    background-color: #9B805D;
+    color: white;
+}
+
+#nextBtn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}

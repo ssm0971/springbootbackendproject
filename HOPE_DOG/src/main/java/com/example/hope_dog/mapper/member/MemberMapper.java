@@ -20,6 +20,6 @@ public interface MemberMapper {
     int checkNickname(@Param("memberNickname") String memberNickname);
 
     // 이메일 중복 체크
-    int checkEmail(@Param("memberEmail") String memberEmail);
+    int checkMemberEmail(@Param("memberEmail") String memberEmail);
 
 }

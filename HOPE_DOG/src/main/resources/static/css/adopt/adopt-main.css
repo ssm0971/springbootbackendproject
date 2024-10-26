@@ -98,9 +98,14 @@ main{
   border-bottom: 1px solid #F5EAD9;
 }
 
+.adopt-banner3-list:hover {
+  cursor: pointer;
+}
+
 .adopt-banner3-cate{
   width: 100px;
   text-align: center;
+  font-weight: bold;
 }
 
 .adopt-banner3-title{
@@ -121,6 +126,7 @@ main{
 .adopt-banner3-status{
   width: 100px;
   text-align: center;
+  font-weight: bold;
 }
 
 a {

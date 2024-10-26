@@ -35,11 +35,20 @@
         FROM TBL_MEMBER
         WHERE MEMBER_NICKNAME = #{memberNickname}
     </select>
-    <!--멤버 이메일 중복확인 쿼리-->
-    <select id="checkEmail" parameterType="String" resultType="int">
+
+
+    <!-- 일반 회원 이메일 중복 체크 -->
+    <select id="checkMemberEmail" resultType="int">
         SELECT COUNT(*)
-        FROM TBL_MEMBER
-        WHERE MEMBER_EMAIL = #{memberEmail}
+        FROM (
+                 SELECT MEMBER_EMAIL
+                 FROM TBL_MEMBER
+                 WHERE MEMBER_EMAIL = #{memberEmail}
+                 UNION ALL
+                 SELECT CENTER_MEMBER_EMAIL
+                 FROM TBL_CENTER_MEMBER
+                 WHERE CENTER_MEMBER_EMAIL = #{memberEmail}
+             )
     </select>
 
 </mapper>

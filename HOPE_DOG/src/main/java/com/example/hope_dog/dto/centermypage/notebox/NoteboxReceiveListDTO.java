@@ -14,11 +14,10 @@ public class NoteboxReceiveListDTO {
     private String noteboxReceiveTitle;
     private String noteboxReceiveContent;
     private String noteboxReceiveRegiDate;
-    private Boolean noteboxReceiveRead;
-    private String noteboxReceiveReadDate;
-    private String noteboxReceiveS;
-    private String noteboxReceiveR;
 
-    private Long centerMemberNo;
-    private String sendMember;
+    private String noteboxReceiveS;
+    private String noteboxSendName;
+
+    private String ReadStatus;
+
 }

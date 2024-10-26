@@ -19,7 +19,7 @@ public class NoteboxSendListDTO {
     private Long noteboxSendR;
     private String noteboxReceiveName;
 
-
+}
 //    private Long noteboxSendNo;
 //    private String noteboxSendTitle;
 //    private String noteboxSendContent;
@@ -28,4 +28,4 @@ public class NoteboxSendListDTO {
 //    private Long noteboxSendR;
 //
 //    private Long receiveMember;
-}
+

@@ -353,6 +353,8 @@ function requestcancle() {
   }
 }
 
+
+//헤더이동
 {
   let adoptPageBtn = document.getElementById('adoptPage');
   adoptPageBtn.addEventListener('click', function(){

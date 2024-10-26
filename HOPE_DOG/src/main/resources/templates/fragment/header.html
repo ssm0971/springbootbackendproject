@@ -60,21 +60,23 @@
     </div>
     <div class="user-section">
         <!-- 비로그인 상태 -->
-        <ul class="user-actions" th:if="${session.memberNo == null}">
+        <ul class="user-actions" th:if="${session.memberNo == null && session.centerMemberNo == null}">
             <li class="user-action"><a th:href="@{/member/login-select}">로그인</a></li>
             <li class="user-action"><a th:href="@{/member/join-select}">회원가입</a></li>
         </ul>
 
         <!-- 일반 회원 로그인 상태 -->
-        <ul class="user-actions" th:if="${session.memberNo != null && session.memberLoginStatus == 'HOPEDOG'}">
+        <ul class="user-actions"
+            th:if="${session.memberNo != null && session.memberLoginStatus == 'HOPEDOG' && session.centerMemberNo == null}">
             <li class="user-action"><a th:href="@{/mypage/mypage}">마이페이지</a></li>
             <li class="user-action"><a th:href="@{/member/logout}">로그아웃</a></li>
         </ul>
 
         <!-- 센터 회원 로그인 상태 -->
-        <ul class="user-actions" th:if="${session.memberNo != null && session.memberLoginStatus == 'CENTER'}">
+        <ul class="user-actions"
+            th:if="${session.centerMemberNo != null && session.memberNo == null}">
             <li class="user-action"><a th:href="@{/center/mypage}">센터마이페이지</a></li>
-            <li class="user-action"><a th:href="@{/member/logout}">로그아웃</a></li>
+            <li class="user-action"><a th:href="@{/center/center-logout}">로그아웃</a></li>
         </ul>
     </div>
 </header>

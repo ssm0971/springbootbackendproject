@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>센터 로그인</title>
+  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+  <link rel="stylesheet" th:href="@{/css/center/center-login.css}" />
+  <script defer th:src="@{/js/center/center-login.js}"></script>
+</head>
+<body>
+<header class="header" th:replace="~{/fragment/header :: header}"></header>
+<main class="center-main-content">
+  <div class="center-login-container">
+    <h1>센터 로그인</h1>
+    <form id="center-login-form" th:action="@{/center/center-login}" method="post">
+      <div class="input-group">
+        <input type="text" id="centerId" name="centerId" placeholder="아이디" required>
+        <p class="center-error-message" id="id-error"></p>
+      </div>
+      <div class="input-group">
+        <input type="password" id="centerPw" name="centerPw" placeholder="비밀번호" required>
+        <p class="center-error-message" id="pw-error"></p>
+      </div>
+      <div class="center-forgot-password">
+        <a th:href="@{/center/center-findId}">아이디 찾기 /</a>
+        <a th:href="@{/center/centerfindPw}">비밀번호 찾기</a>
+      </div>
+      <button type="submit" class="center-login-btn">센터 로그인</button>
+    </form>
+    <div class="center-signup-link">
+      <span>센터회원이 아니세요? =></span>
+      <a th:href="@{/center/center-terms}">희멍의집 회원가입</a>
+    </div>
+  </div>
+</main>
+
+<!-- 로그인 실패 메시지가 있을 경우 표시 -->
+<script th:if="${loginError}" th:inline="javascript">
+  alert(/*[[${loginError}]]*/ '로그인 실패');
+</script>
+</body>
+</html>

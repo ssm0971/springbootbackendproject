@@ -28,6 +28,20 @@ function endClick() {
   }
 }
 
+// 신청서 이동 버튼
+function requestClick() {
+  const adoptNo = document.querySelector('.adoptNo').innerText;
+
+  if (confirm('정말 신청하시겠습니까?')) {
+    console.log('신청서페이지로 이동합니다.');
+    const adoptNo = element.querySelector('.adoptNo').innerText;
+    console.log(adoptNo);
+    location.href = `/adopt/adopt/adoptrequest?adoptNo=${adoptNo}`;
+  } else {
+    console.log('신청서페이지로 이동하지 않습니다.');
+  }
+}
+
 // 댓글수정버튼
 function modifyCommentBtnClcik() {
   const commentBox1 = document.getElementById('adopt-comment-buttonBox'); //수정/삭제버튼 div

@@ -26,7 +26,7 @@ public class SmsService {
     @Value("${coolsms.from.number}")
     private String fromNumber;
 
-    // 인증번호 저장소 (실제 운영에서는 Redis 사용 권장)
+    // 인증번호 저장소
     private final ConcurrentHashMap<String, VerificationInfo> verificationStore = new ConcurrentHashMap<>();
 
     public String sendVerificationMessage(String to) throws CoolsmsException {
@@ -72,7 +72,7 @@ public class SmsService {
 
         return isValid;
     }
-
+//  랜덤으로 인증번호 생성 코드
     private String generateVerificationCode() {
         Random random = new Random();
         return String.format("%06d", random.nextInt(1000000));

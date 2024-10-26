@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>센터 회원가입 완료</title>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/center/center-joinOk.css}">
+</head>
+<body>
+<header th:replace="~{fragment/header :: header}"></header>
+
+<div class="container">
+    <div class="content">
+        <span th:text="${centerMemberName}">센터회원</span>님의 회원가입을 환영합니다!
+        <a th:href="@{/center/center-login}" class="btn">로그인 하러가기</a>
+    </div>
+</div>
+</body>
+</html>

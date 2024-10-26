@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>센터 회원가입</title>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/center/center-join.css}">
+    <script defer th:src="@{/js/center/center-join.js}"></script>
+</head>
+<body>
+<header class="header" th:replace="~{/fragment/header :: header}"></header>
+
+<div class="center-container">
+    <h1>센터 회원가입</h1>
+    <form id="center-signupForm" th:action="@{/center/center-join}" method="post" enctype="multipart/form-data">
+        <div class="center-form-group">
+            <label for="center-name">센터 이름 <span class="center-required">*</span></label>
+            <input type="text" id="center-name" name="centerMemberName" required>
+            <span class="center-error-message" id="center-name-error"></span>
+        </div>
+
+        <div class="center-form-group">
+            <label for="center-businessFile">사업자등록증 첨부 <span class="center-required">*</span></label>
+            <div class="center-input-button-group">
+                <input type="file" id="center-businessFile" name="businessFile" accept=".pdf,.jpg,.jpeg,.png" required>
+                <button type="button" id="center-businessFileUpload">파일 업로드</button>
+            </div>
+            <span class="center-error-message" id="center-businessFile-error"></span>
+        </div>
+
+        <div class="center-form-group">
+            <label for="center-userid">아이디 <span class="center-required">*</span></label>
+            <input type="text" id="center-userid" name="centerMemberId" required>
+            <span class="center-error-message" id="center-userid-error"></span>
+        </div>
+
+        <div class="center-form-group">
+            <label for="center-password">비밀번호 <span class="center-required">*</span></label>
+            <input type="password" id="center-password" name="centerMemberPw" required>
+            <span class="center-error-message" id="center-password-error"></span>
+        </div>
+
+        <div class="center-form-group">
+            <label for="center-passwordConfirm">비밀번호 확인 <span class="center-required">*</span></label>
+            <input type="password" id="center-passwordConfirm" required>
+            <span class="center-error-message" id="center-passwordConfirm-error"></span>
+        </div>
+
+        <div class="center-form-group">
+            <label for="center-phone">연락처 <span class="center-required">*</span></label>
+            <div class="center-input-button-group">
+                <input type="tel" id="center-phone" name="centerMemberPhoneNumber" required>
+                <button type="button" id="center-phoneVerify">인증번호 발송</button>
+            </div>
+            <span class="center-error-message" id="center-phone-error"></span>
+        </div>
+
+        <div class="center-form-group">
+            <label for="center-phoneVerifyCode">연락처 인증번호 <span class="center-required">*</span></label>
+            <div class="center-input-button-group">
+                <input type="text" id="center-phoneVerifyCode" required>
+                <button type="button" id="center-phoneVerifyConfirm">연락처 인증</button>
+            </div>
+            <span class="center-error-message" id="center-phoneVerifyCode-error"></span>
+        </div>
+
+        <div class="center-form-group">
+            <label for="center-email">대표 이메일 <span class="center-required">*</span></label>
+            <div class="center-input-button-group">
+                <input type="email" id="center-email" name="centerMemberEmail" required>
+                <button type="button" id="center-emailCheck">중복 확인</button>
+            </div>
+            <span class="center-error-message" id="center-email-error"></span>
+        </div>
+
+        <div class="center-form-group">
+            <label for="center-zipcode">우편번호 <span class="center-required">*</span></label>
+            <div class="center-input-button-group">
+                <input type="text" id="center-zipcode" name="centerMemberZipcode" required readonly>
+                <button type="button" id="center-addressSearch">우편번호 찾기</button>
+            </div>
+            <span class="center-error-message" id="center-zipcode-error"></span>
+        </div>
+
+        <div class="center-form-group">
+            <label for="center-address">주소 <span class="center-required">*</span></label>
+            <input type="text" id="center-address" name="centerMemberAddress" required readonly>
+            <span class="center-error-message" id="center-address-error"></span>
+        </div>
+
+        <div class="center-form-group">
+            <label for="center-detailAddress">상세주소</label>
+            <input type="text" id="center-detailAddress" name="centerMemberDetailAddress">
+            <span class="center-error-message" id="center-detailAddress-error"></span>
+        </div>
+
+        <div class="center-button-group">
+            <button type="button" id="center-cancelBtn">취소</button>
+            <button type="submit" id="center-submitBtn">확인</button>
+        </div>
+    </form>
+</div>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</body>
+</html>

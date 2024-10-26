@@ -1,6 +1,8 @@
 package com.example.hope_dog.controller.adopt;
 
-import com.example.hope_dog.dto.adopt.adopt.AdoptMainDTO;
+import com.example.hope_dog.dto.adopt.adopt.AdoptDetailDTO;
+import com.example.hope_dog.dto.adopt.adopt.AdoptRequestDTO;
+import com.example.hope_dog.dto.adopt.adopt.MainDTO;
 import com.example.hope_dog.service.adopt.adopt.AdoptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,8 +24,8 @@ public class AdoptController {
     //입양/임보/후기 메인페이지
     @GetMapping("/main")        //열릴페도메인 localhost:8060/adopt/main
     public String Main(Model model) {
-        List<AdoptMainDTO> adoptList = adoptService.getAdoptList();
-        model.addAttribute("adoptList", adoptList);
+        List<MainDTO> MainList = adoptService.getMainList();
+        model.addAttribute("MainList", MainList);
         return "adopt/adopt-main";  //localhost:8060/adopt/main로 접속했을시 열릴 html
     }
 
@@ -34,7 +37,9 @@ public class AdoptController {
 
     //입양상세글
     @GetMapping("/adopt/adoptdetail")
-    public String adoptDetail() {
+    public String adoptDetail(@RequestParam("adoptNo") Long adoptNo, Model model) {
+        List<AdoptDetailDTO> adoptDetailList = adoptService.getAdoptDetail(adoptNo);
+        model.addAttribute("adoptDetailList", adoptDetailList);
         return "adopt/adopt/adopt-adoptdetail";
     }
 
@@ -48,6 +53,14 @@ public class AdoptController {
     @GetMapping("/adopt/adoptmodify")
     public String adoptModify() {
         return "adopt/adopt/adopt-adoptmodify";
+    }
+
+    //입양신청서
+    @GetMapping("/adopt/adoptrequest")
+    public String adoptRequest(@RequestParam("adoptNo") Long adoptNo,Model model) {
+        List<AdoptRequestDTO> adoptRequestList = adoptService.getAdoptRequest(adoptNo);
+        model.addAttribute("adoptRequestList", adoptRequestList);
+        return "adopt/adopt/adopt-adoptrequest";
     }
 
     //임시보호 메인
