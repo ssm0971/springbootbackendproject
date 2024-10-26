@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class NoteboxReciveListDTO {
+public class NoteboxReceiveListDTO {
     private Long noteboxReceiveNo;
     private String noteboxReceiveTitle;
     private String noteboxReceiveContent;

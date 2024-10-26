@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteBoxService {
@@ -14,6 +15,6 @@ public class NoteBoxService {
     private NoteBoxMapper noteBoxMapper;
 
     public List<NoteboxSendListDTO> getSendList(Long centerMemberNo) {
-        return noteBoxMapper.selectSendList(centerMemberNo);
+        return noteBoxMapper.SendList(centerMemberNo);
     }
 }

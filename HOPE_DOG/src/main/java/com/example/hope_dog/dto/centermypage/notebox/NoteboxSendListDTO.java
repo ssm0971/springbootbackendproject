@@ -15,9 +15,10 @@ public class NoteboxSendListDTO {
     private Long noteboxSendNo;
     private String noteboxSendTitle;
     private String noteboxSendContent;
-    private Date noteboxSendRegiDate;
-    private Long noteboxSendS;
+    private String noteboxSendRegiDate;
     private Long noteboxSendR;
+    private String noteboxReceiveName;
+
 
 //    private Long noteboxSendNo;
 //    private String noteboxSendTitle;

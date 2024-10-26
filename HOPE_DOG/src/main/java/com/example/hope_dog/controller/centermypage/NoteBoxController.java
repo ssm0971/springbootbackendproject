@@ -10,18 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/Notebox")
 public class NoteBoxController {
-    private final NoteBoxService mNoteBoxService;
+    private final NoteBoxService NoteBoxService;
 
     @GetMapping("/SendList")
     public String sendList(Model model) {
-        Long centerMemberNo = 21L; // 임시로 사용할 값, 추후 세션에서 가져올 것
-        List<NoteboxSendListDTO> noteboxSendList = mNoteBoxService.getSendList(centerMemberNo);
+        Long centerMemberNo = 12L; // 임시로 사용할 값, 추후 세션에서 가져올 것
+        List<NoteboxSendListDTO> noteboxSendList = NoteBoxService.getSendList(centerMemberNo);
 
         // 모델에 값 추가
         model.addAttribute("noteboxSendList", noteboxSendList);

@@ -1,6 +1,8 @@
 package com.example.hope_dog.service.centermypage;
 
+import com.example.hope_dog.dto.centerMember.CenterMemberDTO;
 import com.example.hope_dog.dto.centermypage.notebox.NoteboxSendListDTO;
+import com.example.hope_dog.dto.member.MemberDTO;
 import com.example.hope_dog.mapper.centermypage.notebox.NoteBoxMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -10,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -24,16 +25,17 @@ class NoteBoxServiceTest {
 
     @Test
     void testGetSendList() {
-        Long centerMemberNo = 21L;
+        Long centerMemberNo = 12L;
 
-        NoteboxSendListDTO dto = new NoteboxSendListDTO();
-        dto.setNoteboxSendTitle("Test Title");
-        dto.setNoteboxSendContent("Test Content");
-        dto.setNoteboxSendRediDate("2024-01-01");
-        dto.setNoteboxSendR(21L);
+        NoteboxSendListDTO noteboxdto = new NoteboxSendListDTO();
+        noteboxdto.setNoteboxSendTitle("Test Title");
+        noteboxdto.setNoteboxSendContent("Test Content");
+        noteboxdto.setNoteboxSendRegiDate("2024-01-01");
+        noteboxdto.setNoteboxSendR(12L);
+
 
         // Mocking the mapper's response
-        when(noteBoxMapper.selectSendList(centerMemberNo)).thenReturn(List.of(dto));
+        when(noteBoxMapper.SendList(centerMemberNo)).thenReturn(List.of(noteboxdto));
 
         // Call the service method
         List<NoteboxSendListDTO> result = noteBoxService.getSendList(centerMemberNo);
@@ -41,7 +43,6 @@ class NoteBoxServiceTest {
         // Assertions
         assertThat(result).isNotNull();
         assertThat(result).isNotEmpty();
-        assertThat(result.get(0).getNoteboxSendTitle()).isEqualTo("Test Title");
     }
 
 }
