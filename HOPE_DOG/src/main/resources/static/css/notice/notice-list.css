@@ -74,6 +74,10 @@ a {
   margin: 0;
 }
 
+.notice-ul-all:hover {
+  cursor: pointer; /* 마우스 오버 시 커서를 포인터로 변경 */
+}
+
 /* 게시글 목록 ul>li 태그 내부 스타일 */
 .notice-ul-main {
   display: flex;
@@ -89,6 +93,10 @@ a {
   text-align: left;
   margin-left: 15px;
   width: 500px;
+}
+
+.notice-title:hover {
+  cursor: pointer; /* 마우스 오버 시 커서를 포인터로 변경 */
 }
 
 /* 글쓴이 */

@@ -97,7 +97,7 @@ ul{
 
 /* 작성자, 작성일 */
 .dona-container-audate {
-  flex-basis: 150px;
+  flex-basis: 120px;
   text-align: center;
   line-height: 20px;
   font-weight: 400;
@@ -116,6 +116,10 @@ ul{
   margin: 0;
 }
 
+.dona-ul-all:hover {
+  cursor: pointer; /* 마우스 오버 시 커서를 포인터로 변경 */
+}
+
 /* 게시글 목록 ul>li 태그 내부 스타일 */
 .dona-ul-main {
   display: flex;
@@ -130,21 +134,21 @@ ul{
 .dona-title {
   text-align: left;
   margin-left: 15px;
-  width: 500px;
+  width: 600px;
 }
 
 /* 글쓴이 */
 .dona-author {
   text-align: center;
   padding: 20px 0px;
-  flex-basis: 150px;
+  flex-basis: 130px;
 }
 
 /* 작성날짜 */
 .dona-date {
   text-align: center;
   padding: 20px 0px;
-  flex-basis: 150px;
+  flex-basis: 130px;
 }
 
 /* 검색창 */

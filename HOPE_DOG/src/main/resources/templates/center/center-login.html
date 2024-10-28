@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>센터 로그인</title>
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
   <link rel="stylesheet" th:href="@{/css/center/center-login.css}" />
   <script defer th:src="@{/js/center/center-login.js}"></script>
 </head>
@@ -33,7 +34,7 @@
     </div>
   </div>
 </main>
-
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 <!-- 로그인 실패 메시지가 있을 경우 표시 -->
 <script th:if="${loginError}" th:inline="javascript">
   alert(/*[[${loginError}]]*/ '로그인 실패');

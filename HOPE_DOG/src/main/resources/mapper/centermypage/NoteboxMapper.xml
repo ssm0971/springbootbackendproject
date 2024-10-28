@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.hope_dog.mapper.centermypage.notebox.NoteBoxMapper">
 
-    <select id="SendList" parameterType="Long" resultType="NoteboxSendListDTO">
+<!--    보낸쪽지함-->
+    <select id="sendList" parameterType="Long" resultType="NoteboxSendListDTO">
         SELECT
             tns.NOTEBOX_SEND_NO,
             tns.NOTEBOX_SEND_TITLE,
@@ -10,8 +11,8 @@
             tns.NOTEBOX_SEND_REGIDATE,
             tns.NOTEBOX_SEND_R,
             CASE
-                WHEN MOD(tns.NOTEBOX_SEND_R, 10) = 1 THEN (SELECT MEMBER_NAME FROM TBL_MEMBER WHERE MEMBER_NO = tns.NOTEBOX_SEND_R)
-                WHEN MOD(tns.NOTEBOX_SEND_R, 20) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tns.NOTEBOX_SEND_R)
+                WHEN MOD(tns.NOTEBOX_SEND_R, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = tns.NOTEBOX_SEND_R)
+                WHEN MOD(tns.NOTEBOX_SEND_R, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tns.NOTEBOX_SEND_R)
                 WHEN tns.NOTEBOX_SEND_R = 3 THEN '관리자'
                 END AS noteboxReceiveName
         FROM TBL_NOTEBOX_SEND tns
@@ -19,30 +20,52 @@
         ORDER BY tns.NOTEBOX_SEND_REGIDATE DESC
     </select>
 
-
-    <select id="ReceiveList" parameterType="Long" resultType="NoteboxReceiveListDTO">
+<!--받은쪽지함-->
+    <select id="receiveList" parameterType="Long" resultType="NoteboxReceiveListDTO">
         SELECT
             tnr.NOTEBOX_RECEIVE_NO,
             tnr.NOTEBOX_RECEIVE_TITLE,
             tnr.NOTEBOX_RECEIVE_CONTENT,
             tnr.NOTEBOX_RECEIVE_REGIDATE,
             tnr.NOTEBOX_RECEIVE_S,
+--             회원구분 컬럼 noteboxSendName
             CASE
-                WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NAME FROM TBL_MEMBER WHERE MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)
-                WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 20) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)
+                WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)
+                WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)
                 WHEN tnr.NOTEBOX_RECEIVE_S = 3 THEN '관리자'
                 END AS noteboxSendName,
+--             읽음/안읽음 구분 컬림 READ_STATUS
             CASE
                 WHEN tnr.NOTEBOX_RECEIVE_READ = 'Y' THEN '읽음'
                 ELSE '안읽음'
-                END AS READ_STATUS
+                END AS readStatus
         FROM TBL_NOTEBOX_RECEIVE tnr
         WHERE tnr.NOTEBOX_RECEIVE_R = #{centerMemberNo}
         ORDER BY
+--             안읽음 우선 읽음 후순위 정렬
             CASE
                 WHEN tnr.NOTEBOX_RECEIVE_READ = 'N' THEN 0  -- 안읽음이 우선
                 ELSE 1
                 END,
+--             최신순 정렬
             tnr.NOTEBOX_RECEIVE_REGIDATE DESC  -- 최신순 정렬
     </select>
+
+<!--    쪽지보내기-->
+    <select id="findMemberNoByNickname" parameterType="String" resultType="Long">
+        SELECT member_no FROM TBL_MEMBER WHERE MEMBER_NICKNAME = #{nickname}
+    </select>
+
+    <select id="findCenterMemberNoByNickname" parameterType="String" resultType="Long">
+        SELECT center_member_no FROM TBL_CENBER_MEMBER WHERE CENTER_MEMBER_NAME = #{nickname}
+    </select>
+
+
+    <insert id="sendingNote" parameterType="NoteboxWriteDTO">
+    INSERT INTO TBL_NOTEBOX_RECEIVE (NOTEBOX_RECEIVE_NO, NOTEBOX_RECEIVE_TITLE, NOTEBOX_RECEIVE_CONTENT, NOTEBOX_RECEIVE_S, NOTEBOX_RECEIVE_R)
+    VALUES (SEQ_NOTE_RECEIVE.NEXTVAL, #{noteboxTitle}, #{noteboxContent}, #{noteboxReceiver}, #{noteboxSender});
+
+    INSERT INTO TBL_NOTEBOX_SEND (NOTEBOX_SEND_NO, NOTEBOX_SEND_TITLE, NOTEBOX_SEND_CONTENT, NOTEBOX_SEND_S, NOTEBOX_SEND_R)
+    VALUES (SEQ_NOTE_SEND.NEXTVAL, #{noteboxTitle}, #{noteboxContent}, #{noteboxSender}, #{noteboxReceiver});
+    </insert>
 </mapper>

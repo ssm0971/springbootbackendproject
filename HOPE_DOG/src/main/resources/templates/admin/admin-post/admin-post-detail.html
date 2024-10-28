@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 페이지- 게시글 상세</title>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-post/admin-post-detail.css}"/>
+  <link rel="icon" href="/im/logo/favicon.png">
+</head>
+
+<body>
+  <div>
+    <div class="info-title-box info-title-box-flex">
+      <div class="logo-box-layout">
+        <div class="logo-box">
+          <img src="../../../img/logo.jpg">
+        </div>
+      </div>
+      <div>
+        <div class="select-name">
+          <span>게시글 상세</span>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+
+      <!-- 사이드 바 -->
+      <div>
+        <div id="side-bar">
+          <div class="side-menu">
+            <div>
+              <div class="menu-title-layout">
+                <div class="menu-title">
+                  <div class="menu-name">
+                    MENU
+                  </div>
+                </div>
+              </div>
+              <ul class="menu-bar">
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-main/admin-main.html">
+                      <span>메인</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-member/admin-member-list.html">
+                      <span>회원 관리</span>
+                    </a>
+                  </div>
+                </li>
+
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-report/admin-report-list.html">
+                      <span>신고 내역</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-post/admin-post-list.html">
+                      <span>게시글 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-comment/admin-comment-list.html">
+                      <span>댓글 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-notice/admin-notice-list.html">
+                      <span>공지사항 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-center-apply/admin-center-apply-list.html">
+                      <span>센터 회원가입 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-ATP/admin-ATP-list.html">
+                      <span>입양/임시보호 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-volun/admin-volun-list.html">
+                      <span>봉사 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-notebox/admin-notebox-in.html">
+                      <span>쪽지함</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex menu-logout">
+                    <a href="../admin-login.html">
+                      <span>로그아웃</span>
+                    </a>
+                  </div>
+                </li>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="container-margin">
+
+          <!-- 내용 섹션 -->
+          <section class="board-info-box-layout">
+            <div class="board-info-box">
+              <div class="board-info-title-box" style="justify-content: left;">
+                <span>게시글 상세</span>
+              </div>
+              <!-- 글작성 박스 -->
+              <div class="post-write-area">
+                <div style="margin: 0 auto; border-bottom: 1px solid black;">
+                  <div class="title"><span style="padding-right: 10px;">[입양]</span><span>게시글 상세 제목</span></div>
+                  <br>
+                  <div class="content"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Morbi suscipit lectus in consectetur lobortis. Integer justo orci, fringilla vel congue non,
+                    tincidunt luctus ante. Proin ut porttitor diam. Cras arcu magna, varius et metus et, viverra ornare
+                    felis. Suspendisse faucibus ut nibh ac malesuada. Mauris eget pulvinar urna, fringilla cursus lorem.
+                    Aenean hendrerit est quis accumsan facilisis.</span></div>
+
+                  <!-- 수정/취소 버튼 -->
+                  <div class="post-write-button-box">
+                    <button class="post-delete-button">삭제</button>
+                  </div>
+                </div>
+
+                <div class="review-detail-box4">
+                  <div class="review-detail-commentNum">댓글 1</div>
+                  <div class="review-detail-commentbox">
+                    <div class="review-detail-name">에드워드리</div>
+                    <div class="review-detail-comment"><span>싫어요</span><button class="post-comment-delete-button" style="margin-left: 50px;">삭제</button></div>
+                    <div class="review-detail-date">2024-10-14</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

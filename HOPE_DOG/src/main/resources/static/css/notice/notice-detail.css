@@ -65,10 +65,11 @@
   align-items: center;
   /* border-bottom: 4px solid #9B805D; */
   padding-bottom: 10px; /* 여백 추가 */
+  font-size: 35px;
 }
 
 .topTitle h1 {
-  font-size: 30px;
+  /*font-size: 40px;*/
   letter-spacing: -0.5px;
   line-height: 30px;
   text-align: center;

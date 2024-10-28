@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>아이디 찾기 완료</title>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/member/find-idOk.css}">
+</head>
+<body>
+<header class="header" th:replace="~{/fragment/header :: header}"></header>
+<main class="result-container">
+    <h1>회원 아이디 찾기</h1>
+    <p class="result-text">
+        <span th:text="${memberName}"></span>님의 아이디는
+        <span class="id-text" th:text="${memberId}"></span> 입니다
+    </p>
+    <div class="result-buttons">
+        <button class="btn btn-primary" th:onclick="|location.href='@{/member/login-select}'|">로그인 하러가기</button>
+        <button class="btn btn-secondary" th:onclick="|location.href='@{/member/find-pw}'|">비밀번호 찾기</button>
+    </div>
+</main>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+</body>
+</html>

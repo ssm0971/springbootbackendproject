@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.donation.DonationMapper">
+    <select id="donationList" resultType="DonationListDTO">
+        SELECT
+            D.DONA_NO,
+            D.CENTER_MEMBER_NO,
+            D.DONA_TITLE,
+            D.DONA_CONTENT,
+            D.DONA_REGIDATE,
+            D.DONA_UPDATEDATE,
+            C.CENTER_MEMBER_NAME
+        FROM
+            TBL_DONA D
+                JOIN
+            TBL_CENTER_MEMBER C ON D.CENTER_MEMBER_NO = C.CENTER_MEMBER_NO
+        ORDER BY
+            D.DONA_REGIDATE DESC
+    </select>
+
+    <select id="donationView" resultType="DonationViewDTO">
+        SELECT
+            D.DONA_NO,
+            D.CENTER_MEMBER_NO,
+            D.DONA_TITLE,
+            D.DONA_CONTENT,
+            D.DONA_REGIDATE,
+            D.DONA_UPDATEDATE,
+            C.CENTER_MEMBER_ID,
+            C.CENTER_MEMBER_NAME,
+            CM.DONA_COMMENT_NO,
+            CM.DONA_COMMENT_CONTENT,
+            CM.DONA_COMMENT_REGIDATE,
+            CM.DONA_COMMENT_WRITER
+        FROM
+            TBL_DONA D
+                JOIN
+            TBL_CENTER_MEMBER C ON D.CENTER_MEMBER_NO = C.CENTER_MEMBER_NO
+                LEFT JOIN
+            TBL_DONA_COMMENT CM ON D.DONA_NO = CM.DONA_NO
+        WHERE D.DONA_NO = #{donaNo}
+        ORDER BY
+            CM.DONA_COMMENT_REGIDATE DESC
+    </select>
+    <!--    <insert id="insertBoard" parameterType="BoardWriteDTO">-->
+    <!--        <selectKey keyProperty="boardId" resultType="Long" order="BEFORE">-->
+    <!--            SELECT SEQ_BOARD.NEXTVAL FROM DUAL-->
+    <!--        </selectKey>-->
+    <!--        INSERT INTO TBL_BOARD (BOARD_ID, TITLE, CONTENT, USER_ID)-->
+    <!--        VALUES (#{boardId}, #{title}, #{content}, #{userId})-->
+    <!--    </insert>-->
+
+    <!--    <update id="updateBoard" parameterType="BoardUpdateDTO">-->
+    <!--        UPDATE TBL_BOARD-->
+    <!--        SET TITLE = #{title}, CONTENT=#{content}, MODIFIED_DATE = SYSDATE-->
+    <!--        WHERE BOARD_ID = #{boardId}-->
+    <!--    </update>-->
+
+<!--    <select id="selectById" parameterType="Long" resultType="NoticeViewDTO">-->
+<!--        SELECT NOTICE_NO, NOTICE_CATE, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_REGIDATE, NOTICE_UPDATEDATE-->
+<!--            ADMIN_NO, A.ADMIN_ID-->
+<!--        FROM TBL_NOTICE N JOIN TBL_ADMIN A-->
+<!--                               ON N.ADMIN_NO = #{noticeNo} AND N.ADMIN.NO = A.ADMIN_NO-->
+<!--        ORDER BY NOTICE_REGIDATE DESC-->
+<!--    </select>-->
+
+<!--    <select id="selectAll" resultType="NoticeListDTO">-->
+<!--        SELECT NOTICE_NO, NOTICE_TITLE, A.ADMIN_NO-->
+<!--        FROM TBL_NOTICE N JOIN TBL_ADMIN A-->
+<!--                               ON N.ADMIN_NO = A.ADMIN_NO-->
+<!--        ORDER BY NOTICE_NO DESC-->
+<!--    </select>-->
+
+<!--    <select id="selectTotal" resultType="int">-->
+<!--        SELECT COUNT(NOTICE_NO) FROM TBL_NOTICE-->
+<!--    </select>-->
+
+<!--    <select id="selectAllPage" parameterType="Criteria" resultType="NoticeListDTO">-->
+<!--    <![CDATA[-->
+<!--        SELECT NOTICE_NO, NOTICE_TITLE, LOGIN_ID, FILE_ID, NAME, UPLOAD_PATH, UUID-->
+<!--        FROM (-->
+<!--                 SELECT ROWNUM AS RNUM, BOARD_ID, TITLE, LOGIN_ID, FILE_ID, NAME, UPLOAD_PATH, UUID-->
+<!--                 FROM (-->
+<!--                          SELECT B.BOARD_ID, TITLE, U.LOGIN_ID,-->
+<!--                                 F.FILE_ID, F.NAME, F.UPLOAD_PATH, F.UUID-->
+<!--                          FROM TBL_BOARD B JOIN TBL_USER U-->
+<!--                                                ON B.USER_ID = U.USER_ID-->
+<!--                                           LEFT JOIN (-->
+<!--                              SELECT FILE_ID, NAME, UPLOAD_PATH, UUID, BOARD_ID-->
+<!--                              FROM (-->
+<!--                                       SELECT FILE_ID, NAME, UPLOAD_PATH, UUID, BOARD_ID,-->
+<!--                                              RANK() OVER(PARTITION BY BOARD_ID ORDER BY FILE_ID) RK-->
+<!--                                       FROM TBL_FILE-->
+<!--                                   )-->
+<!--                              WHERE RK = 1-->
+<!--                          ) F-->
+<!--                                                     ON B.BOARD_ID = F.BOARD_ID-->
+<!--                          ORDER BY BOARD_ID DESC-->
+<!--                      )-->
+<!--                 WHERE ROWNUM <= #{page} * #{amount}-->
+<!--             )-->
+<!--        WHERE RNUM > (#{page} - 1) * #{amount}-->
+<!--        ]]>-->
+
+    <!--    <delete id="deleteBoard" parameterType="long">-->
+    <!--        DELETE FROM TBL_BOARD-->
+    <!--        WHERE BOARD_ID = #{boardId}-->
+    <!--    </delete>-->
+
+
+</mapper>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.volun.car.CarMapper">
+<!--    게시글 조회-->
+    <select id="selectAllCars" resultType="CarDTO">
+        SELECT CAR_NO, CAR_CATE, CAR_TITLE, CAR_CONTENT, CAR_REGIDATE, CAR_UPDATEDATE,
+               CAR_WRITER
+        FROM TBL_CAR
+        ORDER BY CAR_REGIDATE DESC  -- 최신 글이 위에 오도록 정렬
+    </select>
+<!--게시글 상세페이지(글)-->
+    <select id="selectCarById" parameterType="long" resultType="CarDTO">
+        SELECT CAR_NO, CAR_CATE, CAR_TITLE, CAR_CONTENT, CAR_REGIDATE, CAR_UPDATEDATE,
+               CAR_WRITER
+        FROM TBL_CAR
+        WHERE CAR_NO = #{no}
+    </select>
+
+<!--    카테고리 분류별 게시글 조회 -->
+    <select id="selectCate" resultType="CarDTO">
+        SELECT CAR_NO, CAR_CATE, CAR_TITLE, CAR_CONTENT, CAR_REGIDATE, CAR_UPDATEDATE,
+               CAR_WRITER
+        FROM TBL_CAR
+        WHERE CAR_CATE = #{cate}
+        ORDER BY CAR_REGIDATE DESC
+    </select>
+
+    <!-- 일반회원 조회 -->
+    <select id="selectMemberByNo" parameterType="long" resultType="MemberDTO">
+        SELECT MEMBER_NO, MEMBER_NICKNAME
+        FROM TBL_MEMBER
+        WHERE MEMBER_NO = #{no}
+    </select>
+
+    <!-- 센터회원 조회 -->
+        <select id="selectCenterMemberByNo" parameterType="long" resultType="CenterMemberDTO">
+            SELECT CENTER_MEMBER_NO,CENTER_MEMBER_NAME
+            FROM TBL_CENTER_MEMBER
+            WHERE CENTER_MEMBER_NO = #{no}
+        </select>
+
+</mapper>

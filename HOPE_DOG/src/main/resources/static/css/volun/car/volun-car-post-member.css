@@ -24,7 +24,10 @@ main{
   border-top: solid 2px #9B805D;
   border-bottom: solid 2px #9B805D;
 }
-
+a{
+  text-decoration: none;
+  color: black;
+}
 .volun-navList{
   font-size: 18px;
   font-weight: bold;

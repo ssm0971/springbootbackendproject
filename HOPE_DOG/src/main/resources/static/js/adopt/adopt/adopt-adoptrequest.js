@@ -323,7 +323,7 @@ function validateInputs() {
     alert('모든 질문을 입력해 주세요.'); // 경고창 표시
   } else {
     alert('신청이 완료되었습니다'); // 모든 입력이 유효한 경우
-    window.location.href = '../../html/adopt/adopt-adoptdetail.html';
+    location.href='/adopt/adopt';
   }
 }
 
@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function requestcancle() {
   if (confirm('정말 취소하시겠습니까? 작정하던 내용은 저장되지 않습니다')) {
     console.log('입양신청이 취소되었습니다.');
-    window.location.href = '../../html/adopt/adopt-adoptdetail.html'
+    location.href='/adopt/adopt';
   } else {
     console.log('입양신청이 취소되지 않았습니다.');
   }
@@ -375,3 +375,16 @@ function requestcancle() {
     location.href='/adopt/review';
   });
 }
+
+
+// URL에서 adoptNo 추출하는 함수
+function getParameter(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(name);
+}
+
+// 페이지가 로드될 때 adoptNo를 가져와서 표시
+document.addEventListener('DOMContentLoaded', function() {
+  const adoptNo = getParameter('adoptNo'); // URL에서 adoptNo를 가져옵니다.
+  document.getElementById('adoptNoDisplay').textContent = adoptNo; // adoptNo를 표시합니다.
+});

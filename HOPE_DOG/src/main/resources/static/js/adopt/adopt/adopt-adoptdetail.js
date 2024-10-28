@@ -28,13 +28,18 @@ function endClick() {
   }
 }
 
+// URL에서 파라미터를 가져오는 함수
+function getParameter(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(name);
+}
+
 // 신청서 이동 버튼
 function requestClick() {
-  const adoptNo = document.querySelector('.adoptNo').innerText;
+  const adoptNo = getParameter('adoptNo'); // adoptNo를 URL에서 가져옵니다.
 
   if (confirm('정말 신청하시겠습니까?')) {
     console.log('신청서페이지로 이동합니다.');
-    const adoptNo = element.querySelector('.adoptNo').innerText;
     console.log(adoptNo);
     location.href = `/adopt/adopt/adoptrequest?adoptNo=${adoptNo}`;
   } else {

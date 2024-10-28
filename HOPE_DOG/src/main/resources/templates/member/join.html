@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>회원가입</title>
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
     <link rel="stylesheet" th:href="@{/css/member/join.css}">
 </head>
 <body>
@@ -114,7 +115,7 @@
         </div>
     </form>
 </div>
-
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 <!-- 다음 우편번호 API -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script th:src="@{/js/member/join.js}"></script>

@@ -15,4 +15,5 @@ public class MemberSessionDTO {
     private String memberNickname;
     private String memberLoginStatus;
     private String memberTwoFactorEnabled;
+    private String memberPw;
 }

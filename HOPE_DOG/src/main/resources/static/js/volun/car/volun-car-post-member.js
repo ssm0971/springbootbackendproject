@@ -10,7 +10,7 @@ function deleteAlert() {
   const userConfirmed = confirm("삭제하시겠습니까?");
   if (userConfirmed) {
       alert("삭제가 완료되었습니다."); // 알림 창 표시
-      window.location.href = "../../html/volun/volun-car-main-member.html"; // 카풀 메인페이지로 이동
+      window.location.href = "../../html/volun/volun-car-main.html"; // 카풀 메인페이지로 이동
   }
 }
 
@@ -37,3 +37,4 @@ function Comment() {
   }
   return true; // 입력 내용이 있을 경우 
 }
+

@@ -23,27 +23,39 @@ public class CenterMemberService {
     public final MemberMapper memberMapper;
 
 
-    /**
-     * 센터 회원가입 처리
-     * @param memberDTO 회원가입 정보
-     * @throws IllegalArgumentException 필수 정보 누락 시
-     * @throws IOException 파일 처리 실패 시
-     */
-    public void join(CenterMemberDTO memberDTO) {
-        // 필수 입력값 검증
-        validateMemberDTO(memberDTO);
+    public Long join(CenterMemberDTO memberDTO) {
+        // 1. 센터 회원 정보 저장 (시퀀스로 centerMemberNo 생성)
+        centerMemberMapper.insertCenterMember(memberDTO);
+        Long centerMemberNo = memberDTO.getCenterMemberNo();  // 생성된 번호
 
+        // 2. 파일 정보 저장
+        if (memberDTO.getBusinessFile() != null && !memberDTO.getBusinessFile().isEmpty()) {
+            try {
+                MultipartFile file = memberDTO.getBusinessFile();
+                String originalFilename = file.getOriginalFilename();
+                String uuid = UUID.randomUUID().toString();
+                String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                String savedFileName = uuid + extension;
+                String savePath = "C:/upload/" + savedFileName;
 
-        // 아이디 중복 체크
-        if (centerMemberMapper.checkCenterId(memberDTO.getCenterMemberId()) > 0) {
-            throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
+                // 파일 정보 생성
+                CenterFileDTO fileDTO = new CenterFileDTO();
+                fileDTO.setCenterFileName(originalFilename);
+                fileDTO.setCenterFileUuid(uuid);
+                fileDTO.setCenterFilePath(savePath);
+                fileDTO.setCenterMemberNo(centerMemberNo);  // 생성된 회원 번호 설정
+
+                // 파일 저장
+                file.transferTo(new File(savePath));
+
+                // 파일 정보 DB 저장
+                centerMemberMapper.insertCenterFile(fileDTO);
+            } catch (IOException e) {
+                throw new RuntimeException("파일 저장에 실패했습니다.", e);
+            }
         }
 
-        // 파일 처리
-        handleFile(memberDTO);
-
-        // 회원 정보 저장
-        centerMemberMapper.insertCenterMember(memberDTO);
+        return centerMemberNo;
     }
 
     /**
@@ -96,37 +108,7 @@ public class CenterMemberService {
 
     }
 
-    /**
-     * 파일 처리
-     * @param memberDTO 파일 정보가 포함된 회원 정보
-     * @throws IOException 파일 처리 실패 시
-     */
-    private void handleFile(CenterMemberDTO memberDTO) {
-        MultipartFile file = memberDTO.getBusinessFile();
-        if (file != null && !file.isEmpty()) {
-            try {
-                String originalFilename = file.getOriginalFilename();
-                String uuid = UUID.randomUUID().toString();
-                String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-                String savedFileName = uuid + extension;
-                String savePath = "C:/upload/" + savedFileName;  // 실제 저장 경로로 수정 필요
 
-                // 파일 정보 생성
-                CenterFileDTO fileDTO = new CenterFileDTO();
-                fileDTO.setCenterFileName(originalFilename);
-                fileDTO.setCenterFileUuid(uuid);
-                fileDTO.setCenterFilePath(savePath);
-                fileDTO.setCenterMemberNo(memberDTO.getCenterMemberNo());
 
-                // 파일 저장
-                file.transferTo(new File(savePath));
-
-                // 파일 정보 DB 저장
-                centerMemberMapper.insertCenterFile(fileDTO);
-            } catch (IOException e) {
-                throw new RuntimeException("파일 저장에 실패했습니다.", e);
-            }
-        }
-    }
 }
 

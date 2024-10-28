@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 아이디 찾기</title>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/member/find-id.css}">
+</head>
+<body>
+<header class="header" th:replace="~{/fragment/header :: header}"></header>
+<main class="find-id-container">
+    <h1>회원 아이디 찾기</h1>
+    <form id="findIdForm" th:action="@{/member/find-id}" method="post">
+        <div class="input-group">
+            <label for="userName">회원 이름</label>
+            <input type="text" id="userName" name="memberName" required>
+        </div>
+        <div class="input-group">
+            <label for="userPhone">전화번호</label>
+            <input type="tel" id="userPhone" name="memberPhoneNumber" required>
+        </div>
+        <div class="button-group">
+            <button type="button" id="sendVerification">인증번호 받기</button>
+        </div>
+        <div class="input-group" id="verificationGroup" style="display: none;">
+            <label for="verificationCode">인증번호</label>
+            <input type="text" id="verificationCode" name="verificationCode">
+            <button type="button" id="verifyCode">인증 확인</button>
+        </div>
+        <div class="button-group">
+            <button type="button" id="findIdButton" disabled>아이디 찾기</button>
+        </div>
+    </form>
+</main>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+<script th:src="@{/js/member/find-id.js}"></script>
+</body>
+</html>

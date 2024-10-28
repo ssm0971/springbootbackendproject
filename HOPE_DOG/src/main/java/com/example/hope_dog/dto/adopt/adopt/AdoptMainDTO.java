@@ -12,6 +12,14 @@ import java.util.Date;
 public class AdoptMainDTO {
     private Long adoptNo;
     private String adoptTitle;
+    private String adoptStatus;
+    private String adoptIntroduce;
+    private String adoptName;
+    private String adoptGender;
+    private String adoptNeutering;
+    private Date adoptBirth;
+    private String adoptWeight;
     private Date adoptRegidate;
-    private int centerMemberNo;
+    private Date adoptPeriodEnd;
+    private Long centerMemberNo;
 }

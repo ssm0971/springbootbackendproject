@@ -67,6 +67,10 @@ main{
   gap: 10px;
 }
 
+.adopt-post:hover {
+  cursor: pointer;
+}
+
 .adopt-post{
   height: 350px;
   background-color: #F5EAD9;

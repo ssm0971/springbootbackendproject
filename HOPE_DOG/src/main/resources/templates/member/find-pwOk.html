@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호 찾기 완료</title>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/member/find-pwOk.css}">
+</head>
+<body>
+<header class="header" th:replace="~{/fragment/header :: header}"></header>
+<main class="find-pw-result-container">
+    <h1>회원 비밀번호 찾기</h1>
+    <p class="result-message">
+        <span th:text="${memberName}"></span>님의 임시비밀번호를<br>이메일로 발송하였습니다
+    </p>
+    <div class="button-group">
+        <button id="loginButton" th:onclick="|location.href='@{/member/login-select}'|">로그인 하러가기</button>
+    </div>
+</main>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+</body>
+</html>

@@ -37,7 +37,7 @@ function registration() {
   // 내용이 있을 때 확인 창
   if (confirm('게시글을 등록하시겠습니까?')) {
     alert('등록이 완료되었습니다.');
-    location.href = '../../html/volun/volun-car-main-member.html'; // 카풀 메인으로 이동
+    location.href = '../../html/volun/volun-car-main.html'; // 카풀 메인으로 이동
   } else {
     // 확인 창에서 취소했을 때 아무 동작도 하지 않음
     return false; // 입력 내용이 그대로 유지됨
@@ -53,12 +53,12 @@ function Cancel() {
 
   if (subject === '' && contents === '<p><br></p>') { // 빈 내용 체크
     // 아무 내용도 입력되지 않은 경우
-    location.href = '../../html/volun/volun-car-main-member.html'; // 바로 이동
+    location.href = '../../html/volun/volun-car-main.html'; // 바로 이동
   } else {
     // 내용이 입력된 경우 알림창
     const confirmResult = confirm('작성된 내용이 저장되지 않습니다. 취소하시겠습니까?');
     if (confirmResult) {
-      location.href = '../../html/volun/volun-car-main-member.html'; // 확인 시 이동
+      location.href = '../../html/volun/volun-car-main.html'; // 확인 시 이동
     }
     // 아니요 버튼을 누르면 페이지 그대로 유지
   }

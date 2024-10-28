@@ -21,7 +21,7 @@ class NoteBoxMapperTest {
     void testFindNoteboxSendList() {
         Long noteboxMemberNo = 12L; // 테스트에 사용할 centerMemberNo
 
-        List<NoteboxSendListDTO> result = noteBoxMapper.SendList(noteboxMemberNo);
+        List<NoteboxSendListDTO> result = noteBoxMapper.sendList(noteboxMemberNo);
 
         assertThat(result).isNotNull();
         assertThat(result).isNotEmpty(); // 결과가 비어있지 않음을 확인
@@ -33,7 +33,7 @@ class NoteBoxMapperTest {
     void testFindNoteboxReceiveList() {
         Long noteboxMemberNo = 12L;
 
-        List<NoteboxReceiveListDTO> result = noteBoxMapper.ReceiveList(noteboxMemberNo);
+        List<NoteboxReceiveListDTO> result = noteBoxMapper.receiveList(noteboxMemberNo);
 
         assertThat(result).isNotNull();
         assertThat(result).isNotEmpty();

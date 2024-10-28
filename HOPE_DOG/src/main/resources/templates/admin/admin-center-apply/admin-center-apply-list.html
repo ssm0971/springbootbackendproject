@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지- 센터 회원가입 신청 목록</title>
+    <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin/admin-center-apply/admin-center-apply-list.css}"/>
+    <link rel="icon" href="/im/logo/favicon.png">
+</head>
+
+<body>
+    <div>
+        <div class="info-title-box info-title-box-flex">
+            <div class="logo-box-layout">
+                <div class="logo-box">
+                    <img src="../../../img/logo.jpg">
+                </div>
+            </div>
+            <div>
+                <div class="select-name">
+                    <span>센터 회원가입 신청 관리</span>
+                </div>
+            </div>
+        </div>
+        <div class="wrap">
+
+            <!-- 사이드 바 -->
+      <div>
+        <div id="side-bar">
+          <div class="side-menu">
+            <div>
+              <div class="menu-title-layout">
+                <div class="menu-title">
+                  <div class="menu-name">
+                    MENU
+                  </div>
+                </div>
+              </div>
+              <ul class="menu-bar">
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-main/admin-main.html">
+                      <span>메인</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-member/admin-member-list.html">
+                      <span>회원 관리</span>
+                    </a>
+                  </div>
+                </li>
+
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-report/admin-report-list.html">
+                      <span>신고 내역</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-post/admin-post-list.html">
+                      <span>게시글 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-comment/admin-comment-list.html">
+                      <span>댓글 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-notice/admin-notice-list.html">
+                      <span>공지사항 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-center-apply/admin-center-apply-list.html">
+                      <span>센터 회원가입 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-ATP/admin-ATP-list.html">
+                      <span>입양/임시보호 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-volun/admin-volun-list.html">
+                      <span>봉사 관리</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex">
+                    <a href="../admin-notebox/admin-notebox-in.html">
+                      <span>쪽지함</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="menu">
+                  <div class="menu-flex menu-logout">
+                    <a href="../admin-login.html">
+                      <span>로그아웃</span>
+                    </a>
+                  </div>
+                </li>
+            </div>
+          </div>
+        </div>
+      </div>
+
+            <div class="container">
+                <div class="container-margin">
+                    <!-- 헤더 -->
+                    <div class="delete-box-layout">
+                        <form class="search-box" action="" method="get">
+                            <input type="text" class="search-text" name=""placeholder="검색어를 입력하세요.">
+                            <button class="search-btn" type="submit">검색</button>
+                         </form>
+                        <div class="delete-box">
+                            <button class="deleteButton delete-button">수락</button>
+                            <button class="deleteButton delete-button">거절</button>
+                        </div>
+                    </div>
+
+                    <!-- 내용 섹션 -->
+                    <section class="board-info-box-layout">
+                        <div class="board-info-box">
+                            <div class="board-info-title-box">
+                                <span>센터 회원가입 신청 목록</span>
+                            </div>
+                    
+                            <div class="info-table">
+                                <!-- Header -->
+                                <div class="info-row header-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" id="allSelect">
+                                    </div>
+                                    <div class="info-cell-no info-cell">No</div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">신청일</div>
+                                    <div class="info-cell-content info-cell">신청서</div>
+                                </div>
+                    
+                                <!-- Data rows -->
+                                <div class="info-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell-no info-cell"><a href="./admin-center-application.html">1</a></div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">
+                                        <a>2024-10-09</a>
+                                    </div>
+
+                                    <div class="info-cell-content info-cell">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi suscipit lectus in consectetur lobortis. Integer justo orci, fringilla vel congue non, tincidunt luctus ante. Proin ut porttitor diam. Cras arcu magna, varius et metus et, viverra ornare felis. Suspendisse faucibus ut nibh ac malesuada. Mauris eget pulvinar urna, fringilla cursus lorem. Aenean hendrerit est quis accumsan facilisis.</div>
+
+                                </div>
+
+                                <div class="info-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell-no info-cell">2</div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">
+                                        <a>2024-10-09</a>
+                                    </div>
+
+                                    <div class="info-cell-content info-cell">01012345678</div>
+
+                                </div>
+                                
+                                <div class="info-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell-no info-cell">3</div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">
+                                        <a>2024-10-09</a>
+                                    </div>
+
+                                    <div class="info-cell-content info-cell">01012345678</div>
+
+                                </div>
+
+                                <div class="info-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell-no info-cell">4</div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">
+                                        <a>2024-10-09</a>
+                                    </div>
+
+                                    <div class="info-cell-content info-cell">01012345678</div>
+
+                                </div>
+
+                                <div class="info-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell-no info-cell">5</div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">
+                                        <a>2024-10-09</a>
+                                    </div>
+
+                                    <div class="info-cell-content info-cell">01012345678</div>
+
+                                </div>
+
+                                <div class="info-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell-no info-cell">6</div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">
+                                        <a>2024-10-09</a>
+                                    </div>
+
+                                    <div class="info-cell-content info-cell">01012345678</div>
+
+                                </div>
+
+                                <div class="info-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell-no info-cell">7</div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">
+                                        <a>2024-10-09</a>
+                                    </div>
+
+                                    <div class="info-cell-content info-cell">01012345678</div>
+
+                                </div>
+                                
+                                <div class="info-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell-no info-cell">8</div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">
+                                        <a>2024-10-09</a>
+                                    </div>
+
+                                    <div class="info-cell-content info-cell">01012345678</div>
+
+                                </div>
+
+                                <div class="info-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell-no info-cell">9</div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">
+                                        <a>2024-10-09</a>
+                                    </div>
+
+                                    <div class="info-cell-content info-cell">01012345678</div>
+
+                                </div>
+
+                                <div class="info-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell-no info-cell">10</div>
+                                    <div class="info-cell-stat info-cell">센터명</div>
+                                    <div class="info-cell-cate info-cell">
+                                        <a>2024-10-09</a>
+                                    </div>
+
+                                    <div class="info-cell-content info-cell">01012345678</div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+
+                    <!-- 페이지 버튼 -->
+                    <div class="page-button-box-layout">
+                        <div class="page-button-box">
+                            <!-- 페이지 번호 -->
+                            <div class="">
+                                <div class="page-button-margin">
+                                    <div>
+                                        <img src="/im/admin/left_icon.png" class="left-button">
+                                    </div>
+                                </div>
+                            </div>
+                            <th:block th:each="num : ${#numbers.sequence(pageDTO.startPage, pageDTO.endPage + 1)}">
+                                <a th:class="${(num == pageDTO.startPage) ? 'page-button-active page-button changePage' : 'page-button changePage'}" th:href="${num}">
+                                    <span class="page-button" th:text="${num}"></span>
+                                </a>
+                                <div style="width: 2px;"></div>
+                            </th:block>
+                            <div class="">
+                                <div class="page-button-margin">
+                                    <div>
+                                        <img src="/im/admin/right_icon.png" class="right-button">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 페이지 버튼 끝 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script src="../../../js/admin/admin-allcheck.js"></script>
+</html>

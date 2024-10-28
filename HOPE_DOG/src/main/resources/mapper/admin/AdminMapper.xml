@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.admin.AdminMapper">
+    <select id="selectId" resultType="Long">
+        select ADMIN_NO
+        from TBL_ADMIN
+        where ADMIN_ID=#{adminId} and ADMIN_PW=#{adminPw}
+    </select>
+
+    <select id="selectLoginInfo" resultType="AdminSessionDTO">
+        select ADMIN_NO, ADMIN_ID
+        from TBL_ADMIN
+        where ADMIN_ID=#{adminId} and ADMIN_PW=#{adminPw}
+    </select>
+<!--회원 목록 조회-->
+    <select id="selectMemberList" resultType="AdminMemberDTO">
+        SELECT *
+        FROM (
+        SELECT
+        MEMBER_NO,
+        MEMBER_ID,
+        MEMBER_NAME,
+        MEMBER_NICKNAME,
+        MEMBER_EMAIL,
+        MEMBER_PHONE_NUMBER
+        FROM
+        TBL_MEMBER
+        ORDER BY
+        MEMBER_NO DESC
+        )
+    </select>
+
+<!--신고 내역 조회-->
+    <select id="selectReportList" resultType="AdminReportDTO">
+        SELECT REPORT_NO, 'POST' AS REPORT_TYPE, REPORT_CATE, REPORT_CONTENT,
+               CASE
+                   WHEN MOD(REPORT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = REPORT_WRITER)
+                   WHEN MOD(REPORT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = REPORT_WRITER)
+                   END AS REPORT_WRITER,
+               TO_CHAR(REPORT_REGIDATE, 'YYYY-MM-DD') AS REPORT_REGIDATE, REPORT_CONTENT_NO
+        FROM TBL_REPORT
+        WHERE REPORT_CATE IN ('입양', '임시보호', '후기', '봉사', '기부', '카풀', '자랑', '자유', '봉사후기', '질문')
+
+        UNION ALL
+
+        SELECT COMMENT_REPORT_NO, 'COMMENT' AS REPORT_TYPE, COMMENT_REPORT_CATE, COMMENT_REPORT,
+               CASE
+                   WHEN MOD(COMMENT_REPORT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = COMMENT_REPORT_WRITER)
+                   WHEN MOD(COMMENT_REPORT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = COMMENT_REPORT_WRITER)
+                   END AS REPORT_WRITER,
+               TO_CHAR(COMMENT_REPORT_REGIDATE, 'YYYY-MM-DD') AS REPORT_REGIDATE, CONTENT_NO
+        FROM TBL_COMMENT_REPORT
+        WHERE COMMENT_REPORT_CATE IN ('입양', '임시보호', '후기', '봉사', '기부', '카풀', '자랑', '자유', '봉사후기', '질문')
+
+        ORDER BY REPORT_REGIDATE DESC
+    </select>
+<!--게시글 목록 조회-->
+    <select id="selectPostList" resultType="AdminPostDTO">
+        WITH AllPosts AS (
+            SELECT
+                'COMMU' AS post_type,
+                COMMU_NUMBER AS post_no,
+                COMMU_TITLE AS post_title,
+                COMMU_CONTENT as post_content,
+                CASE
+                    WHEN MOD(COMMU_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = COMMU_WRITER)
+                    WHEN MOD(COMMU_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = COMMU_WRITER)
+                    END AS post_writer,
+                COMMU_UPDATEDATE AS post_update_date
+            FROM TBL_COMMU
+            UNION ALL
+            SELECT
+                'VOLUN' AS post_type,
+                VOLUN_NO AS post_no,
+                VOLUN_TITLE AS post_title,
+                VOLUN_CONTENT as post_content,
+                (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = TBL_VOLUN.CENTER_MEMBER_NO) AS post_writer,
+                VOLUN_UPDATEDATE AS post_update_date
+            FROM TBL_VOLUN
+            UNION ALL
+            SELECT
+                'DONA' AS post_type,
+                DONA_NO AS post_no,
+                DONA_TITLE AS post_title,
+                DONA_CONTENT as post_content,
+                (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = TBL_DONA.CENTER_MEMBER_NO) AS post_writer,
+                DONA_UPDATEDATE AS post_update_date
+            FROM TBL_DONA
+            UNION ALL
+            SELECT
+                'ADOPT' AS post_type,
+                ADOPT_NO AS post_no,
+                ADOPT_TITLE AS post_title,
+                ADOPT_CONTENT as post_content,
+                (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = TBL_ADOPT.CENTER_MEMBER_NO) AS post_writer,
+                ADOPT_UPDATEDATE AS post_update_date
+            FROM TBL_ADOPT
+            UNION ALL
+            SELECT
+                'CAR' AS post_type,
+                CAR_NO AS post_no,
+                CAR_TITLE AS post_title,
+                CAR_CONTENT as post_content,
+                CASE
+                    WHEN MOD(CAR_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = CAR_WRITER)
+                    WHEN MOD(CAR_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = CAR_WRITER)
+                    END AS post_writer,
+                CAR_UPDATEDATE AS post_update_date
+            FROM TBL_CAR
+            UNION ALL
+            SELECT
+                'PROTECT' AS post_type,
+                PROTECT_NO AS post_no,
+                PROTECT_TITLE AS post_title,
+                PROTECT_CONTENT as post_content,
+                (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = TBL_PROTECT.CENTER_MEMBER_NO) AS post_writer,
+                PROTECT_UPDATEDATE AS post_update_date
+            FROM TBL_PROTECT
+            UNION ALL
+            SELECT
+                'REVIEW' AS post_type,
+                REVIEW_NO AS post_no,
+                REVIEW_TITLE AS post_title,
+                REVIEW_CONTENT as post_content,
+                (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = TBL_REVIEW.MEMBER_NO) AS post_writer,
+                REVIEW_UPDATEDATE AS post_update_date
+            FROM TBL_REVIEW
+        )
+
+        SELECT
+            post_type,
+            post_no,
+            post_title,
+            post_content,
+            post_writer,
+            post_update_date
+        FROM AllPosts
+        ORDER BY post_update_date DESC
+
+    </select>
+    <!--댓글 목록 조회-->
+    <select id="selectCommentList" resultType="AdminCommentDTO">
+        WITH AllComments AS (
+            SELECT
+                'COMMU' AS comment_type,
+                COMMU_COMMENT_NO AS comment_no,
+                COMMU_NUMBER AS post_no,
+                COMMU_COMMENT as comment_content,
+                CASE
+                    WHEN MOD(COMMU_COMMENT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = COMMU_COMMENT_WRITER)
+                    WHEN MOD(COMMU_COMMENT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = COMMU_COMMENT_WRITER)
+                    END AS comment_writer,
+                COMMU_COMMET_REGIDATE AS comment_update_date
+            FROM TBL_COMMU_COMMENT
+            UNION ALL
+            SELECT
+                'VOLUN' AS comment_type,
+                VOLUN_COMMENT_NO AS comment_no,
+                VOLUN_NO AS post_no,
+                VOLUN_COMMENT as comment_content,
+                CASE
+                    WHEN MOD(VOLUN_COMMENT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = VOLUN_COMMENT_WRITER)
+                    WHEN MOD(VOLUN_COMMENT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = VOLUN_COMMENT_WRITER)
+                    END AS comment_writer,
+                VOLUN_COMMENT_REGIDATE AS comment_update_date
+            FROM TBL_VOLUN_COMMENT
+            UNION ALL
+            SELECT
+                'DONA' AS comment_type,
+                DONA_COMMENT_NO AS comment_no,
+                DONA_NO AS post_no,
+                DONA_COMMENT_CONTENT as comment_content,
+                CASE
+                    WHEN MOD(DONA_COMMENT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = DONA_COMMENT_WRITER)
+                    WHEN MOD(DONA_COMMENT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = DONA_COMMENT_WRITER)
+                    END AS comment_writer,
+                DONA_COMMENT_UPDATEDATE AS comment_update_date
+            FROM TBL_DONA_COMMENT
+            UNION ALL
+            SELECT
+                'ADOPT' AS comment_type,
+                ADOPT_COMMENT_NO AS comment_no,
+                ADOPT_NO AS post_no,
+                ADOPT_COMMENT as comment_content,
+                CASE
+                    WHEN MOD(ADOPT_COMMENT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = ADOPT_COMMENT_WRITER)
+                    WHEN MOD(ADOPT_COMMENT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = ADOPT_COMMENT_WRITER)
+                    END AS comment_writer,
+                ADOPT_COMMENT_UPDATEDATE AS comment_update_date
+            FROM TBL_ADOPT_COMMENT
+            UNION ALL
+            SELECT
+                'CAR' AS comment_type,
+                CAR_COMMENT_NO AS comment_no,
+                CAR_NO AS post_no,
+                CAR_COMMENT as comment_content,
+                CASE
+                    WHEN MOD(CAR_COMMENT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = CAR_COMMENT_WRITER)
+                    WHEN MOD(CAR_COMMENT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = CAR_COMMENT_WRITER)
+                    END AS comment_writer,
+                CAR_COMMENT_REGIDATE AS comment_update_date
+            FROM TBL_CAR_COMMENT
+            UNION ALL
+            SELECT
+                'PROTECT' AS comment_type,
+                PROTECT_COMMENT_NO AS comment_no,
+                PROTECT_NO AS post_no,
+                PROTECT_COMMENT as comment_content,
+                CASE
+                    WHEN MOD(PROTECT_COMMENT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = PROTECT_COMMENT_WRITER)
+                    WHEN MOD(PROTECT_COMMENT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = PROTECT_COMMENT_WRITER)
+                    END AS comment_writer,
+                PROTECT_COMMENT_UPDATEDATE AS comment_update_date
+            FROM TBL_PROTECT_COMMENT
+            UNION ALL
+            SELECT
+                'REVIEW' AS comment_type,
+                REVIEW_COMMENT_NO AS comment_no,
+                REVIEW_NO AS post_no,
+                REVIEW_COMMENT as comment_content,
+                CASE
+                    WHEN MOD(REVIEW_COMMENT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = REVIEW_COMMENT_WRITER)
+                    WHEN MOD(REVIEW_COMMENT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = REVIEW_COMMENT_WRITER)
+                    END AS comment_writer,
+                REVIEW_COMMENT_UPDATEDATE AS comment_update_date
+            FROM TBL_REVIEW_COMMENT
+        )
+
+        SELECT
+            comment_type,
+            comment_no,
+            post_no,
+            comment_content,
+            comment_writer,
+            comment_update_date
+        FROM AllComments
+        ORDER BY comment_update_date DESC
+
+    </select>
+    <!--회원 목록 조회-->
+
+</mapper>

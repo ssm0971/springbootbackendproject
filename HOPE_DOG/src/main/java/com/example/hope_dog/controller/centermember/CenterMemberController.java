@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -219,23 +220,21 @@ public class CenterMemberController {
     }
 
 
-    /**
-     * 센터 회원가입 처리
-     */
     @PostMapping("/center-join")
     @ResponseBody
-    public ResponseEntity<?> join(@ModelAttribute CenterMemberDTO centerMemberDTO,
+    @Transactional  // 트랜잭션 추가
+    public ResponseEntity<?> join(@ModelAttribute CenterMemberDTO memberDTO,
                                   @RequestParam("businessFile") MultipartFile file,
                                   HttpSession session) {
         try {
             // 파일 처리를 위해 DTO에 파일 설정
-            centerMemberDTO.setBusinessFile(file);
+            memberDTO.setBusinessFile(file);
 
-            // 회원가입 처리
-            centerMemberService.join(centerMemberDTO);
+            // 회원가입 처리 (memberDTO에 centerMemberNo가 설정됨)
+            Long centerMemberNo = centerMemberService.join(memberDTO);
 
-            // 세션에 이름 저장 (가입 완료 페이지에서 사용)
-            session.setAttribute("centerMemberName", centerMemberDTO.getCenterMemberName());
+            // 세션에 이름 저장
+            session.setAttribute("centerMemberName", memberDTO.getCenterMemberName());
 
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
@@ -259,5 +258,7 @@ public class CenterMemberController {
         session.removeAttribute("centerMemberName");
         return "center/center-joinOk";
     }
+
+
 
 }

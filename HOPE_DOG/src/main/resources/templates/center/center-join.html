@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>센터 회원가입</title>
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
     <link rel="stylesheet" th:href="@{/css/center/center-join.css}">
     <script defer th:src="@{/js/center/center-join.js}"></script>
 </head>
@@ -100,6 +101,7 @@
         </div>
     </form>
 </div>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </body>
 </html>

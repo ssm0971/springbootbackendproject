@@ -75,7 +75,7 @@
         <!-- 센터 회원 로그인 상태 -->
         <ul class="user-actions"
             th:if="${session.centerMemberNo != null && session.memberNo == null}">
-            <li class="user-action"><a th:href="@{/center/mypage}">센터마이페이지</a></li>
+            <li class="user-action"><a th:href="@{/centerMypage/centerProfile}">센터마이페이지</a></li>
             <li class="user-action"><a th:href="@{/center/center-logout}">로그아웃</a></li>
         </ul>
     </div>

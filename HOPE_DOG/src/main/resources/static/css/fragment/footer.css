@@ -1,0 +1,30 @@
+/* 푸터 스타일 */
+footer {
+    margin-top: auto;
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    background-color: #fff;  /* 배경색 추가 */
+    border-top: 1px solid #eee;  /* 구분선 추가 */
+}
+
+.footer-links {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+footer h6 {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;  /* 줄 간격 추가 */
+}

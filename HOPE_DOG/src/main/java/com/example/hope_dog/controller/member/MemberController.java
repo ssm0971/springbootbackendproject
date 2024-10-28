@@ -1,5 +1,6 @@
 package com.example.hope_dog.controller.member;
 
+import com.example.hope_dog.dto.member.FindPwRequestDTO;
 import com.example.hope_dog.dto.member.MemberDTO;
 import com.example.hope_dog.dto.member.MemberSessionDTO;
 import com.example.hope_dog.service.member.MemberService;
@@ -24,25 +25,19 @@ public class MemberController {
     private final MemberService memberService;
 
 
-    /**
-     * 회원가입 페이지 이동
-     */
+   // 회원가입 페이지 이동
     @GetMapping("/join")
     public String join() {
         return "member/join";
     }
 
-    /**
-     * 로그인 페이지 이동
-     */
+    // 로그인 페이지 이동
     @GetMapping("/login")
     public String login() {
         return "member/login";
     }
 
-    /**
-     * 회원가입 처리
-     */
+   // 회원가입
     @PostMapping("/join")
     @ResponseBody
     public ResponseEntity<?> join(@RequestBody MemberDTO memberDTO, HttpSession session) {
@@ -53,9 +48,7 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * 회원가입 완료 페이지
-     */
+  // 회원가입 완료
     @GetMapping("/joinOk")
     public String joinOk(HttpSession session, Model model) {
         // 세션에서 닉네임 가져오기
@@ -69,9 +62,7 @@ public class MemberController {
 
 
 
-    /**
-     * 로그인 처리
-     */
+ // 로그인
     @PostMapping("/login")
     public String login(
             @RequestParam("memberId") String memberId,
@@ -97,17 +88,13 @@ public class MemberController {
         }
     }
 
-    /**
-     * 예외 처리를 위한 핸들러
-     */
+    // 예외처리
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
-    /**
-     * 로그인 선택 페이지
-     */
+ //로그인 선택
     @GetMapping("/login-select")
     public String loginSelect() {
         log.info("로그인 선택 페이지 요청");
@@ -115,9 +102,7 @@ public class MemberController {
     }
 
 
-    /**
-     * 회원가입 유형 선택 페이지
-     */
+  // 회원가입 선택
     @GetMapping("/join-select")
     public String joinSelect() {
         log.info("회원가입 선택 페이지 요청");
@@ -125,9 +110,7 @@ public class MemberController {
     }
 
 
-    /**
-     * 로그아웃 처리
-     */
+ //로그아웃 
     @GetMapping("/logout")
     public RedirectView logout(HttpSession session) {
         log.info("로그아웃");
@@ -254,9 +237,7 @@ public class MemberController {
 
 
 
-    /**
-     * 약관동의 페이지
-     */
+   //약관동의 페이지 
     @GetMapping("/terms")
     public String terms(Model model) {
         Map<String, String> terms = Map.of(
@@ -267,9 +248,7 @@ public class MemberController {
         return "member/terms";
     }
 
-    /**
-     * 약관동의 후 회원가입 페이지로 이동
-     */
+    //약관동의 후 회원가입 페이지 이동
     @GetMapping("/member/join")
     public String joinForm(@RequestParam(required = false, defaultValue = "false") Boolean emailAgreed) {
         log.info("이메일 수신 동의 여부: {}", emailAgreed);
@@ -277,9 +256,7 @@ public class MemberController {
     }
 
 
-    /**
-     * 닉네임 중복 체크
-     */
+    //닉네임 중복체크
     @GetMapping("/check-nickname")
     public ResponseEntity<Map<String, Boolean>> checkNickname(
             @RequestParam("nickname") String nickname
@@ -289,9 +266,7 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * 이메일 중복 체크
-     */
+    //이메일 중복 체크
     @GetMapping("/check-email")
     @ResponseBody
     public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam(name = "email") String email) {
@@ -299,4 +274,67 @@ public class MemberController {
         return ResponseEntity.ok(Map.of("available", available));
     }
 
+
+
+    //아이디 찾기 페이지 이동
+    @GetMapping("/find-id")
+    public String findIdForm() {
+        return "member/find-id";
+    }
+
+
+   // 아이디 찾기
+   @PostMapping("/find-id")
+   @ResponseBody
+   public ResponseEntity<Map<String, String>> findId(@RequestParam("memberName") String memberName,
+                                                     @RequestParam("memberPhoneNumber") String memberPhoneNumber) {
+       try {
+           String memberId = memberService.findMemberId(memberName, memberPhoneNumber);
+           return ResponseEntity.ok(Map.of("memberId", memberId));
+       } catch (IllegalArgumentException e) {
+           return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+       }
+   }
+
+   // 아이디 찾기 완료
+    @GetMapping("/find-idOk")
+    public String findIdResult(@RequestParam(name = "memberName") String memberName,
+                               @RequestParam(name = "memberId") String memberId,
+                               Model model) {
+        model.addAttribute("memberName", memberName);
+        model.addAttribute("memberId", memberId);
+        return "member/find-idOk";
+    }
+
+    // 비밀번호 찾기 페이지 이동
+    @GetMapping("/find-pw")
+    public String findPwForm() {
+        return "member/find-pw";
+    }
+
+    @PostMapping("/find-pw")
+    @ResponseBody
+    public ResponseEntity<?> findPw(@RequestBody FindPwRequestDTO requestDTO) {
+        try {
+            memberService.resetPassword(
+                    requestDTO.getMemberName(),
+                    requestDTO.getMemberId(),
+                    requestDTO.getMemberEmail()
+            );
+            // 성공 시 memberName을 포함한 JSON 응답 반환
+            Map<String, String> response = new HashMap<>();
+            response.put("memberName", requestDTO.getMemberName());
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
+    // 비밀번호 찾기 완료 페이지
+    @GetMapping("/find-pwOk")
+    public String findPwOk(@RequestParam("memberName") String memberName, Model model) {  // "memberName" 명시적 지정
+        model.addAttribute("memberName", memberName);
+        return "member/find-pwOk";
+    }
 }

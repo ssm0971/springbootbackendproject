@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카풀 게시판(회원)</title>
+  <link rel="stylesheet" th:href="@{/css/volun/car/volun-car.css}" />
+  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+</head>
+
+<body>
+<!-- 헤더를 main 밖으로 이동 -->
+<header th:replace="~{fragment/header :: header}"></header>
+<main>
+  <div class="volun-main">
+    <div class="volun">
+      <!-- 봉사/카풀 게시판 바 -->
+      <div class="volun-header">
+        <ul id="volun-header2">
+          <li><a th:href="@{/adopt/main}">봉사</a></li>
+          <li><a th:href="@{/car/main}">카풀</a></li>
+        </ul>
+      </div>
+      <div class="volun-header">
+        <ul id="volun-header2">
+          <li><a th:href="@{/car/filter(cate='태워주세요')}">태워주세요</a></li>
+          <li><a th:href="@{/car/filter(cate='태워줄게요')}">태워줄게요</a></li>
+        </ul>
+      </div>
+      <!--게시글 칼럼 구분-->
+      <div class="volun-container">
+        <div class="volun-container-cate">분류</div>
+        <div class="volun-container-title">제목</div>
+        <div class="volun-container-audate">닉네임</div>
+        <div class="volun-container-audate">작성일</div>
+      </div>
+      <!--게시글-->
+      <div class="volun-catalog-all">
+        <div class="volun-catalog-main" th:each = "car : ${carList}">
+          <div class="volun-cate" th:text="${car.carCate}"></div>
+          <div class="volun-title">
+            <a th:href="@{/car/post/{no}(no=${car.carNo})}" th:text="${car.carTitle}"></a>
+          </div>
+          <div class="volun-author">
+            <span th:if="${car.carWriter % 2 != 0}" th:text="${car.memberNickname}"></span>
+            <span th:if="${car.carWriter % 2 == 0}" th:text="${car.centerMemberName}"></span>
+          </div>
+          <div class="volun-date" th:text="${#dates.format(car.carRegiDate, 'yyyy-MM-dd')}"></div>
+        </div>
+      </div>
+
+      <!-- 검색 창-->
+      <div class="bottom-search">
+        <form method="get" name="search" action="/zboard/zboard.php">
+          <select name="search-type" id="search-type">
+            <option value="sub-memo">태워줄게요</option>
+            <option value="subject">태워주세요</option>
+          </select>
+          <span class="default">
+            <input type="hidden" name="id" value="publictransport"><input type="hidden" name="page-num" value="25">
+            <input type="text" name="keyword" id="keyword" value="">
+            <input type="submit" onfocus="blur()" value="검색"></span>
+          <!-- </span> -->
+        </form>
+      </div>
+      <div class="volun-write">
+        <button class="volun-write-botton" type="button" onclick="location.href='../../html/volun/volun-car-post-write.html'">
+          <span class="volun-write-botton-sp">글쓰기</span>
+        </button>
+      </div>
+      <!-- 페이지네이션 -->
+      <div class="Pagination-all">
+        <div class="bottom-list">
+          <a class="prev" onfocus="blur()" href="#"></a>
+          <a class="num on" onfocus="blur()" href="#">1</a>
+          <a class="num" onfocus="blur()" href="#">2</a>
+          <a class="num" onfocus="blur()" href="#">3</a>
+          <a class="num" onfocus="blur()" href="#">4</a>
+          <a class="num" onfocus="blur()" href="#">5</a>
+          <a class="next" onfocus="blur()" href="#"></a>
+        </div>
+      </div>
+    </div>
+</main>
+</body>
+<footer>
+  <div class="footer-links">
+    <a href="../member/term.html">이용약관</a> |
+    <a href="../member/term.html">개인정보처리방침</a>
+  </div>
+  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
+    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
+    © NEXT LEVEL. All Rights Reserved</h6>
+</footer>
+<script defer th:src="@{/js/volun/car/volun-car-main.js}"></script>
+<script defer src="../../js/main/header.js"></script>
+
+</html>

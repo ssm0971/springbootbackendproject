@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>센터 회원가입 완료</title>
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
     <link rel="stylesheet" th:href="@{/css/center/center-joinOk.css}">
 </head>
 <body>
@@ -15,5 +16,6 @@
         <a th:href="@{/center/center-login}" class="btn">로그인 하러가기</a>
     </div>
 </div>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 </body>
 </html>

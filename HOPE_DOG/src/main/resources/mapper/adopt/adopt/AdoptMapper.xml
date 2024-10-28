@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.hope_dog.mapper.adopt.adopt.AdoptMapper">
+    <!-- 입양/임보/후기 메인페이지 게시글 불러오기 -->
     <select id="main" resultType="MainDTO">
     <![CDATA[
         SELECT a.ADOPT_NO, a.ADOPT_TITLE, a.ADOPT_REGIDATE, a.CENTER_MEMBER_NO, a.ADOPT_STATUS, c.CENTER_MEMBER_NAME
@@ -13,17 +14,94 @@
         ]]>
     </select>
 
+    <!-- 게시글 상세페이지 불러오기 -->
     <select id="adoptDetail" resultType="AdoptDetailDTO">
         SELECT a.ADOPT_TITLE, c.CENTER_MEMBER_NAME, a.ADOPT_REGIDATE, a.ADOPT_PERIODSTART , a.ADOPT_PERIODEND , a.ADOPT_NAME ,
-               a.ADOPT_BREED , a.ADOPT_NEUTERING , a.ADOPT_GENDER , a.ADOPT_WEIGHT , a.ADOPT_BIRTH , a.ADOPT_INTRODUCE , a.ADOPT_CONTENT
+               a.ADOPT_BREED , a.ADOPT_NEUTERING , a.ADOPT_GENDER , a.ADOPT_WEIGHT , a.ADOPT_BIRTH , a.ADOPT_INTRODUCE , a.ADOPT_CONTENT, a.ADOPT_NO
         FROM TBL_ADOPT a JOIN TBL_CENTER_MEMBER c ON a.CENTER_MEMBER_NO = c.CENTER_MEMBER_NO
         WHERE ADOPT_NO = #{adoptNo}
     </select>
 
-<!--    임시-->
-    <select id="adoptRequest" resultType="AdoptRequestDTO">
-        SELECT ADOPT_TITLE
+    <!-- 입양만 있는 메인페이지 게시글 불러오기 -->
+    <select id="adoptMain" resultType="AdoptMainDTO">
+        SELECT ADOPT_NO, ADOPT_TITLE, ADOPT_INTRODUCE, ADOPT_NAME, ADOPT_GENDER, ADOPT_NEUTERING, ADOPT_BIRTH,
+               ADOPT_WEIGHT, ADOPT_REGIDATE, ADOPT_PERIODEND, CENTER_MEMBER_NO, ADOPT_STATUS
         FROM TBL_ADOPT
-        WHERE ADOPT_NO = #{adoptNo}
+        ORDER BY ADOPT_REGIDATE DESC
     </select>
+
+
+
+<!--    <insert id="adoptRequest" parameterType="AdoptRequestDTO">-->
+<!--        <selectKey keyProperty="adoptRequestNo" resultType="Long" order="BEFORE">-->
+<!--            SELECT SEQ_ADOPT_REQUEST.NEXTVAL FROM DUAL-->
+<!--        </selectKey>-->
+<!--        INSERT INTO TBL_ADOPT_REQUEST (-->
+<!--        ADOPT_REQUEST_NO,-->
+<!--        ADOPT_REQUEST_NAME,-->
+<!--        ADOPT_REQUEST_PHONE,-->
+<!--        ADOPT_REQUEST_PHONE_SUB,-->
+<!--        ADOPT_REQUEST_EMAIL,-->
+<!--        ADOPT_REQUEST_GENDER,-->
+<!--        ADOPT_REQUEST_AGE,-->
+<!--        ADOPT_REQUEST_ZIPCODE,-->
+<!--        ADOPT_REQUEST_ADDRESS,-->
+<!--        ADOPT_REQUEST_ADDRESS_DETAIL,-->
+<!--        ADOPT_REQUEST_JOB,-->
+<!--        ADOPT_REQUEST_MARRY,-->
+<!--        ADOPT_REQUEST_INFO_AGREEMENT,-->
+<!--        ADOPT_REQUEST_Q1,-->
+<!--        ADOPT_REQUEST_Q2,-->
+<!--        ADOPT_REQUEST_Q3,-->
+<!--        ADOPT_REQUEST_Q4,-->
+<!--        ADOPT_REQUEST_Q5,-->
+<!--        ADOPT_REQUEST_Q6,-->
+<!--        ADOPT_REQUEST_Q7,-->
+<!--        ADOPT_REQUEST_Q8,-->
+<!--        ADOPT_REQUEST_Q9,-->
+<!--        ADOPT_REQUEST_Q10,-->
+<!--        ADOPT_REQUEST_Q11,-->
+<!--        ADOPT_REQUEST_Q12,-->
+<!--        ADOPT_REQUEST_Q13,-->
+<!--        ADOPT_REQUEST_Q14,-->
+<!--        ADOPT_REQUEST_Q15,-->
+<!--        ADOPT_REQUEST_ADOPT_AGREEMENT,-->
+<!--        ADOPT_NO,-->
+<!--        MEMBER_NO,-->
+<!--        CENTER_MEMBER_NO-->
+<!--        ) VALUES (-->
+<!--        #{adoptRequestNo},-->
+<!--        #{adoptRequestName},-->
+<!--        #{adoptRequestPhone},-->
+<!--        #{adoptRequestPhoneSub},-->
+<!--        #{adoptRequestEmail},-->
+<!--        #{adoptRequestGender},-->
+<!--        #{adoptRequestAge},-->
+<!--        #{adoptRequestZipcode},-->
+<!--        #{adoptRequestAddress},-->
+<!--        #{adoptRequestAddressDetail},-->
+<!--        #{adoptRequestJob},-->
+<!--        #{adoptRequestMarry},-->
+<!--        #{adoptRequestInfoAgreement},-->
+<!--        #{adoptRequestQ1},-->
+<!--        #{adoptRequestQ2},-->
+<!--        #{adoptRequestQ3},-->
+<!--        #{adoptRequestQ4},-->
+<!--        #{adoptRequestQ5},-->
+<!--        #{adoptRequestQ6},-->
+<!--        #{adoptRequestQ7},-->
+<!--        #{adoptRequestQ8},-->
+<!--        #{adoptRequestQ9},-->
+<!--        #{adoptRequestQ10},-->
+<!--        #{adoptRequestQ11},-->
+<!--        #{adoptRequestQ12},-->
+<!--        #{adoptRequestQ13},-->
+<!--        #{adoptRequestQ14},-->
+<!--        #{adoptRequestQ15},-->
+<!--        #{adoptRequestAdoptAgreement},-->
+<!--        #{adoptNo},-->
+<!--        #{memberNo},-->
+<!--        #{centerMemberNo}-->
+<!--        )-->
+<!--    </insert>-->
 </mapper>

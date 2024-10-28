@@ -32,3 +32,8 @@ function editCommentBtnClcik() {
   commentBox3.style.display = 'block';
   commentBox2.style.display = 'none';
 }
+
+//목록으로 이동
+document.querySelector('.dona-admain-btuall-complaint').addEventListener('click', function() {
+  location.href = '/dona/list'; // 목록 페이지로 이동
+});

@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import java.util.Map;
 
@@ -23,8 +24,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.doThrow;
+import com.example.hope_dog.dto.member.FindPwRequestDTO;
 
 @WebMvcTest(MemberController.class)
+@AutoConfigureMockMvc(addFilters = false)  // Spring Security 필터 비활성화
 class MemberControllerTest {
 
     @Autowired
@@ -228,6 +232,130 @@ class MemberControllerTest {
                 .andExpect(status().is3xxRedirection())  // 리다이렉션 상태 확인
                 .andExpect(redirectedUrl("/member/login"))  // 로그인 페이지로 리다이렉트
                 .andExpect(flash().attributeExists("loginError"))  // 에러 메시지 확인
+                .andDo(print());
+    }
+
+
+    // 15. 아이디 찾기 페이지 이동 테스트
+    @Test
+    void testFindIdPage() throws Exception {
+        mockMvc.perform(get("/member/find-id"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("member/find-id"))
+                .andDo(print());
+    }
+
+    // 16. 아이디 찾기 성공 테스트
+    @Test
+    void testFindIdSuccess() throws Exception {
+        // given - 아이디 찾기 성공 시나리오 설정
+        when(memberService.findMemberId(anyString(), anyString()))
+                .thenReturn("testUser");
+
+        // when & then
+        mockMvc.perform(post("/member/find-id")
+                        .param("memberName", "테스트")
+                        .param("memberPhoneNumber", "01012345678"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.memberId").value("testUser"))
+                .andDo(print());
+    }
+
+    // 17. 아이디 찾기 실패 테스트
+    @Test
+    void testFindIdFail() throws Exception {
+        // given - 아이디 찾기 실패 시나리오 설정
+        when(memberService.findMemberId(anyString(), anyString()))
+                .thenThrow(new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
+
+        // when & then
+        mockMvc.perform(post("/member/find-id")
+                        .param("memberName", "존재하지않는이름")
+                        .param("memberPhoneNumber", "01099999999"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").exists())
+                .andDo(print());
+    }
+
+    // 18. 아이디 찾기 완료 페이지 테스트
+    @Test
+    void testFindIdOk() throws Exception {
+        // given - 찾은 아이디와 이름 파라미터 설정
+        String memberName = "테스트";
+        String memberId = "testUser";
+
+        // when & then
+        mockMvc.perform(get("/member/find-idOk")
+                        .param("memberName", memberName)
+                        .param("memberId", memberId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("member/find-idOk"))
+                .andExpect(model().attribute("memberName", memberName))
+                .andExpect(model().attribute("memberId", memberId))
+                .andDo(print());
+    }
+
+    // 19. 비밀번호 찾기 페이지 이동 테스트
+    @Test
+    void testFindPwPage() throws Exception {
+        mockMvc.perform(get("/member/find-pw"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("member/find-pw"))
+                .andDo(print());
+    }
+
+    // 20. 비밀번호 재설정 성공 테스트
+    @Test
+    void testFindPwSuccess() throws Exception {
+        // given - 비밀번호 재설정 요청 DTO 생성
+        FindPwRequestDTO requestDTO = new FindPwRequestDTO();
+        requestDTO.setMemberName("테스트");
+        requestDTO.setMemberId("testUser");
+        requestDTO.setMemberEmail("test@test.com");
+
+        // when & then
+        mockMvc.perform(post("/member/find-pw")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.memberName").value("테스트"))
+                .andDo(print());
+    }
+
+    // 21. 비밀번호 재설정 실패 테스트
+    @Test
+    void testFindPwFail() throws Exception {
+        // given - 잘못된 회원 정보로 DTO 생성
+        FindPwRequestDTO requestDTO = new FindPwRequestDTO();
+        requestDTO.setMemberName("존재하지않는이름");
+        requestDTO.setMemberId("wrongId");
+        requestDTO.setMemberEmail("wrong@test.com");
+
+        // 서비스에서 예외 발생하도록 설정
+        doThrow(new IllegalArgumentException("회원 정보를 찾을 수 없습니다."))
+                .when(memberService)
+                .resetPassword(anyString(), anyString(), anyString());
+
+        // when & then
+        mockMvc.perform(post("/member/find-pw")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDTO)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    // 22. 비밀번호 찾기 완료 페이지 테스트
+    @Test
+    void testFindPwOk() throws Exception {
+        // given - 회원 이름 파라미터 설정
+        String memberName = "테스트";
+
+        // when & then
+        mockMvc.perform(get("/member/find-pwOk")
+                        .param("memberName", memberName))
+                .andExpect(status().isOk())
+                .andExpect(view().name("member/find-pwOk"))
+                .andExpect(model().attribute("memberName", memberName))
                 .andDo(print());
     }
 

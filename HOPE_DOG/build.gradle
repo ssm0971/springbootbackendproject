@@ -48,6 +48,10 @@ dependencies {
 
 	implementation group: 'net.nurigo', name: 'javaSDK', version: '2.2'
 
+
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 }
 
 tasks.named('test') {

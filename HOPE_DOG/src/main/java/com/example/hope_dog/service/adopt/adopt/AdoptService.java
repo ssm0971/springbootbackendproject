@@ -1,7 +1,7 @@
 package com.example.hope_dog.service.adopt.adopt;
 
 import com.example.hope_dog.dto.adopt.adopt.AdoptDetailDTO;
-import com.example.hope_dog.dto.adopt.adopt.AdoptRequestDTO;
+import com.example.hope_dog.dto.adopt.adopt.AdoptMainDTO;
 import com.example.hope_dog.dto.adopt.adopt.MainDTO;
 import com.example.hope_dog.mapper.adopt.adopt.AdoptMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,9 @@ public class AdoptService {
         return adoptMapper.adoptDetail(adoptNo); // adoptMapper의 메서드 호출
     }
 
-    public List<AdoptRequestDTO> getAdoptRequest(Long adoptNo) {
-        return adoptMapper.adoptRequest(adoptNo); // adoptMapper의 메서드 호출
+    public List<AdoptMainDTO> getAdoptMainList() {
+        return adoptMapper.adoptMain();
     }
+
 }
 

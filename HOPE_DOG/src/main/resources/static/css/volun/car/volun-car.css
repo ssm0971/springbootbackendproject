@@ -1,7 +1,7 @@
 
 .volun-main{
   width: 1080px;
-  height: 900px;
+  height: 1000px;
   background-color: white;
   margin: 0 auto;
 }
@@ -117,7 +117,7 @@ ul{
   color: rgb(76, 76, 76);
   text-align: center;
   padding-left: 21px;
-} 
+}
 
 /* 제목 */
 .volun-title {

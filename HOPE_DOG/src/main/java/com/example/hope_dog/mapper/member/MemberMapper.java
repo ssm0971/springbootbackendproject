@@ -22,4 +22,17 @@ public interface MemberMapper {
     // 이메일 중복 체크
     int checkMemberEmail(@Param("memberEmail") String memberEmail);
 
+
+   //아이디 찾기 이름과 핸드폰번호로
+    String findMemberId(@Param("memberName") String memberName,
+                        @Param("memberPhoneNumber") String memberPhoneNumber);
+
+
+    // 이름, 아이디, 이메일로 회원 찾기
+    MemberDTO findMemberByNameIdEmail(@Param("memberName") String memberName,
+                                      @Param("memberId") String memberId,
+                                      @Param("memberEmail") String memberEmail);
+
+    // 비밀번호 업데이트
+    void updateMemberPassword(MemberDTO member);
 }
