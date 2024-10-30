@@ -13,56 +13,56 @@
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
 
-  <main>
-    <!-- 메인페이지 목록 -->
-    <div class="center-member-profile-navbox">
-      <nav>
-        <ul class="center-member-profile-nav-ul">
-          <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
-          <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
-          <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
-          <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
-          <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
-          <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
-          <div id="choice"></div>
-        </ul>
-      </nav>
+<main>
+  <!-- 메인페이지 목록 -->
+  <div class="center-member-profile-navbox">
+    <nav>
+      <ul class="center-member-profile-nav-ul">
+        <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
+        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+        <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
+        <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
+        <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
+        <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
+        <div id="choice"></div>
+      </ul>
+    </nav>
+  </div>
+  <!-- 제목 -->
+  <div class="center-member-profile-navboard">
+    <nav>
+      <ul class="center-member-profile-navboard-ul">
+        <li>회원 탈퇴</li>
+      </ul>
+    </nav>
+  </div>
+  <!-- 내용 -->
+  <div class="center-withdrawal-container">
+    <div class="center-withdrawal-terms">
+      <b>회원 탈퇴 약관</b>
+      <p>회원탈퇴를 진행하기 전에 아래 약관 및 주의사항을 반드시 확인하시기 바랍니다.</p>
+      <p>약관 내용: 회원 탈퇴 시 모든 데이터가 삭제되며 복구할 수 없습니다.</p>
+      <p>위 내용에 동의하면 아래에 "동의합니다"라고 적어주세요</p>
     </div>
-    <!-- 제목 -->
-    <div class="center-member-profile-navboard">
-      <nav>
-        <ul class="center-member-profile-navboard-ul">
-          <li>회원 탈퇴</li>
-        </ul>
-      </nav>
+    <div>
+      <input type="text" id="agreement" class="center-withdrawal-agreeinput" placeholder="동의합니다" oninput="checkAgreement()">
     </div>
-    <!-- 내용 -->
-    <div class="center-withdrawal-container">
-      <div class="center-withdrawal-terms">
-        <b>회원 탈퇴 약관</b>
-        <p>회원탈퇴를 진행하기 전에 아래 약관 및 주의사항을 반드시 확인하시기 바랍니다.</p>
-        <p>약관 내용: 회원 탈퇴 시 모든 데이터가 삭제되며 복구할 수 없습니다.</p>
-        <p>위 내용에 동의하면 아래에 "동의합니다"라고 적어주세요</p>
-      </div>
-      <div>
-        <input type="text" id="agreement" class="center-withdrawal-agreeinput" placeholder="동의합니다" oninput="checkAgreement()">
-      </div>
-      <div>
-        <button id="withdrawButton" class="button" onclick="showModal()">회원 탈퇴</button>
-      </div>
+    <div>
+      <button id="withdrawButton" class="button" onclick="showModal()">회원 탈퇴</button>
     </div>
-    <div class="modal-overlay" id="modalOverlay"></div>
+  </div>
+  <div class="modal-overlay" id="modalOverlay"></div>
 
-    <div class="modal" id="modal">
-      <div>
-        <p>정말 회원탈퇴를 진행하시겠습니까?</p>
-        <button onclick="confirmWithdrawal()">예</button>
-        <button onclick="closeModal()">아니오</button>
-      </div>
+  <div class="modal" id="modal">
+    <div>
+      <p>정말 회원탈퇴를 진행하시겠습니까?</p>
+      <button onclick="confirmWithdrawal()">예</button>
+      <button onclick="closeModal()">아니오</button>
     </div>
-  </main>
+  </div>
+</main>
 
-  <footer th:replace="~{/fragment/footer :: footer}"></footer>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 
 </body>
 <script th:src="@{/js/centermypage/center-mypage-withdrawal.js}"></script>

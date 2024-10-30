@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.hope_dog.mapper.centermypage.CenterMypageMapper">
-<!--프로필 조회-->
+    <!--프로필 조회-->
     <select id="centerProfile" parameterType="Long" resultType="CenterProfileDTO">
         SELECT CENTER_MEMBER_NO, CENTER_MEMBER_NAME , CENTER_MEMBER_EMAIL ,CENTER_MEMBER_PHONE_NUMBER , CENTER_MEMBER_ADDRESS,CENTER_MEMBER_DETAIL_ADDRESS
         FROM TBL_CENTER_MEMBER
         WHERE CENTER_MEMBER_NO = #{centerMemberNo}
 
     </select>
+
+    <!--    정보수정 페이지 조회-->
+    <select id="viewProfile" parameterType="Long" resultType="CenterViewProfileDTO">
+        SELECT CENTER_MEMBER_NAME,CENTER_MEMBER_EMAIL,CENTER_MEMBER_PHONE_NUMBER,CENTER_MEMBER_ZIPCODE ,CENTER_MEMBER_ADDRESS ,CENTER_MEMBER_DETAIL_ADDRESS,TBL_CENTER_MEMBER_AGREE
+        FROM TBL_CENTER_MEMBER tcm
+        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+    </select>
+
+    <!-- 센터회원정보 수정 -->
+    <update id="centerProfileUpdate" parameterType="CenterUpdateProfileDTO">
+    <![CDATA[
+        UPDATE TBL_CENTER_MEMBER
+        SET
+            CENTER_MEMBER_NAME = #{centerMemberName},
+            CENTER_MEMBER_EMAIL = #{centerMemberEmail},
+            CENTER_MEMBER_PHONE_NUMBER = #{centerMemberPhoneNumber},
+            CENTER_MEMBER_ADDRESS = #{centerMemberAddress},
+            CENTER_MEMBER_DETAIL_ADDRESS = #{centerMemberDetailAddress},
+            TBL_CENTER_MEMBER_AGREE = #{tblCenterMemberAgree},
+            CENTER_MEMBER_PW = CASE
+                                   WHEN #{newCenterMemberPw} IS NOT NULL AND #{newCenterMemberPw} <> '' THEN #{newCenterMemberPw}
+                                   ELSE CENTER_MEMBER_PW
+                END
+        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+          AND CENTER_MEMBER_PW = #{centerMemberPw} <!-- 현재 비밀번호 확인 -->
+        ]]>
+    </update>
+
+    <!-- 현재 비밀번호 일치 여부 확인 -->
+    <select id="checkPasswordMatch" parameterType="map" resultType="boolean">
+    <![CDATA[
+        SELECT CASE WHEN CENTER_MEMBER_PW = #{centerMemberPassword} THEN 1 ELSE 0 END
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+        ]]>
+    </select>
+
 </mapper>

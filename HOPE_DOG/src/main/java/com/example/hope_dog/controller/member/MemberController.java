@@ -40,12 +40,20 @@ public class MemberController {
    // 회원가입
     @PostMapping("/join")
     @ResponseBody
+//    이 어노테이션은 메서드의 반환 값을 JSON 형식으로 클라이언트에게 직접 전달함.
     public ResponseEntity<?> join(@RequestBody MemberDTO memberDTO, HttpSession session) {
+//  ResponseEntity는는 Spring MVC에서 HTTP 요청에 대한 응답을 제어하는 데 사용하는 클래스이다.
+//  이 클래스는 Response Body, Header, Status Code를 포함할 수 있어, 세밀한 응답 관리를 가능하게 한다.
+//  ResponseEntity는 @RestController와 함께 사용되어 JSON 또는 XML과 같은 RESTful 서비스를 제공하는데 이상적이다.
+//  ResponseEntity<?>는 Spring에서 HTTP 응답을 보다 유연하게 처리하기 위해 사용되는 타입입니다.
+// 여기서 <?> 부분은 응답의 바디에 특정 데이터 타입을 지정하지 않았다는 의미입니다
         log.info("memberDTO = {}", memberDTO);
         memberService.join(memberDTO);
         // 세션에 닉네임 저장
         session.setAttribute("memberNickname", memberDTO.getMemberNickname());
         return ResponseEntity.ok().build();
+//   ResponseEntity.ok().build()는 상태 코드 200 OK를 반환하겠다는 의미입니다
+//   ok() 메서드는 HTTP 200 Status Code와 함께 Response를 생성한다. 이는 가장 일반적으로 사용되는 메서드 중 하나입니다.
     }
 
   // 회원가입 완료
@@ -62,7 +70,7 @@ public class MemberController {
 
 
 
- // 로그인
+    // 로그인 메서드 수정
     @PostMapping("/login")
     public String login(
             @RequestParam("memberId") String memberId,
@@ -81,17 +89,36 @@ public class MemberController {
             session.setAttribute("memberTwoFactorEnabled", loginInfo.getMemberTwoFactorEnabled());
 
             return "redirect:/main/main";
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
+//      IllegalArgumentException 또는 IllegalStateException 예외가 발생할 경우 이 블록이 실행됩니다.
             log.error("로그인 실패: {}", e.getMessage());
             redirectAttributes.addFlashAttribute("loginError", e.getMessage());
+//            redirectAttributes를 사용하여 loginError라는 이름으로 에러 메시지를 추가합니다.
+//          addFlashAttribute()는 리다이렉트 후에도 이 속성을 일회성으로 뷰에서 사용할 수 있게 해줍니다.
+//          로그인 페이지에서 이 메시지를 통해 에러를 사용자에게 알릴 수 있습니다.
             return "redirect:/member/login";
         }
+    }
+
+    // 예외 처리기 수정
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+//    이 어노테이션은 Spring에서 컨트롤러 클래스의 특정 예외를 별도로 처리할 수 있게 해줍니다.
+//이 메서드는 컨트롤러 내에서 발생한 IllegalArgumentException 또는 IllegalStateException을 전역적으로 처리할 수 있습니다.
+    public ResponseEntity<String> handleException(Exception e) {
+        //      예외를 HTTP 응답으로 반환하기 위해 ResponseEntity<String> 타입으로 메서드를 선언했습니다.
+//      발생한 예외 메시지를 포함한 ResponseEntity 객체를 반환하여 클라이언트가 예외 정보를 받을 수 있습니다.
+        return ResponseEntity.badRequest().body(e.getMessage());
+//        badRequest() 메서드는 HTTP 상태 코드 400 (Bad Request)을 생성하고, 예외의 메시지를 응답 본문에 포함하여 반환합니다.
+//          클라이언트는 이 응답을 통해 어떤 오류가 발생했는지 메시지를 통해 알 수 있게 됩니다.
     }
 
     // 예외처리
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+
         return ResponseEntity.badRequest().body(e.getMessage());
+//        badRequest() 메서드는 HTTP 상태 코드 400 (Bad Request)을 생성하고, 예외의 메시지를 응답 본문에 포함하여 반환합니다.
+//          클라이언트는 이 응답을 통해 어떤 오류가 발생했는지 메시지를 통해 알 수 있게 됩니다.
     }
 
  //로그인 선택
@@ -240,7 +267,11 @@ public class MemberController {
    //약관동의 페이지 
     @GetMapping("/terms")
     public String terms(Model model) {
+//        반환 타입이 String이므로, 특정 뷰 이름을 반환하여 사용자가 해당 페이지로 이동할 수 있게 합니다.
+//        Model 객체를 사용하여 뷰로 데이터를 전달합니다.
         Map<String, String> terms = Map.of(
+//      Map.of() 메서드를 사용해 약관 데이터를 담은 맵을 생성합니다. 여기서 serviceTerms와 privacyTerms는 각각 서비스 약관과 개인정보 보호 약관을 의미합니다.
+//      SERVICE_TERMS와 PRIVACY_TERMS는 클래스 내의 상수로 정의된 약관의 내용을 참조한다고 가정됩니다.
                 "serviceTerms", SERVICE_TERMS,
                 "privacyTerms", PRIVACY_TERMS
         );
@@ -258,19 +289,42 @@ public class MemberController {
 
     //닉네임 중복체크
     @GetMapping("/check-nickname")
+//    URL로 GET 요청이 들어올 때 이 메서드를 실행하게 합니다.
+//    주로 닉네임 입력 후 중복 확인 버튼을 눌렀을 때 호출되는 API입니다.
     public ResponseEntity<Map<String, Boolean>> checkNickname(
+//            ResponseEntity는 Spring MVC에서 HTTP 응답을 다루기 위해 사용하는 클래스로
+//            이 클래스를 사용하면 응답을 더 유연하고 상세하게 제어할 수 있습니다.
+//            ResponseEntity<Map<String, Boolean>>의 제네릭 타입은 Map<String, Boolean>로,
+//            이 메서드가 반환할 응답 본문이 Map<String, Boolean> 형태의 JSON 데이터임을 나타냅니다.
             @RequestParam("nickname") String nickname
     ) {
         boolean isAvailable = memberService.checkNickname(nickname);
+//        memberService.checkNickname(nickname) 메서드를 호출하여 닉네임이 이미 사용 중인지 확인합니다
         Map<String, Boolean> response = Map.of("available", isAvailable);
+//        Map.of("available", isAvailable); 코드를 통해 결과 값을 Map<String, Boolean>으로 생성합니다.
         return ResponseEntity.ok(response);
+//        ResponseEntity.ok(response)를 통해 상태 코드 200 (OK)과 함께 응답 본문을 설정하여 클라이언트에게 반환합니다.
     }
 
     //이메일 중복 체크
     @GetMapping("/check-email")
     @ResponseBody
+// @ResponseBody: 반환값을 HTTP 응답 본문에 직접 작성
+// Spring의 비동기 처리를 위해 사용되며, 클라이언트-서버 간 JSON 통신을 가능하게 함
     public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam(name = "email") String email) {
+        // ResponseEntity<Map<String, Boolean>>:
+        // - ResponseEntity: HTTP 응답을 세밀하게 제어할 수 있는 클래스
+        // - Map<String, Boolean>: JSON 형태의 응답 데이터 타입 지정
+        //   예: {"available": true} 또는 {"available": false}
+
+        // memberService를 통해 이메일 중복 여부 확인
+        // true: 사용 가능한 이메일
+        // false: 이미 사용 중인 이메일
         boolean available = memberService.checkEmail(email);
+
+        // ResponseEntity.ok(): HTTP 상태 코드 200(OK)으로 응답
+        // Map.of(): 불변 Map을 생성하는 팩토리 메서드
+        // "available" 키와 중복 체크 결과값을 JSON 형태로 반환
         return ResponseEntity.ok(Map.of("available", available));
     }
 
@@ -286,25 +340,37 @@ public class MemberController {
    // 아이디 찾기
    @PostMapping("/find-id")
    @ResponseBody
+// @ResponseBody: HTTP 응답 본문에 직접 데이터를 작성하기 위한 어노테이션
+// Spring이 반환값을 자동으로 JSON으로 변환하여 클라이언트에게 전송
    public ResponseEntity<Map<String, String>> findId(@RequestParam("memberName") String memberName,
                                                      @RequestParam("memberPhoneNumber") String memberPhoneNumber) {
+       // @RequestParam: HTTP 요청 파라미터를 메서드 파라미터로 바인딩
+       // ResponseEntity: HTTP 응답을 상세하게 제어할 수 있는 클래스
        try {
+           // memberService를 통해 회원 아이디 조회
            String memberId = memberService.findMemberId(memberName, memberPhoneNumber);
+           // 성공 시 200 OK 상태코드와 함께 찾은 아이디를 JSON 형태로 반환
+           // Map.of()를 사용하여 간단한 key-value 쌍의 Map 생성
            return ResponseEntity.ok(Map.of("memberId", memberId));
        } catch (IllegalArgumentException e) {
+           // 실패 시 400 Bad Request 상태코드와 함께 에러 메시지 반환
            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
        }
    }
 
    // 아이디 찾기 완료
-    @GetMapping("/find-idOk")
-    public String findIdResult(@RequestParam(name = "memberName") String memberName,
-                               @RequestParam(name = "memberId") String memberId,
-                               Model model) {
-        model.addAttribute("memberName", memberName);
-        model.addAttribute("memberId", memberId);
-        return "member/find-idOk";
-    }
+   // 일반적인 웹 페이지 반환을 위한 컨트롤러 메서드
+   public String findIdResult(@RequestParam(name = "memberName") String memberName,
+                              @RequestParam(name = "memberId") String memberId,
+                              Model model) {
+       // Model: 뷰에 전달할 데이터를 저장하는 객체
+       // 뷰에서 사용할 데이터를 model에 추가
+       model.addAttribute("memberName", memberName);
+       model.addAttribute("memberId", memberId);
+       // member/find-idOk 뷰 템플릿을 반환
+       // ViewResolver가 실제 뷰 페이지를 찾아 렌더링
+       return "member/find-idOk";
+   }
 
     // 비밀번호 찾기 페이지 이동
     @GetMapping("/find-pw")
@@ -312,29 +378,51 @@ public class MemberController {
         return "member/find-pw";
     }
 
+    // 비밀번호 찾기(재설정) API 엔드포인트
     @PostMapping("/find-pw")
     @ResponseBody
+// @ResponseBody: HTTP 응답 본문에 직접 데이터를 작성하기 위한 어노테이션
+// ResponseEntity<?>: 다양한 타입의 응답을 처리할 수 있도록 와일드카드 사용
     public ResponseEntity<?> findPw(@RequestBody FindPwRequestDTO requestDTO) {
+        // @RequestBody: HTTP 요청 본문의 JSON 데이터를 FindPwRequestDTO 객체로 변환
+        // FindPwRequestDTO: 클라이언트로부터 받은 이름, 아이디, 이메일 정보를 담는 DTO 클래스
+        log.info("Received request DTO: {}", requestDTO);
         try {
+            // memberService를 통해 비밀번호 재설정 로직 실행
+            // DTO에서 필요한 정보를 추출하여 서비스 메서드 호출
             memberService.resetPassword(
                     requestDTO.getMemberName(),
                     requestDTO.getMemberId(),
                     requestDTO.getMemberEmail()
             );
-            // 성공 시 memberName을 포함한 JSON 응답 반환
+
+            // 비밀번호 재설정 성공 시 처리
+            // HashMap을 생성하여 응답 데이터 구성
             Map<String, String> response = new HashMap<>();
+            // 사용자 이름을 응답 데이터에 포함
             response.put("memberName", requestDTO.getMemberName());
+            // 200 OK 상태코드와 함께 응답 데이터 반환
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
+            // 유효하지 않은 사용자 정보 등으로 인한 예외 발생 시
+            // 400 Bad Request 상태코드와 함께 에러 메시지 반환
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
 
-    // 비밀번호 찾기 완료 페이지
+    // 비밀번호 찾기 완료 페이지 표시
     @GetMapping("/find-pwOk")
-    public String findPwOk(@RequestParam("memberName") String memberName, Model model) {  // "memberName" 명시적 지정
+// 비밀번호 재설정 완료 후 보여줄 결과 페이지를 위한 컨트롤러 메서드
+    public String findPwOk(@RequestParam("memberName") String memberName, Model model) {
+        // @RequestParam: HTTP 요청 파라미터 'memberName'을 메서드 파라미터로 바인딩
+        // Model: 뷰에 전달할 데이터를 저장하는 객체
+
+        // 뷰에서 사용할 사용자 이름을 model에 추가
         model.addAttribute("memberName", memberName);
+
+        // member/find-pwOk 뷰 템플릿을 반환
+        // ViewResolver가 실제 뷰 페이지를 찾아 렌더링
         return "member/find-pwOk";
     }
 }

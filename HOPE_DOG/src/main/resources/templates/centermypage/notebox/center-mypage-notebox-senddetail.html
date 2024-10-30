@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마이페이지 - 쪽지</title>
+  <link rel="stylesheet" th:href="@{/css/centermypage/center-mypage-notebox-writedetail.css}">
+  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+</head>
+
+<body>
+<header th:replace="~{fragment/header :: header}"></header>
+
+<main>
+  <!-- 마이페이지 목록 -->
+  <div class="center-member-profile-navbox">
+    <nav>
+      <ul class="center-member-profile-nav-ul">
+        <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
+        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+        <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
+        <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
+        <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
+        <div id="choice"></div>
+        <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- 쪽지 내용 -->
+  <div class="note-wrap">
+    <div class="note-title">
+      <h1>쪽지</h1>
+    </div>
+
+      <div class="note-write-wrap">
+        <div class="note-write">
+          <div class="note-title" th:text="${noteboxSendDetail.noteboxSendTitle}">제목</div>
+          <div class="note-title" th:text="${noteboxSendDetail.noteboxSenderName}">닉네임</div>
+          <div class="note-cont" th:text="${noteboxSendDetail.noteboxSendRegiDate}"></div><br>
+          <div class="note-cont" th:text="${noteboxSendDetail.noteboxSendContent}">내용</div>
+        </div>
+      </div>
+      <div class="volun-admain-btuall">
+        <a th:href="@{/centerMypage/noteboxSendList}">
+          <button class="volun-admain-btu" type="button">
+            <span class="volun-admain-btu-sp">이전</span>
+          </button>
+        </a>
+      </div>
+
+  </div>
+
+</main>
+
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+</body>
+</html>

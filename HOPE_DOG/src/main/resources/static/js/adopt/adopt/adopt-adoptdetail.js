@@ -20,9 +20,9 @@ function deleteClick() {
 
 // 글마감버튼
 function endClick() {
-  if (confirm('정말 마감하시겠습니까?')) {
+  if (confirm('정말 마감하시겠습니까? 마감 시 취소할 수 없습니다.')) {
     console.log('입양글이 마감되었습니다.');
-    window.location.href = '../../html/adopt/adopt-adoptdetail.html'
+    location.href = `/adopt/adopt`;
   } else {
     console.log('입양글이 마감되지 않았습니다.');
   }
@@ -37,10 +37,12 @@ function getParameter(name) {
 // 신청서 이동 버튼
 function requestClick() {
   const adoptNo = getParameter('adoptNo'); // adoptNo를 URL에서 가져옵니다.
+  const centerMemberNo = getParameter('centerMemberNo');
 
   if (confirm('정말 신청하시겠습니까?')) {
     console.log('신청서페이지로 이동합니다.');
     console.log(adoptNo);
+    console.log(centerMemberNo)
     location.href = `/adopt/adopt/adoptrequest?adoptNo=${adoptNo}`;
   } else {
     console.log('신청서페이지로 이동하지 않습니다.');
@@ -126,3 +128,4 @@ function CommentReportClick() {
     location.href='/adopt/review';
   });
 }
+

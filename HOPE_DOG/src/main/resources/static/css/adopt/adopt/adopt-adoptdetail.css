@@ -152,11 +152,8 @@ main{
   color: white;
 }
 
-.adopt-detail-box4{
-  width: 745px;
-  height: auto;
-}
 
+/*댓글관련 css*/
 .adopt-detail-commentNum{
   width: 745px;
   height: 35px;
@@ -231,6 +228,12 @@ main{
 .adopt-modify-comment{
   width: 300px;
   height: 30px;
+}
+
+.adopt-comment-buttonBox{
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
 }
 
 /* 신청버튼박스 */

@@ -38,19 +38,20 @@
       <br>
 
       <!-- 글작성 박스 -->
+      <form th:action="@{/adopt/adopt/adoptWriteRegi}" method="post">
       <div class="adopt-write-area">
-        <form action="링크" method="post">
           <br>
           <!-- 임시보호 기간 입력 -->
           <div class="adopt-write-box">
             <div class="adopt-write-subtitle">*입양 기한</div>
-            시작일 : 　<input class="adopt-write-period" type="date" name="start-date">　　
-            종료일 : 　<input class="adopt-write-period" type="date" name="end-date">
+            시작일 : 　<input class="adopt-write-period" type="date" name="adoptPeriodstart">　　
+            종료일 : 　<input class="adopt-write-period" type="date" name="adoptPeriodend">
           </div>
+          <input th:value="${centerMemberNo}" style="display: none" name="centerMemberNo">
           <!-- 이름입력 -->
           <div class="adopt-write-box">
             <div class="adopt-write-subtitle">*이름</div>
-            <input class="adopt-write-breed" type="text" id="nameInput" onblur="checkNameInput()">　　
+            <input class="adopt-write-breed" type="text" id="nameInput" onblur="checkNameInput()" name="adoptName">　　
           </div>
           <!-- 이름 미입력 에러메세지 -->
           <div class="breadError">
@@ -60,7 +61,7 @@
           <!-- 견종입력 -->
           <div class="adopt-write-box">
             <div class="adopt-write-subtitle">*견종</div>
-            <input class="adopt-write-breed" type="text" id="breedInput" onblur="checkBreedInput()">　　
+            <input class="adopt-write-breed" type="text" id="breedInput" onblur="checkBreedInput()" name="adoptBreed">　　
           </div>
           <!-- 견종 미입력 에러메세지 -->
           <div class="breadError">
@@ -70,19 +71,19 @@
           <!-- 중성화 여부 입력 -->
           <div class="adopt-write-box">
             <div class="adopt-write-subtitle">*중성화 여부</div>
-            <input class="adopt-write-sterilization" type="radio" name="sterilization" value="true" checked>네　
-            <input class="adopt-write-sterilization" type="radio" name="sterilization" value="false">아니요
+            <input class="adopt-write-sterilization" type="radio" name="adoptNeutering" value="Y" checked>네　
+            <input class="adopt-write-sterilization" type="radio" name="adoptNeutering" value="N">아니요
           </div>
           <!-- 성별 입력 -->
           <div class="adopt-write-box">
             <div class="adopt-write-subtitle">*성별</div>
-            <input class="adopt-write-gender" type="radio" name="gender" value="male" checked> 남　
-            <input class="adopt-write-gender" type="radio" name="gender" value="female"> 여
+            <input class="adopt-write-gender" type="radio" name="adoptGender" value="M" checked> 남　
+            <input class="adopt-write-gender" type="radio" name="adoptGender" value="F"> 여
           </div>
           <!-- 몸무게 입력 -->
           <div class="adopt-write-box">
             <div class="adopt-write-subtitle">*몸무게</div>
-            <input class="adopt-write-weight" type="text" id="weightInput" onblur="checkWeightInput()">　　
+            <input class="adopt-write-weight" type="text" id="weightInput" onblur="checkWeightInput()" name="adoptWeight">　　
           </div>
           <!-- 몸무게 미입력 에러메세지 -->
           <div class="weightError">
@@ -91,14 +92,14 @@
           </div>
           <!-- 생년월일 입력 -->
           <div class="adopt-write-box">
-            <div class="adopt-write-subtitle">*생년월일</div><input class="adopt-write-birth" type="date">
+            <div class="adopt-write-subtitle">*생년월일</div><input class="adopt-write-birth" type="date" name="adoptBirth">
             <div class="adopt-brirth-ex">　*정확한 생년월일을 모를 시 예상 생년월일을 선택해주세요</div>
           </div>
           <!-- 한줄소개 입력 -->
           <div class="adopt-write-box">
             <div class="adopt-write-subtitle">*한줄소개</div>
             <input class="adopt-write-introduce" type="text" id="introduceInput" onblur="checkIntroduceInput()"
-              placeholder="ex)애교가 많아요~">　　
+              placeholder="ex)애교가 많아요~" name="adoptIntroduce">　　
           </div>
           <!-- 한줄소개 미입력 에러메세지 -->
           <div class="introduceError">
@@ -110,21 +111,17 @@
 
           <!-- 썸머노트 -->
           <div class="content">
-            <form method="post" action="">
-              <input id="subject" name="subject" class="adoptwrite-title" placeholder="제목을 입력해주세요">
-              <textarea id="contents" name="contents"></textarea>
-            </form>
+              <input id="subject" name="adoptTitle" class="adoptwrite-title" placeholder="제목을 입력해주세요">
+              <textarea id="contents" name="adoptContent"></textarea>
           </div>
 
           <!-- 등록/취소 버튼 -->
           <div class="adopt-write-button-box">
-            <a href="../../html/adopt/adopt-adoptdetail.html">
-              <button class="adopt-write-button" type="button">등록</button>
-            </a>
+            <button class="adopt-write-button" type="submit">등록</button>
             <button class="adopt-cancle-button" type="button" onclick="cancleClick()">취소</button>
           </div>
-        </form>
-      </div>
+       </div>
+      </form>
   </main>
 
 </body>
@@ -135,7 +132,6 @@
     © NEXT LEVEL. All Rights Reserved</h6>
 </footer>
 
-<script defer src="../../js/main/header.js"></script>
 <script defer th:src="@{/js/adopt/adopt/adopt-adoptwrite.js}"></script>
 
 

@@ -20,18 +20,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())  // CSRF 비활성화
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/css/**",
-                                "/js/**",
-                                "/img/**",     // img 경로 추가
-                                "/images/**",
-                                "/fonts/**",   // 폰트 파일 경로도 추가
-                                "/assets/**"   // 기타 정적 자원 경로 추가
-                        ).permitAll()
-                        .requestMatchers("/", "/member/**", "/center/**", "/main/**", "/admin/**", "/adopt/**", "/volun/**", "/car/**", "/centerMypage/**","/dona/**", "/mypgae/**", "/commu/**", "/notice/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/**").permitAll()  // 모든 요청 허용
                 )
                 .formLogin(form -> form
                         .loginPage("/member/login-select")

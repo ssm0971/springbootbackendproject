@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+
+    // form submit 이벤트 방지
+    const form = document.getElementById('findPwForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+    });
+
+
     const findPwButton = document.getElementById('findPwButton');
 
     findPwButton.addEventListener('click', function() {

@@ -1,8 +1,6 @@
 package com.example.hope_dog.service.centermypage;
 
-import com.example.hope_dog.dto.centermypage.notebox.NoteboxReceiveListDTO;
-import com.example.hope_dog.dto.centermypage.notebox.NoteboxSendListDTO;
-import com.example.hope_dog.dto.centermypage.notebox.NoteboxWriteDTO;
+import com.example.hope_dog.dto.centermypage.notebox.*;
 import com.example.hope_dog.mapper.centermypage.notebox.NoteBoxMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +25,24 @@ public class NoteBoxService {
     public List<NoteboxReceiveListDTO> getReceiveList(Long centerMemberNo) {
         return noteBoxMapper.receiveList(centerMemberNo);
     }
+
+    // 보낸 쪽지 상세페이지
+    public NoteboxSendDetailDTO getNoteboxSendDetail(Long noteboxSendNo) {
+        return noteBoxMapper.getNoteboxSendDetail(noteboxSendNo);
+    }
+
+    //받은 쪽지 상세페이지
+    public NoteboxReceiveDetailDTO getNoteboxReceiveDetail(Long noteboxReceiveNo) {
+        // 쪽지 읽음 표시 업데이트
+        noteBoxMapper.updateNoteboxReceiveRead(noteboxReceiveNo);
+
+        // 쪽지 상세 정보 가져오기
+        return noteBoxMapper.getNoteboxReceiveDetail(noteboxReceiveNo);
+    }
+
+
+    //받은 쪽지 상세페이지 - 답장하기
+
 
     // 닉네임 확인
     public Long findMemberNoByNickname(String nickname) {

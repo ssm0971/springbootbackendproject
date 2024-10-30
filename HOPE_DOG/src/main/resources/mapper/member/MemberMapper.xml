@@ -24,11 +24,19 @@
 
     <!-- 로그인 정보 조회 이 쿼리는 로그인에 성공한 회원의 세션 정보를 조회하는 SQL 구문입니다.-->
     <select id="selectLoginInfo" resultType="MemberSessionDTO">
-        SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_NAME, MEMBER_NICKNAME,
-               MEMBER_LOGIN_STATUS, MEMBER_TWO_FACTOR_ENABLED, MEMBER_PW
+        SELECT
+        MEMBER_NO,
+        MEMBER_ID,
+        MEMBER_EMAIL,
+        MEMBER_NAME,
+        MEMBER_NICKNAME,
+        MEMBER_LOGIN_STATUS,
+        MEMBER_TWO_FACTOR_ENABLED,
+        MEMBER_PW
         FROM TBL_MEMBER
         WHERE MEMBER_ID = #{memberId}
     </select>
+
 
     <!--멤버 닉네임 중복확인 쿼리-->
     <select id="checkNickname" parameterType="String" resultType="int">
@@ -77,4 +85,14 @@
     </update>
 
 
+    <update id="updateAllPasswords">
+        UPDATE TBL_MEMBER
+        SET MEMBER_PW = #{encodedPassword}
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
+
+    <select id="selectAllMembers" resultType="MemberDTO">
+        SELECT * FROM TBL_MEMBER
+    </select>
 </mapper>

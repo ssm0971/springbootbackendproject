@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
@@ -118,4 +119,46 @@ class CenterMemberMapperTest {
         assertThat(loginInfo).isNotNull();
         assertThat(loginInfo.getCenterMemberId()).isEqualTo("testCenter");
     }
+
+
+    @Test
+    @DisplayName("잘못된 비밀번호로 로그인 시도 테스트")
+    void loginWithWrongPasswordTest() {
+        // given
+        CenterMemberDTO memberDTO = createTestCenterMember();
+        centerMemberMapper.insertCenterMember(memberDTO);
+
+        // when
+        CenterMemberSessionDTO loginInfo = centerMemberMapper.selectCenterLoginInfo("testCenter", "wrongPassword!");
+
+        // then
+        assertThat(loginInfo).isNull();
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 아이디로 로그인 시도 테스트")
+    void loginWithNonExistentIdTest() {
+        // given
+        CenterMemberDTO memberDTO = createTestCenterMember();
+        centerMemberMapper.insertCenterMember(memberDTO);
+
+        // when
+        CenterMemberSessionDTO loginInfo = centerMemberMapper.selectCenterLoginInfo("nonExistentId", "test123!");
+
+        // then
+        assertThat(loginInfo).isNull();
+    }
+
+    @Test
+    @DisplayName("센터파일 등록 시 잘못된 회원번호 테스트")
+    void insertCenterFileWithInvalidMemberNoTest() {
+        // given
+        CenterFileDTO fileDTO = createTestCenterFile(999999L); // 존재하지 않는 회원번호
+
+        // when & then
+        assertThatThrownBy(() -> centerMemberMapper.insertCenterFile(fileDTO))
+                .isInstanceOf(Exception.class);
+    }
+
+
 }

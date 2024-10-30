@@ -1,8 +1,6 @@
 package com.example.hope_dog.mapper.centermypage.notebox;
 
-import com.example.hope_dog.dto.centermypage.notebox.NoteboxReceiveListDTO;
-import com.example.hope_dog.dto.centermypage.notebox.NoteboxSendListDTO;
-import com.example.hope_dog.dto.centermypage.notebox.NoteboxWriteDTO;
+import com.example.hope_dog.dto.centermypage.notebox.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -24,6 +22,16 @@ public interface NoteBoxMapper {
 
     //쪽지보내기
     void sendingNote(NoteboxWriteDTO noteboxWriteDTO);
+
+
+    // 보낸 쪽지 상세 정보 조회
+    NoteboxSendDetailDTO getNoteboxSendDetail(Long noteboxSendNo);
+
+    // 받은 쪽지 상세 진입시 읽음 전환
+    void updateNoteboxReceiveRead(Long noteboxReceiveNo);
+
+    // 받은 쪽지 상세 정보 조회
+    NoteboxReceiveDetailDTO getNoteboxReceiveDetail(Long noteboxReceiveNo);
 }
 
 

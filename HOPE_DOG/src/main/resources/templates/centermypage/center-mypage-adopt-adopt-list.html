@@ -12,96 +12,96 @@
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <!-- 메인페이지 목록 -->
-    <div class="center-member-profile-navbox">
-      <nav>
-        <ul class="center-member-profile-nav-ul">
-          <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
-          <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
-          <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
-          <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
-          <div id="choice"></div>
-          <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
-          <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
-        </ul>
-      </nav>
+<main>
+  <!-- 메인페이지 목록 -->
+  <div class="center-member-profile-navbox">
+    <nav>
+      <ul class="center-member-profile-nav-ul">
+        <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
+        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+        <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
+        <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
+        <div id="choice"></div>
+        <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
+        <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
+      </ul>
+    </nav>
+  </div>
+  <!-- 게시판 제목 -->
+  <div class="center-member-profile-navboard">
+    <nav>
+      <ul class="center-member-profile-navboard-ul">
+        <li><a href="./center-mypage-adopt-adopt-list.html">입양신청</a></li><div id="choice"></div>
+        <li><a href="./center-mypage-adopt-protect-list.html">임시보호신청</a></li>
+      </ul>
+    </nav>
+  </div>
+  <!-- 게시글 리스트 영역 -->
+  <div class="center-member-profile-cumuboard-container">
+    <!-- 게시글 제목 -->
+    <div>
+      <ul class="center-member-profile-cumuboard-titlebox">
+        <li><b>제목</b></li>
+        <li><b>센터명</b></li>
+        <li><b>날짜</b></li>
+      </ul>
     </div>
-    <!-- 게시판 제목 -->
-    <div class="center-member-profile-navboard">
-      <nav>
-        <ul class="center-member-profile-navboard-ul">
-          <li><a href="./center-mypage-adopt-adopt-list.html">입양신청</a></li><div id="choice"></div>
-          <li><a href="./center-mypage-adopt-protect-list.html">임시보호신청</a></li>
-        </ul>
-      </nav>
+    <!-- 게시글 목록 -->
+    <div class="center-member-profile-cumuboard-contentsbox">
+      <ul class="center-member-profile-cumuboard-content">
+        <li>
+          <div>
+            <ul class="center-member-profile-cumuboard-contentbox">
+              <li><a href="./center-mypage-adopt-adoptrequest.html">인천 입양신청서</a></li>
+              <li>홍길동</li>
+              <li>2024.07.29</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <ul class="center-member-profile-cumuboard-contentbox">
+              <li>인천 입양신청서</li>
+              <li>홍길동</li>
+              <li>2024.07.29</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <ul class="center-member-profile-cumuboard-contentbox">
+              <li>인천 입양신청서</li>
+              <li>홍길동</li>
+              <li>2024.07.29</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <ul class="center-member-profile-cumuboard-contentbox">
+              <li>인천 입양신청서</li>
+              <li>홍길동</li>
+              <li>2024.07.29</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
     </div>
-    <!-- 게시글 리스트 영역 -->
-    <div class="center-member-profile-cumuboard-container">
-      <!-- 게시글 제목 -->
-      <div>
-        <ul class="center-member-profile-cumuboard-titlebox">
-          <li><b>제목</b></li>
-          <li><b>센터명</b></li>
-          <li><b>날짜</b></li>
-        </ul>
-      </div>
-      <!-- 게시글 목록 -->
-      <div class="center-member-profile-cumuboard-contentsbox">
-        <ul class="center-member-profile-cumuboard-content">
-          <li>
-            <div>
-              <ul class="center-member-profile-cumuboard-contentbox">
-                <li><a href="./center-mypage-adopt-adoptrequest.html">인천 입양신청서</a></li>
-                <li>홍길동</li>
-                <li>2024.07.29</li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="center-member-profile-cumuboard-contentbox">
-                <li>인천 입양신청서</li>
-                <li>홍길동</li>
-                <li>2024.07.29</li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="center-member-profile-cumuboard-contentbox">
-                <li>인천 입양신청서</li>
-                <li>홍길동</li>
-                <li>2024.07.29</li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="center-member-profile-cumuboard-contentbox">
-                <li>인천 입양신청서</li>
-                <li>홍길동</li>
-                <li>2024.07.29</li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- 페이지네이션 -->
-    <div class="pagination">
-      <button class="prev">◀</button>
-      <button class="page">1</button>
-      <button class="page">2</button>
-      <button class="page">3</button>
-      <button class="page">4</button>
-      <button class="page">5</button>
-      <button class="next">▶</button>
-    </div>
+  </div>
+  <!-- 페이지네이션 -->
+  <div class="pagination">
+    <button class="prev">◀</button>
+    <button class="page">1</button>
+    <button class="page">2</button>
+    <button class="page">3</button>
+    <button class="page">4</button>
+    <button class="page">5</button>
+    <button class="next">▶</button>
+  </div>
 
 
-  </main>
-  <footer th:replace="~{/fragment/footer :: footer}"></footer>
+</main>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 
 </body>
 </html>

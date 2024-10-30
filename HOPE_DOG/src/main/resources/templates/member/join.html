@@ -12,7 +12,7 @@
 
 <div class="container">
     <h1>회원가입</h1>
-    <form id="signupForm" th:action="@{/member/join}" method="post">
+    <form id="signupForm" th:action="@{/member/join}" onsubmit="return false;">
         <div class="form-group">
             <label for="memberName">이름 <span class="required">*</span></label>
             <input type="text" id="memberName" name="memberName" required>

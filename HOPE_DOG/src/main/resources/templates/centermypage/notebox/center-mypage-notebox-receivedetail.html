@@ -14,19 +14,22 @@
 <header th:replace="~{fragment/header :: header}"></header>
 
 <main>
+  <!-- 마이페이지 목록 -->
   <div class="center-member-profile-navbox">
     <nav>
       <ul class="center-member-profile-nav-ul">
-        <li id="profile"><a th:href="@{/templates/centermypage/center-mypage-profile-update.html}">개인정보 수정</a></li>
-        <li id="mywrite"><a th:href="@{/templates/centermypage/center-mypage-writeinfo-my.html}">작성글 조회</a></li>
-        <li id="volunteer"><a th:href="@{/templates/centermypage/center-mypage-volun-list.html}">봉사</a></li>
-        <li id="adopt"><a th:href="@{/templates/centermypage/center-mypage-adopt-adopt-list.html}">입양</a></li>
-        <li id="notebox"><a th:href="@{/templates/centermypage/notebox/center-mypage-notebox-send.html}">쪽지함</a></li>
-        <li id="withdrawal"><a th:href="@{/templates/centermypage/center-mypage-withdrawal.html}">회원 탈퇴</a></li>
+        <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
+        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+        <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
+        <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
+        <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
+        <div id="choice"></div>
+        <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
       </ul>
     </nav>
   </div>
 
+  <!-- 쪽지 내용 -->
   <div class="note-wrap">
     <div class="note-title">
       <h1>쪽지</h1>
@@ -34,23 +37,27 @@
     <form method="get">
       <div class="note-write-wrap">
         <div class="note-write">
-          <div class="note-title">제목</div>
-          <div class="note-title">닉네임</div>
-          <div class="note-cont">내용</div>
+          <div class="note-title" th:text="${noteboxReceiveDetail.noteboxReceiveTitle}">제목</div>
+          <div class="note-title" th:text="${noteboxReceiveDetail.noteboxReceiverName}">닉네임</div>
+          <div class="note-cont" th:text="${noteboxReceiveDetail.noteboxReceiveRegiDate}">시간</div><br>
+          <div class="note-cont" th:text="${noteboxReceiveDetail.noteboxReceiveContent}">내용</div>
         </div>
       </div>
+
       <div class="volun-admain-btuall">
         <a th:href="@{/centerMypage/noteboxReceiveList}">
           <button class="volun-admain-btu" type="button">
             <span class="volun-admain-btu-sp">이전</span>
           </button>
         </a>
+        <!-- 받은 쪽지일 경우에만 답장하기 버튼 표시 -->
         <button class="volun-admain-btu" type="button">
           <a href="#"><span class="volun-admain-btu-sp">답장하기</span></a>
         </button>
       </div>
     </form>
   </div>
+
 </main>
 
 <footer th:replace="~{/fragment/footer :: footer}"></footer>

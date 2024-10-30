@@ -13,101 +13,101 @@
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
 
-  <main>
-    <!-- 메인페이지 목록 -->
-    <div class="center-member-profile-navbox">
-      <nav>
-        <ul class="center-member-profile-nav-ul">
-          <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
-          <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
-          <div id="choice"></div>
-          <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
-          <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
-          <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
-          <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
-        </ul>
-      </nav>
+<main>
+  <!-- 메인페이지 목록 -->
+  <div class="center-member-profile-navbox">
+    <nav>
+      <ul class="center-member-profile-nav-ul">
+        <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
+        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+        <div id="choice"></div>
+        <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
+        <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
+        <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
+        <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
+      </ul>
+    </nav>
+  </div>
+  <!-- 게시판 목록 -->
+  <div class="center-member-profile-navboard">
+    <nav>
+      <ul class="center-member-profile-navboard-ul">
+        <li><a href="./center-mypage-writeinfo-my.html">커뮤니티</a></li>
+        <li><a href="./center-mypage-writeinfo-volun.html">봉사모집글</a></li>
+        <li><a href="./center-mypage-writeinfo-adopt.html">안심입양</a></li><div id="choice"></div>
+      </ul>
+    </nav>
+  </div>
+  <!-- 게시글 리스트 영역 -->
+  <div class="center-member-profile-cumuboard-container">
+    <!-- 게시글 제목 -->
+    <div>
+      <ul class="center-member-profile-cumuboard-titlebox">
+        <li><b>분류</b></li>
+        <li><b>제목</b></li>
+        <li><b>센터명</b></li>
+        <li><b>날짜</b></li>
+      </ul>
     </div>
-    <!-- 게시판 목록 -->
-    <div class="center-member-profile-navboard">
-      <nav>
-        <ul class="center-member-profile-navboard-ul">
-          <li><a href="./center-mypage-writeinfo-my.html">커뮤니티</a></li>
-          <li><a href="./center-mypage-writeinfo-volun.html">봉사모집글</a></li>
-          <li><a href="./center-mypage-writeinfo-adopt.html">안심입양</a></li><div id="choice"></div>
-        </ul>
-      </nav>
+    <!-- 게시글 목록 -->
+    <div class="center-member-profile-cumuboard-contentsbox">
+      <ul class="center-member-profile-cumuboard-content">
+        <li>
+          <div>
+            <ul class="center-member-profile-cumuboard-contentbox">
+              <li>입양</li>
+              <li><a href="../../html/adopt/adopt-protectdetail.html">말티즈 태어난지 1년 됐어요 <span>[7]</span></a></li>
+              <li>행복한 유기견</li>
+              <li>2024.07.29</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <ul class="center-member-profile-cumuboard-contentbox">
+              <li>입양</li>
+              <li>말티즈 태어난지 1년 됐어요 <span>[7]</span></li>
+              <li>행복한 유기견</li>
+              <li>2024.07.29</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <ul class="center-member-profile-cumuboard-contentbox">
+              <li>입양</li>
+              <li>말티즈 태어난지 1년 됐어요 <span>[7]</span></li>
+              <li>행복한 유기견</li>
+              <li>2024.07.29</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <ul class="center-member-profile-cumuboard-contentbox">
+              <li>입양</li>
+              <li>말티즈 태어난지 1년 됐어요 <span>[7]</span></li>
+              <li>행복한 유기견</li>
+              <li>2024.07.29</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
     </div>
-    <!-- 게시글 리스트 영역 -->
-    <div class="center-member-profile-cumuboard-container">
-      <!-- 게시글 제목 -->
-      <div>
-        <ul class="center-member-profile-cumuboard-titlebox">
-          <li><b>분류</b></li>
-          <li><b>제목</b></li>
-          <li><b>센터명</b></li>
-          <li><b>날짜</b></li>
-        </ul>
-      </div>
-      <!-- 게시글 목록 -->
-      <div class="center-member-profile-cumuboard-contentsbox">
-        <ul class="center-member-profile-cumuboard-content">
-          <li>
-            <div>
-              <ul class="center-member-profile-cumuboard-contentbox">
-                <li>입양</li>
-                <li><a href="../../html/adopt/adopt-protectdetail.html">말티즈 태어난지 1년 됐어요 <span>[7]</span></a></li>
-                <li>행복한 유기견</li>
-                <li>2024.07.29</li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="center-member-profile-cumuboard-contentbox">
-                <li>입양</li>
-                <li>말티즈 태어난지 1년 됐어요 <span>[7]</span></li>
-                <li>행복한 유기견</li>
-                <li>2024.07.29</li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="center-member-profile-cumuboard-contentbox">
-                <li>입양</li>
-                <li>말티즈 태어난지 1년 됐어요 <span>[7]</span></li>
-                <li>행복한 유기견</li>
-                <li>2024.07.29</li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="center-member-profile-cumuboard-contentbox">
-                <li>입양</li>
-                <li>말티즈 태어난지 1년 됐어요 <span>[7]</span></li>
-                <li>행복한 유기견</li>
-                <li>2024.07.29</li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- 페이지네이션 -->
-    <div class="pagination">
-      <button class="prev">◀</button>
-      <button class="page">1</button>
-      <button class="page">2</button>
-      <button class="page">3</button>
-      <button class="page">4</button>
-      <button class="page">5</button>
-      <button class="next">▶</button>
-    </div>
+  </div>
+  <!-- 페이지네이션 -->
+  <div class="pagination">
+    <button class="prev">◀</button>
+    <button class="page">1</button>
+    <button class="page">2</button>
+    <button class="page">3</button>
+    <button class="page">4</button>
+    <button class="page">5</button>
+    <button class="next">▶</button>
+  </div>
 
 
-  </main>
+</main>
 
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 

@@ -85,6 +85,8 @@ main{
 
 .breadError{
   display: flex;
+  align-items: center;
+  width: 780px;
 }
 
 .adopt-write-weight{
@@ -94,6 +96,8 @@ main{
 
 .weightError{
   display: flex;
+  align-items: center;
+  width: 780px;
 }
 
 .adopt-write-birth{
@@ -113,6 +117,8 @@ main{
 
 .introduceError{
   display: flex;
+  align-items: center;
+  width: 780px;
 }
 
 .adopt-write-button-box{

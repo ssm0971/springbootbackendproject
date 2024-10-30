@@ -32,8 +32,7 @@
       <div class="adoptrequest-write-area">
         <br>
         <div style="font-weight: bold;">입양 신청서</div>
-        <form action="" method="post">
-          <input id="adoptNoDisplay" style="display: none" name="adoptRequestNo"></input>
+        <form th:action="@{/adopt/adopt/adoptrequestRegi}" method="post">
         <!-- 이름 -->
           <div class="adoptrequest-content-box">
             <div class="adoptrequest-content-title">성명</div><input class="adoptrequest-input-small" id="nameInput"
@@ -358,8 +357,12 @@
 
           <br><br>
 
+          <!--회원번호 세션으로 받고 히든으로 넘기기 -->
+          <input th:value="${memberNo}" name="memberNo" style="display: none">
+          <input th:value="${centerMemberNo}" name="memberNo" style="display: none">
+
           <div class="adoptrequest-buttonbox">
-            <button class="adoptrequest-button" onclick="validateInputs()" type="button">신청</button>
+            <button class="adoptrequest-button" onclick="validateInputs()" type="sbumit">신청</button>
             <button class="adoptrequest-button" onclick="requestcancle()" type="button">취소</button>
           </div>
           <br>

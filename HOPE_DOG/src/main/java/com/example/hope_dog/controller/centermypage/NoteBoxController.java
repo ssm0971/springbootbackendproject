@@ -1,23 +1,23 @@
-package com.example.hope_dog.controller.centermypage;
-
-import com.example.hope_dog.dto.centermypage.notebox.NoteboxReceiveListDTO;
-import com.example.hope_dog.dto.centermypage.notebox.NoteboxSendListDTO;
-import com.example.hope_dog.service.centermypage.NoteBoxService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
-import java.util.Optional;
-
-@Controller
-@RequiredArgsConstructor
-@Slf4j
+//package com.example.hope_dog.controller.centermypage;
+//
+//import com.example.hope_dog.dto.centermypage.notebox.NoteboxReceiveListDTO;
+//import com.example.hope_dog.dto.centermypage.notebox.NoteboxSendListDTO;
+//import com.example.hope_dog.service.centermypage.NoteBoxService;
+//import lombok.RequiredArgsConstructor;
+//import lombok.extern.slf4j.Slf4j;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//
+//import java.util.List;
+//import java.util.Optional;
+//
+//@Controller
+//@RequiredArgsConstructor
+//@Slf4j
 //@RequestMapping("/Notebox")
-public class NoteBoxController {
+//public class NoteBoxController {
 //    private final NoteBoxService NoteBoxService;
 //
 //    @GetMapping("/SendList")
@@ -53,4 +53,4 @@ public class NoteBoxController {
 //
 //        return "centermypage/notebox/center-mypage-notebox-write"; // 뷰로 이동
 //    }
-}
+//}

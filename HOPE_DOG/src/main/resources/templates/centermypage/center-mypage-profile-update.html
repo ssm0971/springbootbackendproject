@@ -12,112 +12,216 @@
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <div class="center-member-profile-navbox">
-      <nav>
-        <ul class="center-member-profile-nav-ul">
-          <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
-          <div id="choice"></div>
-          <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
-          <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
-          <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
-          <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
-          <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
-        </ul>
-      </nav>
-    </div>
+<main>
+  <div class="center-member-profile-navbox">
+    <nav>
+      <ul class="center-member-profile-nav-ul">
+        <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
+        <div id="choice"></div>
+        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+        <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
+        <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
+        <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
+        <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
+      </ul>
+    </nav>
+  </div>
 
-    <div class="center-member-profile-infobox">
-      <div class="center-member-profile-info">
-        <div class="center-member-profile-infoarea">
-          <div class="center-member-profile-infoimg">
-            <img src="../../img/logo.jpg">
-          </div>
-          <div class="center-member-profile-info-textarea">
-            <form action="" method="">
-              <div class="center-member-profile-inputbox">
-                <label for="email">
-                  <div id="contents">
-                    <div id="labelname">이메일 </div>
-                    <div><input type="text" id="email"></div>
-                    <button type="button" class="center-member-profile-button-small" id="emailSendButton">인증전송</button>
-                  </div>
-                </label>
-                <label for="emailcheck">
-                  <div id="contents">
-                    <div id="labelname">이메일 인증 </div>
-                    <div><input type="text" id="emailcheck"></div>
-                    <button type="button" class="center-member-profile-button-small">인증확인</button>
-                  </div>
-                </label>
-                <label for="phonenumber">
-                  <div id="contents">
-                    <div id="labelname">전화번호 </div>
-                    <div><input type="text" id="phonenumber"></div>
-                    <button type="button" class="center-member-profile-button-small" id="phoneSendButton">인증전송</button>
-                  </div>
-                </label>
-                <label for="phonenumbercheck">
-                  <div id="contents">
-                    <div id="labelname">인증번호 </div>
-                    <div><input type="text" id="phonenumbercheck"></div>
-                    <button type="button" class="center-member-profile-button-small">인증확인</button>
-                  </div>
-                </label>
-                <label for="zipcode">
-                  <div id="contents">
-                    <div id="labelname">우편번호 </div>
-                    <div><input type="text" id="zipcode" readonly></div>
-                    <button type="button" class="center-member-profile-button-small"
-                      id="addressSearch">주소찾기</button>
+  <div class="center-member-profile-infobox">
+    <div class="center-member-profile-info">
+      <div class="center-member-profile-infoarea">
 
-                  </div>
-                </label>
-                <label for="address">
-                  <div id="contents">
-                    <div id="labelname">주소 </div>
-                    <div><input type="text" id="address" readonly></div>
-                  </div>
-                </label>
-                <label for="addressdetail">
-                  <div id="contents">
-                    <div id="labelname">상세주소 </div>
-                    <div><input type="text" id="detailAddress"></div>
-                  </div>
-                </label>
-                <label for="password">
-                  <div id="contents">
-                      <div id="labelname">비밀번호 </div>
-                      <div>
-                          <input type="password" id="password">
-                          <div class="alert"><p id="passwordStrengthMessage" style="color: red; display: none; font-size: 13px;">비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수문자 포함</p></div>
-                      </div>
-                  </div>
-              </label>
-              <label for="passwordcheck">
-                  <div id="contents">
-                      <div id="labelname">비밀번호 확인 </div>
-                      <input type="password" id="passwordcheck">
-                      <div class="alert"><p id="passwordMismatchMessage" style="color: red; display: none;">비밀번호 불일치</p></div>
-                  </div>
-              </label>
+        <div class="center-member-profile-info-textarea">
+          <form action="/centerMypage/updateProfileOk" method="post"> <!-- action URL 수정 -->
+            <div class="center-member-profile-inputbox">
+              <label for="name">
                 <div id="contents">
-                  <div id="labelname">알림수신 동의 </div>
-                  동의<input type="radio" name="agree" id="Y">비동의<input type="radio" name="agree" id="N">
+                  <div id="labelname">센터명 </div>
+                  <div><input type="text" id="name" th:value="${profile.centerMemberName}" readonly></div>
                 </div>
-                <div class="center-member-profile-button">
-                  <a href="./center-mypage-profile.html">
-                    <button type="button">수정</button>
-                  </a>
+              </label>
+              <label for="email">
+                <div id="contents">
+                  <div id="labelname">이메일 </div>
+                  <div><input type="text" id="email" placeholder="이메일을 입력하세요" th:value="${profile.centerMemberEmail}"></div>
+                  <button type="button" class="center-member-profile-button-small" id="emailSendButton">인증전송</button>
                 </div>
-              </div>
-            </form>
-          </div>
-        </div>
+              </label>
 
+              <label for="phonenumber">
+                <div id="contents">
+                  <div id="labelname">대표번호 </div>
+                  <div>
+                    <input type="text" id="phonenumber" placeholder="000-0000-0000" pattern="^(\d{3}-\d{4}-\d{4}|\d{3}-\d{3}-\d{4}|\d{2}-\d{4}-\d{4}|\d{2}-\d{3}-\d{4})$" required th:value="${profile.centerMemberPhoneNumber}">
+                  </div>
+                </div>
+              </label>
+
+              <label for="zipcode">
+                <div id="contents">
+                  <div id="labelname">우편번호 </div>
+                  <div><input type="text" id="zipcode" th:value="${profile.centerMemberZipcode}" readonly></div>
+                  <button type="button" class="center-member-profile-button-small" id="addressSearch">주소찾기</button>
+                </div>
+              </label>
+              <label for="address">
+                <div id="contents">
+                  <div id="labelname">주소 </div>
+                  <div><input type="text" id="address" th:value="${profile.centerMemberAddress}" readonly></div>
+                </div>
+              </label>
+              <label for="detailAddress">
+                <div id="contents">
+                  <div id="labelname">상세주소 </div>
+                  <div><input type="text" id="detailAddress" th:value="${profile.centerMemberDetailAddress}"></div>
+                </div>
+              </label>
+
+              <label for="password">
+                <div id="contents">
+                  <div id="labelname">현재 비밀번호 </div>
+                  <div>
+                    <input type="password" id="password" placeholder="현재 비밀번호 입력">
+
+                  </div>
+                </div>
+              </label>
+
+              <label for="newpassword">
+                <div id="contents">
+                  <div id="labelname">새 비밀번호 </div>
+                  <div>
+                    <input type="password" id="newpassword" placeholder="새 비밀번호 입력">
+                    <div class="alert">
+                      <p id="newPasswordStrengthMessage" style="color: red; display: none; font-size: 13px;">
+                        비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수문자 포함
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </label>
+
+              <label for="confirmNewPassword">
+                <div id="contents">
+                  <div id="labelname">새 비밀번호 확인 </div>
+                  <div>
+                    <input type="password" id="confirmNewPassword" placeholder="새 비밀번호 확인">
+                    <div class="alert">
+                      <p id="passwordMatchMessage" style="color: red; display: none; font-size: 13px;">
+                        비밀번호가 일치하지 않습니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </label>
+
+              <div id="contents">
+                <div id="labelname">알림수신 동의 </div>
+                동의<input type="radio" name="agree" id="Y" value="Y" th:checked="${profile.tblCenterMemberAgree == 'Y'}">
+                비동의<input type="radio" name="agree" id="N" value="N" th:checked="${profile.tblCenterMemberAgree == 'N'}" checked>
+              </div>
+
+              <div class="center-member-profile-button">
+                <button type="submit" id="updateButton" class="center-member-profile-button-small">수정</button> <!-- submit 버튼으로 변경 -->
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </main>
+  </div>
+
+  <!--    <div class="center-member-profile-infobox">-->
+  <!--      <div class="center-member-profile-info">-->
+  <!--        <div class="center-member-profile-infoarea">-->
+  <!--          <div class="center-member-profile-infoimg">-->
+  <!--            <img src="../../img/logo.jpg">-->
+  <!--          </div>-->
+  <!--          <div class="center-member-profile-info-textarea">-->
+  <!--            <form action="" method="">-->
+  <!--              <div class="center-member-profile-inputbox">-->
+  <!--                <label for="email">-->
+  <!--                  <div id="contents">-->
+  <!--                    <div id="labelname">이메일 </div>-->
+  <!--                    <div><input type="text" id="email"></div>-->
+  <!--                    <button type="button" class="center-member-profile-button-small" id="emailSendButton">인증전송</button>-->
+  <!--                  </div>-->
+  <!--                </label>-->
+  <!--                <label for="emailcheck">-->
+  <!--                  <div id="contents">-->
+  <!--                    <div id="labelname">이메일 인증 </div>-->
+  <!--                    <div><input type="text" id="emailcheck"></div>-->
+  <!--                    <button type="button" class="center-member-profile-button-small">인증확인</button>-->
+  <!--                  </div>-->
+  <!--                </label>-->
+  <!--                <label for="phonenumber">-->
+  <!--                  <div id="contents">-->
+  <!--                    <div id="labelname">전화번호 </div>-->
+  <!--                    <div><input type="text" id="phonenumber"></div>-->
+  <!--                    <button type="button" class="center-member-profile-button-small" id="phoneSendButton">인증전송</button>-->
+  <!--                  </div>-->
+  <!--                </label>-->
+  <!--                <label for="phonenumbercheck">-->
+  <!--                  <div id="contents">-->
+  <!--                    <div id="labelname">인증번호 </div>-->
+  <!--                    <div><input type="text" id="phonenumbercheck"></div>-->
+  <!--                    <button type="button" class="center-member-profile-button-small">인증확인</button>-->
+  <!--                  </div>-->
+  <!--                </label>-->
+  <!--                <label for="zipcode">-->
+  <!--                  <div id="contents">-->
+  <!--                    <div id="labelname">우편번호 </div>-->
+  <!--                    <div><input type="text" id="zipcode" readonly></div>-->
+  <!--                    <button type="button" class="center-member-profile-button-small"-->
+  <!--                      id="addressSearch">주소찾기</button>-->
+
+  <!--                  </div>-->
+  <!--                </label>-->
+  <!--                <label for="address">-->
+  <!--                  <div id="contents">-->
+  <!--                    <div id="labelname">주소 </div>-->
+  <!--                    <div><input type="text" id="address" readonly></div>-->
+  <!--                  </div>-->
+  <!--                </label>-->
+  <!--                <label for="addressdetail">-->
+  <!--                  <div id="contents">-->
+  <!--                    <div id="labelname">상세주소 </div>-->
+  <!--                    <div><input type="text" id="detailAddress"></div>-->
+  <!--                  </div>-->
+  <!--                </label>-->
+  <!--                <label for="password">-->
+  <!--                  <div id="contents">-->
+  <!--                      <div id="labelname">비밀번호 </div>-->
+  <!--                      <div>-->
+  <!--                          <input type="password" id="password">-->
+  <!--                          <div class="alert"><p id="passwordStrengthMessage" style="color: red; display: none; font-size: 13px;">비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수문자 포함</p></div>-->
+  <!--                      </div>-->
+  <!--                  </div>-->
+  <!--              </label>-->
+  <!--              <label for="passwordcheck">-->
+  <!--                  <div id="contents">-->
+  <!--                      <div id="labelname">비밀번호 확인 </div>-->
+  <!--                      <input type="password" id="passwordcheck">-->
+  <!--                      <div class="alert"><p id="passwordMismatchMessage" style="color: red; display: none;">비밀번호 불일치</p></div>-->
+  <!--                  </div>-->
+  <!--              </label>-->
+  <!--                <div id="contents">-->
+  <!--                  <div id="labelname">알림수신 동의 </div>-->
+  <!--                  동의<input type="radio" name="agree" id="Y">비동의<input type="radio" name="agree" id="N">-->
+  <!--                </div>-->
+  <!--                <div class="center-member-profile-button">-->
+  <!--                  <a href="./center-mypage-profile.html">-->
+  <!--                    <button type="button">수정</button>-->
+  <!--                  </a>-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </form>-->
+  <!--          </div>-->
+  <!--        </div>-->
+
+  <!--      </div>-->
+  <!--    </div>-->
+</main>
 
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 </body>

@@ -11,7 +11,8 @@
 <header class="header" th:replace="~{/fragment/header :: header}"></header>
 <main class="find-pw-container">
     <h1>회원 비밀번호 찾기</h1>
-    <form id="findPwForm" th:action="@{/member/find-pw}" method="post">
+    <!-- form에서 action과 method 속성 제거 -->
+    <form id="findPwForm" onsubmit="return false;">
         <div class="input-group">
             <label for="userName">회원 이름</label>
             <input type="text" id="userName" name="memberName" required>

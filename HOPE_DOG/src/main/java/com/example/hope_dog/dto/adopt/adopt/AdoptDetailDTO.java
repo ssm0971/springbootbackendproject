@@ -23,4 +23,5 @@ public class AdoptDetailDTO {
     private String adoptWeight;
     private Date adoptBirth;
     private String adoptContent;
+    private Long centerMemberNo;
 }

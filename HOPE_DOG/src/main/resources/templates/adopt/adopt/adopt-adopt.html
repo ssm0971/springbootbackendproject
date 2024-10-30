@@ -66,16 +66,38 @@
           </div>
       </div>
 
+      <br>
 
       <!-- 입양 등록 버튼 -->
-      <div class="adopt-button-box">
-        <a href="../../html/adopt/adopt-adoptwrite.html">
+      <div class="adopt-button-box" th:if="${centerMemberNo != null}">
+        <a href="/adopt/adopt/adoptwrite">
           <button class="adopt-button">등록</button>
         </a>
       </div>
 
       <!-- 페이지네이션 -->
+      <div class="pagination">
+        <ul class="page-box">
+          <a th:href="@{/adopt/adopt(page=${page.startPage - 1})}" class="page-a" th:if="${page.prev}">
+            <li class="page-num prev">&lt</li>
+          </a>
 
+          <!--        th:block은 화면에 영향을 주지않는 가짜 태그
+                      타임리프 문법을 사용하기 위해 만들어 쓴다.
+          -->
+          <th:block th:each="i : ${#numbers.sequence(page.startPage, page.endPage)}">
+            <a th:href="@{/adopt/adopt(page=${i})}" class="page-a">
+              <li class="page-num" th:classappend="${i == page.criteria.page ? 'active' : ''}" th:text="${i}"></li>
+            </a>
+          </th:block>
+
+          <a th:href="@{/adopt/adopt(page=${page.endPage + 1})}" class="page-a" th:if="${page.next}">
+            <li class="page-num next">&gt</li>
+          </a>
+        </ul>
+      </div>
+
+      <br>
   </main>
 
 </body>

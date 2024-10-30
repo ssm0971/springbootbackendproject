@@ -4,26 +4,49 @@ package com.example.hope_dog.service.member;
 import com.example.hope_dog.dto.member.MemberDTO;
 import com.example.hope_dog.dto.member.MemberSessionDTO;
 import com.example.hope_dog.mapper.member.MemberMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j  // 로그 추가
 public class MemberService {
 
     private final MemberMapper memberMapper;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
-    //회원가입
+    @PostConstruct  // 애플리케이션 시작 시 자동 실행
+    public void initializePasswords() {
+        log.info("Initializing passwords for existing members...");
+        encryptExistingPasswords();
+        log.info("Password initialization completed.");
+    }
+
+    // 회원가입 시 비밀번호 암호화 확실히 하기
     public void join(MemberDTO memberDTO) {
+        // 비밀번호 암호화 여부 로깅
+        log.info("Original password before encryption: {}", memberDTO.getMemberPw());
+
+        // 비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(memberDTO.getMemberPw());
+        log.info("Password after encryption: {}", encodedPassword);
+
+        // 암호화된 비밀번호로 설정
+        memberDTO.setMemberPw(encodedPassword);
+
+        // DB에 저장
         memberMapper.insertMember(memberDTO);
+        log.info("Member successfully registered with encrypted password");
     }
 
     //회원번호 조회
@@ -32,23 +55,49 @@ public class MemberService {
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원정보"));
     }
 
-    //로그인
-    public MemberSessionDTO login(String memberId, String memberPw) {
-        // 1. 먼저 아이디로 회원 정보를 조회
-        MemberSessionDTO member = memberMapper.selectLoginInfo(memberId, memberPw);
 
-        // 2. 회원이 존재하지 않으면 예외 발생
+    public MemberSessionDTO login(String memberId, String memberPw) {
+        log.info("Login attempt for ID: {}", memberId);
+
+        // 회원 정보 조회
+        MemberSessionDTO member = memberMapper.selectLoginInfo(memberId);
+
         if (member == null) {
+            log.error("Member not found: {}", memberId);
             throw new IllegalStateException("존재하지 않는 회원정보입니다.");
         }
 
-        // 3. 비밀번호 일치 여부 확인
+        // 입력된 비밀번호와 저장된 암호화된 비밀번호 비교
         if (!passwordEncoder.matches(memberPw, member.getMemberPw())) {
-            throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
+            log.error("Password mismatch for member: {}", memberId);
+            throw new IllegalStateException("아이디 또는 비밀번호가 일치하지 않습니다.");
         }
 
+        log.info("Login successful for member: {}", memberId);
         return member;
     }
+
+
+    // 기존 회원의 비밀번호 암호화
+    @Transactional
+    public void encryptExistingPasswords() {
+        log.info("Starting password encryption for existing members");
+
+        // 1. 모든 회원 조회
+        List<MemberDTO> members = memberMapper.selectAllMembers();
+
+        for (MemberDTO member : members) {
+            // 만약 비밀번호가 이미 암호화되어 있지 않다면
+            if (!member.getMemberPw().startsWith("$2a$")) {
+                String encodedPassword = passwordEncoder.encode(member.getMemberPw());
+                log.info("Encrypting password for member: {}", member.getMemberId());
+                memberMapper.updateAllPasswords(member.getMemberId(), encodedPassword);
+            }
+        }
+
+        log.info("Completed password encryption for existing members");
+    }
+
 
     //  닉네임 중복체크
     public boolean checkNickname(String nickname) {

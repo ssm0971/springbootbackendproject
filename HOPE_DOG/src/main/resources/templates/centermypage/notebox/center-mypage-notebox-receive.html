@@ -17,13 +17,13 @@
     <div class="center-member-profile-navbox">
         <nav>
             <ul class="center-member-profile-nav-ul">
-                <li id="profile"><a href="../center-mypage-profile-update.html"> 개인정보수정</a></li>
-                <li id="mywrite"><a href="../center-mypage-writeinfo-my.html"> 작성글조회</a></li>
-                <li id="volunteer"><a href="../center-mypage-volun-list.html"> 봉사</a></li>
-                <li id="adopt"><a href="../center-mypage-adopt-adopt-list.html"> 입양</a></li>
-                <li id="notebox"><a href="center-mypage-notebox-send.html"> 쪽지함</a></li>
+                <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
+                <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+                <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
+                <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
+                <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
                 <div id="choice"></div>
-                <li id="withdrawal"><a href="../center-mypage-withdrawal.html"> 회원탈퇴</a></li>
+                <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
             </ul>
         </nav>
     </div>
@@ -46,11 +46,14 @@
                 <div class="notebox-list-contents">
                     <div class="note-status" th:text="${note.readStatus}"></div> <!-- 읽음/안읽음 상태 -->
                     <div class="note-profile-namebox">
-                        <div class="note-profile-name" th:text="${note.noteboxSendName}"></div> <!-- noteboxSendName -->
+                        <div class="note-profile-name" th:text="${note.noteboxReceiverName}"></div> <!-- 이름 -->
                     </div>
-                    <div class="note-note-content">
+                    <div class="note-note-content" id="sendList-area">
+                        <div>
+                            <div class="noteboxNo" style="display: none;" th:text="${note.noteboxReceiveNo}"></div>
+                        </div>
                         <div class="note-title">
-                            <b th:text="${note.noteboxReceiveTitle}">제목</b> <!-- 제목 -->
+                            <b th:text="${note.noteboxReceiveTitle}">제목</b>
                         </div>
                         <div class="note-body" th:text="${note.noteboxReceiveContent}"></div> <!-- 내용 -->
                     </div>
@@ -85,5 +88,5 @@
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 </body>
-<script th:src="@{/js/centermypage/center-mypage-notebox-receive.js}"></script>
+<script th:src="@{/js/centermypage/center-mypage-notebox-receivepage.js}"></script>
 </html>
