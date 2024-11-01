@@ -24,14 +24,14 @@
         <ul class="menu-bar">
           <li class="menu">
             <div class="menu-flex">
-              <a href="../admin-main/admin-main.html">
+              <a href="/admin/main">
                 <span>메인</span>
               </a>
             </div>
           </li>
           <li class="menu">
             <div class="menu-flex">
-              <a href="../admin-member/admin-member-list.html">
+              <a href="/admin/memberList">
                 <span>회원 관리</span>
               </a>
             </div>
@@ -39,63 +39,63 @@
 
           <li class="menu">
             <div class="menu-flex">
-              <a href="../admin-report/admin-report-list.html">
+              <a href="/admin/reportList">
                 <span>신고 내역</span>
               </a>
             </div>
           </li>
           <li class="menu">
             <div class="menu-flex">
-              <a href="../admin-post/admin-post-list.html">
+              <a href="/admin/postList">
                 <span>게시글 관리</span>
               </a>
             </div>
           </li>
           <li class="menu">
             <div class="menu-flex">
-              <a href="../admin-comment/admin-comment-list.html">
+              <a href="/admin/commentList">
                 <span>댓글 관리</span>
               </a>
             </div>
           </li>
           <li class="menu">
             <div class="menu-flex">
-              <a href="../admin-notice/admin-notice-list.html">
+              <a href="/admin/noticeList">
                 <span>공지사항 관리</span>
               </a>
             </div>
           </li>
           <li class="menu">
             <div class="menu-flex">
-              <a href="../admin-center-apply/admin-center-apply-list.html">
+              <a href="/admin/centerApplyList">
                 <span>센터 회원가입 관리</span>
               </a>
             </div>
           </li>
           <li class="menu">
             <div class="menu-flex">
-              <a href="../admin-ATP/admin-ATP-list.html">
-                <span>입양/임시보호 관리</span>
+              <a href="/admin/adoptList">
+                <span>입양/임시보호 신청</span>
               </a>
             </div>
           </li>
           <li class="menu">
             <div class="menu-flex">
-              <a href="../admin-volun/admin-volun-list.html">
-                <span>봉사 관리</span>
+              <a href="/admin/volunList">
+                <span>봉사 신청</span>
               </a>
             </div>
           </li>
           <li class="menu">
             <div class="menu-flex">
-              <a href="../admin-notebox/admin-notebox-in.html">
+              <a href="/admin/noteboxIn">
                 <span>쪽지함</span>
               </a>
             </div>
           </li>
           <li class="menu">
             <div class="menu-flex menu-logout">
-              <a href="../admin-login.html">
+              <a href="/admin/logout">
                 <span>로그아웃</span>
               </a>
             </div>
@@ -107,6 +107,6 @@
 </div>
 <!-- 사이드 바 끝-->
 </body>
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
 <script src="/js/admin/sidemenu.js"></script>
 </html>

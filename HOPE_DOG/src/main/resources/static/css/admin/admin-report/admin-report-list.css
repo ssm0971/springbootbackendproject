@@ -259,8 +259,11 @@ div#paging-wrap {
   .info-cell-report-pos {
 	width: 100px;
   }
-  .info-cell-report-reason {
-		flex-grow:1;
+  .info-cell-report-reason{
+	  width: 700px
+  }
+  .info-cell-report-regidate{
+	width: 150px;
   }
   .checkbox-line {
 	width: 50px;

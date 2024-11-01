@@ -180,11 +180,13 @@ main{
 .member-notebox-contentbox li:nth-child(2){
   width: 10%;
   margin: 20px;
+  font-size: 13px;
 }
 
 .member-notebox-contentbox li:nth-child(3){
   width: 10%;
   margin: 20px;
+  font-size: 13px;
 }
 
 .member-notebox-contentbox li:nth-child(4){

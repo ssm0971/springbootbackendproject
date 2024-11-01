@@ -1,5 +1,7 @@
 package com.example.hope_dog.config;
 
+import com.example.hope_dog.service.member.CustomOAuth2UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,27 +14,38 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http,
+                                           CustomOAuth2UserService customOAuth2UserService) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()  // 모든 요청 허용
+                        .requestMatchers("/**").permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/member/login-select")
                         .permitAll()
                 )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/")
-                        .permitAll()
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/member/login")
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)
+                        )
+                        .successHandler(oauth2LoginSuccessHandler())
+                        .failureUrl("/member/login?error=true")
                 );
 
         return http.build();
+    }
+
+    @Bean
+    public OAuth2LoginSuccessHandler oauth2LoginSuccessHandler() {
+        return new OAuth2LoginSuccessHandler();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

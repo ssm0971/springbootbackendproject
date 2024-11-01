@@ -74,6 +74,10 @@ main{
   font-size: 25px;
 }
 
+.member-protect-nav-ul:hover {
+  cursor: pointer;
+}
+
 .member-protect-nav-ul a{
   display: flex;
   text-decoration: none;
@@ -101,6 +105,10 @@ main{
   height: 4px;
   background-color: #9B805D;
   margin: 0 auto;
+}
+
+.mypage-protect-list:hover {
+  cursor: pointer;
 }
 
 /* 게시글 리스트 영역 */

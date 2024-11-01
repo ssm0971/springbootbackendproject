@@ -24,4 +24,5 @@ public class AdoptDetailDTO {
     private Date adoptBirth;
     private String adoptContent;
     private Long centerMemberNo;
+    private String adoptStatus;
 }

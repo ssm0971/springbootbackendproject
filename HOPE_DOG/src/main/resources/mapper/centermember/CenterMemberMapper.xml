@@ -10,7 +10,7 @@
 
         <!-- 회원 정보 등록 -->
         INSERT INTO TBL_CENTER_MEMBER (CENTER_MEMBER_NO,CENTER_MEMBER_ID,CENTER_MEMBER_NAME,CENTER_MEMBER_PW,CENTER_MEMBER_ZIPCODE,
-        CENTER_MEMBER_EMAIL,CENTER_MEMBER_ADDRESS,CENTER_MEMBER_DETAIL_ADDRESS,CENTER_MEMBER_PHONE_NUMBER,TBL_CENTER_MEMBER_STATUS
+        CENTER_MEMBER_EMAIL,CENTER_MEMBER_ADDRESS,CENTER_MEMBER_DETAIL_ADDRESS,CENTER_MEMBER_PHONE_NUMBER,CENTER_MEMBER_STATUS
         ) VALUES ( #{centerMemberNo}, #{centerMemberId}, #{centerMemberName},  #{centerMemberPw}, #{centerMemberZipcode},
         #{centerMemberEmail},  #{centerMemberAddress}, #{centerMemberDetailAddress}, #{centerMemberPhoneNumber}, 'N')
     </insert>
@@ -55,5 +55,28 @@
     </select>
 
 
+<!--    아이디 찾기-->
+    <select id="findCenterMemberId" resultType="String">
+        SELECT CENTER_MEMBER_ID
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_NAME = #{centerMemberName}
+          AND CENTER_MEMBER_PHONE_NUMBER = #{centerMemberPhoneNumber}
+    </select>
 
+
+    <!-- 이름, 아이디, 이메일로 센터 회원 찾기 -->
+    <select id="findCenterByNameIdEmail" resultType="CenterMemberDTO">
+        SELECT *
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_NAME = #{centerMemberName}
+          AND CENTER_MEMBER_ID = #{centerMemberId}
+          AND CENTER_MEMBER_EMAIL = #{centerMemberEmail}
+    </select>
+
+    <!-- 센터 비밀번호 업데이트 -->
+    <update id="updateCenterPassword">
+        UPDATE TBL_CENTER_MEMBER
+        SET CENTER_MEMBER_PW = #{centerMemberPw}
+        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+    </update>
 </mapper>

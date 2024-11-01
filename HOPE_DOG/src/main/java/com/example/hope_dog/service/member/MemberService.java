@@ -4,6 +4,7 @@ package com.example.hope_dog.service.member;
 import com.example.hope_dog.dto.member.MemberDTO;
 import com.example.hope_dog.dto.member.MemberSessionDTO;
 import com.example.hope_dog.mapper.member.MemberMapper;
+import com.example.hope_dog.utils.PasswordUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -135,7 +136,7 @@ public class MemberService {
         }
 
         // 임시 비밀번호 생성
-        String tempPassword = generateTempPassword();
+        String tempPassword = PasswordUtil.generateTempPassword();
 
         // DB에 임시 비밀번호 저장 (암호화)
         member.setMemberPw(passwordEncoder.encode(tempPassword));
@@ -145,20 +146,49 @@ public class MemberService {
         emailService.sendTempPassword(memberEmail, tempPassword);
     }
 
-//    10자리 임시 비밀번호를 생성하는 부분
-    private String generateTempPassword() {
-        StringBuilder pw = new StringBuilder();
-        Random random = new Random();
-//        대문자, 소문자, 숫자, 특수 문자로 구성
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-        int length = chars.length();
 
-        for (int i = 0; i < 10; i++) {
-            pw.append(chars.charAt(random.nextInt(length)));
-        }
-
-        return pw.toString();
+    // 소셜 로그인 회원 조회
+    public MemberDTO findByProviderAndProviderId(String provider, String providerId) {
+        return memberMapper.findByProviderAndProviderId(provider, providerId);
     }
 
 
+
+    // 이메일로 회원 조회하는 메서드 추가
+    public MemberDTO findByEmail(String memberEmail) {
+        return memberMapper.findByEmail(memberEmail);
+    }
+
+    // 소셜 회원 등록 메서드 수정
+    public MemberDTO registerSocialMember(MemberDTO memberDTO) {
+        try {
+            // 이메일로 기존 회원 조회
+            MemberDTO existingMember = memberMapper.findByEmail(memberDTO.getMemberEmail());
+
+            if (existingMember != null) {
+                log.info("Existing member found. Updating social info for email: {}", memberDTO.getMemberEmail());
+                // 기존 계정이 있다면 소셜 정보 업데이트
+                existingMember.setProvider(memberDTO.getProvider());
+                existingMember.setProviderId(memberDTO.getProviderId());
+                existingMember.setMemberLoginStatus(memberDTO.getProvider().toUpperCase());
+                memberMapper.updateMemberSocialInfo(existingMember);
+                return existingMember;
+            }
+
+            // 신규 가입 처리
+            log.info("Creating new social member for email: {}", memberDTO.getMemberEmail());
+            String provider = memberDTO.getProvider();
+            memberDTO.setMemberPw(passwordEncoder.encode(provider + memberDTO.getProviderId()));
+            memberDTO.setMemberStatus("1");
+            memberDTO.setMemberLoginStatus(provider.toUpperCase());
+            memberDTO.setMemberTwoFactorEnabled("N");
+
+            memberMapper.insertMember(memberDTO);
+            return memberDTO;
+
+        } catch (Exception e) {
+            log.error("Error in registerSocialMember: ", e);
+            throw new IllegalStateException("소셜 회원 등록 중 오류가 발생했습니다.", e);
+        }
+    }
 }

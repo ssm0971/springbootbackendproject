@@ -2,6 +2,7 @@ package com.example.hope_dog.controller.centermember;
 
 import com.example.hope_dog.dto.centerMember.CenterMemberDTO;
 import com.example.hope_dog.dto.centerMember.CenterMemberSessionDTO;
+import com.example.hope_dog.dto.member.FindPwRequestDTO;
 import com.example.hope_dog.service.centermember.CenterMemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -23,15 +25,6 @@ import java.util.Map;
 public class CenterMemberController {
 
     private final CenterMemberService centerMemberService;
-
-//    /**
-//     * 센터 회원가입 페이지 이동
-//     */
-//    @GetMapping("/center-join")  // 수정
-//    public String joinForm() {
-//        return "center/center-join";  // 이미 correct
-//    }
-
 
 
     /**
@@ -220,9 +213,11 @@ public class CenterMemberController {
     }
 
 
+    /**
+     * 회원가입 처리
+     */
     @PostMapping("/center-join")
     @ResponseBody
-    @Transactional  // 트랜잭션 추가
     public ResponseEntity<?> join(@ModelAttribute CenterMemberDTO memberDTO,
                                   @RequestParam("businessFile") MultipartFile file,
                                   HttpSession session) {
@@ -230,7 +225,7 @@ public class CenterMemberController {
             // 파일 처리를 위해 DTO에 파일 설정
             memberDTO.setBusinessFile(file);
 
-            // 회원가입 처리 (memberDTO에 centerMemberNo가 설정됨)
+            // 회원가입 처리
             Long centerMemberNo = centerMemberService.join(memberDTO);
 
             // 세션에 이름 저장
@@ -238,6 +233,7 @@ public class CenterMemberController {
 
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
+            log.error("회원가입 유효성 검사 실패: {}", e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             log.error("회원가입 처리 중 오류 발생", e);
@@ -245,20 +241,97 @@ public class CenterMemberController {
         }
     }
 
+
     /**
      * 회원가입 완료 페이지
      */
     @GetMapping("/center-joinOk")
     public String joinOk(HttpSession session, Model model) {
-        // 세션에서 이름 가져오기
         String centerMemberName = (String) session.getAttribute("centerMemberName");
-        // Model에 이름 추가
         model.addAttribute("centerMemberName", centerMemberName);
-        // 세션에서 이름 제거
         session.removeAttribute("centerMemberName");
         return "center/center-joinOk";
     }
 
 
+    //아이디 찾기 페이지 이동
+    @GetMapping("/center-findId")
+    public String findIdForm() {
+        return "center/center-findId";
+    }
 
+
+    // 아이디 찾기
+    @PostMapping("/center-findId")
+    @ResponseBody
+// @ResponseBody: HTTP 응답 본문에 직접 데이터를 작성하기 위한 어노테이션
+// Spring이 반환값을 자동으로 JSON으로 변환하여 클라이언트에게 전송
+    public ResponseEntity<Map<String, String>> centerFindId(@RequestParam("centerMemberName") String centerMemberName,
+                                                      @RequestParam("centerMemberPhoneNumber") String centerMemberPhoneNumber) {
+        // @RequestParam: HTTP 요청 파라미터를 메서드 파라미터로 바인딩
+        // ResponseEntity: HTTP 응답을 상세하게 제어할 수 있는 클래스
+        try {
+            // memberService를 통해 회원 아이디 조회
+            String centerMemberId = centerMemberService.findCenterMemberId(centerMemberName, centerMemberPhoneNumber);
+            // 성공 시 200 OK 상태코드와 함께 찾은 아이디를 JSON 형태로 반환
+            // Map.of()를 사용하여 간단한 key-value 쌍의 Map 생성
+            return ResponseEntity.ok(Map.of("centerMemberId", centerMemberId));
+        } catch (IllegalArgumentException e) {
+            // 실패 시 400 Bad Request 상태코드와 함께 에러 메시지 반환
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+
+    // 아이디 찾기 완료
+    @GetMapping("/center-findIdOk")
+    // 일반적인 웹 페이지 반환을 위한 컨트롤러 메서드
+    public String centerFindIdResult(@RequestParam(name = "centerMemberName") String centerMemberName,
+                               @RequestParam(name = "centerMemberId") String centerMemberId,
+                               Model model) {
+        // Model: 뷰에 전달할 데이터를 저장하는 객체
+        // 뷰에서 사용할 데이터를 model에 추가
+        model.addAttribute("centerMemberName", centerMemberName);
+        model.addAttribute("centerMemberId", centerMemberId);
+        // center/center-findIdOk 뷰 템플릿을 반환
+        // ViewResolver가 실제 뷰 페이지를 찾아 렌더링
+        return "center/center-findIdOk";
+    }
+
+
+
+
+
+    // 비밀번호 찾기 페이지 이동
+    @GetMapping("/center-findPw")
+    public String findPwForm() {
+        return "center/center-findPw";
+    }
+
+    // 비밀번호 찾기(재설정) API
+    @PostMapping("/center-findPw")
+    @ResponseBody
+    public ResponseEntity<?> findPw(@RequestBody FindPwRequestDTO requestDTO) {
+        log.info("Received request DTO: {}", requestDTO);
+        try {
+            centerMemberService.centerResetPassword(
+                    requestDTO.getMemberName(),
+                    requestDTO.getMemberId(),
+                    requestDTO.getMemberEmail()
+            );
+
+            Map<String, String> response = new HashMap<>();
+            response.put("centerMemberName", requestDTO.getMemberName());
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // 비밀번호 찾기 완료 페이지
+    @GetMapping("/center-findPwOk")
+    public String findPwOk(@RequestParam("centerMemberName") String centerMemberName, Model model) {
+        model.addAttribute("centerMemberName", centerMemberName);
+        return "center/center-findPwOk";
+    }
 }

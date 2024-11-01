@@ -24,13 +24,3 @@ public class DonationListDTO {
     private String donaCommentContent;
     private String donaCommentWriter;
 }
-
-//public class DonationListDTO {
-//    private Long donaNo;
-//    private String donaTitle;
-////    private String donaContent;
-//    private Date donaRegidate;
-//    private Date donaUpdatedate;
-//    private String centerMemberNo;
-//    private String centerMemberName;
-//}

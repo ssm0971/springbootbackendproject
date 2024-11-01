@@ -2,16 +2,118 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.hope_dog.mapper.mypage.MypageMapper">
 
-    <select id="findMemberById" resultType="MypageDTO"> <!-- DTO의 패키지 경로로 수정 -->
+    <select id="mypageProfile" resultType="MypageDTO"> <!-- DTO의 패키지 경로로 수정 -->
         SELECT
         MEMBER_NO,
-        MEMBER_ID,
         MEMBER_NAME,
-        MEMBER_NICKNAME,
-        MEMBER_EMAIL,
+        MEMBER_PHONE_NUMBER,
+        MEMBER_EMAIL
         FROM
         TBL_MEMBER
         WHERE
-        MEMBER_ID = #{memberId}
+        MEMBER_NO = #{memberNo}
+    </select>
+
+    <select id="mypageAdoptList" resultType="MypageAdoptListDTO">
+        SELECT
+            A.ADOPT_TITLE,
+            A.ADOPT_STATUS,
+            A.ADOPT_PERIODEND
+        FROM TBL_ADOPT A
+                 JOIN TBL_ADOPT_REQUEST AR ON A.ADOPT_NO = AR.ADOPT_NO
+        WHERE AR.MEMBER_NO = #{memberNo}
+    </select>
+
+    <select id="mypageProtectList" resultType="MypageProtectDTO">
+        SELECT
+            P.PROTECT_TITLE,
+            P.PROTECT_STATUS,
+            P.PROTECT_PERIODEND
+        FROM TBL_PROTECT P
+                 JOIN TBL_PROTECT_REQUEST PR ON P.PROTECT_NO = PR.PROTECT_NO
+        WHERE PR.MEMBER_NO = #{memberNo}
+    </select>
+
+    <select id="mypageVolunList" resultType="MypageVolunDTO">
+        SELECT
+            V.VOLUN_TITLE,
+            V.VOLUN_STATUS,
+            V.VOLUN_PERIODEND
+        FROM TBL_VOLUN V
+            JOIN TBL_VOLUN_REQUEST VR ON V.VOLUN_NO = VR.VOLUN_NO
+        WHERE VR.MEMBER_NO = #{memberNo}
+    </select>
+
+    <select id="mypagePostsList" resultType="MypagePostsDTO">
+        SELECT
+            'CAR' AS TYPE,
+            C.CAR_TITLE AS TITLE,
+            M.MEMBER_NICKNAME AS WRITER,  -- 가정: TBL_MEMBER에 NICKNAME 컬럼이 있음
+            C.CAR_REGIDATE AS REGIDATE
+        FROM
+            TBL_CAR C
+                JOIN
+            TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO  -- 작성자 매핑
+        WHERE M.MEMBER_NO = #{memberNo}
+        UNION ALL
+        SELECT
+            'COMMU' AS TYPE,
+            CO.COMMU_TITLE AS TITLE,
+            M.MEMBER_NICKNAME AS WRITER,
+            CO.COMMU_REGIDATE AS REGIDATE
+        FROM
+            TBL_COMMU CO
+                JOIN
+            TBL_MEMBER M ON CO.COMMU_WRITER = M.MEMBER_NO
+        WHERE M.MEMBER_NO = #{memberNo}
+        UNION ALL
+        SELECT
+            'REVIEW' AS TYPE,
+            R.REVIEW_TITLE AS TITLE,
+            M.MEMBER_NICKNAME AS WRITER,
+            R.REVIEW_REGIDATE AS REGIDATE
+        FROM
+            TBL_REVIEW R
+                JOIN
+            TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO
+        WHERE M.MEMBER_NO = #{memberNo}
+    </select>
+    <select id="mypageNoteReceiveList" resultType="MypageNoteReceiveDTO">
+        SELECT
+            N.NOTEBOX_RECEIVE_TITLE,
+            N.NOTEBOX_RECEIVE_CONTENT,
+            N.NOTEBOX_RECEIVE_READ,
+            N.NOTEBOX_RECEIVE_REGIDATE,
+            CASE
+                WHEN MOD(N.NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = N.NOTEBOX_RECEIVE_S)
+                WHEN MOD(N.NOTEBOX_RECEIVE_S, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = N.NOTEBOX_RECEIVE_S)
+                END AS NOTEBOX_RECEIVE_S_NAME,  -- 송신자 이름
+            CASE
+                WHEN MOD(N.NOTEBOX_RECEIVE_R, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = N.NOTEBOX_RECEIVE_R)
+                WHEN MOD(N.NOTEBOX_RECEIVE_R, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = N.NOTEBOX_RECEIVE_R)
+                END AS NOTEBOX_RECEIVE_R_NAME   -- 수신자 이름
+        FROM
+            TBL_NOTEBOX_RECEIVE N
+        WHERE
+            N.NOTEBOX_RECEIVE_R = #{memberNo}
+    </select>
+
+    <select id="mypageNoteSendList" resultType="MypageNoteSendDTO">
+        SELECT
+            N.NOTEBOX_SEND_TITLE,
+            N.NOTEBOX_SEND_CONTENT,
+            N.NOTEBOX_SEND_REGIDATE,
+            CASE
+                WHEN MOD(N.NOTEBOX_SEND_S, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = N.NOTEBOX_SEND_S)
+                WHEN MOD(N.NOTEBOX_SEND_S, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = N.NOTEBOX_SEND_S)
+                END AS NOTEBOX_SEND_S_NAME,  -- 송신자 이름
+            CASE
+                WHEN MOD(N.NOTEBOX_SEND_R, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = N.NOTEBOX_SEND_R)
+                WHEN MOD(N.NOTEBOX_SEND_R, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = N.NOTEBOX_SEND_R)
+                END AS NOTEBOX_SEND_R_NAME   -- 수신자 이름
+        FROM
+            TBL_NOTEBOX_SEND N
+        WHERE
+            N.NOTEBOX_SEND_R = #{memberNo}
     </select>
 </mapper>

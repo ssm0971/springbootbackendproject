@@ -9,54 +9,75 @@
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
   <script defer th:src="@{/js/main/main.js}"></script>
+  <script defer th:src="@{/js/dona/donation-detail.js}"></script>
 </head>
 
 <body>
 
 <header th:replace="~{fragment/header :: header}"></header>
   
-  <main>
-    <div class="post-guest-main"  th:each="donation : ${donationViewList}">
+<main>
+  <div class="post-guest-main"  th:each="donation : ${donationViewList}">
       <div class="post-guest">
         <div class="topTitle" th:text="${donation.donaTitle}"></div>
-        <div id="line"></div>
+          <div id="line"></div>
+        <div class="dona-view-content">
 
-          <!--게시판 상단 (제목, 닉네임)-->
-        <div class="notice-detail-box">
-          <div class="notice-addetail-tcontent">작성자</div>
-          <div class="notice-addetail-ttxt" th:text="${donation.centerMemberName}">행복한유기견</div>
-        </div>
-        <div class="notice-addetail-content">
-          <div class="notice-addetail-tcontent">작성일</div>
-          <div class="notice-addetail-ttxt" th:text="${#dates.format(donation.donaRegidate, 'yyyy-MM-dd HH:mm')}"></div></div>
-        </div>
-        <div class="notice-addetail-maincont"  th:text="${donation.donaContent}">
-        </div>
 
-      <div class="dona-button">
-        <div class="dona-admain-btuall">
-          <button class="dona-admain-btu" type="button" onclick="location.href='../../html/donation/donation-modify.html'">
-            <span class="dona-admain-btu-sp">수정</span>
-          </button>
-        </div>
-        <div class="dona-admain-btuall-delete">
-          <button class="dona-admain-btu-delete" type="button" onclick="deleteClick()">
-            <span class="dona-admain-btu-delete-sp">삭제</span>
-          </button>
-        </div>
-        <div class="dona-admain-btuall-complaint">
-          <button class="dona-admain-btu-complaint" type="button">
-            <span class="dona-admain-btu-complaint-sp">목록</span>
-          </button>
+            <!--게시판 상단 (제목, 닉네임)-->
+          <div class="notice-detail-box">
+            <div class="notice-addetail-content">
+              <div class="notice-addetail-tcontent">작성자</div>
+              <div class="notice-addetail-ttxt" th:text="${donation.centerMemberName}"></div>
+            </div>
+            <div class="notice-addetail-content">
+              <div class="notice-addetail-tcontent">작성일</div>
+              <div class="notice-addetail-ttxt" th:text="${#dates.format(donation.donaRegidate, 'yyyy-MM-dd HH:mm')}"></div></div>
+            </div>
+
+            <div class="notice-addetail-maincont"  th:text="${donation.donaContent}"></div>
+          </div>
         </div>
       </div>
+
+    <section class="dona-bottom">
+      <div class="btn-wrap">
+        <th:block th:if="${donaion.centerMemberNo == session.centerMemberNo}">
+          <button type="button" class="btn-modify" th:data-id="${donaion.donaNo}">수정</button>
+          <button type="button" class="btn-remove" th:data-id="${donaion.donaNo}">삭제</button>
+        </th:block>
+        <button type="button" class="btn-back">뒤로 가기</button>
+      </div>
+
+<!--      <div class="dona-button">-->
+<!--        <input type="hidden" name="centerMemberNo" th:value="${session.centerMemberNo}">-->
+<!--          <div th:if="${session.centerMemberNo == donation.centerMemberNo}">-->
+<!--            <div class="dona-admain-btuall">-->
+<!--                <button class="btn-modify" type="button">-->
+<!--                  <span class="btn-modify-sp" th:data="${donaNo}">수정</span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        <form id="deleteForm" method="post">-->
+<!--          <input type="hidden" name="donaNo" value="${donation.donaNo}"/>-->
+<!--          <div class="dona-admain-btuall-delete">-->
+<!--            <button class="btn-remove" type="button" onclick="goDelete()">-->
+<!--              <span class="btn-remove-sp">삭제</span>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </div>-->
+          <div class="dona-admain-btuall-complaint">
+            <button class="dona-admain-btu-complaint" type="button">
+              <span class="dona-admain-btu-complaint-sp">목록</span>
+            </button>
+          </div>
       <!-- 댓글창 -->
-      <div class="dona-detail-box4">
+      <se class="dona-detail-box4">
         <div class="dona-detail-commentbox">
           <div class="dona-detail-name">행복이</div>
           <div class="dona-detail-comment" id="dona-comment">저요</div>
           <div class="dona-detail-comment" id="dona-modifyInput" style="display:none;">
-            <input class="dona-modify-comment">  
+            <input class="dona-modify-comment">
             <button class="dona-comment-button" onclick="editCommentBtnClcik()">등록</button>
           </div>
           <div id="dona-comment-buttonBox">
@@ -69,7 +90,7 @@
           <div class="dona-detail-name">아가다</div>
           <div class="dona-detail-comment" id="dona-comment">저여!</div>
           <div class="dona-detail-comment" id="dona-modifyInput" style="display:none;">
-            <input class="dona-modify-comment">  
+            <input class="dona-modify-comment">
             <button class="dona-comment-button" onclick="editCommentBtnClcik()">등록</button>
           </div>
           <div id="dona-comment-buttonBox">
@@ -78,21 +99,13 @@
           </div>
           <div class="dona-detail-date">2024-10-14</div>
         </div>
-      </div>
-    </div>
-  </main>
+    </section>
+  </div>
+</main>
 </body>
 
-<footer>
-  <div class="footer-links">
-    <a href="../member/term.html">이용약관</a> |
-    <a href="../member/term.html">개인정보처리방침</a>
-  </div>
-  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
-    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
-    © NEXT LEVEL. All Rights Reserved</h6>
-</footer>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 
-<script defer th:src="@{/js/dona/donation-detail.js}"></script>
+
 
 </html>

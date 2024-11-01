@@ -150,6 +150,13 @@ ul{
   width: 400px;
   margin-top: 15px;
 }
+#search-type{
+  height: 23px;
+}
+
+input[type="text"]{
+height: 23px;
+}
 
 input[type="submit"] {
   background-color: #F5EAD9; /* 입력창 배경색 */

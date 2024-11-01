@@ -4,15 +4,16 @@
 <!--    회원정보를 삽입하는 insert쿼리  id는 insertMember이고 parameterType으로 AdminMemberDTO 객체가 파라미터로 전달되며
 필드 속 객체에 매핑됨 -->
     <insert id="insertMember" parameterType="MemberDTO">
---      SELECT SEQ_MEMBER 구문을통해 memberNo 필드에 값을 설정함 before키워드로 insert되기전에 실행됨
         <selectKey keyProperty="memberNo" resultType="Long" order="BEFORE">
             SELECT SEQ_MEMBER.nextVal FROM DUAL
         </selectKey>
---         TBL_MEMBER 테이블에 회원정보를 삽입하는 INSERT구문
-        INSERT INTO TBL_MEMBER (MEMBER_NO,MEMBER_ID,MEMBER_EMAIL,MEMBER_PW,MEMBER_NAME,MEMBER_NICKNAME,MEMBER_PHONE_NUMBER,
-        MEMBER_GENDER,MEMBER_ZIPCODE,MEMBER_ADDRESS,MEMBER_DETAIL_ADDRESS,MEMBER_TWO_FACTOR_ENABLED,MEMBER_STATUS,MEMBER_LOGIN_STATUS
-        ) VALUES (#{memberNo},#{memberId},#{memberEmail},#{memberPw},#{memberName},#{memberNickname},#{memberPhoneNumber}, #{memberGender},
-        #{memberZipcode}, #{memberAddress}, #{memberDetailAddress},#{memberTwoFactorEnabled},#{memberStatus}, #{memberLoginStatus})
+        INSERT INTO TBL_MEMBER (
+        MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_PW,MEMBER_NAME, MEMBER_NICKNAME, MEMBER_PHONE_NUMBER,
+        MEMBER_GENDER, MEMBER_ZIPCODE, MEMBER_ADDRESS,MEMBER_DETAIL_ADDRESS, MEMBER_TWO_FACTOR_ENABLED,
+        MEMBER_STATUS, MEMBER_LOGIN_STATUS,PROVIDER, PROVIDER_ID)
+        VALUES (#{memberNo}, #{memberId}, #{memberEmail}, #{memberPw},#{memberName}, #{memberNickname}, #{memberPhoneNumber},
+        #{memberGender}, #{memberZipcode}, #{memberAddress},#{memberDetailAddress}, #{memberTwoFactorEnabled},
+        #{memberStatus}, #{memberLoginStatus},#{provider}, #{providerId})
     </insert>
 
     <!-- memberId 조회 이 쿼리는 로그인 시 회원의 ID와 비밀번호가 일치하는지 확인한 후, 해당 회원의 고유 번호를 반환하는 데 사용됨 -->
@@ -95,4 +96,30 @@
     <select id="selectAllMembers" resultType="MemberDTO">
         SELECT * FROM TBL_MEMBER
     </select>
+
+
+    <!-- 소셜 로그인 회원 조회 -->
+    <select id="findByProviderAndProviderId" resultType="MemberDTO">
+        SELECT *
+        FROM TBL_MEMBER
+        WHERE PROVIDER = #{provider}
+          AND PROVIDER_ID = #{providerId}
+    </select>
+
+    <!-- 이메일로 회원 조회 -->
+    <select id="findByEmail" resultType="MemberDTO">
+        SELECT *
+        FROM TBL_MEMBER
+        WHERE MEMBER_EMAIL = #{memberEmail}
+    </select>
+
+    <!-- 소셜 로그인 정보 업데이트 -->
+    <update id="updateMemberSocialInfo" parameterType="MemberDTO">
+        UPDATE TBL_MEMBER
+        SET
+            PROVIDER = #{provider},
+            PROVIDER_ID = #{providerId},
+            MEMBER_LOGIN_STATUS = #{memberLoginStatus},
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
 </mapper>

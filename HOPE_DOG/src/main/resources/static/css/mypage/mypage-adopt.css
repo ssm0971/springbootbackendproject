@@ -103,6 +103,10 @@ main{
   margin: 0 auto;
 }
 
+.member-adopt-nav-ul:hover{
+  cursor: pointer;
+}
+
 /* 게시글 리스트 영역 */
 .member-profile-adoptboard-container{
   margin: 0 auto;
@@ -132,6 +136,9 @@ main{
   margin: 20px;
 }
 
+.mypage-adopt-list:hover{
+  cursor: pointer;
+}
 
 /* 게시글 목록 */
 .member-profile-adoptboard-contentsbox{

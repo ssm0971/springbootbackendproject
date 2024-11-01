@@ -16,5 +16,5 @@ public class AdminReportDTO {
     private String reportContent;
     private String reportRegidate;
     private String reportWriter;
-    private String reportContentNo;
+    private Long reportContentNo;
 }

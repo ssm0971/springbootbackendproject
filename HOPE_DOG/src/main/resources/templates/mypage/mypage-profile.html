@@ -9,7 +9,7 @@
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
   <script defer th:src="@{/js/main/main.js}"></script>
-<!--  <script defer th:src="@{/js/mypage/mypage-profile.js}" ></script>-->
+  <script defer th:src="@{/js/mypage/mypage-profile.js}" ></script>
 </head>
 
 <body>
@@ -20,10 +20,10 @@
       <nav>
         <ul class="member-profile-nav-ul">
           <li id="profile"><a href="../../html/mypage/mypage-update.html">개인정보수정</li></a>
-          <li id="posts"><a href="../../html/mypage/mypage-posts.html">작성글조회</li></a>
-          <li id="volunteer"><a href="../../html/mypage/mypage-volunteer.html">봉사</li></a>
-          <li id="adopt"><a href="../../html/mypage/mypage-adopt.html">입양</li></a>
-          <li id="inbox"><a href="../../html/mypage/mypage-inbox.html">쪽지함</li></a>
+          <li id="posts">작성글조회</li>
+          <li id="volunteer">봉사</li>
+          <li id="adopt">입양</li>
+          <li id="inbox">쪽지함</li>
           <li id="auth"><a href="../../html/mypage/mypage-auth.html">2차인증</li></a>
           <li id="withdrawal"><a href="../../html/mypage/mypage-quit.html">회원탈퇴</li></a>
         </ul>
@@ -37,45 +37,17 @@
           </div>
           <div th:each="mypage : ${mypageProfile}" class="member-profile-info-textarea">
             <ul>
-              <li th:text="${memberNickname}">아가다</li>
-              <li th:text="${memberNo}">010-1111-2222</li>
-              <li th:text="${memberEmail}">coco@naver.com</li>
+              <li th:text="${mypage.memberName}"></li>
+              <li th:text="${mypage.memberPhoneNumber}"></li>
+              <li th:text="${mypage.memberEmail}"></li>
             </ul>
           </div>
-
-
-<!--          <div th:each="notice : ${noticeList}" class="notice-ul-all">-->
-<!--            <div class="notice-ul-main">-->
-<!--              <div class="notice-title" th:text="${notice.noticeTitle}"></div>-->
-<!--              <div class="notice-author" th:text="${notice.adminId}"></div>-->
-<!--              <div class="notice-date" th:text="${#dates.format(notice.noticeRegidate, 'yyyy-MM-dd')}"></div>-->
-<!--              <div class="noticeNo" th:text="${notice.noticeNo}" style="display: none;"></div>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          <div class="member-profile-info-textarea">-->
-<!--            <ul>-->
-<!--              <li>아가다</li>-->
-<!--              <li>010-1111-2222</li>-->
-<!--              <li>coco@naver.com</li>-->
-<!--            </ul>-->
-<!--          </div>-->
-
         </div>
       </div>
     </div>
   </main>
 </body>
 
-<footer>
-  <div class="footer-links">
-    <a href="../member/term.html">이용약관</a> |
-    <a href="../member/term.html">개인정보처리방침</a>
-  </div>
-  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
-    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
-    © NEXT LEVEL. All Rights Reserved</h6>
-</footer>
-
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 
 </html>

@@ -46,7 +46,8 @@
             <div th:if="${adopt.adoptGender == 'F'}" th:text="'성별 : ' + '여자'"></div>
             <div th:text="'몸무게 : ' + ${adopt.adoptWeight}"></div>
             <div th:text="'생년월일 : ' + ${#dates.format(adopt.adoptBirth, 'yyyy-MM-dd')}"></div>
-            <div th:text="adopt.adoptNo" style="display: none" class="adoptNo"></div>
+            <div th:text="${adopt.adoptNo}" style="display: none" class="adoptNo"></div>
+            <div th:text="${adopt.centerMemberNo}" style="display: none" class="centerMemberNo"></div>
           </div>
           <br>
 
@@ -56,7 +57,9 @@
 
           <!-- 신청버튼 -->
           <div class="adopt-submit-box">
-            <button class="adopt-submit-button" type="button" onclick="requestClick()" th:if="${memberNo != null}">신청</button>
+            <button class="adopt-submit-button" type="button" onclick="requestClick()"
+                    th:if="${memberNo != null and adopt.adoptStatus == 'T'}">
+              신청</button>
           </div>
         </div>
       </div>
@@ -72,15 +75,14 @@
                   th:if="${centerMemberNo == adopt.centerMemberNo}">삭제</button>
         </div>
         <button class="adopt-end-button" type="button" onclick="endClick()"
-                th:if="${centerMemberNo == adopt.centerMemberNo}">마감</button>
+                th:if="${centerMemberNo == adopt.centerMemberNo and adopt.adoptStatus == 'T'}">마감</button>
          <button class="adopt-end-button" type="button" onclick="ContentReportClick()"
-                 th:if="${centerMemberNo != adopt.centerMemberNo}">신고</button>
+                 th:if="${centerMemberNo != adopt.centerMemberNo and (centerMemberNo != null or memberNo != null)}">신고</button>
       </div>
 
       <br>
 
       <!-- 댓글 주석처리한건 백단할때 로그인/비로그인, 일반회원/센터회원, 본인작성/타인작성 if로 노출 결정 -->
-      <!-- 댓글창 / 자기댓글-->
       <div class="adopt-detail-commentbox" th:each="adoptComment : ${adoptCommentList}">
         <div class="adopt-detail-name">
           <div class="adopt-detail-name" th:text="${adoptComment.commentWriterName}"></div>

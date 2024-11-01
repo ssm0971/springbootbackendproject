@@ -80,7 +80,7 @@
 .delete-box-layout {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: right;
 }
 
 .delete-box {
@@ -245,9 +245,12 @@ div#paging-wrap {
 	width: 200px;
 }
 
-.info-cell-content {
+.info-cell-phone {
 	width: 200px;
-	flex-grow: 1;
+}
+
+.info-cell-email {
+	width: 370px;
 }
 
 .checkbox-line {

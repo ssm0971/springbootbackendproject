@@ -2,6 +2,7 @@ package com.example.hope_dog.service.notice;
 
 import com.example.hope_dog.dto.notice.NoticeViewDTO;
 import com.example.hope_dog.dto.notice.NoticeListDTO;
+import com.example.hope_dog.dto.page.Criteria;
 import com.example.hope_dog.mapper.notice.NoticeMapper;
 import lombok.RequiredArgsConstructor;
 //import net.coobird.thumbnailator.Thumbnails;
@@ -10,17 +11,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional
-@RequiredArgsConstructor
+@Service // 비즈니스 로직 처리
+@Transactional // 트랜잭션을 지원
+@RequiredArgsConstructor // final 필드에 대한 생성자 자동 생성
 public class NoticeService {
     private final NoticeMapper noticeMapper;
 
-    public List<NoticeListDTO> getNoticeList() {
-
-        return noticeMapper.noticeList();
+    //List
+//    public List<NoticeListDTO> getNoticeList() {
+//        return noticeMapper.noticeList();
+//    }
+    public List<NoticeListDTO> findAll() {
+        return noticeMapper.selectAll();
     }
 
+    public int findTotal(){
+        return noticeMapper.selectTotal();
+    }
+
+    public List<NoticeListDTO> findAllPage(Criteria criteria) {
+        return noticeMapper.selectAllPage(criteria);
+    }
+
+    //View
     public List<NoticeViewDTO> getNoticeViewList(Long noticeNo) {
         return noticeMapper.noticeView(noticeNo);
     }

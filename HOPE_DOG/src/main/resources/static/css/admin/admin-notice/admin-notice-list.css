@@ -243,8 +243,7 @@ div#paging-wrap {
 }
 
 .info-cell-title {
-	width: 200px;
-    flex-grow: 1;
+	width: 300px;
 }
 
 .info-cell-nickname {
@@ -252,8 +251,8 @@ div#paging-wrap {
 }
 
 .info-cell-content {
-	width: 200px;
-	flex-grow: 7;
+	width: 590px;
+	flex-grow: 1;
 }
 
 .checkbox-line {

@@ -16,8 +16,7 @@ public class CarCommentDTO {
     private Date carCommentRegiDate; // 댓글 작성일
     private Date carUpdateDate;      // 댓글 수정일
     private Long carCommentWriter;    // 댓글 작성자
-    private Long memberNo;      //일반회원넘버
-    private String memberNickname;  //일반회원 닉네임
-    private Long centerMemberNo;    //센터회원 넘버
-    private String centerMemberName;    //센터회원 이름
+
+    private String memberNickname; // 댓글 작성자 닉네임(회원)
+    private String centerMemberName;    // 댓글 작성자 이름(센터)
 }

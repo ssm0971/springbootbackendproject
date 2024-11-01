@@ -314,6 +314,7 @@ div#paging-wrap {
 .review-detail-commentbox{
   width: 745px;
   height: auto;
+	margin-bottom: 20px;
 }
 
 .review-detail-name{

@@ -8,3 +8,8 @@ function deleteClick() {
     console.log('삭제하지 않았습니다.');
   }
 }
+
+
+document.querySelector('#member-outbox').addEventListener('click', function() {
+  location.href = '/mypage/noteboxS'; // 목록 페이지로 이동
+});

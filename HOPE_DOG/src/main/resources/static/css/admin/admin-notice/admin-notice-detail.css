@@ -250,7 +250,7 @@ div#paging-wrap {
   color: white;
 }
 
-.notice-cancle-button{
+.notice-cancel-button{
   width: 60px;
   height: 30px;
   background-color: #F5EAD9;
@@ -261,7 +261,7 @@ div#paging-wrap {
   cursor: pointer;
 }
 
-.notice-cancle-button:hover {
+.notice-cancel-button:hover {
   background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
   color: white;
 }

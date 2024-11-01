@@ -8,91 +8,86 @@
   <link rel="stylesheet" th:href="@{/css/volun/car/volun-car-post-member.css}" />
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
-
 </head>
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <!-- 카풀 메인  크기 -->
-    <div class="volun-main-size">
-      <!-- 봉사, 카풀 게시판 바 -->
-      <div class="volun-nav">
-        <div class="volun-navList"><a th:href="@{/adopt/main}"> 봉사</a></div>
-        <div class="volun-navList1"><a th:href="@{/car/main}"> 카풀</a></div>
-      </div>
+<main>
+  <!-- 카풀 메인  크기 -->
+  <div class="volun-main-size">
+    <!-- 봉사, 카풀 게시판 바 -->
+    <div class="volun-nav">
+      <div class="volun-navList"><a th:href="@{/adopt/main}"> 봉사</a></div>
+      <div class="volun-navList1"><a th:href="@{/car/main}"> 카풀</a></div>
+    </div>
 
-      <!-- 제목/작성자/등록일 크기 -->
-      <div class="volun-detail-box1">
-        <div class="volun-detail-title" th:text="${car.carTitle}"></div>
-        <div class="volun-detail-info"><span>작성자 :
-          <span th:if="${car.carWriter % 2 != 0}" th:text="${car.memberNickname}"></span>
-          <span th:if="${car.carWriter % 2 == 0}" th:text="${car.centerMemberName}"></span>
+    <!-- 제목/작성자/등록일 크기 -->
+    <div class="volun-detail-box1">
+      <div class="volun-detail-title" th:text="${carDetail.carTitle}"></div>
+      <div class="volun-detail-info"><span>작성자 :
+          <span th:if="${carDetail.carWriter % 2 != 0}" th:text="${carDetail.memberNickname}"></span>
+          <span th:if="${carDetail.carWriter % 2 == 0}" th:text="${carDetail.centerMemberName}"></span>
         </span>
-          <span >등록일 : <span th:text="${#dates.format(car.carRegiDate, 'yyyy-MM-dd')}"></span></span>
-        </div>
+        <span >등록일 : <span th:text="${#dates.format(carDetail.carRegiDate, 'yyyy-MM-dd')}"></span></span>
       </div>
+    </div>
 
-      <!-- 글내용 크기 -->
-      <div class="volun-detail-box2">
-        <div class="volun-detail-content">
-          <div class="volun-detail-basicinfo">
-            <div class="volun-detail-basicinfo-title"></div>
-            <div th:text="${car.carContent}"></div>
-
-          </div>
+    <!-- 글내용 크기 -->
+    <div class="volun-detail-box2">
+      <div class="volun-detail-content">
+        <div class="volun-detail-basicinfo">
+          <div class="volun-detail-basicinfo-title"></div>
+          <div th:text="${carDetail.carContent}"></div>
 
         </div>
+
       </div>
+    </div>
 
-      <br>
+    <br>
 
-      <!-- 수정 , 삭제 , 신고 버튼 -->
-      <div class="volun-detail-box3">
-        <div>
-          <button class="volun-modify-button" onclick="modifyAlert()">수정</button>　
-          <button class="volun-delete-button" onclick="deleteAlert()">삭제</button>
+    <!-- 수정 , 삭제 , 신고 버튼 -->
+    <div class="volun-detail-box3">
+      <div>
+        <button class="volun-modify-button" onclick="modifyAlert()">수정</button>　
+        <button class="volun-delete-button" onclick="deleteAlert()">삭제</button>
+      </div>
+      <button class="volun-end-button" onclick="endAlert()">신고</button>
+    </div>
+
+    <br>
+
+    <!-- 댓글창 -->
+    <div class="volun-detail-box4">
+      <div  th:each="comment : ${carDetail.comments}">
+<!--        댓글 작성자-->
+        <div class="volun-detail-name">
+          <span th:if="${comment.carCommentWriter% 2 != 0}" th:text="${comment.memberNickname}"></span>
+          <span th:if="${comment.carCommentWriter % 2 == 0}" th:text="${comment.centerMemberName}"></span>
         </div>
-        <button class="volun-end-button" onclick="endAlert()">신고</button>
+<!--        댓글-->
+        <div class="volun-detail-comment" th:text="${comment.carComment}"></div>
+<!--        작성일-->
+        <div class="volun-detail-date" th:text="${#dates.format(comment.carCommentRegiDate, 'yyyy-MM-dd')}"></div>
       </div>
-      
       <br>
+    </div>
 
-      <!-- 댓글창 -->
-      <div class="volun-detail-box4">
-        <div th:each="comment : ${carComments}" class="volun-detail-commentbox">
-          <div class="volun-detail-name">
-            <span th:if="${car.carWriter % 2 != 0}" th:text="${car.memberNickname}"></span>
-            <span th:if="${car.carWriter % 2 == 0}" th:text="${car.centerMemberName}"></span>
-          </div>
-          <div class="volun-detail-comment" th:text="${comment.carComment}"></div>
-          <div class="volun-detail-date" th:text="${#dates.format(comment.carCommentRegiDate, 'yyyy-MM-dd')}"></div>
-        </div>
-        <br>
-      </div>
+    <br>
 
-      <br>
+    <!-- 댓글입력 -->
+    <form onsubmit="return Comment()">
+      <input class="volun-detail-commentregi" type="text" id="commentInput" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요">　
+      <button type="submit" class="volun-commentregi-button">등록</button>
+    </form>
 
-      <!-- 댓글입력 -->
-      <form onsubmit="return Comment()">
-        <input class="volun-detail-commentregi" type="text" id="commentInput" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요">　
-        <button type="submit" class="volun-commentregi-button">등록</button>
-      </form>
-
-      <br>
-  </main>
-</body>
-      
-<footer>
-  <div class="footer-links">
-    <a href="../member/term.html">이용약관</a> |
-    <a href="../member/term.html">개인정보처리방침</a>
+    <br>
   </div>
-  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
-    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
-    © NEXT LEVEL. All Rights Reserved</h6>
-</footer>
+</main>
+</body>
 
-<script defer src="../../js/main/header.js"></script>
-<script defer src="../../js/volun/volun-car-post-member.js"></script>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+
+<!--<script defer src="../../js/main/header.js"></script>-->
+<!--<script defer src="../../js/volun/volun-car-post-member.js"></script>-->
 </html>

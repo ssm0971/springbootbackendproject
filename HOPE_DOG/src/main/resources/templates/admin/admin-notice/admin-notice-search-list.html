@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지- 공지사항 관리</title>
+    <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin/admin-notice/admin-notice-list.css}"/>
+    <link rel="icon" href="/im/logo/favicon.png">
+</head>
+
+<body>
+    <div>
+        <div class="info-title-box info-title-box-flex">
+            <div class="logo-box-layout">
+                <div class="logo-box">
+                    <img src="../../../img/logo.jpg">
+                </div>
+            </div>
+            <div>
+                <div class="select-name">
+                    <span>공지사항 관리</span>
+                </div>
+            </div>
+        </div>
+        <div class="wrap">
+
+            <!-- 사이드 바 -->
+            <th:block th:replace="~{admin/admin-main/admin-sidemenu :: sidemenu}"></th:block>
+
+            <div class="container">
+                <div class="container-margin">
+                    <!-- 헤더 -->
+                    <div class="delete-box-layout">
+                        <form class="search-box" action="/admin/searchNoticeList" method="get">
+                            <input type="text" class="search-text" name="keyword" placeholder="검색어를 입력하세요.">
+                            <button class="search-btn" type="submit">검색</button>
+                            <button class="search-btn" type="submit" th:href="@{/admin/noticeList}">초기화</button>
+                         </form>
+                        <div class="delete-box">
+                            <button class="deleteButton delete-button">선택 항목 삭제</button>
+                        </div>
+                    </div>
+
+                    <!-- 내용 섹션 -->
+                    <section class="board-info-box-layout">
+                        <div class="board-info-box">
+                            <div class="board-info-title-box">
+                                <span>공지사항 관리</span>
+                                <span class="write-btn"><a href="./admin-notice-write.html">글쓰기</a></span>
+                            </div>
+                    
+                            <div class="info-table">
+                                <!-- Header -->
+                                <div class="info-row header-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" id="allSelect">
+                                    </div>
+                                    <div class="info-cell-no info-cell">No</div>
+                                    <div class="info-cell-cate info-cell">분류</div>
+                                    <div class="info-cell-title info-cell">제목</div>
+                                    <div class="info-cell-content info-cell">공지 내용</div>
+                                </div>
+                    
+                                <!-- Data rows -->
+                                <div th:each="notice, iterStat : ${noticeList}" class="info-row" >
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <div class="info-cell info-cell-no" th:text="${notice.noticeNo}"></div>
+                                    <div class="info-cell info-cell-cate" th:text="${notice.noticeCate}"></div>
+                                    <div class="info-cell info-cell-title" th:text="${notice.noticeTitle}"></div>
+                                    <div class="info-cell info-cell-content" th:text="${notice.noticeContent}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
+<script th:src="@{/js/admin/allCheck.js}"></script>
+</html>

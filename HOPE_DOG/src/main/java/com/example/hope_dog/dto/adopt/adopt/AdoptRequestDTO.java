@@ -1,5 +1,12 @@
 package com.example.hope_dog.dto.adopt.adopt;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.time.LocalDate;
+
+@Getter @Setter @ToString
 public class AdoptRequestDTO {
     private Long adoptRequestNo;
     private String adoptRequestName;
@@ -7,7 +14,7 @@ public class AdoptRequestDTO {
     private String adoptRequestPhoneSub;
     private String adoptRequestEmail;
     private String adoptRequestGender;
-    private String adoptRequestAge;
+    private LocalDate adoptRequestAge;
     private String adoptRequestZipcode;
     private String adoptRequestAddress;
     private String adoptRequestAddressDetail;
@@ -33,5 +40,4 @@ public class AdoptRequestDTO {
     private Long adoptNo;
     private Long memberNo;
     private Long centerMemberNo;
-
 }

@@ -52,3 +52,79 @@ document.addEventListener('DOMContentLoaded', function() {
     // 초기 상태 설정
     chatWindow.style.display = 'none';
 });
+
+
+
+// 첫 번째 차트: 연도별 총계
+const yearlyTotalCtx = document.getElementById('yearlyTotalChart').getContext('2d');
+new Chart(yearlyTotalCtx, {
+    type: 'bar',
+    data: {
+        labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+        datasets: [{
+            label: '유기동물 수',
+            data: [8220, 7515, 6378, 5605, 4870, 5176],
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: '연도별 유기동물 발생 현황'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// 두 번째 차트: 연도별 세부 현황
+const yearlyDetailCtx = document.getElementById('yearlyDetailChart').getContext('2d');
+new Chart(yearlyDetailCtx, {
+    type: 'bar',
+    data: {
+        labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+        datasets: [{
+            label: '주인 인도',
+            data: [2017, 1794, 1494, 1260, 1110, 1134],
+            backgroundColor: 'rgba(75, 192, 192, 0.7)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        },
+            {
+                label: '입양/분양',
+                data: [1572, 1222, 1017, 1110, 814, 702],
+                backgroundColor: 'rgba(255, 159, 64, 0.7)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 1
+            },
+            {
+                label: '폐사/안락사',
+                data: [1703, 1300, 777, 341, 536, 565],
+                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: '연도별 처리 현황'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});

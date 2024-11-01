@@ -212,6 +212,7 @@ div#paging-wrap {
 	display: flex;
 	padding: 10px;
 	border-bottom: 1px solid #ddd;
+	  height: 40px;
   }
   
   .header-row {
@@ -231,7 +232,7 @@ div#paging-wrap {
 	width: 100px;
   }
   .info-cell-email {
-	width: 200px;
+	width: 300px;
   }
   .info-cell-name {
 	width: 100px;
@@ -242,11 +243,15 @@ div#paging-wrap {
   .info-cell-phone {
 	width: 200px;
   }
-  .info-cell-join {
+  .info-cell-two-factor {
 	flex-grow: 1;
+	  width: 200px;
   }
+.info-cell-address {
+	flex-grow: 1;
+	width: 370px;
+}
 
-  
   .checkbox-line {
 	width: 50px;
   }
@@ -254,3 +259,16 @@ div#paging-wrap {
   .info-cell:last-child {
 	border-right: none;
   }
+
+  .member-btn{
+	  padding : 5px;
+  }
+
+.member-btn:hover{
+	color: white;
+	background-color: #9B805D;
+}
+
+.active{
+	background-color: #F5EAD9;
+}

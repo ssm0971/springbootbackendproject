@@ -33,9 +33,9 @@
     <div class="member-inbox-navbox">
       <nav>
         <ul class="member-inbox-nav-ul">
-          <li id="member-inbox"><a href="../../html/mypage/mypage-inbox.html">받은 쪽지</li>
-            <div id="inbox-choice"></div></a>
-          <li id="member-outbox"><a href="../../html/mypage/mypage-outbox.html">보낸 쪽지</li></a>
+          <li id="member-inbox">받은 쪽지</li>
+            <div id="inbox-choice"></div>
+          <li id="member-outbox">보낸 쪽지</li>
         </ul>
       </nav>
     </div>
@@ -47,26 +47,28 @@
       <div>
         <ul class="member-notebox-titlebox">
           <li><b>상태</b></li>
-          <li><b>송신자</b></li>
           <li><b>수신자</b></li>
+          <li><b>송신자</b></li>
           <li><b>제목</b></li>
           <li><b>내용</b></li>
           <li><b>날짜</b></li>
         </ul>
       </div>
+
       <!-- 게시글 목록 -->
-      <div class="member-notebox-contentsbox">
+      <div class="member-notebox-contentsbox"  th:each="noteR : ${mypageNoteReceiveList}">
         <ul class="member-notebox-content">
           <li>
             <div>
               <ul class="member-notebox-contentbox">
-                <li>[읽음]</li>
-                <li>슈슈</li>
-                <li>아가다</li>
-                <li><a href="../../html/mypage/mypage-notebox-detail.html">아가다!</li></a>
-                <li><a href="../../html/mypage/mypage-notebox-detail.html">우리 코코 너무 예쁘지</li></a>
-                <li>24.07.29 14:20</li>
+                <li><div th:if="${noteR.noteboxReceiveRead} == 'N'" th:text="안읽음"></div></li>
+                <li><div th:text="${noteR.noteboxReceiveRName}"></div></li>
+                <li><div th:text="${noteR.noteboxReceiveSName}"></div></li>
+                <li><div th:text="${noteR.noteboxReceiveTitle}"></div></li>
+                <li><div th:text="${noteR.noteboxReceiveContent}"></div></li>
+                <li><div th:text="${#dates.format(noteR.noteboxReceiveRegidate, 'yyyy.MM.dd hh:mm:ss')}"></div></li>
               </ul>
+              <div class="memberNo" th:text="${noteR.memberNo}" style="display: none;"></div>
             </div>
           </li>
           <li>
@@ -130,14 +132,6 @@
   </main>
 
 </body>
-<footer>
-  <div class="footer-links">
-    <a href="../member/term.html">이용약관</a> |
-    <a href="../member/term.html">개인정보처리방침</a>
-  </div>
-  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
-    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
-    © NEXT LEVEL. All Rights Reserved</h6>
-</footer>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 
 </html>

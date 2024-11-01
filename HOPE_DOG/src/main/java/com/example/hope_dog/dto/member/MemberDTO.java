@@ -22,4 +22,8 @@ public class MemberDTO {
     private String memberTwoFactorEnabled;
     private String memberStatus;
     private String memberLoginStatus;
+
+    // 카카오 로그인을 위한 필드 추가
+    private String provider;    // 로그인 제공자 (ex: "kakao")
+    private String providerId;  // 카카오 회원번호
 }

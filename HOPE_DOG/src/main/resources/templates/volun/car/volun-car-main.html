@@ -38,7 +38,7 @@
         <div class="volun-container-audate">작성일</div>
       </div>
       <!--게시글-->
-      <div class="volun-catalog-all">
+      <div id="car-results" class="volun-catalog-all">
         <div class="volun-catalog-main" th:each = "car : ${carList}">
           <div class="volun-cate" th:text="${car.carCate}"></div>
           <div class="volun-title">
@@ -54,37 +54,50 @@
 
       <!-- 검색 창-->
       <div class="bottom-search">
-        <form method="get" name="search" action="/zboard/zboard.php">
-          <select name="search-type" id="search-type">
-            <option value="sub-memo">태워줄게요</option>
-            <option value="subject">태워주세요</option>
+        <form method="get" action="/car/main/search" name="search">
+          <select name="searchType" id="search-type">
+            <option value="title">제목</option>
+            <option value="nickname">닉네임</option>
           </select>
           <span class="default">
-            <input type="hidden" name="id" value="publictransport"><input type="hidden" name="page-num" value="25">
-            <input type="text" name="keyword" id="keyword" value="">
-            <input type="submit" onfocus="blur()" value="검색"></span>
-          <!-- </span> -->
+            <input type="text" name="keyword" id="keyword" value="" placeholder="검색어를 입력하세요">
+            <input type="submit" value="검색">
+        </span>
         </form>
       </div>
+
+<!--      글쓰기-->
       <div class="volun-write">
         <button class="volun-write-botton" type="button" onclick="location.href='../../html/volun/volun-car-post-write.html'">
           <span class="volun-write-botton-sp">글쓰기</span>
         </button>
       </div>
+
+
       <!-- 페이지네이션 -->
-      <div class="Pagination-all">
-        <div class="bottom-list">
-          <a class="prev" onfocus="blur()" href="#"></a>
-          <a class="num on" onfocus="blur()" href="#">1</a>
-          <a class="num" onfocus="blur()" href="#">2</a>
-          <a class="num" onfocus="blur()" href="#">3</a>
-          <a class="num" onfocus="blur()" href="#">4</a>
-          <a class="num" onfocus="blur()" href="#">5</a>
-          <a class="next" onfocus="blur()" href="#"></a>
-        </div>
+      <div class="pagination">
+        <ul class="page-box">
+          <a th:href="@{/car/main(page=${page.startPage - 1})}" class="page-a" th:if="${page.prev}">
+            <li class="page-num prev">&lt</li>
+          </a>
+
+          <!--        th:block은 화면에 영향을 주지않는 가짜 태그
+                      타임리프 문법을 사용하기 위해 만들어 쓴다.
+          -->
+          <th:block th:each="i : ${#numbers.sequence(page.startPage, page.endPage)}">
+            <a th:href="@{/car/main(page=${i})}" class="page-a">
+              <li class="page-num" th:classappend="${i == page.criteria.page ? 'active' : ''}" th:text="${i}"></li>
+            </a>
+          </th:block>
+
+          <a th:href="@{/car/main(page=${page.endPage + 1})}" class="page-a" th:if="${page.next}">
+            <li class="page-num next">&gt</li>
+          </a>
+        </ul>
       </div>
     </div>
 </main>
+
 </body>
 <footer>
   <div class="footer-links">
@@ -96,6 +109,6 @@
     © NEXT LEVEL. All Rights Reserved</h6>
 </footer>
 <script defer th:src="@{/js/volun/car/volun-car-main.js}"></script>
-<script defer src="../../js/main/header.js"></script>
+
 
 </html>

@@ -3,40 +3,193 @@
 <mapper namespace="com.example.hope_dog.mapper.volun.car.CarMapper">
 <!--    게시글 조회-->
     <select id="selectAllCars" resultType="CarDTO">
-        SELECT CAR_NO, CAR_CATE, CAR_TITLE, CAR_CONTENT, CAR_REGIDATE, CAR_UPDATEDATE,
-               CAR_WRITER
-        FROM TBL_CAR
-        ORDER BY CAR_REGIDATE DESC  -- 최신 글이 위에 오도록 정렬
-    </select>
-<!--게시글 상세페이지(글)-->
-    <select id="selectCarById" parameterType="long" resultType="CarDTO">
-        SELECT CAR_NO, CAR_CATE, CAR_TITLE, CAR_CONTENT, CAR_REGIDATE, CAR_UPDATEDATE,
-               CAR_WRITER
-        FROM TBL_CAR
-        WHERE CAR_NO = #{no}
+        SELECT c.CAR_NO, c.CAR_CATE, c.CAR_TITLE, c.CAR_CONTENT,
+               c.CAR_REGIDATE, c.CAR_UPDATEDATE, c.CAR_WRITER,
+               m.MEMBER_NICKNAME, cm.CENTER_MEMBER_NAME
+        FROM TBL_CAR c
+                 LEFT JOIN TBL_MEMBER m ON c.CAR_WRITER = m.MEMBER_NO
+                 LEFT JOIN TBL_CENTER_MEMBER cm ON c.CAR_WRITER = cm.CENTER_MEMBER_NO
+        ORDER BY c.CAR_REGIDATE DESC  -- 최신 글이 위에 오도록 정렬
     </select>
 
-<!--    카테고리 분류별 게시글 조회 -->
+
+
+
+<!--    카테고리 분류별 게시글 조회+페이지네이션 -->
     <select id="selectCate" resultType="CarDTO">
-        SELECT CAR_NO, CAR_CATE, CAR_TITLE, CAR_CONTENT, CAR_REGIDATE, CAR_UPDATEDATE,
-               CAR_WRITER
+    <![CDATA[
+        SELECT * FROM (
+                          SELECT C.CAR_NO, C.CAR_CATE, C.CAR_TITLE, C.CAR_CONTENT,
+                                 C.CAR_REGIDATE, C.CAR_UPDATEDATE, C.CAR_WRITER,
+                                 M.MEMBER_NO, M.MEMBER_NICKNAME,
+                                 CM.CENTER_MEMBER_NO, CM.CENTER_MEMBER_NAME,
+                                 ROW_NUMBER() OVER (ORDER BY C.CAR_REGIDATE DESC) AS rn
+                          FROM TBL_CAR C
+                                   LEFT JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO
+                                   LEFT JOIN TBL_CENTER_MEMBER CM ON C.CAR_WRITER = CM.CENTER_MEMBER_NO
+                          WHERE C.CAR_CATE = #{cate}
+                      )
+        WHERE rn > (#{criteria.page} - 1) * #{criteria.amount}
+          AND rn <= #{criteria.page} * #{criteria.amount}
+        ]]>
+</select>
+
+    <!-- 카테고리별 게시글 수 카운트 -->
+    <select id="countCarsByCategory" resultType="int">
+        SELECT COUNT(CAR_NO)
         FROM TBL_CAR
         WHERE CAR_CATE = #{cate}
+    </select>
+
+    <select id="getCarList" resultType="CarDTO">
+        <![CDATA[
+            SELECT C.CAR_NO, C.CAR_CATE, C.CAR_TITLE, C.CAR_CONTENT,
+                C.CAR_REGIDATE, C.CAR_UPDATEDATE, C.CAR_WRITER,
+                M.MEMBER_NO, M.MEMBER_NICKNAME,
+                CM.CENTER_MEMBER_NO, CM.CENTER_MEMBER_NAME
+            FROM (
+            SELECT C.CAR_NO, C.CAR_CATE, C.CAR_TITLE, C.CAR_CONTENT,
+                C.CAR_REGIDATE, C.CAR_UPDATEDATE, C.CAR_WRITER,
+                M.MEMBER_NO, M.MEMBER_NICKNAME,
+                CM.CENTER_MEMBER_NO, CM.CENTER_MEMBER_NAME,
+                ROW_NUMBER() OVER (ORDER BY C.CAR_REGIDATE DESC) AS rn
+            FROM TBL_CAR C
+                LEFT JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO
+                LEFT JOIN TBL_CENTER_MEMBER CM ON C.CAR_WRITER = CM.CENTER_MEMBER_NO
+            WHERE C.CAR_CATE = #{cate}
+            )
+            WHERE rn > (#{page} - 1) * #{amount} AND rn <= #{page} * #{amount}
+        ]]>
+    </select>
+
+<!--    게시글 상세 조회 (게시글과 댓글 정보 포함)-->
+    <select id="selectCarDetail" resultType="CarDetailDTO">
+        SELECT c.CAR_NO, c.CAR_CATE, c.CAR_TITLE, c.CAR_CONTENT,
+               c.CAR_REGIDATE, c.CAR_UPDATEDATE, c.CAR_WRITER,
+               m.MEMBER_NICKNAME, cm.CENTER_MEMBER_NAME
+        FROM TBL_CAR c
+                 LEFT JOIN TBL_MEMBER m ON c.CAR_WRITER = m.MEMBER_NO
+                 LEFT JOIN TBL_CENTER_MEMBER cm ON c.CAR_WRITER = cm.CENTER_MEMBER_NO
+        WHERE c.CAR_NO = #{carNo}
+    </select>
+
+    <select id="selectCommentsByCarNo" parameterType="long" resultType="CarCommentDTO">
+        SELECT CAR_COMMENT_NO, CAR_COMMENT, CAR_COMMENT_REGIDATE, CAR_UPDATEDATE AS COMMENT_UPDATEDATE, CAR_COMMENT_WRITER
+        FROM TBL_CAR_COMMENT
+        WHERE CAR_NO = #{carNo}
+        ORDER BY CAR_COMMENT_REGIDATE ASC
+    </select>
+
+    <!-- 검색 기능 (페이지네이션 포함) -->
+    <select id="searchCars" parameterType="map" resultType="CarDTO">
+<![CDATA[
+        SELECT * FROM (
+                          SELECT C.CAR_NO, C.CAR_CATE, C.CAR_TITLE, C.CAR_CONTENT,
+                                 C.CAR_REGIDATE, C.CAR_UPDATEDATE, C.CAR_WRITER,
+                                 M.MEMBER_NO, M.MEMBER_NICKNAME,
+                                 CM.CENTER_MEMBER_NO, CM.CENTER_MEMBER_NAME,
+                                 ROW_NUMBER() OVER (ORDER BY C.CAR_REGIDATE DESC) AS rn
+                          FROM TBL_CAR C
+                                   LEFT JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO
+                                   LEFT JOIN TBL_CENTER_MEMBER CM ON C.CAR_WRITER = CM.CENTER_MEMBER_NO
+                          WHERE
+                              <if test="params.carTitle != null">
+                              C.CAR_TITLE LIKE '%' || #{params.carTitle} || '%'
+                              </if>
+                              <if test="params.carWriter != null">
+                              C.CAR_WRITER = #{params.carWriter}
+                              </if>
+                      )
+        WHERE rn > (#{criteria.page} - 1) * #{criteria.amount}
+          AND rn <= #{criteria.page} * #{criteria.amount}
+        ]]>
+</select>
+
+    <!-- 검색 조건에 따른 게시글 수 카운트 -->
+    <select id="countCarsBySearch" parameterType="map" resultType="int">
+    <![CDATA[
+        SELECT COUNT(*)
+        FROM TBL_CAR C
+                 LEFT JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO
+                 LEFT JOIN TBL_CENTER_MEMBER CM ON C.CAR_WRITER = CM.CENTER_MEMBER_NO
+        WHERE
+            <if test="params.carTitle != null">
+            C.CAR_TITLE LIKE CONCAT('%', #{params.carTitle}, '%')
+            </if>
+            <if test="params.carWriter != null">
+            C.CAR_WRITER = #{params.carWriter}
+            </if>
+        ]]>
+</select>
+
+    <select id="searchCarsByTitle" parameterType="map" resultType="CarDTO">
+        SELECT * FROM TBL_CAR C WHERE CAR_Title LIKE '%' || #{carTitle} || '%'
+        ORDER BY CAR_REGIDATE DESC
+            LIMIT #{criteria.page}, #{criteria.amount}
+    </select>
+
+    <select id="searchCarsByNickname" parameterType="map" resultType="CarDTO">
+        SELECT * FROM TBL_CAR c
+                          JOIN MEMBER m ON c.CAR_Writer = m.memberNo
+        WHERE m.MEMBER_NICKNAME LIKE '%' || #{nickname} || '%'
+        ORDER BY c.CAR_REGIDATE DESC
+            LIMIT #{criteria.page}, #{criteria.amount}
+    </select>
+
+    <select id="countCarsByTitle" resultType="int">
+        SELECT COUNT(*)
+        FROM TBL_CAR
+        WHERE CAR_TITLE LIKE '%' || #{keyword} || '%'
+    </select>
+
+    <select id="countCarsByNickname" resultType="int">
+        SELECT COUNT(*)
+        FROM TBL_MEMBER
+        WHERE MEMBER_NICKNAME LIKE '%' || #{keyword} || '%'
+    </select>
+
+
+
+<!--    페이지네이션 시작-->
+<!--    카풀 전체 게시글 수-->
+    <select id="carTotal" resultType="int">
+        SELECT COUNT(CAR_NO) FROM TBL_CAR
+    </select>
+
+<!--    카풀 전체 게시글-->
+    <select id="carMain" resultType="CarDTO">
+        SELECT CAR_NO, CAR_CATE,CAR_TITLE,CAR_CONTENT, CAR_REGIDATE,CAR_UPDATEDATE,CAR_WRITER
+        FROM TBL_CAR
         ORDER BY CAR_REGIDATE DESC
     </select>
+
+<!--    카풀 페이지마다 표시할 게시글-->
+        <select id="selectCarPage" parameterType="Criteria" resultType="CarDTO">
+            <![CDATA[
+            SELECT c.CAR_NO, c.CAR_CATE, c.CAR_TITLE, c.CAR_CONTENT,
+                   c.CAR_REGIDATE, c.CAR_UPDATEDATE, c.CAR_WRITER,
+                   m.MEMBER_NICKNAME, cm.CENTER_MEMBER_NAME
+            FROM TBL_CAR c
+                     LEFT JOIN TBL_MEMBER m ON c.CAR_WRITER = m.MEMBER_NO
+                     LEFT JOIN TBL_CENTER_MEMBER cm ON c.CAR_WRITER = cm.CENTER_MEMBER_NO
+            WHERE ROWNUM > (#{page} - 1) * #{amount} AND ROWNUM <= #{page} * #{amount}
+            ORDER BY c.CAR_REGIDATE DESC
+            ]]>
+        </select>
+<!--페이지네이션 끝-->
 
     <!-- 일반회원 조회 -->
     <select id="selectMemberByNo" parameterType="long" resultType="MemberDTO">
         SELECT MEMBER_NO, MEMBER_NICKNAME
         FROM TBL_MEMBER
-        WHERE MEMBER_NO = #{no}
+        WHERE MEMBER_NO = #{memberNo}
     </select>
 
     <!-- 센터회원 조회 -->
         <select id="selectCenterMemberByNo" parameterType="long" resultType="CenterMemberDTO">
             SELECT CENTER_MEMBER_NO,CENTER_MEMBER_NAME
             FROM TBL_CENTER_MEMBER
-            WHERE CENTER_MEMBER_NO = #{no}
+            WHERE CENTER_MEMBER_NO = #{centermemberNo}
         </select>
 
 </mapper>

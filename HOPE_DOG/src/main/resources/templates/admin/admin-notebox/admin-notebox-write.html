@@ -29,100 +29,7 @@
     <div class="wrap">
 
       <!-- 사이드 바 -->
-      <div>
-        <div id="side-bar">
-          <div class="side-menu">
-            <div>
-              <div class="menu-title-layout">
-                <div class="menu-title">
-                  <div class="menu-name">
-                    MENU
-                  </div>
-                </div>
-              </div>
-              <ul class="menu-bar">
-                <li class="menu">
-                  <div class="menu-flex">
-                    <a href="../admin-main/admin-main.html">
-                      <span>메인</span>
-                    </a>
-                  </div>
-                </li>
-                <li class="menu">
-                  <div class="menu-flex">
-                    <a href="../admin-member/admin-member-list.html">
-                      <span>회원 관리</span>
-                    </a>
-                  </div>
-                </li>
-
-                <li class="menu">
-                  <div class="menu-flex">
-                    <a href="../admin-report/admin-report-list.html">
-                      <span>신고 내역</span>
-                    </a>
-                  </div>
-                </li>
-                <li class="menu">
-                  <div class="menu-flex">
-                    <a href="../admin-post/admin-post-list.html">
-                      <span>게시글 관리</span>
-                    </a>
-                  </div>
-                </li>
-                <li class="menu">
-                  <div class="menu-flex">
-                    <a href="../admin-comment/admin-comment-list.html">
-                      <span>댓글 관리</span>
-                    </a>
-                  </div>
-                </li>
-                <li class="menu">
-                  <div class="menu-flex">
-                    <a href="../admin-notice/admin-notice-list.html">
-                      <span>공지사항 관리</span>
-                    </a>
-                  </div>
-                </li>
-                <li class="menu">
-                  <div class="menu-flex">
-                    <a href="../admin-center-apply/admin-center-apply-list.html">
-                      <span>센터 회원가입 관리</span>
-                    </a>
-                  </div>
-                </li>
-                <li class="menu">
-                  <div class="menu-flex">
-                    <a href="../admin-ATP/admin-ATP-list.html">
-                      <span>입양/임시보호 관리</span>
-                    </a>
-                  </div>
-                </li>
-                <li class="menu">
-                  <div class="menu-flex">
-                    <a href="../admin-volun/admin-volun-list.html">
-                      <span>봉사 관리</span>
-                    </a>
-                  </div>
-                </li>
-                <li class="menu">
-                  <div class="menu-flex">
-                    <a href="../admin-notebox/admin-notebox-in.html">
-                      <span>쪽지함</span>
-                    </a>
-                  </div>
-                </li>
-                <li class="menu">
-                  <div class="menu-flex menu-logout">
-                    <a href="../admin-login.html">
-                      <span>로그아웃</span>
-                    </a>
-                  </div>
-                </li>
-            </div>
-          </div>
-        </div>
-      </div>
+      <th:block th:replace="~{admin/admin-main/admin-sidemenu :: sidemenu}"></th:block>
 
       <div class="container">
         <div class="container-margin">
@@ -191,7 +98,7 @@
     </div>
   </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-<script src="../../../js/admin/admin-allcheck.js"></script>
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
+<script th:src="@{/js/admin/allCheck.js}"></script>
 
 </html>

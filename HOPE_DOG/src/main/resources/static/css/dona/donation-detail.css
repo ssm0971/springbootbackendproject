@@ -1,15 +1,34 @@
 .post-guest-main{
   width: 1080px;
   height: 600px;
+  justify-content: center;
+  align-items: center;
   background-color: white;
   margin: 0 auto;
 }
 
 .post-guest{
   width: 800px;
-  height: 400px;
+  /*height: 500px;*/
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
+  /*background-color: #3c763d;*/
+}
+
+.notice-detail-box{
+  height: 100px;
+}
+.notice-addetail-maincont{
+  height: 330px;
+}
+
+.dona-bottom{
+  width: 800px;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  /*background-color: beige;*/
   margin: 0 auto;
 }
 
@@ -20,6 +39,10 @@
   margin: 5px auto;
 }
 
+.dona-view-content{
+  justify-content: center;
+  align-items: center;
+}
 
 /* 게시글 컨테이너 */
 .notice-addetail-main {
@@ -64,14 +87,12 @@
   align-items: center;
   /* border-bottom: 4px solid #9B805D; */
   padding-bottom: 10px; /* 여백 추가 */
-}
-
-.topTitle h1 {
   font-size: 30px;
   letter-spacing: -0.5px;
   line-height: 30px;
-  text-align: center;
+  font-weight: bold;
 }
+
 
 
 .topTitle-mainbox{
@@ -102,7 +123,7 @@
 }
 
 /* 수정 버튼 */
-.dona-admain-btu {
+.btn-modify {
   display: block;
   padding: 0px 10px;
   text-align: center;
@@ -123,19 +144,19 @@
 }
 
 /* 수정 폰트 두께 */
-.dona-admain-btu-sp {
+.btn-modify-sp {
   display: inline-block;
   font-size: 16px;
   font-weight: 500;
 }
 
-.dona-admain-btu:hover {
+.btn-modify:hover {
   background-color: #9B805D; /* 마우스를 올렸을 때 배경색 */
   color: white; /* 마우스를 올렸을 때 텍스트 색상 */
 }
 
 /* 삭제 버튼 */
-.dona-admain-btu-delete {
+.btn-remove {
   display: block;
   padding: 0px 10px;
   text-align: center;
@@ -151,18 +172,18 @@
 }
 
 /* 삭제 폰트사이즈 */
-.dona-admain-btuall-delete span {
+.btn-remove span {
   font-size: 13px;
 }
 
 /* 삭제 폰트 두께 */
-.dona-admain-btu-delete-sp {
+.btn-remove-sp {
   display: inline-block;
   font-size: 16px;
   font-weight: 500;
 }
 
-.dona-admain-btu-delete:hover {
+.btn-remove:hover {
   background-color: #9B805D; /* 마우스를 올렸을 때 배경색 */
   color: white; /* 마우스를 올렸을 때 텍스트 색상 */
 }

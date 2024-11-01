@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 페이지 - 회원 정보</title>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-member/admin-member-detail.css}"/>
+  <link rel="icon" href="/im/logo/favicon.png">
+</head>
+
+<body>
+<div>
+  <div class="info-title-box info-title-box-flex">
+    <div class="logo-box-layout">
+      <div class="logo-box">
+        <img src="../../../img/logo.jpg">
+      </div>
+    </div>
+    <div>
+      <div class="select-name">
+        <span>센터 회원 가입 신청</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+
+    <!-- 사이드 바 -->
+    <th:block th:replace="~{admin/admin-main/admin-sidemenu :: sidemenu}"></th:block>
+
+    <div class="container">
+      <div class="container-margin">
+        <!-- 헤더 -->
+        <!-- 내용 섹션 -->
+        <section class="board-info-box-layout">
+          <div class="board-info-box">
+            <div class="board-info-title-box">
+              <span>회원 정보</span>
+            </div>
+            <div class="center-container">
+              <h1>회원 정보</h1>
+              <form id="center-signupForm">
+                <div class="center-form-group">
+                  <label for="center-name">이름 <span class="center-required">*</span></label>
+                  <input type="text" id="center-name" name="center-name" readonly th:value="${centerMember.centerMemberName}" required>
+
+                </div>
+
+                <div class="center-form-group">
+                  <label for="center-name">사업자 등록증 <span class="center-required">*</span></label>
+                  <input type="text" id="center-file" name="center-file" readonly th:value="${centerMember.centerFileName}" required>
+
+                </div>
+
+                <div class="center-form-group">
+                  <label for="center-userid">아이디 <span class="center-required">*</span></label>
+                  <input type="text" id="center-userid" name="center-userid" readonly th:value="${centerMember.centerMemberId}" required>
+
+                </div>
+
+                <div class="center-form-group">
+                  <label for="center-password">비밀번호 <span class="center-required">*</span></label>
+                  <input type="password" id="center-password" name="center-password" readonly value="비밀번호는 보안상 표시되지 않습니다" required>
+                  <span class="center-error-message" id="center-password-error"></span>
+                </div>
+
+                <div class="center-form-group">
+                  <label for="center-phone">연락처 <span class="center-required">*</span></label>
+                  <div class="center-input-button-group">
+                    <input type="tel" id="center-phone" name="center-phone" readonly th:value="${centerMember.centerMemberPhoneNumber}" required>
+                  </div>
+
+                </div>
+
+                <div class="center-form-group">
+                  <label for="center-email">이메일 <span class="center-required">*</span></label>
+                  <div class="center-input-button-group">
+                    <input type="email" id="center-email" name="center-email" readonly th:value="${centerMember.centerMemberEmail}" required>
+                  </div>
+
+                </div>
+
+                <div class="center-form-group">
+                  <label for="center-zipcode">우편번호 <span class="center-required">*</span></label>
+                  <div class="center-input-button-group">
+                    <input type="text" id="center-zipcode" name="center-zipcode" required th:value="${centerMember.centerMemberZipcode}" readonly>
+                  </div>
+
+                </div>
+
+                <div class="center-form-group">
+                  <label for="center-address">주소 <span class="center-required">*</span></label>
+                  <input type="text" id="center-address" name="center-address" required th:value="${centerMember.centerMemberAddress}" readonly>
+
+                </div>
+
+                <div class="center-form-group">
+                  <label for="center-detailAddress">상세주소</label>
+                  <input type="text" id="center-detailAddress" name="center-detailAddress" th:value="${centerMember.centerMemberDetailAddress}" readonly>
+
+                </div>
+
+                <div class="delete-box-layout">
+                  <div class="delete-box">
+                    <button type="button" class="deleteButton delete-button">강제 탈퇴</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
+<script th:src="@{/js/admin/allCheck.js}"></script>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지- 신고 내역</title>
+    <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin/admin-report/admin-report-list.css}"/>
+    <link rel="icon" href="/im/logo/favicon.png">
+</head>
+
+<body>
+    <div>
+        <div class="info-title-box info-title-box-flex">
+            <div class="logo-box-layout">
+                <div class="logo-box">
+                    <img src="../../../img/logo.jpg">
+                </div>
+            </div>
+            <div>
+                <div class="select-name">
+                    <span>신고 내역</span>
+                </div>
+            </div>
+        </div>
+        <div class="wrap">
+
+            <!-- 사이드 바 -->
+            <th:block th:replace="~{admin/admin-main/admin-sidemenu :: sidemenu}"></th:block>
+
+            <div class="container">
+                <div class="container-margin">
+                    <!-- 헤더 -->
+                    <div class="delete-box-layout">
+                        <form class="search-box" action="/admin/reportSearchList" method="get">
+                            <input type="text" class="search-text" name="keyword" placeholder="검색어를 입력하세요.">
+                            <button class="search-btn" type="submit">검색</button>
+                            <button class="search-btn" type="submit" th:href="@{/admin/reportList}">초기화</button>
+                         </form>
+                        <div class="delete-box">
+                            <button class="deleteButton delete-button">선택 항목 삭제</button>
+                        </div>
+                    </div>
+
+                    <!-- 내용 섹션 -->
+                    <section class="board-info-box-layout">
+                        <div class="board-info-box">
+                            <div class="board-info-title-box">
+                                <span>신고 내역</span>
+                            </div>
+
+                            <div class="info-table">
+                                <!-- Header -->
+                                <div class="info-row header-row">
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" id="allSelect">
+                                    </div>
+                                    <div class="info-cell-no info-cell">No</div>
+                                    <div class="info-cell-report-pos info-cell">신고 대상</div>
+                                    <div class="info-cell-stat info-cell">구분</div>
+                                    <div class="info-cell-name info-cell">신고자</div>
+                                    <div class="info-cell-report-reason info-cell">신고 사유</div>
+                                    <div class="info-cell-report-regidate info-cell">신고일</div>
+                                </div>
+
+                                <!-- Data rows -->
+                                <div th:each="report, iterStat : ${reportSearchList}" class="info-row" >
+                                    <div class="info-cell checkbox-line">
+                                        <input type="checkbox" class="checkbox" name="check">
+                                    </div>
+                                    <a style="display: flex; justify-content: center" th:href="@{/admin/postDetail(postType=${report.reportCate}, postNo=${report.reportContentNo})}">
+
+                                    <div class="info-cell-no info-cell" th:text="${report.reportNo}"></div>
+                                    <div class="info-cell-report-pos info-cell">
+                                        <span th:switch="${report.reportType}">
+                                        <span th:case="'POST'">게시글</span>
+                                        <span th:case="'COMMENT'">댓글</span>
+                                    </span>
+                                    </div>
+                                    <div class="info-cell-stat info-cell">
+                                        <span th:switch="${report.reportCate}">
+                                        <span th:case="'COMMU'">커뮤니티</span>
+                                        <span th:case="'VOLUN'">봉사</span>
+                                        <span th:case="'DONA'">기부</span>
+                                        <span th:case="'ADOPT'">입양</span>
+                                        <span th:case="'CAR'">카풀</span>
+                                        <span th:case="'PROTECT'">임시보호</span>
+                                        <span th:case="'REVIEW'">입양후기</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-cell-name info-cell" th:text="${report.reportWriter}"></div>
+                                    <div class="info-cell-report-reason info-cell" th:text="${report.reportContent}"></div>
+                                    <div class="info-cell-report-regidate info-cell" th:text="${report.reportRegidate}"></div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
+<script th:src="@{/js/admin/allCheck.js}"></script>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>추가 정보 입력</title>
+    <link rel="stylesheet" th:href="@{/css/member/additional-info.css}">
+</head>
+<body>
+<form th:action="@{/member/additional-info}" method="post">
+    <h2>추가 정보 입력</h2>
+
+    <div class="input-group">
+        <label>이메일</label>
+        <input type="email" name="memberEmail" th:value="${email}" readonly>
+    </div>
+
+    <div class="input-group">
+        <label>닉네임</label>
+        <input type="text" name="memberNickname" th:value="${nickname}">
+    </div>
+
+    <div class="input-group">
+        <label>이름</label>
+        <input type="text" name="memberName" placeholder="이름을 입력해주세요" required>
+    </div>
+
+    <div class="input-group">
+        <label>전화번호</label>
+        <input type="text" name="memberPhoneNumber" placeholder="전화번호를 입력해주세요" required>
+    </div>
+
+    <div class="input-group">
+        <label>성별</label>
+        <select name="memberGender" required>
+            <option value="">성별을 선택해주세요</option>
+            <option value="M">남성</option>
+            <option value="F">여성</option>
+        </select>
+    </div>
+
+    <div class="address-group">
+        <label>주소</label>
+        <div style="margin-bottom: 10px;">
+            <input type="text" id="memberZipcode" name="memberZipcode" placeholder="우편번호" readonly required>
+            <button type="button" class="address-search-btn" onclick="execDaumPostcode()">주소 검색</button>
+        </div>
+        <input type="text" id="memberAddress" name="memberAddress" placeholder="주소" readonly required>
+        <input type="text" id="memberDetailAddress" name="memberDetailAddress" placeholder="상세주소" required>
+    </div>
+
+    <button type="submit">가입완료</button>
+</form>
+<!-- 카카오 주소 API 추가 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('memberZipcode').value = data.zonecode;
+                document.getElementById('memberAddress').value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById('memberDetailAddress').focus();
+            }
+        }).open();
+    }
+</script>
+</body>
+</html>

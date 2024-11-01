@@ -13,6 +13,7 @@ public class AdminCommentDTO {
     private String commentType;
     private Long commentNo;
     private Long postNo;
+    private String postTitle;
     private String commentContent;
     private String commentWriter;
     private String commentUpdateDate;

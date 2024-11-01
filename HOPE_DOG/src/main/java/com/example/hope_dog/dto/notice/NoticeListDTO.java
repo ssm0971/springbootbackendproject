@@ -10,9 +10,7 @@ import java.util.Date;
 
 public class NoticeListDTO {
     private Long noticeNo;
-//    private String noticeCate;
     private String noticeTitle;
-//    private String noticeContent;
     private Date noticeRegidate;
     private String adminId;
     private Long adminNo;

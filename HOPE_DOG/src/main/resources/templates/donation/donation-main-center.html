@@ -35,12 +35,15 @@
         </div>
         <!--게시글-->
         <div class="dona-ul-all" th:each="donation : ${donationList}">
+          <a th:href="@{/dona/view/{donaNo}(donaNo=${donation.donaNo})}">
           <div class="dona-ul-main">
+<!--            <a th:href="@{/dona/view/{donaNo}(donaNo=${donation.donaNo})}"></a>-->
             <div class="dona-title" th:text="${donation.donaTitle}"></div>
             <div class="dona-author" th:text="${donation.centerMemberName}"></div>
             <div class="dona-date" th:text="${#dates.format(donation.donaRegidate, 'yyyy-MM-dd')}"></div>
-            <div class="donaNo" th:text="${donation.donaNo}" style="display: none;"></div>
-          </div>
+
+<!--            <div class="donaNo" th:text="${donation.donaNo}" style="display: none;"></div>-->
+          </div></a>
         </div>
 
 <!--        <div class="dona-ul-all">-->
@@ -67,34 +70,36 @@
         </div>
         <div class="dona-admain-btuall">
           <button class="dona-admain-btu" type="button">
-            <a href="../../html/donation/donation-write.html"><span class="dona-admain-btu-sp">글쓰기</span></a>
+            <span class="dona-admain-btu-sp">글쓰기</span>
           </button>
         </div>
-      <!-- 페이지네이션 -->
-      <div class="pagination">
-        <button class="prev">◀</button>
-        <button class="page">1</button>
-        <button class="page">2</button>
-        <button class="page">3</button>
-        <button class="page">4</button>
-        <button class="page">5</button>
-        <button class="next">▶</button>
-      </div>
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+          <ul class="page-box">
+            <a th:href="@{/dona/list(page=${page.startPage - 1})}" class="page-a" th:if="${page.prev}">
+              <li class="page-num prev">&lt</li>
+            </a>
+
+            <!--        th:block은 화면에 영향을 주지않는 가짜 태그
+                        타임리프 문법을 사용하기 위해 만들어 쓴다.
+            -->
+            <th:block th:each="i : ${#numbers.sequence(page.startPage, page.endPage)}">
+              <a th:href="@{/dona/list(page=${i})}" class="page-a">
+                <li class="page-num" th:classappend="${i == page.criteria.page ? 'active' : ''}" th:text="${i}"></li>
+              </a>
+            </th:block>
+
+            <a th:href="@{/dona/list(page=${page.endPage + 1})}" class="page-a" th:if="${page.next}">
+              <li class="page-num next">&gt</li>
+            </a>
+          </ul>
+        </div>
     </div>
     </div>
   </main>
 </body>
 
-<footer>
-  <div class="footer-links">
-    <a href="../center/term.html">이용약관</a> |
-    <a href="../center/term.html">개인정보처리방침</a>
-  </div>
-  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
-    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
-    © NEXT LEVEL. All Rights Reserved</h6>
-</footer>
-
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 <script defer th:src="@{/js/dona/donation-main.js}"></script>
 
 </html>

@@ -323,7 +323,7 @@ function validateInputs() {
     alert('모든 질문을 입력해 주세요.'); // 경고창 표시
   } else {
     alert('신청이 완료되었습니다'); // 모든 입력이 유효한 경우
-    location.href='/adopt/adopt';
+    document.getElementById('adoptRequest').submit();
   }
 }
 

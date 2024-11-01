@@ -35,9 +35,10 @@
                 <div class="container-margin">
                     <!-- 헤더 -->
                     <div class="delete-box-layout">
-                        <form class="search-box" action="" method="get">
-                            <input type="text" class="search-text" name=""placeholder="검색어를 입력하세요.">
+                        <form class="search-box" action="/admin/searchMemberList" method="get">
+                            <input class="search-text" name="keyword" placeholder="검색어를 입력하세요." type="text">
                             <button class="search-btn" type="submit">검색</button>
+                            <button class="search-btn" type="submit" th:href="@{/admin/memberList}">초기화</button>
                          </form>
                         <div class="delete-box">
                             <button class="deleteButton delete-button">선택 회원 강제 탈퇴</button>
@@ -48,7 +49,10 @@
                     <section class="board-info-box-layout">
                         <div class="board-info-box">
                             <div class="board-info-title-box">
-                                <span>회원정보 목록</span>
+                                <span>
+                                    <a class="member-btn" th:href="@{/admin/memberList}" th:classappend="${currentPage == 'general'} ? 'active'">일반 회원</a>
+                                    &emsp;&emsp;&emsp;
+                                    <a class="member-btn" th:href="@{/admin/centerMemberList}" th:classappend="${currentPage == 'center'} ? 'active'">센터 회원</a></span>
                             </div>
                     
                             <div class="info-table">
@@ -58,201 +62,37 @@
                                         <input type="checkbox" id="allSelect">
                                     </div>
                                     <div class="info-cell-no info-cell">No</div>
-                                    <div class="info-cell-stat info-cell">구분</div>
-                                    <div class="info-cell-email info-cell">이메일</div>
                                     <div class="info-cell-name info-cell">이름</div>
                                     <div class="info-cell-nickname info-cell">닉네임</div>
-                                    <div class="info-cell-phone info-cell">핸드폰 번호</div>
-                                    <div class="info-cell-join info-cell">가입 날짜</div>
+                                    <div class="info-cell-email info-cell">이메일</div>
+                                    <div class="info-cell-phone info-cell">연락처</div>
+                                    <div class="info-cell info-cell-two-factor">2차 인증</div>
                                 </div>
-                    
+
                                 <!-- Data rows -->
-                                <div class="info-row">
+                                <div th:each="member, iterStat : ${memberList}" class="info-row" >
                                     <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
+                                        <input type="checkbox" class="checkbox" name="check" th:data-member-no="${member.memberNo}">
                                     </div>
-                                    <div class="info-cell-no info-cell"><a href="./admin-member-detail.html">1</a></div>
-                                    <div class="info-cell-stat info-cell">일반회원</div>
-                                    <div class="info-cell-email info-cell">
-                                        <a>danny1014@naver.com</a>
-                                    </div>
-                                    <div class="info-cell-name info-cell">김규열</div>
-                                    <div class="info-cell-nickname info-cell">danny1014</div>
-                                    <div class="info-cell-phone info-cell">01012345678</div>
-                                    <div class="info-cell-join info-cell">2024-10-09</div>
-                                </div>
-
-                                <div class="info-row">
-                                    <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
-                                    </div>
-                                    <div class="info-cell-no info-cell">2</div>
-                                    <div class="info-cell-stat info-cell">일반회원</div>
-                                    <div class="info-cell-email info-cell">
-                                        <a>danny1014@naver.com</a>
-                                    </div>
-                                    <div class="info-cell-name info-cell">김규열</div>
-                                    <div class="info-cell-nickname info-cell">danny1014</div>
-                                    <div class="info-cell-phone info-cell">01012345678</div>
-                                    <div class="info-cell-join info-cell">2024-10-09</div>
-                                </div>
-                                
-                                <div class="info-row">
-                                    <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
-                                    </div>
-                                    <div class="info-cell-no info-cell">3</div>
-                                    <div class="info-cell-stat info-cell">일반회원</div>
-                                    <div class="info-cell-email info-cell">
-                                        <a>danny1014@naver.com</a>
-                                    </div>
-                                    <div class="info-cell-name info-cell">김규열</div>
-                                    <div class="info-cell-nickname info-cell">danny1014</div>
-                                    <div class="info-cell-phone info-cell">01012345678</div>
-                                    <div class="info-cell-join info-cell">2024-10-09</div>
-                                </div>
-
-                                <div class="info-row">
-                                    <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
-                                    </div>
-                                    <div class="info-cell-no info-cell">4</div>
-                                    <div class="info-cell-stat info-cell">일반회원</div>
-                                    <div class="info-cell-email info-cell">
-                                        <a>danny1014@naver.com</a>
-                                    </div>
-                                    <div class="info-cell-name info-cell">김규열</div>
-                                    <div class="info-cell-nickname info-cell">danny1014</div>
-                                    <div class="info-cell-phone info-cell">01012345678</div>
-                                    <div class="info-cell-join info-cell">2024-10-09</div>
-                                </div>
-
-                                <div class="info-row">
-                                    <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
-                                    </div>
-                                    <div class="info-cell-no info-cell">5</div>
-                                    <div class="info-cell-stat info-cell">일반회원</div>
-                                    <div class="info-cell-email info-cell">
-                                        <a>danny1014@naver.com</a>
-                                    </div>
-                                    <div class="info-cell-name info-cell">김규열</div>
-                                    <div class="info-cell-nickname info-cell">danny1014</div>
-                                    <div class="info-cell-phone info-cell">01012345678</div>
-                                    <div class="info-cell-join info-cell">2024-10-09</div>
-                                </div>
-
-                                <div class="info-row">
-                                    <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
-                                    </div>
-                                    <div class="info-cell-no info-cell">6</div>
-                                    <div class="info-cell-stat info-cell">센터회원</div>
-                                    <div class="info-cell-email info-cell">
-                                        <a>danny1014@naver.com</a>
-                                    </div>
-                                    <div class="info-cell-name info-cell">김규열</div>
-                                    <div class="info-cell-nickname info-cell">danny1014</div>
-                                    <div class="info-cell-phone info-cell">01012345678</div>
-                                    <div class="info-cell-join info-cell">2024-10-09</div>
-                                </div>
-
-                                <div class="info-row">
-                                    <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
-                                    </div>
-                                    <div class="info-cell-no info-cell">7</div>
-                                    <div class="info-cell-stat info-cell">센터회원</div>
-                                    <div class="info-cell-email info-cell">
-                                        <a>danny1014@naver.com</a>
-                                    </div>
-                                    <div class="info-cell-name info-cell">김규열</div>
-                                    <div class="info-cell-nickname info-cell">danny1014</div>
-                                    <div class="info-cell-phone info-cell">01012345678</div>
-                                    <div class="info-cell-join info-cell">2024-10-09</div>
-                                </div>
-                                
-                                <div class="info-row">
-                                    <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
-                                    </div>
-                                    <div class="info-cell-no info-cell">8</div>
-                                    <div class="info-cell-stat info-cell">센터회원</div>
-                                    <div class="info-cell-email info-cell">
-                                        <a>danny1014@naver.com</a>
-                                    </div>
-                                    <div class="info-cell-name info-cell">김규열</div>
-                                    <div class="info-cell-nickname info-cell">danny1014</div>
-                                    <div class="info-cell-phone info-cell">01012345678</div>
-                                    <div class="info-cell-join info-cell">2024-10-09</div>
-                                </div>
-
-                                <div class="info-row">
-                                    <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
-                                    </div>
-                                    <div class="info-cell-no info-cell">9</div>
-                                    <div class="info-cell-stat info-cell">센터회원</div>
-                                    <div class="info-cell-email info-cell">
-                                        <a>danny1014@naver.com</a>
-                                    </div>
-                                    <div class="info-cell-name info-cell">김규열</div>
-                                    <div class="info-cell-nickname info-cell">danny1014</div>
-                                    <div class="info-cell-phone info-cell">01012345678</div>
-                                    <div class="info-cell-join info-cell">2024-10-09</div>
-                                </div>
-
-                                <div class="info-row">
-                                    <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
-                                    </div>
-                                    <div class="info-cell-no info-cell">10</div>
-                                    <div class="info-cell-stat info-cell">센터회원</div>
-                                    <div class="info-cell-email info-cell">
-                                        <a>danny1014@naver.com</a>
-                                    </div>
-                                    <div class="info-cell-name info-cell">김규열</div>
-                                    <div class="info-cell-nickname info-cell">danny1014</div>
-                                    <div class="info-cell-phone info-cell">01012345678</div>
-                                    <div class="info-cell-join info-cell">2024-10-09</div>
+                                    <a th:href="@{/admin/memberDetail(memberNo=${member.memberNo})}" style="display: flex; justify-content: center">
+                                    <div class="info-cell info-cell-no" th:text="${member.memberNo}"></div>
+                                    <div class="info-cell info-cell-name" th:text="${member.memberName}"></div>
+                                    <div class="info-cell info-cell-nickname" th:text="${member.memberNickname}"></div>
+                                    <div class="info-cell info-cell-email" th:text="${member.memberEmail}"></div>
+                                    <div class="info-cell info-cell-phone" th:text="${member.memberPhoneNumber}"></div>
+                                    <div class="info-cell info-cell-two-factor" th:text="${member.memberTwoFactorEnabled}"></div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </section>
-                    
 
-                    <!-- 페이지 버튼 -->
-                    <div class="page-button-box-layout">
-                        <div class="page-button-box">
-                            <!-- 페이지 번호 -->
-                            <div class="">
-                                <div class="page-button-margin">
-                                    <div>
-                                        <img src="/im/admin/left_icon.png" class="left-button">
-                                    </div>
-                                </div>
-                            </div>
-                            <th:block th:each="num : ${#numbers.sequence(pageDTO.startPage, pageDTO.endPage + 1)}">
-                                <a th:class="${(num == pageDTO.startPage) ? 'page-button-active page-button changePage' : 'page-button changePage'}" th:href="${num}">
-                                    <span class="page-button" th:text="${num}"></span>
-                                </a>
-                                <div style="width: 2px;"></div>
-                            </th:block>
-                            <div class="">
-                                <div class="page-button-margin">
-                                    <div>
-                                        <img src="/im/admin/right_icon.png" class="right-button">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 페이지 버튼 끝 -->
                 </div>
             </div>
         </div>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-<script src="../../../js/admin/admin-allcheck.js"></script>
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
+<script th:src="@{/js/admin/allCheck.js}"></script>
+<script th:src="@{/js/admin/deleteMember.js}"></script>
 </html>

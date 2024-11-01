@@ -1,22 +1,42 @@
-function filter(category) {
-    // AJAX 요청을 통해 서버에 카테고리 필터링 요청
-    fetch(`/car/filter?cate=${encodeURIComponent(category)}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text(); // HTML 응답으로 처리
-        })
-        .then(html => {
-            // 게시글 목록을 업데이트
-            const container = document.querySelector('.volun-catalog-all');
-            container.innerHTML = ''; // 기존 내용을 비움
-            container.innerHTML = html; // 새로운 HTML 삽입
+console.log("제이에스 들어왔는지 확인");
+function searchCars() {
+    console.log("제이에스 들어왔을까");
+    const searchType = document.getElementById("search-type").value;
+    const keyword = document.getElementById("keyword").value;
 
-            // URL 변경
-            history.pushState(null, '', `/car/filter?cate=${encodeURIComponent(category)}`);
+    console.log("js searchType: ", searchType, "keyword: ", keyword);
+
+    fetch(`/car/main/search?searchType=${encodeURIComponent(searchType)}&keyword=${encodeURIComponent(keyword)}`)
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
         })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
+        .then(data => {
+            console.log("검색 결과:", data);
+            // 검색 결과를 업데이트하는 코드 추가
+            displayResults(data); // 새로운 함수 호출
+        })
+        .catch(error => console.error("Error fetching search results:", error));
+}
+
+// 검색 결과를 화면에 표시하는 함수
+function displayResults(data) {
+    const resultsDiv = document.getElementById("search-results");
+    resultsDiv.innerHTML = ""; // 이전 결과 초기화
+
+    if (data.length === 0) {
+        resultsDiv.innerHTML = "<p>검색 결과가 없습니다.</p>";
+        return;
+    }
+
+    data.forEach(car => {
+        const carElement = document.createElement("div");
+        carElement.innerHTML = `
+            <h3>${car.carTitle}</h3>
+            <p>카테고리: ${car.carCate}</p>
+            <p>내용: ${car.carContent}</p>
+            <p>등록일: ${new Date(car.carRegiDate).toLocaleString()}</p>
+        `;
+        resultsDiv.appendChild(carElement);
+    });
 }

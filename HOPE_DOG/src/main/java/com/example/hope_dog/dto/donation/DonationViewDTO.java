@@ -15,7 +15,7 @@ public class DonationViewDTO {
     private String donaContent;
     private Date donaRegidate;
     private Date donaUpdatedate;
-    private String centerMemberNo;
+    private Long centerMemberNo;
     private String centerMemberName;
     private String centerMemberId;
     private Long donaCommentNo;

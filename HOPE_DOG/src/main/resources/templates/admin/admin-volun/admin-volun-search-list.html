@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 페이지- 봉사신청 목록</title>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-volun/admin-volun-list.css}"/>
+  <link rel="icon" href="/im/logo/favicon.png">
+</head>
+
+<body>
+  <div>
+    <div class="info-title-box info-title-box-flex">
+      <div class="logo-box-layout">
+        <div class="logo-box">
+          <img src="../../../img/logo.jpg">
+        </div>
+      </div>
+      <div>
+        <div class="select-name">
+          <span>봉사신청 관리</span>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+
+      <!-- 사이드 바 -->
+      <th:block th:replace="~{admin/admin-main/admin-sidemenu :: sidemenu}"></th:block>
+
+      <div class="container">
+        <div class="container-margin">
+          <!-- 헤더 -->
+          <div class="delete-box-layout">
+            <form class="search-box" action="/admin/volunSearchList" method="get">
+              <input type="text" class="search-text" name="keyword" placeholder="검색어를 입력하세요.">
+              <button class="search-btn" type="submit">검색</button>
+              <button class="search-btn" type="submit" th:href="@{/admin/volunList}">초기화</button>
+            </form>
+          </div>
+
+          <!-- 내용 섹션 -->
+          <section class="board-info-box-layout">
+            <div class="board-info-box">
+              <div class="board-info-title-box">
+                <span>봉사신청 목록</span>
+              </div>
+
+              <div class="info-table">
+                <!-- Header -->
+                <div class="info-row header-row">
+                  <div class="info-cell-no info-cell">No</div>
+                  <div class="info-cell-stat info-cell">상태</div>
+                  <div class="info-cell-cate info-cell">작성일</div>
+                  <div class="info-cell-title info-cell">이름</div>
+                  <div class="info-cell-nickname info-cell">닉네임</div>
+                  <div class="info-cell-phone info-cell">연락처</div>
+                  <div class="info-cell-email info-cell">메일</div>
+                </div>
+
+                <!-- Data rows -->
+                <div th:each="volunRequest, iterStat : ${volunRequestList}" class="info-row" >
+                  <a style="display: flex; justify-content: center" th:href="@{/admin/volunDetail(volunNo=${volunRequest.volunRequestNo})}">
+                    <div class="info-cell-no info-cell" th:text="${volunRequest.volunRequestNo}"></div>
+                  <div class="info-cell-stat info-cell" th:text="${volunRequest.volunRequestStatus}"></div>
+                  <div class="info-cell-cate info-cell" th:text="${volunRequest.volunRequestRegiDate}"></div>
+                  <div class="info-cell-title info-cell" th:text="${volunRequest.volunRequestName}"></div>
+                  <div class="info-cell-nickname info-cell" th:text="${volunRequest.memberNickName}"></div>
+                  <div class="info-cell-phone info-cell" th:text="${volunRequest.memberPhoneNumber}"></div>
+                  <div class="info-cell-email info-cell" th:text="${volunRequest.memberEmail}"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
+<script th:src="@{/js/admin/allCheck.js}"></script>
+</html>

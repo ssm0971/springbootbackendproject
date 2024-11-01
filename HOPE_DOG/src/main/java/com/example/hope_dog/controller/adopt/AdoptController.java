@@ -82,6 +82,51 @@ public class AdoptController {
         return "redirect:/adopt/adopt";
     }
 
+    //입양글마감처리
+    @GetMapping("/adopt/adoptStatusEnd")
+    public String adoptEnd(@RequestParam("adoptNo") Long adoptNo) {
+        System.out.println(adoptNo + " 확인"); // adoptNo 확인 로그
+
+        // AdoptDetailDTO 생성 및 adoptNo 설정
+        AdoptDetailDTO adoptDetailDTO = new AdoptDetailDTO();
+        adoptDetailDTO.setAdoptNo(adoptNo);
+
+        // 서비스 호출
+        adoptService.adoptEnd(adoptDetailDTO);
+
+        return "redirect:/adopt/adopt"; // 리다이렉트
+    }
+
+    //입양글삭제처리
+    @GetMapping("/adopt/adoptDelete")
+    public String adoptDelete(@RequestParam("adoptNo") Long adoptNo) {
+        System.out.println(adoptNo + " 확인"); // adoptNo 확인 로그
+
+        // AdoptDetailDTO 생성 및 adoptNo 설정
+        AdoptDetailDTO adoptDetailDTO = new AdoptDetailDTO();
+        adoptDetailDTO.setAdoptNo(adoptNo);
+
+        // 서비스 호출
+        adoptService.adoptDelete(adoptDetailDTO);
+
+        return "redirect:/adopt/adopt"; // 리다이렉트
+    }
+
+    // 입양 글 신고 처리
+    @GetMapping("/adopt/adoptReport")
+    public String postAdoptReport(@RequestParam("adoptNo") Long adoptNo, @RequestParam("reportContent") String reportContent,
+                                  AdoptReportDTO adoptReportDTO, HttpSession session) {
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+        Long memberNo = (Long) session.getAttribute("memberNo");
+
+        adoptReportDTO.setReportContent(reportContent);
+        adoptReportDTO.setReportContentNo(adoptNo);
+        adoptReportDTO.setReportWriter(centerMemberNo != null ? centerMemberNo : memberNo);
+
+        adoptService.adoptReport(adoptReportDTO);
+
+        return "redirect:/adopt/adopt";
+    }
 
     //입양글수정
     @GetMapping("/adopt/adoptmodify")
@@ -91,9 +136,12 @@ public class AdoptController {
 
     // 입양 신청서 페이지 열기
     @GetMapping("/adopt/adoptrequest")
-    public String adoptRequest(HttpSession session, Model model) {
+    public String adoptRequest(@RequestParam(value = "centerMemberNo") Long centerMemberNo,
+                               HttpSession session, Model model) {
         Long memberNo = (Long) session.getAttribute("memberNo");
+
         model.addAttribute("memberNo", memberNo);
+        model.addAttribute("centerMemberNo", centerMemberNo); // 이 부분이 중요합니다.
 
         return "adopt/adopt/adopt-adoptrequest";
     }
@@ -101,6 +149,7 @@ public class AdoptController {
     // 입양 신청서 등록
     @PostMapping("/adopt/adoptrequestRegi")
     public String adoptRequestRegi(@DateTimeFormat(pattern = "yyyy-MM-dd") AdoptRequestDTO adoptRequestDTO) {
+        adoptService.registerRequest(adoptRequestDTO);
         return "redirect:/adopt/adopt";
     }
 

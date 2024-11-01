@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>임시 보호 신청서</title>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-member/admin-member-detail.css}"/>
+  <link rel="stylesheet" th:href="@{/css/admin/admin-volun/admin-volun-detail.css}"/>
+  <link rel="icon" href="/im/logo/favicon.png">
+</head>
+
+<body>
+<div>
+  <div class="info-title-box info-title-box-flex">
+    <div class="logo-box-layout">
+      <div class="logo-box">
+        <img src="../../../img/logo.jpg">
+      </div>
+    </div>
+    <div>
+      <div class="select-name">
+        <span>임시 보호 신청 관리</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+
+    <!-- 사이드 바 -->
+    <th:block th:replace="~{admin/admin-main/admin-sidemenu :: sidemenu}"></th:block>
+
+    <div class="container">
+      <div class="container-margin">
+
+        <!-- 내용 섹션 -->
+        <section class="board-info-box-layout">
+          <div class="board-info-box">
+            <div class="board-info-title-box" style="justify-content: left;">
+              <span>임시 보호 신청서 상세</span>
+            </div>
+            <!-- 신청서 박스 -->
+            <div class="volun-write-area">
+              <div style="margin: 0 auto; border-bottom: 1px solid black;">
+                <div class="title">
+                  <span>임시 보호 신청서 - <span th:text="${protectRequest.protectRequestNo}"></span></span>
+                  <span style="float:right">작성자 - <span th:text="${protectRequest.memberName}"></span></span>
+                </div>
+                <br>
+                <form id="protect-requestForm">
+                  <div class="volun-form-group">
+                    <label for="protectRequestName">이름 <span class="required">*</span></label>
+                    <input type="text" id="protectRequestName" name="protectRequestName" readonly th:value="${protectRequest.protectRequestName}" required>
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestPhone">전화번호 <span class="required">*</span></label>
+                    <input type="text" id="protectRequestPhone" name="protectRequestPhone" readonly th:value="${protectRequest.protectRequestPhone}" required>
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestPhoneSub">보조 전화번호</label>
+                    <input type="text" id="protectRequestPhoneSub" name="protectRequestPhoneSub" readonly th:value="${protectRequest.protectRequestPhoneSub}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestEmail">이메일 <span class="required">*</span></label>
+                    <input type="email" id="protectRequestEmail" name="protectRequestEmail" readonly th:value="${protectRequest.protectRequestEmail}" required>
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label>성별 <span class="required">*</span></label>
+                    <div class="gender-buttons">
+                      <div th:class="${protectRequest.protectRequestGender} == 'M' ? 'gender-btn-active' : 'gender-btn'">남</div>
+                      <div th:class="${protectRequest.protectRequestGender} == 'F' ? 'gender-btn-active' : 'gender-btn'">여</div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestAge">나이</label>
+                    <input type="text" id="protectRequestAge" name="protectRequestAge" readonly th:value="${protectRequest.protectRequestAge}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestZipcode">우편번호 <span class="required">*</span></label>
+                    <input type="text" id="protectRequestZipcode" name="protectRequestZipcode" readonly th:value="${protectRequest.protectRequestZipcode}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestAddress">주소 <span class="required">*</span></label>
+                    <input type="text" id="protectRequestAddress" name="protectRequestAddress" readonly th:value="${protectRequest.protectRequestAddress}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestAddrDetail">상세주소</label>
+                    <input type="text" id="protectRequestAddrDetail" name="protectRequestAddrDetail" readonly th:value="${protectRequest.protectRequestAddrDetail}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestJob">직업</label>
+                    <input type="text" id="protectRequestJob" name="protectRequestJob" readonly th:value="${protectRequest.protectRequestJob}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestMarry">결혼 여부</label>
+                    <input type="text" id="protectRequestMarry" name="protectRequestMarry" readonly th:value="${protectRequest.protectRequestMarry}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label>약관 동의 <span class="required">*</span></label>
+                    <input type="text" id="protectRequestInfoAgree" name="protectRequestInfoAgree" readonly th:value="${protectRequest.protectRequestInfoAgree}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ1">Q1</label>
+                    <input type="text" id="protectRequestQ1" name="protectRequestQ1" readonly th:value="${protectRequest.protectRequestQ1}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ2">Q2</label>
+                    <input type="text" id="protectRequestQ2" name="protectRequestQ2" readonly th:value="${protectRequest.protectRequestQ2}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ3">Q3</label>
+                    <input type="text" id="protectRequestQ3" name="protectRequestQ3" readonly th:value="${protectRequest.protectRequestQ3}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ4">Q4</label>
+                    <input type="text" id="protectRequestQ4" name="protectRequestQ4" readonly th:value="${protectRequest.protectRequestQ4}">
+                  </div>
+                  <br>
+                  <!-- 추가 질문들 -->
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ5">Q5</label>
+                    <input type="text" id="protectRequestQ5" name="protectRequestQ5" readonly th:value="${protectRequest.protectRequestQ5}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ6">Q6</label>
+                    <input type="text" id="protectRequestQ6" name="protectRequestQ6" readonly th:value="${protectRequest.protectRequestQ6}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ7">Q7</label>
+                    <input type="text" id="protectRequestQ7" name="protectRequestQ7" readonly th:value="${protectRequest.protectRequestQ7}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ8">Q8</label>
+                    <input type="text" id="protectRequestQ8" name="protectRequestQ8" readonly th:value="${protectRequest.protectRequestQ8}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ9">Q9</label>
+                    <input type="text" id="protectRequestQ9" name="protectRequestQ9" readonly th:value="${protectRequest.protectRequestQ9}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ10">Q10</label>
+                    <input type="text" id="protectRequestQ10" name="protectRequestQ10" readonly th:value="${protectRequest.protectRequestQ10}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ11">Q11</label>
+                    <input type="text" id="protectRequestQ11" name="protectRequestQ11" readonly th:value="${protectRequest.protectRequestQ11}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ12">Q12</label>
+                    <input type="text" id="protectRequestQ12" name="protectRequestQ12" readonly th:value="${protectRequest.protectRequestQ12}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ13">Q13</label>
+                    <input type="text" id="protectRequestQ13" name="protectRequestQ13" readonly th:value="${protectRequest.protectRequestQ13}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ14">Q14</label>
+                    <input type="text" id="protectRequestQ14" name="protectRequestQ14" readonly th:value="${protectRequest.protectRequestQ14}">
+                  </div>
+                  <br>
+                  <div class="volun-form-group">
+                    <label for="protectRequestQ15">Q15</label>
+                    <input type="text" id="protectRequestQ15" name="protectRequestQ15" readonly th:value="${protectRequest.protectRequestQ15}">
+                  </div>
+                  <br>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

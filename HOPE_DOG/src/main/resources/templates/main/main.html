@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
     <link rel="stylesheet" th:href="@{/css/main/main.css}">
     <script defer th:src="@{/js/main/main.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 </head>
 <body>
 <div class="page-container">
@@ -86,21 +87,22 @@
             </div>
         </section>
 
-        <section class="section5">
+        <div class="section5">
             <div class="section5-content">
-                <h2>봉사 통계</h2>
-                <div class="chart-container">
-                    <div class="chart-item">
-                        <h3>봉사 통계 제목1</h3>
-                        <img th:src="@{/img/main-cart1.png}" alt="봉사 통계 차트1" class="chart-image">
+                <h2>유기동물 보호 현황 통계</h2>
+                <br>
+                <div class="chart-container" style="display: flex; gap: 20px;">
+                    <div class="chart-item" style="flex: 1;">
+                        <h3>연도별 유기동물 현황</h3>
+                        <canvas id="yearlyTotalChart"></canvas>
                     </div>
-                    <div class="chart-item">
-                        <h3>봉사 통계 제목2</h3>
-                        <img th:src="@{/img/main-cart2.png}" alt="봉사 통계 차트2" class="chart-image">
+                    <div class="chart-item" style="flex: 1;">
+                        <h3>연도별 조치 현황</h3>
+                        <canvas id="yearlyDetailChart"></canvas>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
         <section class="section6">
             <div class="section6-content">

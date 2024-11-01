@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -424,5 +426,46 @@ public class MemberController {
         // member/find-pwOk 뷰 템플릿을 반환
         // ViewResolver가 실제 뷰 페이지를 찾아 렌더링
         return "member/find-pwOk";
+    }
+
+
+
+    @GetMapping("/additional-info")  // "/member/additional-info" 대신
+    public String additionalInfoForm(HttpSession session, Model model) {
+        model.addAttribute("email", session.getAttribute("tempEmail"));
+        model.addAttribute("nickname", session.getAttribute("tempNickname"));
+        return "member/additional-info";
+    }
+
+    @PostMapping("/additional-info")
+    public String processAdditionalInfo(@ModelAttribute MemberDTO memberDTO,
+                                        HttpSession session) {
+        String providerId = (String) session.getAttribute("tempProviderId");
+        String provider = (String) session.getAttribute("provider");
+
+        memberDTO.setProvider(provider);
+        memberDTO.setProviderId(providerId);
+        memberDTO.setMemberId(provider + "_" + providerId);
+
+        // 통합 메서드 사용
+        MemberDTO savedMember = memberService.registerSocialMember(memberDTO);
+
+        // 임시 세션 정보 제거
+        session.removeAttribute("tempEmail");
+        session.removeAttribute("tempNickname");
+        session.removeAttribute("tempProviderId");
+        session.removeAttribute("provider");
+        session.removeAttribute("needAdditionalInfo");
+
+        // 실제 세션 정보 설정
+        session.setAttribute("memberNo", savedMember.getMemberNo());
+        session.setAttribute("memberId", savedMember.getMemberId());
+        session.setAttribute("memberName", savedMember.getMemberName());
+        session.setAttribute("memberNickname", savedMember.getMemberNickname());
+        session.setAttribute("memberEmail", savedMember.getMemberEmail());
+        session.setAttribute("memberLoginStatus", provider.toUpperCase());
+        session.setAttribute("memberTwoFactorEnabled", savedMember.getMemberTwoFactorEnabled());
+
+        return "redirect:/main/main";
     }
 }

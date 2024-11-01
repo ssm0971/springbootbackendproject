@@ -252,13 +252,11 @@ div#paging-wrap {
 }
 
 .info-cell-email {
-	width: 150px;
-    flex-grow: 1;
+	width: 360px;
 }
 
 .info-cell-phone {
 	width: 200px;
-	flex-grow: 1;
 }
 
 .checkbox-line {
@@ -267,4 +265,17 @@ div#paging-wrap {
 
 .info-cell:last-child {
 	border-right: none;
+}
+
+.member-btn{
+	padding: 5px
+}
+
+.member-btn:hover{
+	color: white;
+	background-color: #9B805D;
+}
+
+.active{
+	background-color: #F5EAD9;
 }

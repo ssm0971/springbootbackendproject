@@ -32,7 +32,7 @@
       <div class="adoptrequest-write-area">
         <br>
         <div style="font-weight: bold;">입양 신청서</div>
-        <form th:action="@{/adopt/adopt/adoptrequestRegi}" method="post">
+        <form th:action="@{/adopt/adopt/adoptrequestRegi}" method="post" id="adoptRequest">
         <!-- 이름 -->
           <div class="adoptrequest-content-box">
             <div class="adoptrequest-content-title">성명</div><input class="adoptrequest-input-small" id="nameInput"
@@ -47,7 +47,7 @@
           <!-- 연락처 -->
           <div class="adoptrequest-content-box">
             <div class="adoptrequest-content-title">연락처</div><input class="adoptrequest-input-small" id="phoneInput"
-              type="text" onblur="checkPhoneInput()" placeholder="　-을 제외한 숫자만 입력해주세요" name="adoptPhone">
+              type="text" onblur="checkPhoneInput()" placeholder="　-을 제외한 숫자만 입력해주세요" name="adoptRequestPhone">
           </div>
           <!-- 연락처 미입력 에러메세지 -->
           <div class="Error">
@@ -58,7 +58,7 @@
           <!-- 대체 연락처 -->
           <div class="adoptrequest-content-box">
             <div class="adoptrequest-content-title">대체 연락처</div><input class="adoptrequest-input-small" type="text"
-              id="phone2Input" onblur="checkPhone2Input()" placeholder="　-을 제외한 숫자만 입력해주세요" name="adoptPhoneSub">
+              id="phone2Input" onblur="checkPhone2Input()" placeholder="　-을 제외한 숫자만 입력해주세요" name="adoptRequestPhoneSub">
           </div>
           <!-- 대체 연락처 미입력 에러메세지 -->
           <div class="Error">
@@ -110,7 +110,7 @@
           <div class="adoptrequest-content-box">
             <div class="adoptrequest-content-title">상세주소</div>
             <input id="detailAddress" class="adoptrequest-input-small" type="text"
-              onblur="checkAddressInput()" name="aodptRequestAddressDetail">
+              onblur="checkAddressInput()" name="adoptRequestAddressDetail">
           </div>
           <!-- 주소 미입력 에러메세지 -->
           <div class="Error">
@@ -147,7 +147,7 @@
             <p>개인정보의 보유 및 이용기간: 5년(관계법령에서 정한 일정한 기간)</p>
           </div>
           <div class="agreement-checkbox">
-            <input type="checkbox" id="info-agreement" name="adoptRequestInfoAgreement">
+            <input type="checkbox" id="info-agreement" name="adoptRequestInfoAgreement" value="Y">
             <label for="info-agreement">위 약관에 동의합니다.</label>
           </div>
 
@@ -345,7 +345,7 @@
             <p>임양인은 본인에 대한 의사를 파악하는 경우에는, 반드시 단체에 통보해야 하며 임양동에 대한 지연이 있을 수 있습니다. 또한, 단체에 임양동물에 반환을 정당할 수 있습니다.</p>
           </div>
           <div class="agreement-checkbox">
-            <input type="checkbox" id="adopt-agreement" name="adoptRequeestAdoptAgreement">
+            <input type="checkbox" id="adopt-agreement" name="adoptRequestAdoptAgreement" value="Y">
             <label for="adopt-agreement">위 약관에 동의합니다.</label>
           </div>
 
@@ -358,11 +358,11 @@
           <br><br>
 
           <!--회원번호 세션으로 받고 히든으로 넘기기 -->
-          <input th:value="${memberNo}" name="memberNo" style="display: none">
-          <input th:value="${centerMemberNo}" name="memberNo" style="display: none">
+          <input th:value="${memberNo}" style="display: none" name="memberNo">
+          <input th:value="${centerMemberNo}" style="display: none" name="centerMemberNo">
 
           <div class="adoptrequest-buttonbox">
-            <button class="adoptrequest-button" onclick="validateInputs()" type="sbumit">신청</button>
+            <button class="adoptrequest-button" onclick="validateInputs()" type="button">신청</button>
             <button class="adoptrequest-button" onclick="requestcancle()" type="button">취소</button>
           </div>
           <br>

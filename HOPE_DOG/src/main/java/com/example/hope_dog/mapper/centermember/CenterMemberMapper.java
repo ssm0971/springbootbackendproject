@@ -23,4 +23,17 @@ public interface CenterMemberMapper {
 //    파일 insert
     void insertCenterFile(CenterFileDTO centerFileDTO);
 
+
+//    아이디 찾기 이름과 핸드폰번호로 찾기
+    String findCenterMemberId(@Param("centerMemberName") String centerMemberName,
+                              @Param("centerMemberPhoneNumber") String centerMemberPhoneNumber);
+
+
+//    // 이름, 아이디, 이메일로 센터 회원 찾기
+    CenterMemberDTO findCenterByNameIdEmail(@Param("centerMemberName") String centerMemberName,
+                                      @Param("centerMemberId") String centerId,
+                                      @Param("centerMemberEmail") String centerEmail);
+
+    // 비밀번호 업데이트
+    void updateCenterPassword(CenterMemberDTO center);
 }

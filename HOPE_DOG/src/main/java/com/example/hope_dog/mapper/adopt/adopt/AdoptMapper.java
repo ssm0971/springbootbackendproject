@@ -14,9 +14,6 @@ public interface AdoptMapper {
 
     //입양 상세글
     List<AdoptDetailDTO> adoptDetail(Long adoptNo);
-
-    //입양 신청서
-    List<AdoptRequestDTO> adoptRequest();
     
     //입양 게시글(페이지네이션 포함)
     List<AdoptMainDTO> selectAll();
@@ -28,7 +25,20 @@ public interface AdoptMapper {
     //입양글작성
     void adoptWrite(AdoptWriteDTO adoptWriteDTO);
 
+    //입양글마감처리
+    void adoptEnd(AdoptDetailDTO adoptDetailDTO);
+
+    //입양글삭제처리
+    void adoptDelete(AdoptDetailDTO adoptDetailDTO);
+
+    //입양글신고처리
+    void adoptReport(AdoptReportDTO adoptReportDTO);
+
     //댓글불러오기
     List<AdoptCommentDTO> adoptComment(Long adoptNo);
+
+    //입양 신청서
+    void adoptRequest(AdoptRequestDTO adoptRequestDTO);
+
 
 }

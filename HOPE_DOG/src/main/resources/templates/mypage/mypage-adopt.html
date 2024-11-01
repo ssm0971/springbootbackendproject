@@ -9,6 +9,7 @@
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
   <script defer th:src="@{/js/main/main.js}"></script>
+  <script defer th:src="@{/js/mypage/mypage-adopt.js}"></script>
 </head>
 
 <body>
@@ -34,7 +35,7 @@
         <ul class="member-adopt-nav-ul">
           <li id="member-adopt"><a href="#">입양신청</li>
           <div id="adopt-choice"></div></a>
-          <li id="protect-list"><a href="../../html/mypage/mypage-protect.html">임시보호신청</li></a>
+          <li id="protect-list">임시보호신청</li>
         </ul>
       </nav>
     </div>
@@ -47,19 +48,21 @@
         <ul class="member-profile-adoptboard-titlebox">
           <li><b>입양 신청서</b></li>
           <li><b>상태</b></li>
-          <li><b>작성일</b></li>
+          <li><b>마감일</b></li>
         </ul>
       </div>
       <!-- 게시글 목록 -->
-      <div class="member-profile-adoptboard-contentsbox">
+      <div class="member-profile-adoptboard-contentsbox" >
         <ul class="member-profile-adoptboard-content">
           <li>
-            <div>
+            <div class="mypage-adopt-list" th:each="myadopt : ${mypageAdoptList}">
               <ul class="member-profile-adoptboard-contentbox">
-                <li><a href="../../html/mypage/mypage-adopt-form.html">입양 신청서</li></a>
-                <li>수락</li>
-                <li>2024.07.29</li>
+                <li th:text="${myadopt.adoptTitle}"></li>
+                <li th:if="${myadopt.adoptStatus} == 'T'" th:text="검토중"></li>
+                <li th:if="${myadopt.adoptStatus} == 'F'" th:text="마감"></li>
+                <li th:text="${#dates.format(myadopt.adoptPeriodend, 'yyyy-MM-dd')}"></li>
               </ul>
+              <div class="memberNo" th:text="${myadopt.memberNo}" style="display: none;"></div>
             </div>
           </li>
           <li>
@@ -87,15 +90,6 @@
     </div>
 
   </main>
-  <footer>
-    <div class="footer-links">
-      <a href="../member/term.html">이용약관</a> |
-      <a href="../member/term.html">개인정보처리방침</a>
-    </div>
-    <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
-      통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
-      © NEXT LEVEL. All Rights Reserved</h6>
-  </footer>
 </body>
-
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
 </html>

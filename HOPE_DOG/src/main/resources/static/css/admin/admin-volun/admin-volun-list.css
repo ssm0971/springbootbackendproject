@@ -240,20 +240,24 @@ div#paging-wrap {
 }
 
 .info-cell-cate {
-	width: 100px;
+	width: 200px;
 }
 
 .info-cell-title {
-	width: 200px;
+	width: 100px;
 }
 
 .info-cell-nickname {
 	width: 150px;
 }
 
-.info-cell-content {
+.info-cell-phone {
 	width: 200px;
-	flex-grow: 1;
+
+}
+
+.info-cell-email {
+	width: 460px;
 }
 
 .checkbox-line {

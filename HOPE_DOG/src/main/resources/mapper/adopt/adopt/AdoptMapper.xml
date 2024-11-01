@@ -17,7 +17,8 @@
     <!-- 게시글 상세페이지 불러오기 -->
     <select id="adoptDetail" resultType="AdoptDetailDTO">
         SELECT a.ADOPT_TITLE, c.CENTER_MEMBER_NAME, a.ADOPT_REGIDATE, a.ADOPT_PERIODSTART , a.ADOPT_PERIODEND , a.ADOPT_NAME ,
-               a.ADOPT_BREED , a.ADOPT_NEUTERING , a.ADOPT_GENDER , a.ADOPT_WEIGHT , a.ADOPT_BIRTH , a.ADOPT_INTRODUCE , a.ADOPT_CONTENT, a.ADOPT_NO, a.CENTER_MEMBER_NO
+               a.ADOPT_BREED , a.ADOPT_NEUTERING , a.ADOPT_GENDER , a.ADOPT_WEIGHT , a.ADOPT_BIRTH , a.ADOPT_INTRODUCE ,
+               a.ADOPT_CONTENT, a.ADOPT_NO, a.CENTER_MEMBER_NO, a.ADOPT_STATUS
         FROM TBL_ADOPT a JOIN TBL_CENTER_MEMBER c ON a.CENTER_MEMBER_NO = c.CENTER_MEMBER_NO
         WHERE ADOPT_NO = #{adoptNo}
     </select>
@@ -79,6 +80,32 @@
         )
     </insert>
 
+    <!-- 게시글 마감 처리 -->
+    <update id="adoptEnd" parameterType="AdoptDetailDTO">
+        UPDATE TBL_ADOPT
+        SET ADOPT_STATUS = 'F'
+        WHERE ADOPT_NO = #{adoptNo}
+    </update>
+
+
+    <!-- 게시글 삭제 처리 -->
+    <delete id="adoptDelete" parameterType="AdoptDetailDTO">
+        DELETE FROM TBL_ADOPT
+        WHERE ADOPT_NO = #{adoptNo}
+    </delete>
+
+    <!-- 게시글 신고 처리 -->
+    <insert id="adoptReport" parameterType="AdoptReportDTO">
+        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_REPORT (
+        REPORT_NO, REPORT_CATE, REPORT_CONTENT, REPORT_WRITER, REPORT_CONTENT_NO
+        ) VALUES (
+        #{reportNo}, '입양', #{reportContent}, #{reportWriter},#{reportContentNo}
+        )
+    </insert>
+
     <!-- 댓글불러오기 -->
     <select id="adoptComment" parameterType="Long" resultType="AdoptCommentDTO">
         SELECT
@@ -100,6 +127,7 @@
     </select>
 
 
+    <!-- 입양신청서 등록 -->
     <insert id="adoptRequest" parameterType="AdoptRequestDTO">
         <selectKey keyProperty="adoptRequestNo" resultType="Long" order="BEFORE">
             SELECT SEQ_ADOPT_REQUEST.NEXTVAL FROM DUAL
