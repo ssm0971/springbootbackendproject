@@ -11,7 +11,7 @@
 
     <!--    정보수정 페이지 조회-->
     <select id="viewProfile" parameterType="Long" resultType="CenterViewProfileDTO">
-        SELECT CENTER_MEMBER_NAME,CENTER_MEMBER_EMAIL,CENTER_MEMBER_PHONE_NUMBER,CENTER_MEMBER_ZIPCODE ,CENTER_MEMBER_ADDRESS ,CENTER_MEMBER_DETAIL_ADDRESS,TBL_CENTER_MEMBER_AGREE
+        SELECT CENTER_MEMBER_NAME,CENTER_MEMBER_EMAIL,CENTER_MEMBER_PHONE_NUMBER,CENTER_MEMBER_ZIPCODE ,CENTER_MEMBER_ADDRESS ,CENTER_MEMBER_DETAIL_ADDRESS,CENTER_MEMBER_AGREE
         FROM TBL_CENTER_MEMBER tcm
         WHERE CENTER_MEMBER_NO = #{centerMemberNo}
     </select>
@@ -26,13 +26,13 @@
             CENTER_MEMBER_PHONE_NUMBER = #{centerMemberPhoneNumber},
             CENTER_MEMBER_ADDRESS = #{centerMemberAddress},
             CENTER_MEMBER_DETAIL_ADDRESS = #{centerMemberDetailAddress},
-            TBL_CENTER_MEMBER_AGREE = #{tblCenterMemberAgree},
+            CENTER_MEMBER_AGREE = #{tblCenterMemberAgree},
             CENTER_MEMBER_PW = CASE
                                    WHEN #{newCenterMemberPw} IS NOT NULL AND #{newCenterMemberPw} <> '' THEN #{newCenterMemberPw}
                                    ELSE CENTER_MEMBER_PW
                 END
         WHERE CENTER_MEMBER_NO = #{centerMemberNo}
-          AND CENTER_MEMBER_PW = #{centerMemberPw} <!-- 현재 비밀번호 확인 -->
+          AND CENTER_MEMBER_PW = #{centerMemberPw}
         ]]>
     </update>
 

@@ -7,10 +7,10 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 public class NoteboxSendDetailDTO {
-    private Long noteboxSendNo;
-    private String noteboxSendTitle;
-    private String noteboxSendContent;
-    private String noteboxSendRegiDate;
-    private String noteboxSenderName;
+    private Long noteboxSendNo;     // 쪽지 번호
+    private String noteboxSendTitle;    // 쪽지 제목
+    private String noteboxSendContent;  // 쪽지 내용
+    private String noteboxSendRegiDate; // 작성일
+    private String noteboxReceiverName; // 수신자 이름
 
 }

@@ -18,12 +18,12 @@
   <div class="center-member-profile-navbox">
     <nav>
       <ul class="center-member-profile-nav-ul">
-        <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
-        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+        <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
+        <li id="mywrite"><a th:href="@{/centerMypage/writeInfoCommuList}"> 작성글조회</a></li>
         <div id="choice"></div>
         <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
         <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
-        <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
+        <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
         <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
       </ul>
     </nav>

@@ -16,7 +16,7 @@ public class NoteboxReceiveListDTO {
     private String noteboxReceiveRegiDate;
 
     private Long noteboxReceiveS;
-    private String noteboxReceiverName;
+    private String noteboxSenderName;
 
     private String readStatus;
 

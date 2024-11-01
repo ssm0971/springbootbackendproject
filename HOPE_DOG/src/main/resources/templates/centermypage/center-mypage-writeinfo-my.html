@@ -18,12 +18,12 @@
   <div class="center-member-profile-navbox">
     <nav>
       <ul class="center-member-profile-nav-ul">
-        <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
-        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+        <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
+        <li id="mywrite"><a th:href="@{/centerMypage/writeInfoCommuList}"> 작성글조회</a></li>
         <div id="choice"></div>
         <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
         <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
-        <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
+        <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
         <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
       </ul>
     </nav>
@@ -32,7 +32,7 @@
   <div class="center-member-profile-navboard">
     <nav>
       <ul class="center-member-profile-navboard-ul">
-        <li><a href="./center-mypage-writeinfo-my.html">커뮤니티</a></li><div id="choice"></div>
+        <li><a th:href="@{/centerMypage/writeInfoCommuList}">커뮤니티</a></li><div id="choice"></div>
         <li><a href="./center-mypage-writeinfo-volun.html">봉사모집글</a></li>
         <li><a href="./center-mypage-writeinfo-adopt.html">안심입양</a></li>
       </ul>
@@ -52,49 +52,24 @@
     <!-- 게시글 목록 -->
     <div class="center-member-profile-cumuboard-contentsbox">
       <ul class="center-member-profile-cumuboard-content">
-        <li>
+        <li th:each="commuList : ${commuWriteInfoList}">
           <div>
             <ul class="center-member-profile-cumuboard-contentbox">
-              <li>커뮤니티</li>
-              <li><a href="../../html/commu/commu-post-member-comm-writer.html">말티즈 태어난지 1년 됐어요 <span>[7]</span></a></li>
-              <li>행복한 유기견</li>
-              <li>2024.07.29</li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <div>
-            <ul class="center-member-profile-cumuboard-contentbox">
-              <li>커뮤니티</li>
-              <li>말티즈 태어난지 1년 됐어요 <span>[7]</span></li>
-              <li>행복한 유기견</li>
-              <li>2024.07.29</li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <div>
-            <ul class="center-member-profile-cumuboard-contentbox">
-              <li>커뮤니티</li>
-              <li>말티즈 태어난지 1년 됐어요 <span>[7]</span></li>
-              <li>행복한 유기견</li>
-              <li>2024.07.29</li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <div>
-            <ul class="center-member-profile-cumuboard-contentbox">
-              <li>커뮤니티</li>
-              <li>말티즈 태어난지 1년 됐어요 <span>[7]</span></li>
-              <li>행복한 유기견</li>
-              <li>2024.07.29</li>
+              <li th:text="${commuList.commuCate}">커뮤니티</li>
+              <li>
+                <a th:href="@{centerMypage/commuDetail(id=${commuList.commuNumber})}"
+                   th:text="${commuList.commuTitle}">제목</a>
+                <span th:text="'[' + ${commuList.commentCount} + ']'">[댓글수]</span>
+              </li>
+              <li th:text="${commuList.commuCenterName}">센터명</li>
+              <li th:text="${#dates.format(commuList.commuRegiDate, 'yyyy.MM.dd')}">날짜</li>
             </ul>
           </div>
         </li>
       </ul>
     </div>
   </div>
+
   <!-- 페이지네이션 -->
   <div class="pagination">
     <button class="prev">◀</button>

@@ -11,10 +11,10 @@
             tns.NOTEBOX_SEND_REGIDATE,
             tns.NOTEBOX_SEND_R,
             CASE
-                WHEN MOD(tns.NOTEBOX_SEND_R, 10) = 1 THEN (SELECT MEMBER_NAME FROM TBL_MEMBER WHERE MEMBER_NO = tns.NOTEBOX_SEND_R)
+                WHEN MOD(tns.NOTEBOX_SEND_R, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = tns.NOTEBOX_SEND_R)
                 WHEN MOD(tns.NOTEBOX_SEND_R, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tns.NOTEBOX_SEND_R)
                 WHEN tns.NOTEBOX_SEND_R = 3 THEN '관리자'
-                END AS noteboxReceiveName
+                END AS noteboxReceiverName
         FROM TBL_NOTEBOX_SEND tns
         WHERE tns.NOTEBOX_SEND_S = #{centerMemberNo}
         ORDER BY tns.NOTEBOX_SEND_REGIDATE DESC
@@ -29,10 +29,10 @@
             tnr.NOTEBOX_RECEIVE_REGIDATE,
             tnr.NOTEBOX_RECEIVE_S,
             CASE
-                WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NAME FROM TBL_MEMBER WHERE MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)
+                WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)
                 WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)
                 WHEN tnr.NOTEBOX_RECEIVE_S = 3 THEN '관리자'
-                END AS noteboxSendName,
+                END AS noteboxSenderName,
             CASE
                 WHEN tnr.NOTEBOX_RECEIVE_READ = 'Y' THEN '읽음'
                 ELSE '안읽음'
@@ -58,8 +58,8 @@
             CASE
                 WHEN MOD(tnr.NOTEBOX_SEND_R, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = tnr.NOTEBOX_SEND_R)
                 WHEN MOD(tnr.NOTEBOX_SEND_R, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tnr.NOTEBOX_SEND_R)
-                WHEN tnr.NOTEBOX_SEND_S = 3 THEN '관리자'
-                END AS noteboxSenderName
+                WHEN tnr.NOTEBOX_SEND_R = 3 THEN '관리자'
+                END AS noteboxReceiverName
         FROM TBL_NOTEBOX_SEND tnr
         WHERE NOTEBOX_SEND_NO = #{noteboxSendNo}
     </select>
@@ -82,15 +82,12 @@
             CASE
                 WHEN MOD(tns.NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = tns.NOTEBOX_RECEIVE_S)
                 WHEN MOD(tns.NOTEBOX_RECEIVE_S, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tns.NOTEBOX_RECEIVE_S)
-                WHEN tns.NOTEBOX_RECEIVE_R = 3 THEN '관리자'
-                END AS noteboxReceiverName,
+                WHEN tns.NOTEBOX_RECEIVE_S = 3 THEN '관리자'
+                END AS noteboxSenderName,
             TNS.NOTEBOX_RECEIVE_READ
         FROM TBL_NOTEBOX_RECEIVE tns
         WHERE NOTEBOX_RECEIVE_NO = #{noteboxReceiveNo}
     </select>
-
-
-
 
     <!--    쪽지보내기-->
     <select id="findMemberNoByNickname" parameterType="String" resultType="Long">
@@ -98,15 +95,24 @@
     </select>
 
     <select id="findCenterMemberNoByNickname" parameterType="String" resultType="Long">
-        SELECT center_member_no FROM TBL_CENBER_MEMBER WHERE CENTER_MEMBER_NAME = #{nickname}
+        SELECT center_member_no FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NAME = #{nickname}
     </select>
 
-
-    <insert id="sendingNote" parameterType="NoteboxWriteDTO">
+<!--받은쪽지함 insert-->
+    <insert id="sendingNoteReceive" parameterType="NoteboxWriteDTO">
         INSERT INTO TBL_NOTEBOX_RECEIVE (NOTEBOX_RECEIVE_NO, NOTEBOX_RECEIVE_TITLE, NOTEBOX_RECEIVE_CONTENT, NOTEBOX_RECEIVE_S, NOTEBOX_RECEIVE_R)
-        VALUES (SEQ_NOTE_RECEIVE.NEXTVAL, #{noteboxTitle}, #{noteboxContent}, #{noteboxReceiver}, #{noteboxSender});
-
-        INSERT INTO TBL_NOTEBOX_SEND (NOTEBOX_SEND_NO, NOTEBOX_SEND_TITLE, NOTEBOX_SEND_CONTENT, NOTEBOX_SEND_S, NOTEBOX_SEND_R)
-        VALUES (SEQ_NOTE_SEND.NEXTVAL, #{noteboxTitle}, #{noteboxContent}, #{noteboxSender}, #{noteboxReceiver});
+        VALUES (SEQ_NOTE_RECEIVE.NEXTVAL, #{noteboxTitle}, #{noteboxContent}, #{noteboxS}, #{noteboxR})
     </insert>
+
+<!--보낸쪽지함 insert-->
+    <insert id="sendingNoteSend" parameterType="NoteboxWriteDTO">
+        INSERT INTO TBL_NOTEBOX_SEND (NOTEBOX_SEND_NO, NOTEBOX_SEND_TITLE, NOTEBOX_SEND_CONTENT, NOTEBOX_SEND_S, NOTEBOX_SEND_R)
+        VALUES (SEQ_NOTE_SEND.NEXTVAL, #{noteboxTitle}, #{noteboxContent}, #{noteboxS}, #{noteboxR})
+    </insert>
+
+    <delete id="deleteNoteByReceiveNo" parameterType="Long">
+        DELETE FROM TBL_NOTEBOX_RECEIVE tnr
+        WHERE NOTEBOX_RECEIVE_NO = #{noteboxReceiveNo}
+    </delete>
+
 </mapper>

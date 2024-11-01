@@ -10,33 +10,13 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class NoteboxWriteDTO {
-//    private Long noteboxSendNo;
-//    private String noteboxSendTitle;
-//    private String noteboxSendContent;
-//    private String noteboxSendRediDate;
-//    private String noteboxSendS;
-//    private String noteboxSendR;
-//
-//    private Long noteboxReceiveNo;
-//    private String noteboxReceiveTitle;
-//    private String noteboxReceiveContent;
-//    private String noteboxReceiveRegiDate;
-//    private String noteboxReceiveRead;
-//    private String noteboxReceiveReadDate;
-//    private String noteboxReceiveS;
-//    private String noteboxReceiveR;
 
-    private Long noteboxSendNo;
-    private Long noteboxReceiveNo;
+    private String noteboxTitle;    //쪽지 제목
+    private String noteboxContent;  //쪽지 내용
+//    private String noteboxRegiDate; //쪽지 시간
 
-    private String noteboxTitle;
-    private String noteboxContent;
-    private String noteboxRegiDate;
+    private String noteboxReceiverName; //입력한 닉네임 or 센터명
 
-    private String noteboxReceiverName;
-
-    private Long noteboxReceiver;
-    private Long noteboxSender;
-
-
+    private Long noteboxS; //발신자
+    private Long noteboxR; //수신자
 }

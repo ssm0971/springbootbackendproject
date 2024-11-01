@@ -40,11 +40,7 @@ public class NoteBoxService {
         return noteBoxMapper.getNoteboxReceiveDetail(noteboxReceiveNo);
     }
 
-
-    //받은 쪽지 상세페이지 - 답장하기
-
-
-    // 닉네임 확인
+    // 닉네임으로 회원번호 확인
     public Long findMemberNoByNickname(String nickname) {
         if (nickname == null) {
             throw new IllegalArgumentException("닉네임은 null일 수 없습니다.");
@@ -56,10 +52,14 @@ public class NoteBoxService {
 
         // 센터회원 또는 일반회원 테이블에서 조회
         Long centerMemberNo = noteBoxMapper.findCenterMemberNoByNickname(nickname);
-        return (centerMemberNo != null)
-                ? centerMemberNo
-                : noteBoxMapper.findMemberNoByNickname(nickname); // 일반회원 반환
+
+        if (centerMemberNo != null) {
+            return centerMemberNo; // 센터회원이 존재하는 경우
+        } else {
+            return noteBoxMapper.findMemberNoByNickname(nickname); // 일반회원 반환
+        }
     }
+
 
     // 쪽지 전송
     public void sendingNote(NoteboxWriteDTO noteboxWriteDTO) {
@@ -71,10 +71,19 @@ public class NoteBoxService {
         }
 
         // DTO에 수신자 번호와 발신자 번호 설정
-        noteboxWriteDTO.setNoteboxReceiveNo(receiverNo);
-        noteboxWriteDTO.setNoteboxSender(senderNo); // 발신자 번호 설정
+        noteboxWriteDTO.setNoteboxR(receiverNo); // 수신자 번호 설정
+        noteboxWriteDTO.setNoteboxS(senderNo); // 발신자 번호 설정
 
         // 쪽지 전송
-        noteBoxMapper.sendingNote(noteboxWriteDTO);
+        noteBoxMapper.sendingNoteReceive(noteboxWriteDTO);
+        noteBoxMapper.sendingNoteSend(noteboxWriteDTO);
+    }
+
+
+    //쪽지 삭제 진행
+    // 쪽지 삭제 메서드
+    public boolean deleteNoteByReceiveNo(Long noteboxReceiveNo) {
+        int deletedRows = noteBoxMapper.deleteNoteByReceiveNo(noteboxReceiveNo);
+        return deletedRows > 0;
     }
 }

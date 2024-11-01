@@ -18,7 +18,7 @@
         <nav>
             <ul class="center-member-profile-nav-ul">
                 <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
-                <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+                <li id="mywrite"><a th:href="@{/centerMypage/writeInfoCommuList}"> 작성글조회</a></li>
                 <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
                 <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
                 <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
@@ -46,7 +46,7 @@
                 <div class="notebox-list-contents">
                     <div class="note-status" th:text="${note.readStatus}"></div> <!-- 읽음/안읽음 상태 -->
                     <div class="note-profile-namebox">
-                        <div class="note-profile-name" th:text="${note.noteboxReceiverName}"></div> <!-- 이름 -->
+                        <div class="note-profile-name" th:text="${note.noteboxSenderName}"></div> <!-- 이름 -->
                     </div>
                     <div class="note-note-content" id="sendList-area">
                         <div>
@@ -59,10 +59,12 @@
                     </div>
                     <div class="note-note-date" th:text="${note.noteboxReceiveRegiDate}"></div> <!-- 작성일 -->
                     <div class="button-box">
-                        <a th:href="@{/center-mypage-notebox-write.html}">
+                        <a th:href="@{/centerMypage/noteboxResponse(noteboxSenderName=${note.noteboxSenderName})}">
                             <button>답장</button>
                         </a>
-                        <button class="delete-button">삭제</button>
+                        <a th:href="@{/centerMypage/noteboxDelete(noteboxReceiveNo=${note.noteboxReceiveNo})}">
+                            <button class="delete-button" type="button">삭제</button>
+                        </a>
                     </div>
                 </div>
             </li>

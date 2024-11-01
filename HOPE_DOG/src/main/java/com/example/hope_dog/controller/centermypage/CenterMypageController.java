@@ -4,19 +4,17 @@ import com.example.hope_dog.dto.centermypage.CenterProfileDTO;
 import com.example.hope_dog.dto.centermypage.CenterUpdateProfileDTO;
 import com.example.hope_dog.dto.centermypage.CenterViewProfileDTO;
 import com.example.hope_dog.dto.centermypage.notebox.*;
+import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoCommuListDTO;
 import com.example.hope_dog.service.centermypage.CenterMypageService;
 import com.example.hope_dog.service.centermypage.NoteBoxService;
+import com.example.hope_dog.service.centermypage.WriteInfoService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -25,9 +23,13 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/centerMypage")
 class CenterMypageController {
-    private final CenterMypageService centerMypageService;
+    //로그인 세션
     private final HttpSession session;
 
+//프로필
+    private final CenterMypageService centerMypageService;
+
+    //회원정보
     @GetMapping("/centerProfile")
     public String centerProfile(Model model) {
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo"); // 세션에서 센터회원 번호 가져오기
@@ -82,6 +84,28 @@ class CenterMypageController {
         return "redirect:/updateProfile";
     }
 
+//게시글 조회
+    private final WriteInfoService writeInfoService;
+
+    //커뮤니티 작성글 페이지
+    @GetMapping("/writeInfoCommuList")
+    public String centerWriteInfoCommuList(Model model) {
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo"); // 세션에서 센터회원 번호 가져오기
+
+        if (centerMemberNo == null) {
+            log.warn("세션에서 centerMemberNo가 존재하지 않습니다.");
+            return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
+        }
+
+        // 커뮤니티 작성글 조회
+        List<WriteInfoCommuListDTO> commuWriteInfoList = writeInfoService.commuList(centerMemberNo);
+        model.addAttribute("commuWriteInfoList", commuWriteInfoList);
+
+        return "centermypage/center-mypage-writeinfo-my";
+    }
+    //봉사 모집글 페이지
+
+    //안심입양 모집글 페이지
 
 
 
@@ -89,6 +113,10 @@ class CenterMypageController {
 
 
 
+
+
+
+//쪽지함
     private final NoteBoxService noteBoxService;
 
     //보낸쪽지함
@@ -163,37 +191,87 @@ class CenterMypageController {
             return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
         }
 
-        // 필요한 경우, 모델에 데이터 추가
-        model.addAttribute("noteboxWriteDTO", new NoteboxWriteDTO()); // DTO 객체 생성 및 모델에 추가
+        // DTO 객체 생성 및 모델에 추가
+        model.addAttribute("noteboxWriteDTO", new NoteboxWriteDTO());
 
-        return "centermypage/notebox/center-mypage-notebox-senddetail"; // HTML 파일 경로
+        return "centermypage/notebox/center-mypage-notebox-write"; // HTML 파일 경로
     }
 
-    // 쪽지 전송 처리
+    //쪽지보내기 (답장) 페이지 이동
+    @GetMapping("/noteboxResponse")
+    public String writeNote(@RequestParam("noteboxSenderName") String noteboxSenderName, Model model, HttpSession session) {
+        // 세션 체크 및 DTO 설정
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+        if (centerMemberNo == null) {
+            log.error("세션에서 centerMemberNo를 찾을 수 없습니다.");
+            return "redirect:/login";
+        }
+
+        NoteboxWriteDTO noteboxWriteDTO = new NoteboxWriteDTO();
+        noteboxWriteDTO.setNoteboxReceiverName(noteboxSenderName); // senderName을 받는 사람 이름으로 설정
+        model.addAttribute("noteboxWriteDTO", noteboxWriteDTO);
+
+        return "centermypage/notebox/center-mypage-notebox-write";
+    }
+
+    // 쪽지 전송 실패
+    @GetMapping("/notebox/sendFail")
+    public String showSendNoteForm(Model model) {
+        model.addAttribute("noteboxWriteDTO", new NoteboxWriteDTO());
+        return "centermypage/notebox/center-mypage-notebox-write"; // 템플릿 경로
+    }
+
     @PostMapping("/sendingNote")
-    public String sendingNote(@ModelAttribute NoteboxWriteDTO noteboxWriteDTO, Model model) {
+    public String sendingNote(@ModelAttribute NoteboxWriteDTO noteboxWriteDTO, RedirectAttributes redirectAttributes) {
         // 세션에서 센터회원 번호 가져오기
         Long senderNo = (Long) session.getAttribute("centerMemberNo");
 
-        // 닉네임을 통해 회원 번호 조회
-        Long receiverNo = noteBoxService.findMemberNoByNickname(noteboxWriteDTO.getNoteboxReceiverName());
+        if (senderNo == null) {
+            redirectAttributes.addFlashAttribute("error", "발신자 정보를 찾을 수 없습니다.");
+            return "redirect:/centerMypage/notebox/sendFail"; // 에러가 발생하면 다시 폼으로 돌아감
+        }
+
+        Long receiverNo;
+        try {
+            receiverNo = noteBoxService.findMemberNoByNickname(noteboxWriteDTO.getNoteboxReceiverName());
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            log.error("수신자 조회 실패: {}", e.getMessage());
+            return "redirect:/centerMypage/notebox/sendFail"; // 에러가 발생하면 다시 폼으로 돌아감
+        }
 
         if (receiverNo != null) {
             // DTO에 수신자 번호 및 발신자 번호 설정
-            noteboxWriteDTO.setNoteboxReceiveNo(receiverNo);
-            noteboxWriteDTO.setNoteboxSendNo(senderNo); // 발신자 번호 설정
+            noteboxWriteDTO.setNoteboxR(receiverNo);
+            noteboxWriteDTO.setNoteboxS(senderNo); // 발신자 번호 설정
 
             // 쪽지 전송
             noteBoxService.sendingNote(noteboxWriteDTO);
             log.info("쪽지가 성공적으로 전송되었습니다: {}", noteboxWriteDTO);
-            return "redirect:/centermypage/NoteboxSendList"; // 쪽지 전송 후 목록 페이지로 리다이렉트
+            return "redirect:/centerMypage/noteboxSendList"; // 보낸 쪽지함으로 리다이렉트
         } else {
-            // 쪽지 전송 실패시 원래페이지로
-            model.addAttribute("error", "회원 번호를 찾을 수 없습니다.");
-            log.error("회원 번호를 찾을 수 없습니다: {}", noteboxWriteDTO.getNoteboxReceiver());
-            return "centermypage/notebox/center-mypage-notebox-send"; // 에러가 발생하면 다시 폼으로 돌아감
+            redirectAttributes.addFlashAttribute("error", "회원 번호를 찾을 수 없습니다.");
+            log.error("회원 번호를 찾을 수 없습니다: {}", noteboxWriteDTO.getNoteboxReceiverName());
+            return "redirect:/centerMypage/notebox/sendFail"; // 에러가 발생하면 다시 폼으로 돌아감
         }
     }
+
+
+    @GetMapping("/noteboxDelete")
+    public String deleteNote(@RequestParam("noteboxReceiveNo") Long noteboxReceiveNo, Model model) {
+        boolean isDeleted = noteBoxService.deleteNoteByReceiveNo(noteboxReceiveNo);
+
+        if (isDeleted) {
+            log.info("쪽지 번호 {}가 성공적으로 삭제되었습니다.", noteboxReceiveNo);
+            return "redirect:/centerMypage/noteboxReceiveList"; // 쪽지 리스트 페이지로 리다이렉트
+        } else {
+            log.error("쪽지 번호 {} 삭제 실패", noteboxReceiveNo);
+            model.addAttribute("errorMessage", "쪽지 삭제에 실패했습니다.");
+            return "centerMypage/noteboxError"; // 에러 페이지로 이동
+        }
+    }
+
+
 
 
 

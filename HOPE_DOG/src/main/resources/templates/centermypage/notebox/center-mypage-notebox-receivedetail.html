@@ -19,7 +19,7 @@
     <nav>
       <ul class="center-member-profile-nav-ul">
         <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
-        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+        <li id="mywrite"><a th:href="@{/centerMypage/writeInfoCommuList}"> 작성글조회</a></li>
         <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
         <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
         <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
@@ -38,7 +38,7 @@
       <div class="note-write-wrap">
         <div class="note-write">
           <div class="note-title" th:text="${noteboxReceiveDetail.noteboxReceiveTitle}">제목</div>
-          <div class="note-title" th:text="${noteboxReceiveDetail.noteboxReceiverName}">닉네임</div>
+          <div class="note-title" th:text="${noteboxReceiveDetail.noteboxSenderName}">닉네임</div>
           <div class="note-cont" th:text="${noteboxReceiveDetail.noteboxReceiveRegiDate}">시간</div><br>
           <div class="note-cont" th:text="${noteboxReceiveDetail.noteboxReceiveContent}">내용</div>
         </div>

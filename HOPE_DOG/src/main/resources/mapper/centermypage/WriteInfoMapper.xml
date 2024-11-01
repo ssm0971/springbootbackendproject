@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.centermypage.writeinfo.WriteInfoMapper">
+
+<!--    회원 이름 조회-->
+    <select id="writerInfo" parameterType="Long" resultType="String">
+        SELECT CENTER_MEMBER_NAME
+        FROM TBL_CENTER_MEMBER tcm
+        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+    </select>
+
+<!--    커뮤니티 조회-->
+    <select id="writeInfoCommuList" parameterType="Long" resultType="WriteInfoCommuListDTO">
+        SELECT
+            tc.COMMU_NO,
+            tc.COMMU_CATE,
+            tc.COMMU_TITLE,
+            tc.COMMU_CONTENT,
+            tc.COMMU_REGIDATE,
+            COUNT(tcc.COMMU_NUMBER) AS commentCount  -- 댓글 수 계산
+        FROM
+            TBL_COMMU tc
+                LEFT JOIN
+            TBL_COMMU_COMMENT tcc ON tc.COMMU_NO = tcc.COMMU_NO
+        WHERE
+            tc.COMMU_WRITER = #{centerMemberNo}
+          AND tc.COMMU_CATE IN ('전체', '인기', '봉사후기', '질문', '자랑')
+        GROUP BY
+            tc.COMMU_NUMBER,
+            tc.COMMU_CATE,
+            tc.COMMU_TITLE,
+            tc.COMMU_CONTENT,
+            tc.COMMU_REGIDATE
+        ORDER BY
+            CASE tc.COMMU_CATE
+                WHEN '전체' THEN 1
+                WHEN '인기' THEN 2
+                WHEN '봉사후기' THEN 3
+                WHEN '질문' THEN 4
+                WHEN '자랑' THEN 5
+                END,
+            tc.COMMU_REGIDATE DESC
+    </select>
+
+</mapper>

@@ -21,8 +21,10 @@ public interface NoteBoxMapper {
     Long findCenterMemberNoByNickname(String nickname);
 
     //쪽지보내기
-    void sendingNote(NoteboxWriteDTO noteboxWriteDTO);
-
+    //받은쪽지 insert
+    void sendingNoteSend(NoteboxWriteDTO noteboxWriteDTO);
+    //보낸쪽지 insert
+    void sendingNoteReceive(NoteboxWriteDTO noteboxWriteDTO);
 
     // 보낸 쪽지 상세 정보 조회
     NoteboxSendDetailDTO getNoteboxSendDetail(Long noteboxSendNo);
@@ -32,6 +34,9 @@ public interface NoteBoxMapper {
 
     // 받은 쪽지 상세 정보 조회
     NoteboxReceiveDetailDTO getNoteboxReceiveDetail(Long noteboxReceiveNo);
+
+    // 쪽지 삭제
+    int deleteNoteByReceiveNo(Long noteboxReceiveNo);
 }
 
 

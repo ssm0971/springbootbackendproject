@@ -18,7 +18,7 @@
       <ul class="center-member-profile-nav-ul">
         <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
         <div id="choice"></div>
-        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
+        <li id="mywrite"><a th:href="@{/centerMypage/writeInfoCommuList}"> 작성글조회</a></li>
         <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
         <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
         <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
@@ -117,8 +117,8 @@
 
               <div id="contents">
                 <div id="labelname">알림수신 동의 </div>
-                동의<input type="radio" name="agree" id="Y" value="Y" th:checked="${profile.tblCenterMemberAgree == 'Y'}">
-                비동의<input type="radio" name="agree" id="N" value="N" th:checked="${profile.tblCenterMemberAgree == 'N'}" checked>
+                동의<input type="radio" name="agree" id="Y" value="Y" th:checked="${profile.CenterMemberAgree == 'Y'}">
+                비동의<input type="radio" name="agree" id="N" value="N" th:checked="${profile.CenterMemberAgree == 'N'}" checked>
               </div>
 
               <div class="center-member-profile-button">
