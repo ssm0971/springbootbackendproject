@@ -17,8 +17,59 @@
     </select>
 
     <!-- 센터회원정보 수정 -->
-    <update id="centerProfileUpdate" parameterType="CenterUpdateProfileDTO">
-    <![CDATA[
+<!--    <update id="centerProfileUpdate" parameterType="CenterUpdateProfileDTO">-->
+<!--    <![CDATA[-->
+<!--        UPDATE TBL_CENTER_MEMBER-->
+<!--        SET-->
+<!--            CENTER_MEMBER_NAME = #{centerMemberName},-->
+<!--            CENTER_MEMBER_EMAIL = #{centerMemberEmail},-->
+<!--            CENTER_MEMBER_PHONE_NUMBER = #{centerMemberPhoneNumber},-->
+<!--            CENTER_MEMBER_ADDRESS = #{centerMemberAddress},-->
+<!--            CENTER_MEMBER_DETAIL_ADDRESS = #{centerMemberDetailAddress},-->
+<!--            CENTER_MEMBER_AGREE = #{centerMemberAgree},-->
+<!--            CENTER_MEMBER_PW = CASE-->
+<!--                                   WHEN #{newCenterMemberPw} IS NOT NULL AND #{newCenterMemberPw} <> '' THEN #{newCenterMemberPw}-->
+<!--                                   ELSE CENTER_MEMBER_PW-->
+<!--                END-->
+<!--        WHERE CENTER_MEMBER_NO = #{centerMemberNo}-->
+<!--          AND CENTER_MEMBER_PW = #{centerMemberPw}-->
+<!--        ]]>-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 현재 비밀번호 일치 여부 확인 &ndash;&gt;-->
+<!--    <select id="checkPasswordMatch" parameterType="map" resultType="boolean">-->
+<!--    <![CDATA[-->
+<!--        SELECT CASE WHEN CENTER_MEMBER_PW = #{centerMemberPassword} THEN 1 ELSE 0 END-->
+<!--        FROM TBL_CENTER_MEMBER-->
+<!--        WHERE CENTER_MEMBER_NO = #{centerMemberNo}-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <!-- 프로필 업데이트 -->
+    <!-- 수정된 Mapper XML 쿼리 -->
+<!--    <update id="updateCenterProfile" parameterType="CenterUpdateProfileDTO">-->
+<!--    <![CDATA[-->
+<!--        UPDATE TBL_CENTER_MEMBER-->
+<!--        SET-->
+<!--            CENTER_MEMBER_NAME = #{centerMemberName},-->
+<!--            CENTER_MEMBER_EMAIL = #{centerMemberEmail},-->
+<!--            CENTER_MEMBER_PHONE_NUMBER = #{centerMemberPhoneNumber},-->
+<!--            CENTER_MEMBER_ADDRESS = #{centerMemberAddress},-->
+<!--            CENTER_MEMBER_DETAIL_ADDRESS = #{centerMemberDetailAddress},-->
+<!--            CENTER_MEMBER_AGREE = #{centerMemberAgree},-->
+<!--            CENTER_MEMBER_PW =-->
+<!--                CASE-->
+<!--                    WHEN #{centerMemberNewPw} IS NOT NULL AND #{centerMemberNewPw} <> ''-->
+<!--                        THEN #{centerMemberNewPw}-->
+<!--                    ELSE CENTER_MEMBER_PW-->
+<!--                    END-->
+<!--        WHERE CENTER_MEMBER_NO = #{centerMemberNo}-->
+<!--          AND CENTER_MEMBER_PW = #{centerMemberPw}-->
+<!--          AND (#{centerMemberNewPw} IS NULL OR #{centerMemberNewPw} = '' OR #{centerMemberPw} <> #{centerMemberNewPw})-->
+<!--        ]]>-->
+<!--</update>-->
+
+    <update id="updateCenterProfile" parameterType="CenterUpdateProfileDTO">
         UPDATE TBL_CENTER_MEMBER
         SET
             CENTER_MEMBER_NAME = #{centerMemberName},
@@ -26,23 +77,31 @@
             CENTER_MEMBER_PHONE_NUMBER = #{centerMemberPhoneNumber},
             CENTER_MEMBER_ADDRESS = #{centerMemberAddress},
             CENTER_MEMBER_DETAIL_ADDRESS = #{centerMemberDetailAddress},
-            CENTER_MEMBER_AGREE = #{tblCenterMemberAgree},
-            CENTER_MEMBER_PW = CASE
-                                   WHEN #{newCenterMemberPw} IS NOT NULL AND #{newCenterMemberPw} <> '' THEN #{newCenterMemberPw}
-                                   ELSE CENTER_MEMBER_PW
-                END
+            CENTER_MEMBER_AGREE = #{centerMemberAgree},
+            CENTER_MEMBER_PW = COALESCE(NULLIF(#{centerMemberNewPw}, #{centerMemberPw}), CENTER_MEMBER_PW)
         WHERE CENTER_MEMBER_NO = #{centerMemberNo}
           AND CENTER_MEMBER_PW = #{centerMemberPw}
-        ]]>
     </update>
 
+<!--    <update id="updateCenterProfile" parameterType="CenterUpdateProfileDTO">-->
+<!--        UPDATE TBL_CENTER_MEMBER-->
+<!--        SET-->
+<!--            CENTER_MEMBER_NAME = #{centerMemberName},-->
+<!--            CENTER_MEMBER_EMAIL = #{centerMemberEmail},-->
+<!--            CENTER_MEMBER_PHONE_NUMBER = #{centerMemberPhoneNumber},-->
+<!--            CENTER_MEMBER_ADDRESS = #{centerMemberAddress},-->
+<!--            CENTER_MEMBER_DETAIL_ADDRESS = #{centerMemberDetailAddress},-->
+<!--            CENTER_MEMBER_AGREE = #{centerMemberAgree},-->
+<!--            CENTER_MEMBER_PW = COALESCE(#{centerMemberNewPw}, CENTER_MEMBER_PW)-->
+<!--        WHERE CENTER_MEMBER_NO = #{centerMemberNo}-->
+<!--          AND CENTER_MEMBER_PW = #{centerMemberPw}-->
+<!--    </update>-->
     <!-- 현재 비밀번호 일치 여부 확인 -->
-    <select id="checkPasswordMatch" parameterType="map" resultType="boolean">
-    <![CDATA[
-        SELECT CASE WHEN CENTER_MEMBER_PW = #{centerMemberPassword} THEN 1 ELSE 0 END
-        FROM TBL_CENTER_MEMBER
-        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
-        ]]>
-    </select>
+<!--    <select id="checkPasswordMatch" parameterType="map" resultType="boolean">-->
+<!--        SELECT CASE WHEN CENTER_MEMBER_PW = #{centerMemberPw} THEN 1 ELSE 0 END-->
+<!--        FROM TBL_CENTER_MEMBER-->
+<!--        WHERE CENTER_MEMBER_NO = #{centerMemberNo}-->
+<!--</select>-->
+
 
 </mapper>

@@ -43,25 +43,25 @@ document.addEventListener('DOMContentLoaded', function () {
     // });
 
     // 비밀번호 입력 이벤트
-    passwordInput.addEventListener('input', function () {
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-        if (!passwordPattern.test(passwordInput.value)) {
-            passwordStrengthMessage.style.display = 'block';
-        } else {
-            passwordStrengthMessage.style.display = 'none';
-        }
-    });
-
-    // 비밀번호 확인 입력 이벤트
-    passwordCheckInput.addEventListener('input', function () {
-        if (passwordInput.value !== passwordCheckInput.value) {
-            passwordMismatchMessage.style.display = 'block';
-        } else {
-            passwordMismatchMessage.style.display = 'none';
-        }
-    });
-});
+//     passwordInput.addEventListener('input', function () {
+//         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+//
+//         if (!passwordPattern.test(passwordInput.value)) {
+//             passwordStrengthMessage.style.display = 'block';
+//         } else {
+//             passwordStrengthMessage.style.display = 'none';
+//         }
+//     });
+//
+//     // 비밀번호 확인 입력 이벤트
+//     passwordCheckInput.addEventListener('input', function () {
+//         if (passwordInput.value !== passwordCheckInput.value) {
+//             passwordMismatchMessage.style.display = 'block';
+//         } else {
+//             passwordMismatchMessage.style.display = 'none';
+//         }
+//     });
+// });
 
 // 주소 검색
 document.addEventListener('DOMContentLoaded', function() {
@@ -78,15 +78,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const submitButton = document.getElementById('updateButton');
-
-    submitButton.addEventListener('click', function(event) {
-        const passwordInput = document.getElementById('password').value;
-
-        if (!passwordInput) {
-            event.preventDefault(); // 폼 전송 막기
-            alert('현재 비밀번호를 입력해 주세요.'); // 경고 메시지 표시
-        }
-    });
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//     const submitButton = document.getElementById('updateButton');
+//
+//     submitButton.addEventListener('click', function(event) {
+//         const passwordInput = document.getElementById('password').value;
+//
+//         if (!passwordInput) {
+//             event.preventDefault(); // 폼 전송 막기
+//             alert('현재 비밀번호를 입력해 주세요.'); // 경고 메시지 표시
+//         }
+//     });
+// });
+//
+// document.getElementById("updateButton").addEventListener("click", function(event) {
+//     const newPassword = document.getElementById("newpassword").value;
+//     const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+//     if (newPassword !== confirmNewPassword) {
+//         event.preventDefault();
+//         document.getElementById("passwordMatchMessage").style.display = "block";
+//     }
+// });

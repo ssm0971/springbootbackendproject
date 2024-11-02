@@ -16,5 +16,5 @@ public class CenterViewProfileDTO {
     private String centerMemberZipcode;       // 우편번호
     private String centerMemberAddress;       // 주소
     private String centerMemberDetailAddress; // 상세주소
-    private String tblCenterMemberAgree;      // 알림 수신 동의 (Y or N)
+    private String centerMemberAgree;      // 알림 수신 동의 (Y or N)
 }

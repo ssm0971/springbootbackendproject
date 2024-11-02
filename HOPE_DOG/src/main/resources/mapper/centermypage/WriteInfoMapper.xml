@@ -17,7 +17,7 @@
             tc.COMMU_TITLE,
             tc.COMMU_CONTENT,
             tc.COMMU_REGIDATE,
-            COUNT(tcc.COMMU_NUMBER) AS commentCount  -- 댓글 수 계산
+            COUNT(tcc.COMMU_NO) AS commentCount  -- 댓글 수 계산
         FROM
             TBL_COMMU tc
                 LEFT JOIN
@@ -26,7 +26,7 @@
             tc.COMMU_WRITER = #{centerMemberNo}
           AND tc.COMMU_CATE IN ('전체', '인기', '봉사후기', '질문', '자랑')
         GROUP BY
-            tc.COMMU_NUMBER,
+            tc.COMMU_NO,
             tc.COMMU_CATE,
             tc.COMMU_TITLE,
             tc.COMMU_CONTENT,
@@ -40,6 +40,54 @@
                 WHEN '자랑' THEN 5
                 END,
             tc.COMMU_REGIDATE DESC
+    </select>
+
+<!--    봉사 작성글 조회-->
+    <select id="writeInfoVolList" parameterType="Long" resultType="WriteInfoVolListDTO">
+        SELECT
+            tv.VOLUN_NO,
+            tv.VOLUN_TITLE,
+            tv.VOLUN_CONTENT,
+            tv.VOLUN_REGIDATE,
+            COUNT(tvc.VOLUN_COMMENT_NO) AS commentCount
+        FROM
+            TBL_VOLUN tv
+                LEFT JOIN
+            TBL_VOLUN_COMMENT tvc ON tv.VOLUN_NO = tvc.VOLUN_NO
+        WHERE tv.CENTER_MEMBER_NO = #{centerMemberNo}
+        GROUP BY
+            tv.VOLUN_NO, tv.VOLUN_TITLE, tv.VOLUN_CONTENT, tv.VOLUN_REGIDATE
+    </select>
+
+    <select id="writeInfoAdoptList" parameterType="Long" resultType="WriteInfoAdoptListDTO">
+        SELECT
+            ta.ADOPT_NO,
+            ta.ADOPT_TITLE,
+            ta.ADOPT_CONTENT,
+            ta.ADOPT_REGIDATE,
+            COUNT(tac.ADOPT_COMMENT_NO) AS commentCount,
+            CASE
+                WHEN ta.ADOPT_STATUS = 'T' THEN '모집중'
+                WHEN ta.ADOPT_STATUS = 'F' THEN '마감'
+                END AS adoptStatus
+        FROM
+            TBL_ADOPT ta
+                LEFT JOIN
+            TBL_ADOPT_COMMENT tac ON ta.ADOPT_NO = tac.ADOPT_NO
+        WHERE
+            ta.CENTER_MEMBER_NO = #{cemterMemberNo}
+        GROUP BY
+            ta.ADOPT_NO,
+            ta.ADOPT_TITLE,
+            ta.ADOPT_CONTENT,
+            ta.ADOPT_REGIDATE,
+            ta.ADOPT_STATUS
+        ORDER BY
+            MAX(ta.ADOPT_REGIDATE) DESC,  -- 최신순으로 정렬
+            CASE
+                WHEN ta.ADOPT_STATUS = 'T' THEN 0  -- 모집중은 우선
+                WHEN ta.ADOPT_STATUS = 'F' THEN 1  -- 마감은 뒤로
+                END
     </select>
 
 </mapper>
