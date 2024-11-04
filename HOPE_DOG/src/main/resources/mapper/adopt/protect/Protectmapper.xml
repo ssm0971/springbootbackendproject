@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.adopt.protect.ProtectMapper">
+
+    <!-- 게시글 상세페이지 불러오기 -->
+    <select id="protectDetail" resultType="ProtectDetailDTO">
+        SELECT a.PROTECT_TITLE, c.CENTER_MEMBER_NAME, a.PROTECT_REGIDATE, a.PROTECT_PERIODSTART , a.PROTECT_PERIODEND , a.PROTECT_NAME ,
+               a.PROTECT_BREED , a.PROTECT_NEUTERING , a.PROTECT_GENDER , a.PROTECT_WEIGHT , a.PROTECT_BIRTH , a.PROTECT_INTRODUCE ,
+               a.PROTECT_CONTENT, a.PROTECT_NO, a.CENTER_MEMBER_NO, a.PROTECT_STATUS
+        FROM TBL_PROTECT a JOIN TBL_CENTER_MEMBER c ON a.CENTER_MEMBER_NO = c.CENTER_MEMBER_NO
+        WHERE PROTECT_NO = #{protecttNo}
+    </select>
+
+    <!-- 여기서 부터 페이지네이션 관련 쿼리문-->
+    <!-- 임시보호 전체게시글 수 -->
+    <select id="selectTotal" resultType="int">
+        SELECT COUNT(PROTECT_NO) FROM TBL_PROTECT
+    </select>
+
+    <!-- 임시보호 전체게시글-->
+    <select id="protectMain" resultType="ProtectMainDTO">
+        SELECT PROTECT_NO, PROTECT_TITLE, PROTECT_INTRODUCE, PROTECT_NAME, PROTECT_GENDER,
+               PROTECT_NEUTERING, PROTECT_BIRTH, PROTECT_WEIGHT, PROTECT_REGIDATE,
+               PROTECT_PERIODEND, CENTER_MEMBER_NO, PROTECT_STATUS
+        FROM TBL_PROTECT
+        ORDER BY PROTECT_REGIDATE DESC
+    </select>
+
+
+    <!-- 임시보호 페이지마다 표시할 게시글-->
+    <select id="selectAllPage" parameterType="Criteria" resultType="ProtectMainDTO">
+    <![CDATA[
+        SELECT PROTECT_NO, PROTECT_TITLE, PROTECT_INTRODUCE, PROTECT_NAME, PROTECT_GENDER,
+               PROTECT_NEUTERING, PROTECT_BIRTH, PROTECT_WEIGHT, PROTECT_REGIDATE,
+               PROTECT_PERIODEND, CENTER_MEMBER_NO, PROTECT_STATUS
+        FROM (
+                 SELECT PROTECT_NO, PROTECT_TITLE, PROTECT_INTRODUCE, PROTECT_NAME,
+                        PROTECT_GENDER, PROTECT_NEUTERING, PROTECT_BIRTH, PROTECT_WEIGHT,
+                        PROTECT_REGIDATE, PROTECT_PERIODEND, CENTER_MEMBER_NO, PROTECT_STATUS,
+                        ROWNUM AS RNUM
+                 FROM (
+                          SELECT PROTECT_NO, PROTECT_TITLE, PROTECT_INTRODUCE, PROTECT_NAME,
+                                 PROTECT_GENDER, PROTECT_NEUTERING, PROTECT_BIRTH, PROTECT_WEIGHT,
+                                 PROTECT_REGIDATE, PROTECT_PERIODEND, CENTER_MEMBER_NO, PROTECT_STATUS
+                          FROM TBL_PROTECT
+                          ORDER BY PROTECT_REGIDATE DESC
+                      )
+             )
+        WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount}
+        ]]>
+</select>
+    <!-- 여기까지 페이지네이션+게시글목록불러오기 -->
+
+
+    <!-- 임시보호 진행중인 전체게시글 수 -->
+    <select id="selectTotalKeep" resultType="int">
+        SELECT COUNT(PROTECT_NO) FROM TBL_PROTECT WHERE PROTECT_STATUS = 'T'
+    </select>
+
+    <!-- 임시보호 모집중인 게시글-->
+    <select id="protectMainKeep" resultType="ProtectMainDTO">
+        SELECT PROTECT_NO, PROTECT_TITLE, PROTECT_INTRODUCE, PROTECT_NAME, PROTECT_GENDER,
+               PROTECT_NEUTERING, PROTECT_BIRTH, PROTECT_WEIGHT, PROTECT_REGIDATE,
+               PROTECT_PERIODEND, CENTER_MEMBER_NO, PROTECT_STATUS
+        FROM TBL_PROTECT
+        WHERE PROTECT_STATUS = 'T'
+        ORDER BY PROTECT_REGIDATE DESC
+    </select>
+
+
+    <!-- 임시보호 모집중 페이지마다 표시할 게시글-->
+    <select id="selectAllPageKeep" parameterType="Criteria" resultType="ProtectMainDTO">
+    <![CDATA[
+        SELECT PROTECT_NO, PROTECT_TITLE, PROTECT_INTRODUCE, PROTECT_NAME, PROTECT_GENDER,
+               PROTECT_NEUTERING, PROTECT_BIRTH, PROTECT_WEIGHT, PROTECT_REGIDATE,
+               PROTECT_PERIODEND, CENTER_MEMBER_NO, PROTECT_STATUS
+        FROM (
+                 SELECT PROTECT_NO, PROTECT_TITLE, PROTECT_INTRODUCE, PROTECT_NAME,
+                        PROTECT_GENDER, PROTECT_NEUTERING, PROTECT_BIRTH, PROTECT_WEIGHT,
+                        PROTECT_REGIDATE, PROTECT_PERIODEND, CENTER_MEMBER_NO, PROTECT_STATUS,
+                        ROWNUM AS RNUM
+                 FROM (
+                          SELECT PROTECT_NO, PROTECT_TITLE, PROTECT_INTRODUCE, PROTECT_NAME,
+                                 PROTECT_GENDER, PROTECT_NEUTERING, PROTECT_BIRTH, PROTECT_WEIGHT,
+                                 PROTECT_REGIDATE, PROTECT_PERIODEND, CENTER_MEMBER_NO, PROTECT_STATUS
+                          FROM TBL_PROTECT
+                          ORDER BY PROTECT_REGIDATE DESC
+                      )
+             )
+        WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount} AND PROTECT_STATUS = 'T'
+        ]]>
+</select>
+    <!-- 여기까지 페이지네이션+게시글목록불러오기 -->
+
+
+
+    <!-- 게시글 작성 -->
+    <insert id="protectWrite" parameterType="ProtectWriteDTO">
+        <selectKey keyProperty="protectNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_PROTECT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_PROTECT (
+        PROTECT_NO, PROTECT_PERIODSTART, PROTECT_PERIODEND, PROTECT_NAME,
+        PROTECT_BREED, PROTECT_NEUTERING, PROTECT_GENDER, PROTECT_WEIGHT,
+        PROTECT_BIRTH, PROTECT_INTRODUCE, PROTECT_TITLE, PROTECT_CONTENT, CENTER_MEMBER_NO
+        ) VALUES (
+        #{protectNo}, #{protectPeriodstart}, #{protectPeriodend}, #{protectName},
+        #{protectBreed}, #{protectNeutering}, #{protectGender}, #{protectWeight},
+        #{protectBirth}, #{protectIntroduce}, #{protectTitle}, #{protectContent}, #{centerMemberNo}
+        )
+    </insert>
+
+    <!-- 게시글 마감 처리 -->
+    <update id="protectEnd" parameterType="ProtectDetailDTO">
+        UPDATE TBL_PROTECT
+        SET PROTECT_STATUS = 'F'
+        WHERE PROTECT_NO = #{protectNo}
+    </update>
+
+
+    <!-- 게시글 삭제 처리 -->
+    <delete id="protectDelete" parameterType="ProtectDetailDTO">
+        DELETE FROM TBL_PROTECT
+        WHERE PROTECT_NO = #{protectNo}
+    </delete>
+
+    <!-- 게시글 신고 처리 -->
+    <insert id="protectContentReport" parameterType="ProtectReportDTO">
+        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_REPORT (
+        REPORT_NO, REPORT_CATE, REPORT_CONTENT, REPORT_WRITER, REPORT_CONTENT_NO
+        ) VALUES (
+        #{reportNo}, '임시보호', #{reportContent}, #{reportWriter},#{reportContentNo}
+        )
+    </insert>
+
+    <!-- 댓글불러오기 -->
+    <select id="protectComment" parameterType="Long" resultType="ProtectCommentDTO">
+        SELECT
+            ac.PROTECT_COMMENT_NO,
+            ac.PROTECT_COMMENT,
+            ac.PROTECT_COMMENT_REGIDATE,
+            ac.PROTECT_COMMENT_WRITER,
+            CASE
+                WHEN MOD(ac.PROTECT_COMMENT_WRITER, 10) = 1 THEN m.MEMBER_NAME
+                WHEN MOD(ac.PROTECT_COMMENT_WRITER, 10) = 2 THEN cm.CENTER_MEMBER_NAME
+                END AS COMMENT_WRITER_NAME
+        FROM
+            TBL_PROTECT_COMMENT ac
+                LEFT JOIN
+            TBL_MEMBER m ON MOD(ac.PROTECT_COMMENT_WRITER, 10) = 1 AND ac.PROTECT_COMMENT_WRITER = m.MEMBER_NO
+                LEFT JOIN
+            TBL_CENTER_MEMBER cm ON MOD(ac.PROTECT_COMMENT_WRITER, 10) = 2 AND ac.PROTECT_COMMENT_WRITER = cm.CENTER_MEMBER_NO
+        WHERE
+            ac.PROTECT_NO = #{adoptNo}
+    </select>
+
+    <!-- 댓글 등록 -->
+    <insert id="protectCommentRegi" parameterType="ProtectCommentDTO">
+        <selectKey keyProperty="protectCommentNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_PROTECT_COMMENT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_PROTECT_COMMENT (
+        PROTECT_COMMENT_NO, PROTECT_COMMENT, PROTECT_COMMENT_WRITER, PROTECT_NO
+        ) VALUES (
+        #{protectCommentNo}, #{protectComment}, #{protectCommentWriter}, #{protectNo}
+        )
+    </insert>
+
+    <!-- 댓글 수정 -->
+    <update id="protectCommentModi" parameterType="ProtectCommentDTO">
+        UPDATE TBL_PROTECT_COMMENT
+        SET PROTECT_COMMENT = #{protectComment}
+        WHERE PROTECT_COMMENT_WRITER = #{protectCommentWriter} AND PROTECT_COMMENT_NO = #{protectCommentNo} AND PROTECT_NO = #{protectNo}
+    </update>
+
+    <!-- 댓글 삭제 -->
+    <delete id="protectCommentDelete" parameterType="ProtectCommentDTO">
+        DELETE FROM TBL_PROTECT_COMMENT
+        WHERE PROTECT_COMMENT_WRITER = #{protectCommentWriter} AND PROTECT_COMMENT_NO = #{protectCommentNo} AND PROTECT_NO = #{protectNo}
+    </delete>
+
+    <!-- 댓글 신고 (이거도 아가다가 만든거야 헤헤)-->
+    <!--    <insert id="adoptCommentReport" parameterType="AdoptReportDTO">-->
+    <!--        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">-->
+    <!--            SELECT SEQ_REPORT.NEXTVAL FROM DUAL-->
+    <!--        </selectKey>-->
+    <!--        INSERT INTO TBL_REPORT (-->
+    <!--        REPORT_NO, REPORT_CATE, REPORT_CONTENT, REPORT_WRITER, REPORT_CONTENT_NO-->
+    <!--        ) VALUES (-->
+    <!--        #{reportNo}, '임시보호', #{reportContent}, #{reportWriter},#{reportContentNo}-->
+    <!--        )-->
+    <!--    </insert>-->
+
+    <!-- 댓글 신고 처리 -->
+    <insert id="protectCommentReport" parameterType="ProtectReportDTO">
+        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_COMMENT_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_COMMENT_REPORT (
+        COMMENT_REPORT_NO, COMMENT_REPORT_CATE, COMMENT_REPORT, COMMENT_REPORT_WRITER, COMMENT_NO, CONTENT_NO
+        ) VALUES (
+        #{reportNo}, '임시보호', #{reportComment}, #{reportWriter},#{reportCommentNo}, #{reportContentNo}
+        )
+    </insert>
+
+    <!-- 임시보호신청서 등록 -->
+    <insert id="protectRequest" parameterType="ProtectRequestDTO">
+        <selectKey keyProperty="protectRequestNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_PROTECT_REQUEST.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_PROTECT_REQUEST (
+        PROTECT_REQUEST_NO,
+        PROTECT_REQUEST_NAME,
+        PROTECT_REQUEST_PHONE,
+        PROTECT_REQUEST_PHONE_SUB,
+        PROTECT_REQUEST_EMAIL,
+        PROTECT_REQUEST_GENDER,
+        PROTECT_REQUEST_AGE,
+        PROTECT_REQUEST_ZIPCODE,
+        PROTECT_REQUEST_ADDRESS,
+        PROTECT_REQUEST_ADDRESS_DETAIL,
+        PROTECT_REQUEST_JOB,
+        PROTECT_REQUEST_MARRY,
+        PROTECT_REQUEST_INFO_AGREEMENT,
+        PRO_REQUEST_Q1,
+        PRO_REQUEST_Q2,
+        PRO_REQUEST_Q3,
+        PRO_REQUEST_Q4,
+        PRO_REQUEST_Q5,
+        PRO_REQUEST_Q6,
+        PRO_REQUEST_Q7,
+        PRO_REQUEST_Q8,
+        PRO_REQUEST_Q9,
+        PRO_REQUEST_Q10,
+        PRO_REQUEST_Q11,
+        PRO_REQUEST_Q12,
+        PRO_REQUEST_Q13,
+        PRO_REQUEST_Q14,
+        PRO_REQUEST_Q15,
+        PROTECT_REQUEST_AGREEMENT,
+        PROTECT_NO,
+        MEMBER_NO,
+        CENTER_MEMBER_NO
+        ) VALUES (
+        #{protectRequestNo},
+        #{protectRequestName},
+        #{protectRequestPhone},
+        #{protectRequestPhoneSub},
+        #{protectRequestEmail},
+        #{protectRequestGender},
+        #{protectRequestAge},
+        #{protectRequestZipcode},
+        #{protectRequestAddress},
+        #{protectRequestAddressDetail},
+        #{protectRequestJob},
+        #{protectRequestMarry},
+        #{protectRequestInfoAgreement},
+        #{proRequestQ1},
+        #{proRequestQ2},
+        #{proRequestQ3},
+        #{proRequestQ4},
+        #{proRequestQ5},
+        #{proRequestQ6},
+        #{proRequestQ7},
+        #{proRequestQ8},
+        #{proRequestQ9},
+        #{proRequestQ10},
+        #{proRequestQ11},
+        #{proRequestQ12},
+        #{proRequestQ13},
+        #{proRequestQ14},
+        #{proRequestQ15},
+        #{protectRequestAgreement},
+        #{protectNo},
+        #{memberNo},
+        #{centerMemberNo}
+        )
+    </insert>
+</mapper>

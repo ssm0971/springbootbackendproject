@@ -68,7 +68,7 @@
                 <!-- Data rows -->
                 <div th:each="post, iterStat : ${postList}" class="info-row" >
                   <div class="info-cell checkbox-line">
-                    <input type="checkbox" class="checkbox" name="check">
+                    <input type="checkbox" class="checkbox" name="check" th:data-post-no="${post.postNo}" th:data-post-type="${post.postType}">
                   </div>
                   <a style="display: flex; justify-content: center" th:href="@{/admin/postDetail(postType=${post.postType}, postNo=${post.postNo})}">
                     <div class="info-cell info-cell-no" th:text="${post.postNo}"></div>
@@ -99,4 +99,5 @@
 </body>
 <script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
 <script th:src="@{/js/admin/allCheck.js}"></script>
+<script th:src="@{/js/admin/deletePost.js}"></script>
 </html>

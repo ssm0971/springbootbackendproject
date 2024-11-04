@@ -3,6 +3,8 @@ package com.example.hope_dog.service.mypage;
 import com.example.hope_dog.dto.adopt.adopt.MainDTO;
 import com.example.hope_dog.dto.member.MemberSessionDTO;
 import com.example.hope_dog.dto.mypage.*;
+import com.example.hope_dog.dto.notice.NoticeListDTO;
+import com.example.hope_dog.dto.page.Criteria;
 import com.example.hope_dog.mapper.member.MemberMapper;
 import com.example.hope_dog.mapper.mypage.MypageMapper;
 import lombok.RequiredArgsConstructor;
@@ -44,16 +46,31 @@ public class MypageService {
     public List<MypagePostsDTO> getMypagePostsProfile(Long memberNo) {
         return mypageMapper.mypagePostsList(memberNo);
     }
+//
+//    //noteR
+//    public List<MypageNoteReceiveDTO> getMypageNoteReceiveProfile(Long memberNo) {
+//        return mypageMapper.mypageNoteReceiveList(memberNo);
+//    }
+//
+//    //noteS
+//    public List<MypageNoteSendDTO> getMypageNoteSendProfile(Long memberNo) {
+//        return mypageMapper.mypageNoteSendList(memberNo);
+//    }
 
-    //noteR
-    public List<MypageNoteReceiveDTO> getMypageNoteReceiveProfile(Long memberNo) {
-        return mypageMapper.mypageNoteReceiveList(memberNo);
-    }
+    // 페이지네이션
+//    public List<MypagePostsDTO> findAll() {
+//        return mypageMapper.selectAll();
+//    }
+//
+//    public int findTotal(){
+//        return mypageMapper.selectTotal();
+//    }
+//
+//    public List<MypagePostsDTO> findAllPage(Criteria criteria) {
+//        return mypageMapper.selectAllPage(criteria);
+//    }
 
-    //noteS
-    public List<MypageNoteSendDTO> getMypageNoteSendProfile(Long memberNo) {
-        return mypageMapper.mypageNoteSendList(memberNo);
-    }
+
 
     // 프로필 조회
 //    public MypageDTO getMypageProfile(String memberId) {

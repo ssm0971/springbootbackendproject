@@ -13,89 +13,54 @@
 </head>
 
 <body>
-  <div>
-    <div class="info-title-box info-title-box-flex">
-      <div class="logo-box-layout">
-        <div class="logo-box">
-          <img src="../../../img/logo.jpg">
-        </div>
-      </div>
-      <div>
-        <div class="select-name">
-          <span>회원 관리</span>
-        </div>
+<div>
+  <div class="info-title-box info-title-box-flex">
+    <div class="logo-box-layout">
+      <div class="logo-box">
+        <img src="../../../img/logo.jpg">
       </div>
     </div>
-    <div class="wrap">
-
-      <!-- 사이드 바 -->
-            <th:block th:replace="~{admin/admin-main/admin-sidemenu :: sidemenu}"></th:block>
-
-      <div class="container">
-        <div class="container-margin">
-          <!-- 내용 섹션 -->
-          <div class="note-wrap">
-            <div class="note-title">
-              <h1>받은 쪽지</h1>
-            </div>
-            <form method="get">
-              <div class="note-write-wrap">
-                <div class="note-write">
-                  <div class="note-title">
-                    <input readonly ="note-board-title" name="notbTitle" type="text" placeholder="제목" />
-                  </div>
-                  <div class="note-title">
-                    <input readonly ="note-board-title" name="notbTitle" type="text" placeholder="수신자" />
-                  </div>
-                  <div class="note-cont">
-                    <textarea readonly id="note-board-content" name="notbContent" inputmode="text" placeholder="내용을 입력하세요">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi suscipit lectus in consectetur lobortis. Integer justo orci, fringilla vel congue non, tincidunt luctus ante. Proin ut porttitor diam. Cras arcu magna, varius et metus et, viverra ornare felis. Suspendisse faucibus ut nibh ac malesuada. Mauris eget pulvinar urna, fringilla cursus lorem. Aenean hendrerit est quis accumsan facilisis.</textarea>
-                  </div>
-                </div>
-              </div>
-              <div class="volun-admain-btuall">
-                <button class="volun-admain-btu" type="button">
-                  <a href="../../html/mypage/mypage-inbox.html"><span class="volun-admain-btu-sp">이전</span></a>
-                </button>
-                <button class="volun-admain-btu" type="button">
-                  <a href="#"><span class="volun-admain-btu-sp">보내기</span></a>
-                </button>
-              </div>
-            </form>
-          </div>
-
-
-          <!-- 페이지 버튼 -->
-          <div class="page-button-box-layout">
-            <div class="page-button-box">
-              <!-- 페이지 번호 -->
-              <div class="">
-                <div class="page-button-margin">
-                  <div>
-                    <img src="/im/admin/left_icon.png" class="left-button">
-                  </div>
-                </div>
-              </div>
-              <th:block th:each="num : ${#numbers.sequence(pageDTO.startPage, pageDTO.endPage + 1)}">
-                <a th:class="${(num == pageDTO.startPage) ? 'page-button-active page-button changePage' : 'page-button changePage'}"
-                  th:href="${num}">
-                  <span class="page-button" th:text="${num}"></span>
-                </a>
-                <div style="width: 2px;"></div>
-              </th:block>
-              <div class="">
-                <div class="page-button-margin">
-                  <div>
-                    <img src="/im/admin/right_icon.png" class="right-button">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 페이지 버튼 끝 -->
-        </div>
+    <div>
+      <div class="select-name">
+        <span>회원 관리</span>
       </div>
     </div>
   </div>
+  <div class="wrap">
+
+    <!-- 사이드 바 -->
+    <th:block th:replace="~{admin/admin-main/admin-sidemenu :: sidemenu}"></th:block>
+
+    <div class="container">
+      <div class="container-margin">
+        <!-- 내용 섹션 -->
+        <div class="note-wrap">
+          <div class="note-title">
+            <h1>보낸 쪽지</h1>
+          </div>
+          <form method="get">
+            <div class="note-write-wrap">
+              <div class="note-write">
+                <div class="note-title">
+                  <input readonly class="note-board-title" name="notebTitle" type="text" th:value="${noteSend.noteboxSendTitle}" />
+                </div>
+                <div class="note-title note-title-sr">
+                  <input readonly class="note-board-receiver" name="notebTitle" type="text" style="width: 40%" th:value="관리자" />
+                  <input readonly class="note-board-sender" name="notebTitle" type="text" style="width: 40%" th:value="${noteSend.noteboxSendRname}" />
+                </div>
+
+                <div class="note-cont">
+                  <textarea readonly id="note-board-content" name="notbContent" inputmode="text" th:text="${noteSend.noteboxSendContent}"></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 <script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
 <script th:src="@{/js/admin/allCheck.js}"></script>

@@ -5,9 +5,11 @@ import com.example.hope_dog.dto.centermypage.CenterUpdateProfileDTO;
 import com.example.hope_dog.dto.centermypage.CenterViewProfileDTO;
 import com.example.hope_dog.mapper.centermypage.CenterMypageMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -22,6 +24,18 @@ public class CenterMypageService {
     // 프로필 조회
     public CenterViewProfileDTO getCenterViewProfile(Long centerMemberNo) {
         return centerMypageMapper.viewProfile(centerMemberNo);
+    }
+
+    // 이메일 중복체크
+    public boolean updateCheckCenterEmail(String newEmail, String currentEmail) {
+        // 입력한 이메일이 현재 이메일과 같다면 중복 검사 없이 사용 가능으로 처리
+        if (newEmail.equals(currentEmail)) {
+            return true;  // 중복 검사 없이 사용 가능
+        }
+
+        // 입력한 이메일이 현재 이메일과 다를 때만 중복 체크 수행
+        int count = centerMypageMapper.updateCheckCenterEmail(newEmail, currentEmail);
+        return count == 0;  // 중복된 이메일이 없으면 true 반환, 중복되면 false 반환
     }
 
 

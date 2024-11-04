@@ -8,6 +8,7 @@
   <link rel="stylesheet" th:href="@{/css/centermypage/center-mypage-writeinfo.css}">
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
 </head>
 
 <body>
@@ -72,22 +73,24 @@
       </ul>
     </div>
   </div>
+
   <!-- 페이지네이션 -->
-  <div class="pagination">
-    <button class="prev">◀</button>
-    <button class="page">1</button>
-    <button class="page">2</button>
-    <button class="page">3</button>
-    <button class="page">4</button>
-    <button class="page">5</button>
-    <button class="next">▶</button>
-  </div>
-
-
+  <div id="pagination" class="pagination"></div>
+  <!--  <div class="pagination">-->
+  <!--    <button class="prev">◀</button>-->
+  <!--    <button class="page">1</button>-->
+  <!--    <button class="page">2</button>-->
+  <!--    <button class="page">3</button>-->
+  <!--    <button class="page">4</button>-->
+  <!--    <button class="page">5</button>-->
+  <!--    <button class="next">▶</button>-->
+  <!--  </div>-->
+  
 </main>
 
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 
 </body>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </html>

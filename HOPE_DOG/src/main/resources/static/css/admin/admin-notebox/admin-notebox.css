@@ -242,7 +242,6 @@ div#paging-wrap {
 
 .info-cell-title {
 	width: 200px;
-    flex-grow: 1;
 }
 
 .info-cell-nickname {
@@ -250,8 +249,7 @@ div#paging-wrap {
 }
 
 .info-cell-content {
-	width: 200px;
-	flex-grow: 7;
+	width: 640px;
 }
 
 .checkbox-line {
@@ -276,4 +274,8 @@ div#paging-wrap {
 .notebox-btn:hover{
   color: white;
   background-color: #9B805D;
+}
+
+.active{
+	background-color: #F5EAD9;
 }

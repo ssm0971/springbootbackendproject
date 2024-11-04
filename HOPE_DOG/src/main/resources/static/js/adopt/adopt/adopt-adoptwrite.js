@@ -66,16 +66,17 @@ function cancleClick() {
 
 // 썸머노트 크기 및 튜닝
 $(function () {
+  const maxLength = 1000;
+
   $("#contents").summernote({
     width: 780,                   // 가로값 설정
-    minHeight: 500,              // 높이값 설정
+    minHeight: 500,               // 높이값 설정
     maxHeight: 500,
     placeholder: "내용을 입력해주세요", // 안내 문구 설정
-    disableDrageAndDrop: true,   // 드래그
+    disableDrageAndDrop: true,    // 드래그 비활성화
     focus: true,                  // 초기화 후 커서가 편집 가능한 영역에 포커스를 맞춤
-    lang: 'ko-KR',                // 한글 설정, 기본값은 'en-US'
+    lang: 'ko-KR',                // 한글 설정
     toolbar: [
-      // [groupName, [list of button]],
       ['insert', ['picture']],
       ['fontSize', ['fontsize']],
       ['fontName', ['fontname']],
@@ -87,25 +88,29 @@ $(function () {
       ['view', ['fullscreen', 'codeview', 'help']]
     ],
     callbacks: {
-      onBlur: function() {
-        var contents = $('#contents').summernote('code'); // 현재 내용 가져오기
-        var editorText = f_SkipTags_html(contents); // HTML 태그 제거 함수 호출
-        editorText = editorText.replace(/\s/gi, ""); // 줄바꿈 제거
-        editorText = editorText.replace(/&nbsp;/gi, ""); // 공백 제거
+      onKeyup: function(e) {
+        // 현재 입력된 HTML 내용 가져오기
+        const contents = $('#contents').summernote('code');
 
-        // 수정된 내용을 다시 summernote에 설정 (필요에 따라)
-        $('#contents').summernote('code', editorText);
+        // HTML 태그를 제외하고 텍스트만 추출하여 길이 확인
+        const textOnly = $('<div>').html(contents).text();
+
+        // 글자 수가 제한을 초과했을 때
+        if (textOnly.length > maxLength) {
+          alert(`최대 ${maxLength}자까지 입력할 수 있습니다.`);
+
+          // 텍스트 길이를 제한하여 자르고 HTML 구조 복원
+          const trimmedText = textOnly.substring(0, maxLength);
+
+          // 자른 텍스트를 다시 HTML 구조에 맞춰 설정
+          const trimmedHTMLContent = $('<div>').text(trimmedText).html();
+          $('#contents').summernote('code', trimmedHTMLContent);
+        }
       }
     }
   });
 });
 
-// HTML 태그를 제거하는 함수 (예시)
-function f_SkipTags_html(html) {
-  var tempDiv = document.createElement("div");
-  tempDiv.innerHTML = html;
-  return tempDiv.innerText || tempDiv.textContent || "";
-}
 
 
 {
@@ -145,3 +150,4 @@ function f_SkipTags_html(html) {
   // 폼 제출 (필요한 경우)
   document.getElementById('adoptForm').submit();
 }
+

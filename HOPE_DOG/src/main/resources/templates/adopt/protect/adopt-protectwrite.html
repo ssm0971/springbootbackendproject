@@ -22,110 +22,109 @@
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <!-- 입양 후기 메인 크기 -->
-    <div class="protect-main-size">
-      <!-- 입양/임보/후기 게시판 바 -->
-      <div class="protect-nav">
-        <div class="protect-navList" id="adoptPage">안심입양</div>
-        <div class="protect-navList" id="protectPage">임시보호</div>
-        <div class="protect-navList" id="reviewPage">후기</div>
+<main>
+  <!-- 입양 메인 크기 -->
+  <div class="adopt-main-size">
+    <!-- 입양/임보/후기 게시판 바 -->
+    <div class="adopt-nav">
+      <div class="adopt-navList" id="adoptPage">안심입양</div>
+      <div class="adopt-navList" id="protectPage">임시보호</div>
+      <div class="adopt-navList" id="reviewPage">후기</div>
+    </div>
+
+    <!-- 입양신청 글 등록 -->
+    <div class="adopt-wirtebanner">안심입양 등록</div>
+
+    <br>
+
+    <!-- 글작성 박스 -->
+    <form th:action="@{/adopt/protect/protectWriteRegi}" method="post">
+      <div class="adopt-write-area">
+        <br>
+        <!-- 임시보호 기간 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*입양 기한</div>
+          시작일 : 　<input class="adopt-write-period" type="date" name="protectPeriodstart">　　
+          종료일 : 　<input class="adopt-write-period" type="date" name="protectPeriodend">
+        </div>
+        <input th:value="${centerMemberNo}" style="display: none" name="centerMemberNo">
+        <!-- 이름입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*이름</div>
+          <input class="adopt-write-breed" type="text" id="nameInput" onblur="checkNameInput()" name="protectName">　　
+        </div>
+        <!-- 이름 미입력 에러메세지 -->
+        <div class="breadError">
+          <div class="adopt-write-subtitle" id="nameError2" style="display: none;"></div>
+          <div id="nameError" style="color: red; display: none;">이름을 입력해주세요</div>
+        </div>
+        <!-- 견종입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*견종</div>
+          <input class="adopt-write-breed" type="text" id="breedInput" onblur="checkBreedInput()" name="protectBreed">　　
+        </div>
+        <!-- 견종 미입력 에러메세지 -->
+        <div class="breadError">
+          <div class="adopt-write-subtitle" id="breadError2" style="display: none;"></div>
+          <div id="breadError" style="color: red; display: none;">견종을 입력해주세요</div>
+        </div>
+        <!-- 중성화 여부 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*중성화 여부</div>
+          <input class="adopt-write-sterilization" type="radio" name="protectNeutering" value="Y" checked>네　
+          <input class="adopt-write-sterilization" type="radio" name="protectNeutering" value="N">아니요
+        </div>
+        <!-- 성별 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*성별</div>
+          <input class="adopt-write-gender" type="radio" name="protectGender" value="M" checked> 남　
+          <input class="adopt-write-gender" type="radio" name="protectGender" value="F"> 여
+        </div>
+        <!-- 몸무게 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*몸무게</div>
+          <input class="adopt-write-weight" type="text" id="weightInput" onblur="checkWeightInput()" name="protectWeight">　　
+        </div>
+        <!-- 몸무게 미입력 에러메세지 -->
+        <div class="weightError">
+          <div class="adopt-write-subtitle" id="weightError2" style="display: none;"></div>
+          <div id="weightError" style="color: red; display: none;">몸무게를 입력해주세요</div>
+        </div>
+        <!-- 생년월일 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*생년월일</div><input class="adopt-write-birth" type="date" name="protectBirth">
+          <div class="adopt-brirth-ex">　*정확한 생년월일을 모를 시 예상 생년월일을 선택해주세요</div>
+        </div>
+        <!-- 한줄소개 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*한줄소개</div>
+          <input class="adopt-write-introduce" type="text" id="introduceInput" onblur="checkIntroduceInput()"
+                 placeholder="ex)애교가 많아요~" name="protectIntroduce">　　
+        </div>
+        <!-- 한줄소개 미입력 에러메세지 -->
+        <div class="introduceError">
+          <div class="adopt-write-subtitle" id="introduceError2" style="display: none;"></div>
+          <div id="introduceError" style="color: red; display: none;">한줄소개를 입력해주세요</div>
+        </div>
+
+        <br><br>
+
+        <!-- 썸머노트 -->
+        <div class="content">
+          <input id="subject" name="protectTitle" class="adoptwrite-title" placeholder="제목을 입력해주세요">
+          <textarea id="contents" name="protectContent" maxlength="100"></textarea>
+        </div>
+
+        <!-- 등록/취소 버튼 -->
+        <div class="adopt-write-button-box">
+          <button class="adopt-write-button" type="submit">등록</button>
+          <button class="adopt-cancle-button" type="button" onclick="cancleClick()">취소</button>
+        </div>
       </div>
+    </form>
 
-      <!-- 임시보호 글 등록 -->
-      <div class="protect-wirtebanner">임시보호 등록</div>
 
-      <br>
-
-      <!-- 글작성 박스 -->
-      <div class="protect-write-area">
-        <form action="링크" method="post">
-          <br>
-          <!-- 임시보호 기간 입력 -->
-          <div class="protect-write-box">
-            <div class="protect-write-subtitle">*임시보호 기한</div>
-            시작일 : 　<input type="date" name="start-date">　　
-            종료일 : 　<input type="date" name="end-date">
-          </div>
-          <!-- 이름입력 -->
-          <div class="protect-write-box">
-            <div class="protect-write-subtitle">*이름</div>
-            <input class="adopt-write-breed" type="text" id="nameInput" onblur="checkNameInput()">　　
-          </div>
-          <!-- 이름 미입력 에러메세지 -->
-          <div class="breadError">
-            <div class="protect-write-subtitle" id="nameError2" style="display: none;"></div>
-            <div id="nameError" style="color: red; display: none;">이름을 입력해주세요</div>
-          </div>
-          <!-- 견종입력 -->
-          <div class="protect-write-box">
-            <div class="protect-write-subtitle">*견종</div>
-            <input class="adopt-write-breed" type="text" id="breedInput" onblur="checkBreedInput()">　　
-          </div>
-          <!-- 견종 미입력 에러메세지 -->
-          <div class="breadError">
-            <div class="protect-write-subtitle" id="breadError2" style="display: none;"></div>
-            <div id="breadError" style="color: red; display: none;">견종을 입력해주세요</div>
-          </div>
-          <!-- 중성화 여부 입력 -->
-          <div class="protect-write-box">
-            <div class="protect-write-subtitle">*중성화 여부</div>
-            <input class="protect-write-sterilization" type="radio" name="sterilization" value="O" checked>네　
-            <input class="protect-write-sterilization" type="radio" name="sterilization" value="X">아니요
-          </div>
-          <!-- 성별 입력 -->
-          <div class="protect-write-box">
-            <div class="protect-write-subtitle">*성별</div>
-            <input class="protect-write-gender" type="radio" name="gender" value="male" checked> 남　
-            <input class="protect-write-gender" type="radio" name="gender" value="female"> 여
-          </div>
-          <!-- 몸무게 입력 -->
-          <div class="protect-write-box">
-            <div class="protect-write-subtitle">*몸무게</div>
-            <input class="adopt-write-weight" type="text" id="weightInput" onblur="checkWeightInput()">　　
-          </div>
-          <!-- 몸무게 미입력 에러메세지 -->
-          <div class="weightError">
-            <div class="protect-write-subtitle" id="weightError2" style="display: none;"></div>
-            <div id="weightError" style="color: red; display: none;">몸무게를 입력해주세요</div>
-          </div>
-          <!-- 생년월일 입력 -->
-          <div class="protect-write-box">
-            <div class="protect-write-subtitle">*생년월일</div><input class="protect-write-birth" type="date">
-            <div class="protect-brirth-ex">　*정확한 생년월일을 모를 시 예상 생년월일을 선택해주세요</div>
-          </div>
-          <!-- 한줄소개 입력 -->
-          <div class="protect-write-box">
-            <div class="protect-write-subtitle">*한줄소개</div>
-            <input class="protect-write-introduce" type="text" id="introduceInput" onblur="checkIntroduceInput()"
-              placeholder="ex)애교가 많아요~">　　
-          </div>
-          <!-- 한줄소개 미입력 에러메세지 -->
-          <div class="introduceError">
-            <div class="protect-write-subtitle" id="introduceError2" style="display: none;"></div>
-            <div id="introduceError" style="color: red; display: none;">한줄소개를 입력해주세요</div>
-          </div>
-
-          <br><br>
-          
-          <!-- 썸머노트 -->
-          <div class="content">
-            <form method="post" action="">
-              <input id="subject" name="subject" class="adoptwrite-title" placeholder="제목을 입력해주세요">
-              <textarea id="contents" name="contents"></textarea>
-            </form>
-          </div>
-
-          <!-- 등록/취소 버튼 -->
-          <div class="protect-write-button-box">
-            <a href="../../html/adopt/adopt-protectdetail.html">
-            <button class="protect-write-button" type="button">등록</button>
-          </a>
-            <button class="protect-cancle-button" type="button" onclick="cancleClick()">취소</button>
-          </div>
-        </form>
-      </div>
-  </main>
+</main>
 
 </body>
 

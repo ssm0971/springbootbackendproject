@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>마이페이지-받은쪽지</title>
+  <title>마이페이지-보낸쪽지</title>
   <link rel="stylesheet" th:href="@{/css/mypage/mypage-notebox-detail.css}" />
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
@@ -36,26 +36,25 @@
             <div class="note-title">
               <h1>쪽지</h1>
             </div>
-            <form method="get">
               <div class="note-write-wrap">
                 <div class="note-write">
-                  <div class="note-title" th:text="${noteboxReceiveDetail.noteboxReceiveTitle}">제목</div>
-                  <div class="note-title" th:text="${noteboxReceiveDetail.noteboxSenderName}">닉네임</div>
-                  <div class="note-cont" th:text="${noteboxReceiveDetail.noteboxReceiveRegiDate}">시간</div><br>
-                  <div class="note-cont" th:text="${noteboxReceiveDetail.noteboxReceiveContent}">내용</div>
-              </div>
+                  <div class="noteboxSendNo" th:text="${mpNoteboxSendDetail.noteboxSendNo}" style="display: none;"></div>
+                  <div class="note-title" th:text="${mpNoteboxSendDetail.noteboxSendTitle}">제목</div>
+                  <div class="note-title" th:text="${mpNoteboxSendDetail.noteboxReceiverName}">닉네임</div>
+                  <div class="note-cont" th:text="${mpNoteboxSendDetail.noteboxSendRegiDate}">시간</div><br>
+                  <div class="note-cont" th:text="${mpNoteboxSendDetail.noteboxSendContent}">내용</div>
+                </div>
               </div>
               <div class="notebox-admain-btuall">
-<!--                <a th:href="@{/mypage/inbox}"></a>-->
-                <a href="../../html/mypage/mypage-nbbnvinbox.html">
-                <button class="notebox-admain-btu" type="button">
-                  <span class="notebox-admain-btu-sp">이전</span>
-                </button></a>
-                <button class="notebox-admain-btu" type="button">
-                  <a href="../../html/mypage/mypage-notebox-write.html"><span class="notebox-admain-btu-sp">답장하기</span></a>
-                </button>
+                <a th:href="@{/mypage/noteboxSendList}">
+                  <button class="notebox-admain-btu" type="button">
+                    <span class="notebox-admain-btu-sp">이전</span>
+                  </button>
+                </a>
+<!--                <button class="notebox-admain-btu" type="button">-->
+<!--                  <a href="#"><span class="notebox-admain-btu-sp">답장하기</span></a>-->
+<!--                </button>-->
               </div>
-            </form>
           </div>
 
 

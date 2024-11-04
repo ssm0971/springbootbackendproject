@@ -16,6 +16,21 @@
         WHERE CENTER_MEMBER_NO = #{centerMemberNo}
     </select>
 
+    <select id="checkCenterEmail" resultType="int">
+        SELECT COUNT(*)
+        FROM (
+                 SELECT CENTER_MEMBER_EMAIL
+                 FROM TBL_CENTER_MEMBER
+                 WHERE CENTER_MEMBER_EMAIL = #{centerMemberEmail}
+                   AND CENTER_MEMBER_EMAIL != #{currentEmail}  -- 현재 이메일 제외
+                 UNION ALL
+                 SELECT MEMBER_EMAIL
+                 FROM TBL_MEMBER
+                 WHERE MEMBER_EMAIL = #{centerMemberEmail}
+                   AND MEMBER_EMAIL != #{currentEmail}  -- 현재 이메일 제외
+             )
+    </select>
+
     <!-- 센터회원정보 수정 -->
 <!--    <update id="centerProfileUpdate" parameterType="CenterUpdateProfileDTO">-->
 <!--    <![CDATA[-->

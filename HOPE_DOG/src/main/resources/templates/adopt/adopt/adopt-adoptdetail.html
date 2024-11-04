@@ -27,7 +27,7 @@
       <div class="adopt-detail-box1" th:each="adopt : ${adoptDetailList}">
         <div class="adopt-detail-title" th:text="${adopt.adoptTitle}"></div>
         <div class="adopt-detail-info">
-          <span th:text="'작성자 : ' + ${adopt.centerMemberName}">작성자 : 안성재</span>
+          <span th:text="'작성자 : ' + ${adopt.centerMemberName}"></span>
           <span th:text="'등록일 : ' + ${#dates.format(adopt.adoptRegidate, 'yyyy-MM-dd')}"></span>
         </div>
       </div>
@@ -51,7 +51,7 @@
           </div>
           <br>
 
-          <div th:text="${adopt.adoptContent}"></div>
+          <div th:utext="${adopt.adoptContent}"></div>
 
           <br>
 
@@ -82,31 +82,57 @@
 
       <br>
 
-      <!-- 댓글 주석처리한건 백단할때 로그인/비로그인, 일반회원/센터회원, 본인작성/타인작성 if로 노출 결정 -->
-      <div class="adopt-detail-commentbox" th:each="adoptComment : ${adoptCommentList}">
-        <div class="adopt-detail-name">
-          <div class="adopt-detail-name" th:text="${adoptComment.commentWriterName}"></div>
-        <div class="adopt-comment-buttonBox" id="adopt-comment-buttonBox">
-          <button class="adopt-comment-button" type="button" onclick="modifyCommentBtnClcik()">수정</button>
-          <button class="adopt-comment-button" type="button" onclick="CommentDeleteClick()">삭제</button>
-          <button class="adopt-comment-button" type="button" onclick="CommentReportClick()">신고</button>
-        </div>
+      <!-- 댓글 수정/삭제/신고 -->
+      <div th:with="adoptNo=${adoptDetailList[0]?.adoptNo}">
+        <div class="adopt-detail-commentbox" th:each="adoptComment, iterStat : ${adoptCommentList}">
+          <div class="adopt-detail-name">
+            <div class="adopt-detail-name" th:text="${adoptComment.commentWriterName}"></div>
+            <div class="adoptCommentNo" th:text="${adoptComment.adoptCommentNo}" style="display: none"></div>
+            <div class="adopt-comment-buttonBox" th:id="'adopt-comment-buttonBox-' + ${iterStat.index}">
+              <button class="adopt-comment-button" type="button"
+                      th:onclick="'modifyCommentBtnClick(' + ${iterStat.index} + ')'"
+                      th:if="${(centerMemberNo != null and centerMemberNo == adoptComment.adoptCommentWriter)
+                   or (memberNo != null and memberNo == adoptComment.adoptCommentWriter)}">수정</button>
+              <button class="adopt-comment-button" type="button"
+                      th:onclick="'CommentDeleteClick(' + ${adoptComment.adoptCommentNo} + ', ' + ${adoptNo} + ')'"
+                      th:if="${(centerMemberNo != null and centerMemberNo == adoptComment.adoptCommentWriter)
+                   or (memberNo != null and memberNo == adoptComment.adoptCommentWriter)}">삭제</button>
+              <button class="adopt-comment-button" type="button"
+                      th:onclick="'CommentReportClick(' + ${adoptComment.adoptCommentNo} + ', ' + ${adoptNo} + ')'"
+                      th:if="${(centerMemberNo != null or memberNo != null)
+                   and (centerMemberNo != adoptComment.adoptCommentWriter)
+                   and (memberNo != adoptComment.adoptCommentWriter)}">신고</button>
+            </div>
           </div>
-        <div class="adopt-detail-comment" id="adopt-comment" th:text="${adoptComment.adoptComment}"></div>
-        <div class="adopt-detail-comment" id="adopt-modifyInput" style="display:none;">
-          <input class="adopt-modify-comment">
-          <button class="adopt-comment-button" onclick="editCommentBtnClcik()">등록</button>
+
+          <div class="adopt-detail-comment" th:id="'adopt-comment-' + ${iterStat.index}" th:text="${adoptComment.adoptComment}"></div>
+
+          <!-- 댓글 수정 form 추가 -->
+          <form th:action="@{/adopt/adopt/adoptCommentModi(adoptNo=${adoptNo})}" method="post"
+                th:id="'adopt-modifyInput-' + ${iterStat.index}" style="display:none;">
+            <input type="hidden" name="adoptCommentNo" th:value="${adoptComment.adoptCommentNo}">
+            <input type="hidden" name="adoptNo" th:value="${adoptNo}">
+            <input type="text" name="adoptComment" class="adopt-modify-comment" th:value="${adoptComment.adoptComment}">
+            <button type="submit" class="adopt-comment-button">등록</button>
+          </form>
+
+          <div class="adopt-detail-date" th:text="${#dates.format(adoptComment.adoptCommentRegidate, 'yyyy-MM-dd')}"></div>
         </div>
-        <div class="adopt-detail-date" th:text="${#dates.format(adoptComment.adoptCommentRegidate, 'yyyy-MM-dd')}"></div>
       </div>
+
+
+
 
       <br>
 
       <!-- 댓글입력 -->
-      <form>
-        <input class="adopt-detail-commentregi" type="text" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요">　
-        <button class="adopt-commentregi-button" type="button">등록</button>
+      <div th:if="${memberNo != null or centerMemberNo != null}">
+      <form action="/adopt/adopt/adoptCommentRegi" method="get" th:each="adopt : ${adoptDetailList}">
+        <input class="adopt-detail-commentregi" type="text" name="adoptComment" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요" maxlength="1000">
+        <input th:value="${adopt.adoptNo}" style="display: none" name="adoptNo">
+        <button class="adopt-commentregi-button" type="submit">등록</button>
       </form>
+      </div>
 
       <br>
   </main>

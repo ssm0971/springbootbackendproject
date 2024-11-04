@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -91,6 +92,41 @@ public class AdminController {
         return "admin/admin-post/admin-post-search-list";
     }
 
+    @PostMapping("/deletePost")
+    @DeleteMapping
+    @ResponseBody
+    public String deletePost(@RequestBody List<AdminPostDTO> itemList, HttpSession session) {
+        // 관리자 로그인 체크
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        // 각 게시글 삭제
+        for (AdminPostDTO item : itemList) {
+            adminService.deletePost(item); // 게시글 삭제 메서드 호출
+        }
+
+        return "redirect:/admin/postList";
+    }
+
+    @PostMapping("/deleteComment")
+    @DeleteMapping
+    @ResponseBody
+    public String deleteComment(@RequestBody List<AdminCommentDTO> itemList, HttpSession session) {
+        // 관리자 로그인 체크
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        // 각 게시글 삭제
+        for (AdminCommentDTO item : itemList) {
+            adminService.deleteComment(item); // 게시글 삭제 메서드 호출
+        }
+
+        return "redirect:/admin/commentList";
+    }
+
+
     @GetMapping("/postDetail")
     public String postDetail(@RequestParam("postType") String postType, @RequestParam("postNo") Long postNo, Model model, HttpSession session) {
         if (!isAdminLoggedIn(session)) {
@@ -105,6 +141,35 @@ public class AdminController {
 
         return "admin/admin-post/admin-post-detail";
     }
+
+    @PostMapping("/deletePostDetail")
+    @DeleteMapping
+    @ResponseBody
+    public String deletePostDetail(@RequestBody AdminPostDTO item, HttpSession session) {
+        // 관리자 로그인 체크
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        adminService.deletePostDetail(item);
+
+        return "redirect:/admin/postList";
+    }
+
+    @PostMapping("/deleteCommentDetail")
+    @DeleteMapping
+    @ResponseBody
+    public String deleteCommentDetail(@RequestBody AdminCommentDTO item, HttpSession session) {
+        // 관리자 로그인 체크
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        adminService.deleteCommentDetail(item);
+
+        return "redirect:/admin/postList";
+    }
+
 
     @GetMapping("/commentList")
     public String commentList(Model model, HttpSession session) {
@@ -200,6 +265,7 @@ public class AdminController {
     }
 
     @PostMapping("/deleteMembers")
+    @DeleteMapping
     @ResponseBody
     public String deleteMembers(@RequestBody List<Long> itemList, HttpSession session) {
         if (!isAdminLoggedIn(session)) {
@@ -211,6 +277,7 @@ public class AdminController {
     }
 
     @PostMapping("/deleteCenterMembers")
+    @DeleteMapping
     @ResponseBody
     public String deleteCenterMembers(@RequestBody List<Long> itemList, HttpSession session) {
         if (!isAdminLoggedIn(session)) {
@@ -442,6 +509,21 @@ public class AdminController {
         List<AdminNoteReceiveDTO> noteReceiveList = adminService.selectNoteReceiveList();
 
         model.addAttribute("noteReceiveList", noteReceiveList);
+        model.addAttribute("currentPage", "receive");
+
+        return "admin/admin-notebox/admin-notebox-in";
+    }
+
+    @GetMapping("/searchNoteboxIn")
+    public String searchNoteboxIn(@RequestParam("keyword") String keyword, Model model, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        List<AdminNoteReceiveDTO> noteReceiveList = adminService.searchNoteInByKeyword(keyword);
+
+        model.addAttribute("noteReceiveList", noteReceiveList);
+        model.addAttribute("currentPage", "receive");
 
         return "admin/admin-notebox/admin-notebox-in";
     }
@@ -454,7 +536,69 @@ public class AdminController {
         List<AdminNoteSendDTO> noteSendList = adminService.selectNoteSendList();
 
         model.addAttribute("noteSendList", noteSendList);
+        model.addAttribute("currentPage", "send");
 
         return "admin/admin-notebox/admin-notebox-out";
+    }
+
+    @GetMapping("/searchNoteboxOut")
+    public String searchNoteboxOut(@RequestParam("keyword") String keyword, Model model, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+        List<AdminNoteSendDTO> noteSendList = adminService.searchNoteOutByKeyword(keyword);
+
+        model.addAttribute("noteSendList", noteSendList);
+        model.addAttribute("currentPage", "send");
+
+        return "admin/admin-notebox/admin-notebox-out";
+    }
+    @GetMapping("/noteboxInDetail")
+    public String noteboxInDetail(@RequestParam("noteboxReceiveNo") Long noteboxReceiveNo, Model model, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        AdminNoteReceiveDTO noteReceive = adminService.selectNoteReceiveDetail(noteboxReceiveNo);
+
+        model.addAttribute("noteReceive", noteReceive);
+
+        return "admin/admin-notebox/admin-notebox-in-detail";
+    }
+
+    @GetMapping("/noteboxOutDetail")
+    public String noteboxOutDetail(@RequestParam("noteboxSendNo") Long noteboxSendNo, Model model, HttpSession session){
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        AdminNoteSendDTO noteSend = adminService.selectNoteSendDetail(noteboxSendNo);
+
+        model.addAttribute("noteSend", noteSend);
+
+        return "admin/admin-notebox/admin-notebox-out-detail";
+    }
+
+    @GetMapping("/noteboxWrite")
+    public String noteboxWrite(@RequestParam(value = "noteSender", required = false) String noteSender, Model model, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+        if (noteSender != null && !noteSender.isEmpty()) {
+            model.addAttribute("noteSender", noteSender);
+        }
+        return "admin/admin-notebox/admin-notebox-write";
+    }
+
+    @PostMapping("/noteboxWrite")
+    public String noteboxWrite(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("receiver") String receiver, Model model, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        adminService.insertNoteWriteReceive(title, content, receiver);
+        adminService.insertNoteWriteSend(title, content, receiver);
+
+        return "redirect:/admin/noteboxOut";
     }
 }

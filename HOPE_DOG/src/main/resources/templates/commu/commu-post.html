@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>커뮤니티 글 상세(글 작성자)</title>
+  <link rel="stylesheet" th:href="@{/css/commu/commu-post-member.css}"/>
+  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+  <script defer th:src="@{/js/main/main.js}"></script>
+</head>
+
+<body>
+<header th:replace="~{fragment/header :: header}"></header>
+  <main>
+    <!-- 카풀 메인  크기 -->
+    <div class="comm-main-size">
+        <!--게시글 상단-->
+        <div class="comm-header">
+          <div class="navcontainer">
+            <ul id="navlist">
+              <li><a id="current" th:href="@{/commu/filter(cate='전체')}">전체</a></li>
+              <li><a th:href="@{/commu/filter(cate='인기')}">인기</a></li>
+              <li><a th:href="@{/commu/filter(cate='자유')}">자유</a></li>
+              <li><a th:href="@{/commu/filter(cate='봉사후기')}">봉사 후기</a></li>
+              <li><a th:href="@{/commu/filter(cate='질문')}">질문</a></li>
+              <li><a th:href="@{/commu/filter(cate='자랑')}">자랑</a></li>
+            </ul>
+          </div>
+        </div>
+
+      <!-- 제목/작성자/등록일 크기 -->
+      <div class="comm-detail-box1">
+        <div class="comm-detail-title" th:text="${commuDetail.commuTitle}">[1]
+        </div>
+        <div class="comm-detail-info"><span>작성자 :
+                <span th:if="${commuDetail.commuWriter % 2 != 0}" th:text="${commuDetail.memberNickname}"></span>
+                <span th:if="${commuDetail.commuWriter % 2 == 0}" th:text="${commuDetail.centerMemberName}"></span>
+        </span>
+          <span>등록일 : <span th:text="${#dates.format(commuDetail.commuRegiDate, 'yyyy-MM-dd')}"></span></span>
+        </div>
+      </div>
+
+      <!-- 글내용 크기 -->
+      <div class="comm-detail-box2">
+        <div class="comm-detail-content">
+          <div class="comm-detail-basicinfo">
+            <div class="comm-detail-basicinfo-title"></div>
+            <div th:text="${commuDetail.commuContent}"></div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <br>
+
+      <!-- 버튼 -->
+      <div class="comm-detail-box3">
+        <div>
+          <button class="comm-modify-button" onclick="modifyAlert()">수정</button>　
+          <button class="comm-delete-button" onclick="deleteAlert()">삭제</button>
+        </div>
+        <button class="comm-end-button" onclick="endAlert()">신고</button>
+      </div>
+
+      <br>
+
+      <!-- 댓글창 -->
+      <div class="comm-detail-box4">
+        <div th:each="comment : ${commuDetail.comments}">
+          <div class="comm-detail-name">
+            <span th:if="${comment.commuCommentWriter % 2 != 0}" th:text="${comment.memberNickname}"></span>
+            <span th:if="${comment.commuCommentWriter % 2 == 0}" th:text="${comment.centerMemberName}"></span>
+          </div>
+          <div class="comm-detail-comment" th:text="${comment.commuComment}"></div>
+          <div class="comm-detail-date" th:text="${#dates.format(comment.commuCommetRegiDate, 'yyyy-MM-dd')}"></div>
+        </div>
+        <br>
+      </div>
+
+      <br>
+
+      <!-- 댓글입력 -->
+      <form onsubmit="return Comment()">
+        <input class="comm-detail-commentregi" type="text" id="commentInput" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요">　
+        <button type="submit" class="comm-commentregi-button">등록</button>
+      </form>
+
+      <br>
+    </div>
+  </main>
+</body>
+
+<footer>
+  <div class="footer-links">
+    <a href="../member/term.html">이용약관</a> |
+    <a href="../member/term.html">개인정보처리방침</a>
+  </div>
+  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
+    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
+    © NEXT LEVEL. All Rights Reserved</h6>
+</footer>
+
+
+<!--<script defer src="../../js/commu/commu-post.js"></script>-->
+
+</html>

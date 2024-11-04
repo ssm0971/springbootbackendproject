@@ -66,27 +66,19 @@ public class CarController {
         return "volun/car/volun-car-main";
     }
 
-    //검색
+    // 검색
     @GetMapping("/main/search")
     public String searchCars(@RequestParam("searchType") String searchType,
                              @RequestParam("keyword") String keyword,
-                             @RequestParam(value = "page", defaultValue = "1") int page,
-                             @RequestParam(value = "amount", defaultValue = "9") int amount,
                              Model model) {
-        Criteria criteria = new Criteria(page, amount);
-        System.out.println("컨트롤러 criteria : " + criteria);
+        System.out.println("컨트롤러 검색 타입 : " + searchType);
+        System.out.println("컨트롤러 키워드 : " + keyword);
 
-
-        // 검색 조건에 따른 총 개수 조회
-        int total = carService.findCarSearch(criteria, searchType, keyword);
-        Page pageInfo = new Page(criteria, total);
-
-        // 검색 조건에 따라 차량 리스트 조회
-        List<CarDTO> carList = carService.searchCars(searchType, keyword, criteria);
+        // 검색 조건에 따른 차량 리스트 조회
+        List<CarDTO> carList = carService.searchCars(searchType, keyword);
         System.out.println("컨트롤러 List : " + carList);
 
         model.addAttribute("carList", carList); // 차량 리스트 추가
-        model.addAttribute("page", pageInfo); // 페이지 정보 추가
         model.addAttribute("searchType", searchType); // 검색 타입 추가
         model.addAttribute("keyword", keyword); // 검색어 추가
 

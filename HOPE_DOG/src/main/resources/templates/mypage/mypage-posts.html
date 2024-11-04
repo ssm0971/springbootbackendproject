@@ -9,7 +9,11 @@
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
   <script defer th:src="@{/js/main/main.js}"></script>
-<!--  <script defer th:src="@{/js/mypage/mypage-posts.js}" ></script>-->
+  <script defer th:src="@{/js/mypage/mypage-posts.js}" ></script>
+  <!-- 페이지네이션 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </head>
 
 <body>
@@ -65,15 +69,7 @@
         </ul>
       </div>
       <!-- 페이지네이션 -->
-      <div class="pagination">
-        <button class="prev">◀</button>
-        <button class="page">1</button>
-        <button class="page">2</button>
-        <button class="page">3</button>
-        <button class="page">4</button>
-        <button class="page">5</button>
-        <button class="next">▶</button>
-      </div>
+      <div id="pagination"></div>
     </div>
 
 

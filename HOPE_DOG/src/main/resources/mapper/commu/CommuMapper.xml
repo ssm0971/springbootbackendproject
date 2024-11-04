@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.commu.CommuMapper">
+<!--    게시글 조회-->
+    <select id="commuCatalog" resultType="CommuDTO">
+        SELECT c.COMMU_NO, c.COMMU_CATE, c.COMMU_TITLE, c.COMMU_CONTENT,
+        c.COMMU_REGIDATE, c.COMMU_UPDATEDATE, c.COMMU_GOOD, c.COMMU_WRITER,
+        m.MEMBER_NICKNAME AS memberNickname, cm.CENTER_MEMBER_NAME AS centerMemberName
+        FROM TBL_COMMU c
+        LEFT JOIN TBL_MEMBER m ON c.COMMU_WRITER = m.MEMBER_NO
+        LEFT JOIN TBL_CENTER_MEMBER cm ON c.COMMU_WRITER = cm.CENTER_MEMBER_NO
+        ORDER BY c.COMMU_REGIDATE DESC  <!-- 최신 글이 위에 오도록 정렬 -->
+    </select>
+
+    <!-- 조회수 증가 -->
+    <update id="commuGood" parameterType="CommuDTO">
+        UPDATE TBL_COMMU
+        SET COMMU_GOOD = COMMU_GOOD + 1
+        WHERE COMMU_NO = #{commuNo}
+    </update>
+
+
+
+    <!-- 카테고리별 커뮤니티 게시글 조회 -->
+    <select id="findCate" parameterType="string" resultType="CommuDTO">
+        SELECT
+        C.COMMU_NO,
+        C.COMMU_CATE,
+        C.COMMU_TITLE,
+        C.COMMU_CONTENT,
+        C.COMMU_REGIDATE,
+        C.COMMU_UPDATEDATE,
+        C.COMMU_GOOD,
+        C.COMMU_WRITER,
+        M.MEMBER_NICKNAME AS MEMBER_NICKNAME,
+        CM.CENTER_MEMBER_NAME AS CENTER_MEMBER_NAME
+        FROM
+        TBL_COMMU C
+        LEFT JOIN
+        TBL_MEMBER M
+        ON C.COMMU_WRITER = M.MEMBER_NO
+        LEFT JOIN
+        TBL_CENTER_MEMBER CM
+        ON C.COMMU_WRITER = CM.CENTER_MEMBER_NO
+        <where>
+           <if test="cate != '전체'">
+                C.COMMU_CATE = #{cate}
+            </if>
+        </where>
+        ORDER BY
+        C.COMMU_REGIDATE DESC, C.COMMU_GOOD DESC
+    </select>
+
+    <!-- 카테고리별 인기 커뮤니티 게시글 조회 -->
+<!--    <select id="findCateByGood" resultType="CommuDTO">-->
+<!--        SELECT-->
+<!--        C.COMMU_NO,-->
+<!--        C.COMMU_CATE,-->
+<!--        C.COMMU_TITLE,-->
+<!--        C.COMMU_CONTENT,-->
+<!--        C.COMMU_REGIDATE,-->
+<!--        C.COMMU_UPDATEDATE,-->
+<!--        C.COMMU_GOOD,-->
+<!--        C.COMMU_WRITER,-->
+<!--        M.MEMBER_NICKNAME AS MEMBER_NICKNAME,-->
+<!--        CM.CENTER_MEMBER_NAME AS CENTER_MEMBER_NAME-->
+<!--        FROM-->
+<!--        TBL_COMMU C-->
+<!--        LEFT JOIN TBL_MEMBER M ON C.COMMU_WRITER = M.MEMBER_NO-->
+<!--        LEFT JOIN TBL_CENTER_MEMBER CM ON C.COMMU_WRITER = CM.CENTER_MEMBER_NO-->
+<!--        <where>-->
+<!--            <if test="cate != '전체'">-->
+<!--                C.COMMU_CATE = #{cate}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        ORDER BY C.COMMU_GOOD DESC &#45;&#45; 조회수 기준으로 정렬-->
+<!--    </select>-->
+
+    <!-- 커뮤니티 게시글 검색 -->
+    <select id="searchCommu" parameterType="map" resultType="CommuDTO">
+        SELECT
+            C.COMMU_NO,
+            C.COMMU_CATE,
+            C.COMMU_TITLE,
+            C.COMMU_CONTENT,
+            C.COMMU_REGIDATE,
+            C.COMMU_UPDATEDATE,
+            C.COMMU_GOOD,
+            C.COMMU_WRITER,
+            M.MEMBER_NICKNAME AS MEMBER_NICKNAME,
+            CM.CENTER_MEMBER_NAME AS CENTER_MEMBER_NAME
+        FROM
+            TBL_COMMU C
+                LEFT JOIN TBL_MEMBER M ON C.COMMU_WRITER = M.MEMBER_NO
+                LEFT JOIN TBL_CENTER_MEMBER CM ON C.COMMU_WRITER = CM.CENTER_MEMBER_NO
+        WHERE
+            (M.MEMBER_NICKNAME LIKE '%' || #{memberNickname} || '%' OR CM.CENTER_MEMBER_NAME LIKE '%' || #{centerMemberName} || '%')
+    </select>
+
+
+
+<!--게시글 상세-->
+    <!-- 게시글 조회 -->
+    <select id="selectCommuByNo" parameterType="long" resultType="CommuDetailDTO">
+        SELECT C.COMMU_NO,
+               C.COMMU_CATE,
+               C.COMMU_TITLE,
+               C.COMMU_CONTENT,
+               C.COMMU_REGIDATE,
+               C.COMMU_UPDATEDATE,
+               C.COMMU_GOOD,
+               C.COMMU_WRITER,
+               M.MEMBER_NO,
+               M.MEMBER_NICKNAME,
+               CM.CENTER_MEMBER_NO,
+               CM.CENTER_MEMBER_NAME
+        FROM TBL_COMMU C
+                 LEFT JOIN TBL_MEMBER M ON C.COMMU_WRITER = M.MEMBER_NO AND MOD(M.MEMBER_NO, 2) != 0
+             LEFT JOIN TBL_CENTER_MEMBER CM ON C.COMMU_WRITER = CM.CENTER_MEMBER_NO AND MOD(CM.CENTER_MEMBER_NO, 2) = 0
+        WHERE C.COMMU_NO = #{commuNo}
+    </select>
+
+    <!-- 댓글 조회 -->
+    <select id="selectCommentsByCommuNo" parameterType="long" resultType="CommuCommentDTO">
+        SELECT CC.COMMU_COMMENT_NO,
+               CC.COMMU_NO,
+               CC.COMMU_COMMENT,
+               CC.COMMU_COMMET_REGIDATE,
+               CC.COMMU_UPDATEDATE,
+               CC.COMMU_COMMENT_WRITER,
+               M.MEMBER_NO,
+               M.MEMBER_NICKNAME,
+               CM.CENTER_MEMBER_NO,
+               CM.CENTER_MEMBER_NAME
+        FROM TBL_COMMU_COMMENT CC
+                 LEFT JOIN TBL_MEMBER M ON CC.COMMU_COMMENT_WRITER = M.MEMBER_NO AND MOD(M.MEMBER_NO, 2) != 0
+             LEFT JOIN TBL_CENTER_MEMBER CM ON CC.COMMU_COMMENT_WRITER = CM.CENTER_MEMBER_NO AND MOD(CM.CENTER_MEMBER_NO, 2) = 0
+        WHERE CC.COMMU_NO = #{commuNo}
+    </select>
+
+<!--    게시글 작성-->
+    <insert id="insertWrite" parameterType="CommuDTO">
+        <selectKey keyProperty="commuNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_COMMU.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_COMMU (
+        commu_no, commu_cate, commu_title, commu_content,
+        commu_regidate, commu_updatedate, commu_good, commu_writer
+        ) VALUES (
+        #{commuNo}, #{commuCate}, #{commuTitle}, #{commuContent},
+        SYSDATE, SYSDATE, #{commuGood}, #{commuWriter}
+        )
+    </insert>
+
+
+    <!-- 일반회원 조회 -->
+    <select id="commuMemberByNo" parameterType="long" resultType="MemberDTO">
+        SELECT MEMBER_NO, MEMBER_NICKNAME
+        FROM TBL_MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+
+
+
+    <!-- 센터회원 조회 -->
+    <select id="commuCenterMemberByNo" parameterType="long" resultType="CenterMemberDTO">
+        SELECT CENTER_MEMBER_NO,CENTER_MEMBER_NAME
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_NO = #{centermemberNo}
+    </select>
+
+
+
+</mapper>
+
+

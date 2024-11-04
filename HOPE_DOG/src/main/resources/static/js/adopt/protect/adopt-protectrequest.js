@@ -46,8 +46,9 @@ function checkEmailInput() {
   const inputField = document.getElementById('emailInput');
   const emailError = document.getElementById('emailError');
   const emailError2 = document.getElementById('emailError2');
+  const email_format = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
-  if (inputField.value.trim() === '') {
+  if (inputField.value.trim() === '' || !email_format.test(inputField.value)) {
     emailError.style.display = 'block'; // 메시지 표시
     emailError2.style.display = 'block'; // 메시지 표시
   } else {
@@ -114,7 +115,7 @@ function checkQuest1Input() {
 
 function checkQuest2Input() {
   const inputField = document.getElementById('quest2Input');
-  const quest1Error = document.getElementById('quest2Error');
+  const quest2Error = document.getElementById('quest2Error');
 
   if (inputField.value.trim() === '') {
     quest2Error.style.display = 'block'; // 메시지 표시
@@ -312,7 +313,7 @@ function validateInputs() {
 
   // 체크박스 확인 추가
   const checkbox1 = document.getElementById('info-agreement');
-  const checkbox2 = document.getElementById('protect-agreement');
+  const checkbox2 = document.getElementById('adopt-agreement');
   if (!checkbox1.checked || !checkbox2.checked) {
     alert('약관에 동의해 주세요.'); // 체크되지 않은 경우 경고
     allValid = false;
@@ -322,7 +323,7 @@ function validateInputs() {
     alert('모든 질문을 입력해 주세요.'); // 경고창 표시
   } else {
     alert('신청이 완료되었습니다'); // 모든 입력이 유효한 경우
-    window.location.href = '../../html/adopt/adopt-protectdetail.html';
+    document.getElementById('adoptRequest').submit();
   }
 }
 
@@ -341,16 +342,19 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+
 // 신청취소
 function requestcancle() {
   if (confirm('정말 취소하시겠습니까? 작정하던 내용은 저장되지 않습니다')) {
     console.log('입양신청이 취소되었습니다.');
-    window.location.href = '../../html/adopt/adopt-protectdetail.html'
+    location.href='/adopt/adopt';
   } else {
     console.log('입양신청이 취소되지 않았습니다.');
   }
 }
 
+
+//헤더이동
 {
   let adoptPageBtn = document.getElementById('adoptPage');
   adoptPageBtn.addEventListener('click', function(){
@@ -371,3 +375,16 @@ function requestcancle() {
     location.href='/adopt/review';
   });
 }
+
+
+// URL에서 adoptNo 추출하는 함수
+function getParameter(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(name);
+}
+
+// 페이지가 로드될 때 adoptNo를 가져와서 표시
+document.addEventListener('DOMContentLoaded', function() {
+  const adoptNo = getParameter('adoptNo'); // URL에서 adoptNo를 가져옵니다.
+  document.getElementById('adoptNoDisplay').textContent = adoptNo; // adoptNo를 표시합니다.
+});

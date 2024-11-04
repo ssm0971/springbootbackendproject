@@ -11,9 +11,11 @@ import java.util.Date;
 @NoArgsConstructor
 public class AdoptReportDTO {
     private Long reportNo;
-    private String reportCate; // 기본값 설정
-    private String reportContent; // 신고 사유
-    private Date reportRegidate;
+    private String reportCate; //게시글 카테고리
+    private String reportContent; // 신고 사유(게시글)
+    private Date reportRegidate;    //신고날짜
     private Long reportWriter; // 신고자
     private Long reportContentNo; // 신고할 게시글 번호
+    private String reportComment; //신고 사유(댓글)
+    private Long reportCommentNo; //신고할 댓글 번호
 }

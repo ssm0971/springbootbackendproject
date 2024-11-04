@@ -1,24 +1,35 @@
 
+// URL에서 파라미터를 가져오는 함수
+function getParameter(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(name);
+}
 
-function goDelete() {
-  if (confirm('게시글을 삭제하시겠습니까?')) {
-    var donaNo = document.querySelector('input[name="donaNo"]').value;
+// 글 삭제 버튼
+function deleteClick() {
+  // donaNo 가져오기
+  const donaNo = document.querySelector('.donaNo').textContent.trim();
 
-    // Form을 통해 POST 요청으로 서버에 삭제를 요청
-    var form = document.createElement('form');
-    form.method = 'post';
-    form.action = '/dona/delete/' + donaNo;
+  console.log('donaNo:', donaNo); // donaNo 값을 콘솔에 출력하여 확인
 
-    document.body.appendChild(form);
-    form.submit();
+  if (!donaNo) {
+    console.error('donaNo가 유효하지 않습니다.');
+  }
+
+  if (confirm('정말 삭제하시겠습니까?')) {
+    console.log('글이 삭제되었습니다.');
+
+    // donaNo URL에 포함시켜 이동
+    location.href = `/dona/delete?donaNo=${donaNo}`;
+  } else {
+    console.log('글이 삭제되지 않았습니다.');
   }
 }
 
-{
+
+
   // 버튼 처리
   let $modifyBtn = document.querySelector('.btn-modify');
-  let $removeBtn = document.querySelector('.btn-remove');
-  let $backBtn = document.querySelector('.btn-back');
 
   // 수정 버튼 처리
   $modifyBtn?.addEventListener('click', function (){
@@ -30,22 +41,4 @@ function goDelete() {
     location.href = `/dona/modify?donaNo=${donaNo}`;
   });
 
-  // 삭제 버튼 처리
-  $removeBtn?.addEventListener('click', function (){
-    let donaNo = this.dataset.id;
-    console.log(donaNo);
-    location.href=`/dona/delete?donaNo=${donaNo}`;
-  });
 
-  //뒤로가기 버튼 처리
-  $backBtn?.addEventListener('click', function (){
-    window.history.back();
-  });
-}
-
-let boardId = document.querySelector('#donaNo').value;
-
-//목록으로 이동
-document.querySelector('.dona-admain-btuall-complaint').addEventListener('click', function() {
-  location.href = '/dona/list'; // 목록 페이지로 이동
-});

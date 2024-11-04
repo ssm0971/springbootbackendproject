@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -58,7 +59,15 @@ public class AdminService {
 
     public List<AdminPostDTO> searchPostByKeyword(String keyword){ return adminMapper.searchPostByKeyword(keyword); }
 
+    public void deletePost(AdminPostDTO item){adminMapper.deletePost((AdminPostDTO) item);}
+
+    public void deleteComment(AdminCommentDTO item){adminMapper.deleteComment((AdminCommentDTO) item);}
+
     public AdminPostDTO selectPostDetail(String postType, Long postNo){ return adminMapper.selectPostDetail(postType, postNo); }
+
+    public void deletePostDetail(AdminPostDTO item){adminMapper.deletePostDetail((AdminPostDTO) item);}
+
+    public void deleteCommentDetail(AdminCommentDTO item){adminMapper.deleteCommentDetail((AdminCommentDTO) item);}
 
     public List<AdminCommentDTO> selectCommentList(){ return adminMapper.selectCommentList(); }
 
@@ -105,4 +114,16 @@ public class AdminService {
     public List<AdminNoteReceiveDTO> selectNoteReceiveList(){
         return adminMapper.selectNoteReceiveList();
     }
+
+    public AdminNoteReceiveDTO selectNoteReceiveDetail(Long noteboxReceiveNo){ return adminMapper.selectNoteReceiveDetail(noteboxReceiveNo);}
+
+    public AdminNoteSendDTO selectNoteSendDetail(Long noteboxSendNo){ return adminMapper.selectNoteSendDetail(noteboxSendNo);}
+
+    public void insertNoteWriteReceive(String title, String content, String receiver){adminMapper.insertNoteWriteReceive(title, content, receiver); }
+
+    public void insertNoteWriteSend(String title, String content, String receiver){adminMapper.insertNoteWriteSend(title, content, receiver); }
+
+    public List<AdminNoteReceiveDTO> searchNoteInByKeyword(String keyword){ return adminMapper.searchNoteInByKeyword(keyword);}
+
+    public List<AdminNoteSendDTO> searchNoteOutByKeyword(String keyword){ return adminMapper.searchNoteOutByKeyword(keyword); }
 }

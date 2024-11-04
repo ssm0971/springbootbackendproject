@@ -46,10 +46,25 @@
               <label for="email">
                 <div id="contents">
                   <div id="labelname">이메일</div>
-                  <div><input type="text" id="email" name="centerMemberEmail" placeholder="이메일을 입력하세요" th:value="${profile.centerMemberEmail}"></div>
-                  <button type="button" class="center-member-profile-button-small" id="emailSendButton">인증전송</button>
+                  <div>
+                    <input
+                            type="text"
+                            id="email"
+                            name="centerMemberEmail"
+                            placeholder="이메일을 입력하세요"
+                            th:value="${profile.centerMemberEmail}">
+                  </div>
+                  <button
+                          type="button"
+                          class="center-member-profile-button-small"
+                          id="emailCheckButton">
+                    중복확인
+                  </button>
+                  <div id="emailCheckResult" style="margin-top: 5px; color: red;"></div> <!-- 결과 메시지 표시 영역 -->
                 </div>
+                <input type="hidden" id="currentEmail" th:value="${profile.centerMemberEmail}">
               </label>
+
 
               <!-- 전화번호 입력 (02-123-4567 형식 포함) -->
               <label for="phonenumber">
@@ -94,7 +109,12 @@
               <label for="password">
                 <div id="contents">
                   <div id="labelname">현재 비밀번호</div>
-                  <div><input type="password" id="password" name="centerMemberPw" placeholder="현재 비밀번호 입력"></div>
+                  <div>
+                    <input type="password" id="password" name="centerMemberPw" placeholder="현재 비밀번호 입력">
+                  </div>
+                    <div class="alert">
+                      <p id="currentPasswordMessage" style="display: none; color: red; font-size: 8px;">현재 비밀번호를 입력하세요.</p>
+                    </div>
                 </div>
               </label>
 
@@ -102,10 +122,12 @@
               <label for="newpassword">
                 <div id="contents">
                   <div id="labelname">새 비밀번호</div>
-                  <div><input type="password" id="newpassword" name="centerMemberNewPw" placeholder="새 비밀번호 입력"></div>
-                  <div class="alert">
-                    <p id="newPasswordStrengthMessage" style="display: none;">비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수문자 포함</p>
+                  <div>
+                    <input type="password" id="newpassword" name="centerMemberNewPw" placeholder="새 비밀번호 입력">
                   </div>
+                    <div class="alert">
+                      <p id="newPasswordStrengthMessage" style="display: none; color: red; font-size: 8px;">비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수문자 포함</p>
+                    </div>
                 </div>
               </label>
 
@@ -113,12 +135,44 @@
               <label for="confirmNewPassword">
                 <div id="contents">
                   <div id="labelname">새 비밀번호 확인</div>
-                  <div><input type="password" id="confirmNewPassword" name="confirmNewPw" placeholder="새 비밀번호 확인"></div>
-                  <div class="alert">
-                    <p id="passwordMatchMessage" style="display: none;">비밀번호가 일치하지 않습니다.</p>
+                  <div>
+                    <input type="password" id="confirmNewPassword" name="confirmNewPw" placeholder="새 비밀번호 확인">
                   </div>
+                    <div class="alert">
+                      <p id="passwordMatchMessage" style="display: none; color: red; font-size: 8px;">비밀번호가 일치하지 않습니다.</p>
+                    </div>
                 </div>
               </label>
+
+<!--              &lt;!&ndash; 현재 비밀번호 입력란 &ndash;&gt;-->
+<!--              <label for="password">-->
+<!--                <div id="contents">-->
+<!--                  <div id="labelname">현재 비밀번호</div>-->
+<!--                  <div><input type="password" id="password" name="centerMemberPw" placeholder="현재 비밀번호 입력"></div>-->
+<!--                </div>-->
+<!--              </label>-->
+
+<!--              &lt;!&ndash; 새 비밀번호 입력란 &ndash;&gt;-->
+<!--              <label for="newpassword">-->
+<!--                <div id="contents">-->
+<!--                  <div id="labelname">새 비밀번호</div>-->
+<!--                  <div><input type="password" id="newpassword" name="centerMemberNewPw" placeholder="새 비밀번호 입력"></div>-->
+<!--                  <div class="alert">-->
+<!--                    <p id="newPasswordStrengthMessage" style="display: none;">비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수문자 포함</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </label>-->
+
+<!--              &lt;!&ndash; 새 비밀번호 확인 입력란 &ndash;&gt;-->
+<!--              <label for="confirmNewPassword">-->
+<!--                <div id="contents">-->
+<!--                  <div id="labelname">새 비밀번호 확인</div>-->
+<!--                  <div><input type="password" id="confirmNewPassword" name="confirmNewPw" placeholder="새 비밀번호 확인"></div>-->
+<!--                  <div class="alert">-->
+<!--                    <p id="passwordMatchMessage" style="display: none;">비밀번호가 일치하지 않습니다.</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </label>-->
 
               <!-- 알림 수신 동의 -->
               <div id="contents">
@@ -129,7 +183,16 @@
 
               <!-- 수정 버튼 -->
               <div class="center-member-profile-button">
-                <button type="submit" id="updateButton" class="center-member-profile-button-small">수정</button>
+                <div id="disablebtn">
+                <button type="submit" id="updateButton" class="center-member-profile-button-small" disabled>수정</button>
+                </div>
+              </div>
+              <!-- 커스텀 모달 -->
+              <div id="customModal" class="modal" style="display:none;">
+                <div class="modal-content">
+                  <p id="modalMessage"></p>
+                  <button id="modalConfirmButton">확인</button>
+                </div>
               </div>
             </div>
           </form>
@@ -137,201 +200,6 @@
       </div>
     </div>
   </div>
-
-<!--  <div class="center-member-profile-infobox">-->
-<!--    <div class="center-member-profile-info">-->
-<!--      <div class="center-member-profile-infoarea">-->
-
-<!--        <div class="center-member-profile-info-textarea">-->
-<!--          <form action="/centerMypage/updateProfileOk" method="post"> &lt;!&ndash; action URL 수정 &ndash;&gt;-->
-<!--            <div class="center-member-profile-inputbox">-->
-<!--              <label for="name">-->
-<!--                <div id="contents">-->
-<!--                  <div id="labelname">센터명 </div>-->
-<!--                  <div><input type="text" id="name" th:value="${profile.centerMemberName}" readonly></div>-->
-<!--                </div>-->
-<!--              </label>-->
-<!--              <label for="email">-->
-<!--                <div id="contents">-->
-<!--                  <div id="labelname">이메일 </div>-->
-<!--                  <div><input type="text" id="email" placeholder="이메일을 입력하세요" th:value="${profile.centerMemberEmail}"></div>-->
-<!--                  <button type="button" class="center-member-profile-button-small" id="emailSendButton">인증전송</button>-->
-<!--                </div>-->
-<!--              </label>-->
-
-<!--              <label for="phonenumber">-->
-<!--                <div id="contents">-->
-<!--                  <div id="labelname">대표번호 </div>-->
-<!--                  <div>-->
-<!--                    <input type="text" id="phonenumber" placeholder="000-0000-0000" pattern="^(\d{3}-\d{4}-\d{4}|\d{3}-\d{3}-\d{4}|\d{2}-\d{4}-\d{4}|\d{2}-\d{3}-\d{4})$" required th:value="${profile.centerMemberPhoneNumber}">-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </label>-->
-
-<!--              <label for="zipcode">-->
-<!--                <div id="contents">-->
-<!--                  <div id="labelname">우편번호 </div>-->
-<!--                  <div><input type="text" id="zipcode" th:value="${profile.centerMemberZipcode}" readonly></div>-->
-<!--                  <button type="button" class="center-member-profile-button-small" id="addressSearch">주소찾기</button>-->
-<!--                </div>-->
-<!--              </label>-->
-<!--              <label for="address">-->
-<!--                <div id="contents">-->
-<!--                  <div id="labelname">주소 </div>-->
-<!--                  <div><input type="text" id="address" th:value="${profile.centerMemberAddress}" readonly></div>-->
-<!--                </div>-->
-<!--              </label>-->
-<!--              <label for="detailAddress">-->
-<!--                <div id="contents">-->
-<!--                  <div id="labelname">상세주소 </div>-->
-<!--                  <div><input type="text" id="detailAddress" th:value="${profile.centerMemberDetailAddress}"></div>-->
-<!--                </div>-->
-<!--              </label>-->
-
-<!--              <label for="password">-->
-<!--                <div id="contents">-->
-<!--                  <div id="labelname">현재 비밀번호 </div>-->
-<!--                  <div>-->
-<!--                    <input type="password" id="password" placeholder="현재 비밀번호 입력">-->
-
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </label>-->
-
-<!--              <label for="newpassword">-->
-<!--                <div id="contents">-->
-<!--                  <div id="labelname">새 비밀번호 </div>-->
-<!--                  <div>-->
-<!--                    <input type="password" id="newpassword" placeholder="새 비밀번호 입력">-->
-<!--                    <div class="alert">-->
-<!--                      <p id="newPasswordStrengthMessage" style="color: red; display: none; font-size: 13px;">-->
-<!--                        비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수문자 포함-->
-<!--                      </p>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </label>-->
-
-<!--              <label for="confirmNewPassword">-->
-<!--                <div id="contents">-->
-<!--                  <div id="labelname">새 비밀번호 확인 </div>-->
-<!--                  <div>-->
-<!--                    <input type="password" id="confirmNewPassword" placeholder="새 비밀번호 확인">-->
-<!--                    <div class="alert">-->
-<!--                      <p id="passwordMatchMessage" style="color: red; display: none; font-size: 13px;">-->
-<!--                        비밀번호가 일치하지 않습니다.-->
-<!--                      </p>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </label>-->
-
-<!--              <div id="contents">-->
-<!--                <div id="labelname">알림수신 동의 </div>-->
-<!--                동의<input type="radio" name="agree" id="Y" value="Y" th:checked="${profile.centerMemberAgree == 'Y'}">-->
-<!--                비동의<input type="radio" name="agree" id="N" value="N" th:checked="${profile.centerMemberAgree == 'N'}" checked>-->
-<!--              </div>-->
-
-<!--              <div class="center-member-profile-button">-->
-<!--                <button type="submit" id="updateButton" class="center-member-profile-button-small">수정</button> &lt;!&ndash; submit 버튼으로 변경 &ndash;&gt;-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </form>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-
-  <!--    <div class="center-member-profile-infobox">-->
-  <!--      <div class="center-member-profile-info">-->
-  <!--        <div class="center-member-profile-infoarea">-->
-  <!--          <div class="center-member-profile-infoimg">-->
-  <!--            <img src="../../img/logo.jpg">-->
-  <!--          </div>-->
-  <!--          <div class="center-member-profile-info-textarea">-->
-  <!--            <form action="" method="">-->
-  <!--              <div class="center-member-profile-inputbox">-->
-  <!--                <label for="email">-->
-  <!--                  <div id="contents">-->
-  <!--                    <div id="labelname">이메일 </div>-->
-  <!--                    <div><input type="text" id="email"></div>-->
-  <!--                    <button type="button" class="center-member-profile-button-small" id="emailSendButton">인증전송</button>-->
-  <!--                  </div>-->
-  <!--                </label>-->
-  <!--                <label for="emailcheck">-->
-  <!--                  <div id="contents">-->
-  <!--                    <div id="labelname">이메일 인증 </div>-->
-  <!--                    <div><input type="text" id="emailcheck"></div>-->
-  <!--                    <button type="button" class="center-member-profile-button-small">인증확인</button>-->
-  <!--                  </div>-->
-  <!--                </label>-->
-  <!--                <label for="phonenumber">-->
-  <!--                  <div id="contents">-->
-  <!--                    <div id="labelname">전화번호 </div>-->
-  <!--                    <div><input type="text" id="phonenumber"></div>-->
-  <!--                    <button type="button" class="center-member-profile-button-small" id="phoneSendButton">인증전송</button>-->
-  <!--                  </div>-->
-  <!--                </label>-->
-  <!--                <label for="phonenumbercheck">-->
-  <!--                  <div id="contents">-->
-  <!--                    <div id="labelname">인증번호 </div>-->
-  <!--                    <div><input type="text" id="phonenumbercheck"></div>-->
-  <!--                    <button type="button" class="center-member-profile-button-small">인증확인</button>-->
-  <!--                  </div>-->
-  <!--                </label>-->
-  <!--                <label for="zipcode">-->
-  <!--                  <div id="contents">-->
-  <!--                    <div id="labelname">우편번호 </div>-->
-  <!--                    <div><input type="text" id="zipcode" readonly></div>-->
-  <!--                    <button type="button" class="center-member-profile-button-small"-->
-  <!--                      id="addressSearch">주소찾기</button>-->
-
-  <!--                  </div>-->
-  <!--                </label>-->
-  <!--                <label for="address">-->
-  <!--                  <div id="contents">-->
-  <!--                    <div id="labelname">주소 </div>-->
-  <!--                    <div><input type="text" id="address" readonly></div>-->
-  <!--                  </div>-->
-  <!--                </label>-->
-  <!--                <label for="addressdetail">-->
-  <!--                  <div id="contents">-->
-  <!--                    <div id="labelname">상세주소 </div>-->
-  <!--                    <div><input type="text" id="detailAddress"></div>-->
-  <!--                  </div>-->
-  <!--                </label>-->
-  <!--                <label for="password">-->
-  <!--                  <div id="contents">-->
-  <!--                      <div id="labelname">비밀번호 </div>-->
-  <!--                      <div>-->
-  <!--                          <input type="password" id="password">-->
-  <!--                          <div class="alert"><p id="passwordStrengthMessage" style="color: red; display: none; font-size: 13px;">비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자 및 특수문자 포함</p></div>-->
-  <!--                      </div>-->
-  <!--                  </div>-->
-  <!--              </label>-->
-  <!--              <label for="passwordcheck">-->
-  <!--                  <div id="contents">-->
-  <!--                      <div id="labelname">비밀번호 확인 </div>-->
-  <!--                      <input type="password" id="passwordcheck">-->
-  <!--                      <div class="alert"><p id="passwordMismatchMessage" style="color: red; display: none;">비밀번호 불일치</p></div>-->
-  <!--                  </div>-->
-  <!--              </label>-->
-  <!--                <div id="contents">-->
-  <!--                  <div id="labelname">알림수신 동의 </div>-->
-  <!--                  동의<input type="radio" name="agree" id="Y">비동의<input type="radio" name="agree" id="N">-->
-  <!--                </div>-->
-  <!--                <div class="center-member-profile-button">-->
-  <!--                  <a href="./center-mypage-profile.html">-->
-  <!--                    <button type="button">수정</button>-->
-  <!--                  </a>-->
-  <!--                </div>-->
-  <!--              </div>-->
-  <!--            </form>-->
-  <!--          </div>-->
-  <!--        </div>-->
-
-  <!--      </div>-->
-  <!--    </div>-->
 </main>
 
 <footer th:replace="~{/fragment/footer :: footer}"></footer>

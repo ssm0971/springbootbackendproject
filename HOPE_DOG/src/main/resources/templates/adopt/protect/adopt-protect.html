@@ -13,185 +13,96 @@
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <!-- 입양 메인 크기 -->
-    <div class="protect-main-size">
-      <!-- 입양/임보/후기 게시판 바 -->
-      <div class="protect-nav">
-          <div class="protect-navList" id="adoptPage">안심입양</div>
-          <div class="protect-navList" id="protectPage">임시보호</div>
-          <div class="protect-navList" id="reviewPage">후기</div>
-      </div>
-      <!-- 안심입양 소제목 -->
-      <div class="protect-title1">
-        임시보호
-      </div>
-      <!-- 전체/진행중/마감 버튼-->
-      <div class="protect-title2">
-        <label>
-          <input type="radio" name="adopt-radio" value="" checked>
-          전체
-        </label>
-        <label>
-          <input type="radio" name="adopt-radio" value="">
-          진행중
-        </label>
-        <label>
-          <input type="radio" name="adopt-radio" value="">
-          마감
-        </label>
-      </div>
+<main>
+  <!-- 입양 메인 크기 -->
+  <div class="adopt-main-size">
+    <!-- 입양/임보/후기 게시판 바 -->
+    <div class="adopt-nav">
+      <div class="adopt-navList" id="adoptPage">안심입양</div>
+      <div class="adopt-navList" id="protectPage">임시보호</div>
+      <div class="adopt-navList" id="reviewPage">후기</div>
+    </div>
+    <!-- 안심입양 소제목 -->
+    <div class="adopt-title1">
+      임시보호
+    </div>
+    <!-- 전체/진행중 버튼-->
+    <div class="adopt-title2">
+      <label>
+        <input type="radio" name="adopt-radio" value="all"
+               onclick="filterProtection('all')"
+               th:checked="${All}">
+        전체
+      </label>
+      <label>
+        <input type="radio" name="adopt-radio" value="progress"
+               onclick="filterProtection('keep')"
+               th:checked="${Keep}">
+        진행중
+      </label>
+    </div>
 
-      <!-- 임시호보 글 목록 -->
-      <div class="protect-postlist">
-        <a href="../../html/adopt/adopt-protectdetail.html">
-          <div class="protect-post">
-            <div class="protect-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
-            <div class="protect-post-intro">
-              <div class="protect-post-status">[마감]</div>
-              <div class="protect-post-title">말티즈 여아 3세</div>
-            </div>
-            <div class="protect-post-content">데려가주세요 제발 글1</div>
-            <div class="protect-post-content">몽이</div>
-            <div class="protect-post-content"><span>암컷</span>/<span>(중성화O)</span></div>
-            <div class="protect-post-content"><span>2017년생추정</span>/<span>3.5kg</span></div>
-            <div class="protect-post-content">등록일 : <span>2024-10-14</span> / 마감일 : <span>2024-10-31</span></div>
-          </div>
-        </a>
-        <a href="../../html/adopt/adopt-protectdetail.html">
-          <div class="protect-post">
-            <div class="protect-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
-            <div class="protect-post-intro">
-              <div class="protect-post-status">[마감]</div>
-              <div class="protect-post-title">말티즈 여아 3세</div>
-            </div>
-            <div class="protect-post-content">데려가주세요 제발 글1</div>
-            <div class="protect-post-content">몽이</div>
-            <div class="protect-post-content"><span>암컷</span>/<span>(중성화O)</span></div>
-            <div class="protect-post-content"><span>2017년생추정</span>/<span>3.5kg</span></div>
-            <div class="protect-post-content">등록일 : <span>2024-10-14</span> / 마감일 : <span>2024-10-31</span></div>
-          </div>
-        </a>
-        <a href="../../html/adopt/adopt-protectdetail.html">
-          <div class="protect-post">
-            <div class="protect-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
-            <div class="protect-post-intro">
-              <div class="protect-post-status">[마감]</div>
-              <div class="protect-post-title">말티즈 여아 3세</div>
-            </div>
-            <div class="protect-post-content">데려가주세요 제발 글1</div>
-            <div class="protect-post-content">몽이</div>
-            <div class="protect-post-content"><span>암컷</span>/<span>(중성화O)</span></div>
-            <div class="protect-post-content"><span>2017년생추정</span>/<span>3.5kg</span></div>
-            <div class="protect-post-content">등록일 : <span>2024-10-14</span> / 마감일 : <span>2024-10-31</span></div>
-          </div>
-        </a>
-        <a href="../../html/adopt/adopt-protectdetail.html">
-          <div class="protect-post">
-            <div class="protect-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
-            <div class="protect-post-intro">
-              <div class="protect-post-status">[마감]</div>
-              <div class="protect-post-title">말티즈 여아 3세</div>
-            </div>
-            <div class="protect-post-content">데려가주세요 제발 글1</div>
-            <div class="protect-post-content">몽이</div>
-            <div class="protect-post-content"><span>암컷</span>/<span>(중성화O)</span></div>
-            <div class="protect-post-content"><span>2017년생추정</span>/<span>3.5kg</span></div>
-            <div class="protect-post-content">등록일 : <span>2024-10-14</span> / 마감일 : <span>2024-10-31</span></div>
-          </div>
-        </a>
-        <a href="../../html/adopt/adopt-protectdetail.html">
-          <div class="protect-post">
-            <div class="protect-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
-            <div class="protect-post-intro">
-              <div class="protect-post-status">[마감]</div>
-              <div class="protect-post-title">말티즈 여아 3세</div>
-            </div>
-            <div class="protect-post-content">데려가주세요 제발 글1</div>
-            <div class="protect-post-content">몽이</div>
-            <div class="protect-post-content"><span>암컷</span>/<span>(중성화O)</span></div>
-            <div class="protect-post-content"><span>2017년생추정</span>/<span>3.5kg</span></div>
-            <div class="protect-post-content">등록일 : <span>2024-10-14</span> / 마감일 : <span>2024-10-31</span></div>
-          </div>
-        </a>
-        <a href="../../html/adopt/adopt-protectdetail.html">
-          <div class="protect-post">
-            <div class="protect-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
-            <div class="protect-post-intro">
-              <div class="protect-post-status">[마감]</div>
-              <div class="protect-post-title">말티즈 여아 3세</div>
-            </div>
-            <div class="protect-post-content">데려가주세요 제발 글1</div>
-            <div class="protect-post-content">몽이</div>
-            <div class="protect-post-content"><span>암컷</span>/<span>(중성화O)</span></div>
-            <div class="protect-post-content"><span>2017년생추정</span>/<span>3.5kg</span></div>
-            <div class="protect-post-content">등록일 : <span>2024-10-14</span> / 마감일 : <span>2024-10-31</span></div>
-          </div>
-        </a>
-        <a href="../../html/adopt/adopt-protectdetail.html">
-          <div class="protect-post">
-            <div class="protect-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
-            <div class="protect-post-intro">
-              <div class="protect-post-status">[마감]</div>
-              <div class="protect-post-title">말티즈 여아 3세</div>
-            </div>
-            <div class="protect-post-content">데려가주세요 제발 글1</div>
-            <div class="protect-post-content">몽이</div>
-            <div class="protect-post-content"><span>암컷</span>/<span>(중성화O)</span></div>
-            <div class="protect-post-content"><span>2017년생추정</span>/<span>3.5kg</span></div>
-            <div class="protect-post-content">등록일 : <span>2024-10-14</span> / 마감일 : <span>2024-10-31</span></div>
-          </div>
-        </a>
-        <a href="../../html/adopt/adopt-protectdetail.html">
-          <div class="protect-post">
-            <div class="protect-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
-            <div class="protect-post-intro">
-              <div class="protect-post-status">[마감]</div>
-              <div class="protect-post-title">말티즈 여아 3세</div>
-            </div>
-            <div class="protect-post-content">데려가주세요 제발 글1</div>
-            <div class="protect-post-content">몽이</div>
-            <div class="protect-post-content"><span>암컷</span>/<span>(중성화O)</span></div>
-            <div class="protect-post-content"><span>2017년생추정</span>/<span>3.5kg</span></div>
-            <div class="protect-post-content">등록일 : <span>2024-10-14</span> / 마감일 : <span>2024-10-31</span></div>
-          </div>
-        </a>
-        <a href="../../html/adopt/adopt-protectdetail.html">
-          <div class="protect-post">
-            <div class="protect-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
-            <div class="protect-post-intro">
-              <div class="protect-post-status">[마감]</div>
-              <div class="protect-post-title">말티즈 여아 3세</div>
-            </div>
-            <div class="protect-post-content">데려가주세요 제발 글1</div>
-            <div class="protect-post-content">몽이</div>
-            <div class="protect-post-content"><span>암컷</span>/<span>(중성화O)</span></div>
-            <div class="protect-post-content"><span>2017년생추정</span>/<span>3.5kg</span></div>
-            <div class="protect-post-content">등록일 : <span>2024-10-14</span> / 마감일 : <span>2024-10-31</span></div>
-          </div>
-        </a>
+    <!-- 입양 글 목록 -->
+    <div class="adopt-postlist">
+      <div class="adopt-post" th:each="protect : ${ProtectMainList}">
+        <div class="adopt-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
+        <div class="adopt-post-intro">
+          <div th:text="${protect.centerMemberNo}" style="display: none"></div>
+          <div th:text="${protect.protectNo}" style="display: none" class="adoptNo"></div>
+          <div class="adopt-post-status" th:if="${protect.protectStatus} == 'T'" th:text="[진행중]"></div>
+          <div class="adopt-post-status" th:if="${protect.protectStatus} == 'F'" th:text="[마감]"></div>
+          <div class="adopt-post-title" th:text="${protect.protectTitle}"></div>
+        </div>
+        <div class="adopt-post-content" th:text="${protect.protectIntroduce}"></div>
+        <div class="adopt-post-content" th:text="${protect.protectName}"></div>
+        <div class="adopt-post-content">
+          <span th:if="${protect.protectGender == 'M'}" th:text="남자"></span>
+          <span th:if="${protect.protectGender == 'F'}" th:text="남자"></span>
+          /
+          <span th:if="${protect.protectNeutering == 'Y'}" th:text="'중성화(O)'"></span>
+          <span th:if="${protect.protectNeutering == 'N'}" th:text="'중성화(X)'"></span>
+        </div>
+        <div class="adopt-post-content2"><span th:text="${#dates.format(protect.protectBirth, 'yyyy-MM-dd')}"></span>/<span th:text="${protect.protectWeight}"></span></div>
+        <div class="adopt-post-content2">등록일 : <span th:text="${#dates.format(protect.protectRegidate, 'yyyy-MM-dd')}"></span> / 마감일 : <span th:text="${#dates.format(protect.protectPeriodEnd, 'yyyy-MM-dd')}"></span></div>
       </div>
+    </div>
 
-      <br>
+    <br>
 
-      <!-- 입양 등록 버튼 -->
-      <div class="protect-button-box">
-        <a href="../../html/adopt/adopt-protectwrite.html">
-          <button class="protect-button">등록</button>
-        </a>  
-      </div>
+    <!-- 입양 등록 버튼 -->
+    <div class="adopt-button-box" th:if="${centerMemberNo != null}">
+      <a href="/adopt/protect/protectwrite">
+        <button class="adopt-button">등록</button>
+      </a>
+    </div>
 
-      <!-- 페이지네이션 -->
-      <div class="protect-pagenation">
-        <div>&lt;</div>
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>&gt;</div>
-      </div>
-  </main>
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+      <ul class="page-box">
+        <a th:href="@{/adopt/protect(page=${page.startPage - 1})}" class="page-a" th:if="${page.prev}">
+          <li class="page-num prev">&lt</li>
+        </a>
+
+        <!--        th:block은 화면에 영향을 주지않는 가짜 태그
+                    타임리프 문법을 사용하기 위해 만들어 쓴다.
+        -->
+        <th:block th:each="i : ${#numbers.sequence(page.startPage, page.endPage)}">
+          <a th:href="@{/adopt/protect(page=${i})}" class="page-a">
+            <li class="page-num" th:classappend="${i == page.criteria.page ? 'active' : ''}" th:text="${i}"></li>
+          </a>
+        </th:block>
+
+        <a th:href="@{/adopt/protect(page=${page.endPage + 1})}" class="page-a" th:if="${page.next}">
+          <li class="page-num next">&gt</li>
+        </a>
+      </ul>
+    </div>
+
+    <br>
+
+</main>
+
+
 
 </body>
 

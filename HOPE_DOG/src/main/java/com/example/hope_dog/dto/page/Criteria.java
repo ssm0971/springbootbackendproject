@@ -22,8 +22,27 @@ public class Criteria {
     }
 
     public int getPageStart(){
-        return (page - 1) * this.amount;
+        return (page - 1) * this.amount; //시작 인덱스 계산
     }
 
+    public void setPage(int page) {
+        if (page < 1) {
+            this.page = 1; // 최소 페이지 1로 설정
+        } else {
+            this.page = page;
+        }
+    }
+
+    public void setAmount(int amount) {
+        if (amount < 1) {
+            this.amount = 10; // 최소 게시물 수 10으로 설정
+        } else {
+            this.amount = amount;
+        }
+    }
+
+    public void setCate(String cate) {
+        this.cate = cate; // 카테고리 정보 설정
+    }
 
 }

@@ -13,114 +13,129 @@
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <!-- 입양 메인 크기 -->
-    <div class="protect-main-size">
-      <!-- 입양/임보/후기 게시판 바 -->
-      <div class="protect-nav">
-        <div class="protect-navList" id="adoptPage">안심입양</div>
-        <div class="protect-navList" id="protectPage">임시보호</div>
-        <div class="protect-navList" id="reviewPage">후기</div>
-      </div>
+<main>
+  <!-- 입양 메인 크기 -->
+  <div class="adopt-main-size">
+    <!-- 입양/임보/후기 게시판 바 -->
+    <div class="adopt-nav">
+      <div class="adopt-navList" id="adoptPage">안심입양</div>
+      <div class="adopt-navList" id="protectPage">임시보호</div>
+      <div class="adopt-navList" id="reviewPage">후기</div>
+    </div>
 
-      <!-- 제목/작성자/등록일 크기 --> 
-      <div class="protect-detail-box1">
-        <div class="protect-detail-title">웰시코기 데려가세요</div>
-        <div class="protect-detail-info"><span>작성자 : 안성재</span>
-          <sapn>등록일 : 2024-10-05</sapn>
+    <!-- 제목/작성자/등록일 크기 -->
+    <div class="adopt-detail-box1" th:each="protect : ${protectDetailList}">
+      <div class="adopt-detail-title" th:text="${protect.protectTitle}"></div>
+      <div class="adopt-detail-info">
+        <span th:text="'작성자 : ' + ${protect.centerMemberName}"></span>
+        <span th:text="'등록일 : ' + ${#dates.format(protect.protectRegidate, 'yyyy-MM-dd')}"></span>
+      </div>
+    </div>
+
+    <!-- 글내용 크기 -->
+    <div class="adopt-detail-box2" th:each="protect : ${protectDetailList}">
+      <div class="adopt-detail-content">
+        <div class="adopt-detail-basicinfo">
+          <div class="adopt-detail-basicinfo-title">기본정보</div>
+          <div th:text="'입양기한 : ' + ${#dates.format(protect.protectPeriodStart, 'yyyy-MM-dd')} + ' ~ ' + ${#dates.format(protect.protectPeriodEnd, 'yyyy-MM-dd')}"></div>
+          <div th:text="'이름 : ' + ${protect.protectName}"></div>
+          <div th:text="'견종 : ' + ${protect.protectBreed}"></div>
+          <div th:if="${protect.protectNeutering == 'Y'}" th:text="'중성화여부 : ' + 'O'"></div>
+          <div th:if="${protect.protectNeutering == 'N'}" th:text="'중성화여부 : ' + 'X'"></div>
+          <div th:if="${protect.protectGender == 'M'}" th:text="'성별 : ' + '남자'"></div>
+          <div th:if="${protect.protectGender == 'F'}" th:text="'성별 : ' + '여자'"></div>
+          <div th:text="'몸무게 : ' + ${protect.protectWeight}"></div>
+          <div th:text="'생년월일 : ' + ${#dates.format(protect.protectBirth, 'yyyy-MM-dd')}"></div>
+          <div th:text="${protect.protectNo}" style="display: none" class="adoptNo"></div>
+          <div th:text="${protect.centerMemberNo}" style="display: none" class="centerMemberNo"></div>
+        </div>
+        <br>
+
+        <div th:utext="${protect.protectContent}"></div>
+
+        <br>
+
+        <!-- 신청버튼 -->
+        <div class="adopt-submit-box">
+          <button class="adopt-submit-button" type="button" onclick="requestClick()"
+                  th:if="${memberNo != null and protect.protectStatus == 'T'}">
+            신청</button>
         </div>
       </div>
+    </div>
 
-      <!-- 글내용 크기 -->
-      <div class="protect-detail-box2">
-        <div class="protect-detail-content">
-          <div class="protect-detail-basicinfo">
-            <div class="protect-detail-basicinfo-title">기본정보</div>
-            <div>입양기한 : 2024-10-15 ~ 2024-10-31</div>
-            <div>견종 : 시츄</div>
-            <div>중성화 여부 : O</div>
-            <div>성별 : 남자</div>
-            <div>몸무게 : 3.8kg</div>
-            <div>생년월일 : 2021-01-14</div>
+    <br>
+
+    <!-- 버튼 -->
+    <div class="adopt-detail-box3" th:each="protect : ${protectDetailList}">
+      <div>
+        <button class="adopt-modify-button" type="button" onclick="modifyClick()"
+                th:if="${centerMemberNo == protect.centerMemberNo}">수정</button>
+        <button class="adopt-delete-button" type="button" onclick="deleteClick()"
+                th:if="${centerMemberNo == protect.centerMemberNo}">삭제</button>
+      </div>
+      <button class="adopt-end-button" type="button" onclick="endClick()"
+              th:if="${centerMemberNo == protect.centerMemberNo and protect.protectStatus == 'T'}">마감</button>
+      <button class="adopt-end-button" type="button" onclick="ContentReportClick()"
+              th:if="${centerMemberNo != protect.centerMemberNo and (centerMemberNo != null or memberNo != null)}">신고</button>
+    </div>
+
+    <br>
+
+    <!-- 댓글 수정/삭제/신고 -->
+    <div th:with="protectNo=${protectDetailList[0]?.protectNo}">
+      <div class="adopt-detail-commentbox" th:each="protectComment, iterStat : ${protectCommentList}">
+        <div class="adopt-detail-name">
+          <div class="adopt-detail-name" th:text="${protectComment.commentWriterName}"></div>
+          <div class="adoptCommentNo" th:text="${protectComment.protectCommentNo}" style="display: none"></div>
+          <div class="adopt-comment-buttonBox" th:id="'adopt-comment-buttonBox-' + ${iterStat.index}">
+            <button class="adopt-comment-button" type="button"
+                    th:onclick="'modifyCommentBtnClick(' + ${iterStat.index} + ')'"
+                    th:if="${(centerMemberNo != null and centerMemberNo == protectComment.protectCommentWriter)
+                   or (memberNo != null and memberNo == protectComment.protectCommentWriter)}">수정</button>
+            <button class="adopt-comment-button" type="button"
+                    th:onclick="'CommentDeleteClick(' + ${protectComment.protectCommentNo} + ', ' + ${protectNo} + ')'"
+                    th:if="${(centerMemberNo != null and centerMemberNo == protectComment.protectCommentWriter)
+                   or (memberNo != null and memberNo == protectComment.protectCommentWriter)}">삭제</button>
+            <button class="adopt-comment-button" type="button"
+                    th:onclick="'CommentReportClick(' + ${protectComment.protectCommentNo} + ', ' + ${protectNo} + ')'"
+                    th:if="${(centerMemberNo != null or memberNo != null)
+                   and (centerMemberNo != protectComment.protectCommentWriter)
+                   and (memberNo != protectComment.protectCommentWriter)}">신고</button>
           </div>
-
-          <br>
-
-          <img src="../../img/adopt-main.jpg" width="200px" height="200px">
-          <img src="../../img/adopt-main.jpg" width="200px" height="200px">
-          <img src="../../img/adopt-main.jpg" width="200px" height="200px">
-          <div>모수에서 킥이었어요</div>
-
-          <br>
-
-          <!-- 신청버튼 -->
-          <div class="protect-submit-box">
-            <a href="../../html/adopt/adopt-protectrequest.html">
-            <button class="protect-submit-button" type="button">신청</button>
-          </a>
-          </div>
         </div>
+
+        <div class="adopt-detail-comment" th:id="'adopt-comment-' + ${iterStat.index}" th:text="${protectComment.protectComment}"></div>
+
+        <!-- 댓글 수정 form 추가 -->
+        <form th:action="@{/adopt/protect/protectCommentModi(protectNo=${protectNo})}" method="post"
+              th:id="'adopt-modifyInput-' + ${iterStat.index}" style="display:none;">
+          <input type="hidden" name="protectCommentNo" th:value="${protectComment.protectCommentNo}">
+          <input type="hidden" name="protectNo" th:value="${protectNo}">
+          <input type="text" name="protectComment" class="adopt-modify-comment" th:value="${protectComment.protectComment}">
+          <button type="submit" class="adopt-comment-button">등록</button>
+        </form>
+
+        <div class="adopt-detail-date" th:text="${#dates.format(protectComment.protectCommentRegidate, 'yyyy-MM-dd')}"></div>
       </div>
+    </div>
 
-      <br>
 
-      <!-- 버튼 -->
-      <div class="protect-detail-box3">
-        <div>
-          <button class="protect-modify-button" type="button" onclick="modifyClick()">수정</button>　
-          <button class="protect-delete-button" type="button" onclick="deleteClick()">삭제</button>
-        </div>
-        <button class="protect-end-button" onclick="endClick()">마감</button>
-        <!-- 신고버튼 자기글엔 안나옴 + 로그인한 회원만 노출 / 반대의 경우 신고버튼 숨기기 -->
-        <!-- <button class="protect-end-button" type="button" onclick="ContentReportClick()">신고</button> -->
-      </div>
 
-      <br>
 
-      <!-- 댓글 주석처리한건 백단할때 로그인/비로그인, 일반회원/센터회원, 본인작성/타인작성 if로 노출 결정 -->
-      <!-- 댓글창 / 자기댓글-->
-      <div class="protect-detail-commentbox">
-        <div class="protect-detail-name">에드워드리
-          <div id="protect-comment-buttonBox">
-            <button class="protect-comment-button" type="button" onclick="modifyCommentBtnClcik()">수정</button>
-            <button class="protect-comment-button" type="button" onclick="CommentDeleteClick()">삭제</button>
-          </div>
-        </div>
-        <div class="protect-detail-comment" id="protect-comment">싫어요</div>
-        <div class="protect-detail-comment" id="protect-modifyInput" style="display:none;">
-          <input class="protect-modify-comment">
-          <button class="protect-comment-button" onclick="editCommentBtnClcik()">등록</button>
-        </div>
-        <div class="protect-detail-date">2024-10-14</div>
-      </div>
+    <br>
 
-      <!-- 댓글창 / 타인댓글-->
-      <div class="protect-detail-commentbox">
-        <div class="protect-detail-name">에드워드리
-          <div id="protect-comment-buttonBox">
-            <!-- <button class="protect-comment-button" type="button" onclick="modifyCommentBtnClcik()">수정</button> -->
-            <!-- <button class="protect-comment-button" type="button" onclick="CommentDeleteClick()">삭제</button> -->
-            <button class="protect-comment-button" type="button" onclick="CommentReportClick()">신고</button>
-          </div>
-        </div>
-        <div class="protect-detail-comment" id="protect-comment">싫어요</div>
-        <div class="protect-detail-comment" id="protect-modifyInput" style="display:none;">
-          <input class="protect-modify-comment">
-          <!-- <button class="protect-comment-button" onclick="editCommentBtnClcik()">등록</button> -->
-        </div>
-        <div class="protect-detail-date">2024-10-14</div>
-      </div>
-
-      <br>
-
-      <!-- 댓글입력 -->
-      <form>
-        <input class="protect-detail-commentregi" type="text" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요">　
-        <button class="protect-commentregi-button">등록</button>
+    <!-- 댓글입력 -->
+    <div th:if="${memberNo != null or centerMemberNo != null}">
+      <form action="/adopt/protect/protectCommentRegi" method="get" th:each="protect : ${protectDetailList}">
+        <input class="adopt-detail-commentregi" type="text" name="protectComment" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요" maxlength="1000">
+        <input th:value="${protect.protectNo}" style="display: none" name="protectNo">
+        <button class="adopt-commentregi-button" type="submit">등록</button>
       </form>
+    </div>
 
-      <br>
-  </main>
+    <br>
+</main>
 
 </body>
 

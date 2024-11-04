@@ -4,7 +4,9 @@ import com.example.hope_dog.dto.adopt.adopt.AdoptDetailDTO;
 import com.example.hope_dog.dto.member.MemberDTO;
 import com.example.hope_dog.dto.member.MemberSessionDTO;
 import com.example.hope_dog.dto.mypage.*;
+import com.example.hope_dog.dto.notice.NoticeListDTO;
 import com.example.hope_dog.dto.notice.NoticeViewDTO;
+import com.example.hope_dog.dto.page.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,10 +25,18 @@ public interface MypageMapper {
 
     List<MypagePostsDTO> mypagePostsList(Long memberNo);
 
-    List<MypageNoteReceiveDTO> mypageNoteReceiveList(Long memberNo);
+//    List<MypageNoteReceiveDTO> mypageNoteReceiveList(Long memberNo);
+//
+//    List<MypageNoteSendDTO> mypageNoteSendList(Long memberNo);
 
-    List<MypageNoteSendDTO> mypageNoteSendList(Long memberNo);
+    //페이지네이션
+//    List<MypagePostsDTO> selectAll();
+//
+//    int selectTotal();
+//
+//    List<MypagePostsDTO> selectAllPage(Criteria criteria);
 
+    //
 //    MypageDTO mypageProfile(@Param("memberNo") Long memberNo);
 
 //    List<NoticeViewDTO> noticeView(Long noticeNo);

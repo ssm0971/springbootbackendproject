@@ -26,3 +26,12 @@ document.querySelectorAll('.adopt-post').forEach(function(element) {
         location.href = `/adopt/adopt/adoptdetail?adoptNo=${adoptNo}`; // 상세 페이지로 이동
     });
 });
+
+//전체게시글 / 모집중인 게시글 구분
+function filterAdoption(status) {
+    if (status === 'all') {
+        location.href = '/adopt/adopt';
+    } else if (status === 'keep') {
+        location.href = '/adopt/adoptKeep';
+    }
+}

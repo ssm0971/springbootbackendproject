@@ -35,8 +35,8 @@
                 <div class="container-margin">
                     <!-- 헤더 -->
                     <div class="delete-box-layout">
-                        <form class="search-box" action="" method="get">
-                            <input type="text" class="search-text" name=""placeholder="검색어를 입력하세요.">
+                        <form class="search-box" action="/admin/searchNoteboxIn" method="get">
+                            <input type="text" class="search-text" name="keyword" placeholder="검색어를 입력하세요.">
                             <button class="search-btn" type="submit">검색</button>
                             <button class="search-btn" type="submit" th:href="@{/admin/noteboxIn}">초기화</button>
                          </form>
@@ -49,14 +49,16 @@
                     <section class="board-info-box-layout">
                         <div class="board-info-box">
                             <div class="board-info-title-box">
-                                <span><a class="notebox-btn" th:href="@{/admin/noteboxIn}">받은 쪽지함</a>&emsp;&emsp;&emsp;<a class="notebox-btn" th:href="@{/admin/noteboxOut}">보낸 쪽지함</a></span>
-                                <span class="write-btn"><a href="./admin-notebox-write.html" >쪽지 쓰기</a></span>
+                            <span><a class="notebox-btn" th:href="@{/admin/noteboxIn}" th:classappend="${currentPage == 'receive'} ? 'active'">받은 쪽지함</a>
+                                &emsp;&emsp;&emsp;
+                                <a class="notebox-btn" th:href="@{/admin/noteboxOut}" th:classappend="${currentPage == 'send'} ? 'active'">보낸 쪽지함</a></span>
+                                <span class="write-btn"><a href="/admin/noteboxWrite" >쪽지 쓰기</a></span>
                             </div>
-                    
+
                             <div class="info-table">
                                 <!-- Header -->
                                 <div class="info-row header-row">
-                                    <div class="info-cell checkbox-line"> 
+                                    <div class="info-cell checkbox-line">
                                         <input type="checkbox" id="allSelect">
                                     </div>
                                     <div class="info-cell-cate info-cell">송신자</div>
@@ -69,10 +71,12 @@
                                     <div class="info-cell checkbox-line">
                                         <input type="checkbox" class="checkbox" name="check">
                                     </div>
+                                    <a th:href="@{/admin/noteboxInDetail(noteboxReceiveNo=${noteReceive.noteboxReceiveNo})}" style="display: flex; justify-content: center">
                                     <div class="info-cell info-cell-cate" th:text="${noteReceive.noteboxReceiveSname}"></div>
                                     <div class="info-cell info-cell-cate">관리자</div>
                                     <div class="info-cell info-cell-title" th:text="${noteReceive.noteboxReceiveTitle}"></div>
                                     <div class="info-cell info-cell-content" th:text="${noteReceive.noteboxReceiveContent}"></div>
+                                    </a>
                                 </div>
                             </div>
                         </div>

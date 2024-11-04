@@ -25,14 +25,18 @@
       <div class="adopt-title1">
         안심입양
       </div>
-      <!-- 전체/진행중/마감 버튼-->
+      <!-- 전체/진행중 버튼-->
       <div class="adopt-title2">
         <label>
-          <input type="radio" name="adopt-radio" value="" checked>
+          <input type="radio" name="adopt-radio" value="all"
+                 onclick="filterAdoption('all')"
+                 th:checked="${All}">
           전체
         </label>
         <label>
-          <input type="radio" name="adopt-radio" value="">
+          <input type="radio" name="adopt-radio" value="progress"
+                 onclick="filterAdoption('keep')"
+                 th:checked="${Keep}">
           진행중
         </label>
       </div>
@@ -57,8 +61,8 @@
               <span th:if="${adopt.adoptNeutering == 'Y'}" th:text="'중성화(O)'"></span>
               <span th:if="${adopt.adoptNeutering == 'N'}" th:text="'중성화(X)'"></span>
             </div>
-            <div class="adopt-post-content"><span th:text="${#dates.format(adopt.adoptBirth, 'yyyy-MM-dd')}"></span>/<span th:text="${adopt.adoptWeight}"></span></div>
-            <div class="adopt-post-content">등록일 : <span th:text="${#dates.format(adopt.adoptRegidate, 'yyyy-MM-dd')}"></span> / 마감일 : <span th:text="${#dates.format(adopt.adoptPeriodEnd, 'yyyy-MM-dd')}"></span></div>
+            <div class="adopt-post-content2"><span th:text="${#dates.format(adopt.adoptBirth, 'yyyy-MM-dd')}"></span>/<span th:text="${adopt.adoptWeight}"></span></div>
+            <div class="adopt-post-content2">등록일 : <span th:text="${#dates.format(adopt.adoptRegidate, 'yyyy-MM-dd')}"></span> / 마감일 : <span th:text="${#dates.format(adopt.adoptPeriodEnd, 'yyyy-MM-dd')}"></span></div>
           </div>
       </div>
 
@@ -94,7 +98,10 @@
       </div>
 
       <br>
+
   </main>
+
+
 
 </body>
 

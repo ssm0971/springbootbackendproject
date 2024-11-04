@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>커뮤니티 게시판 회원(전체)</title>
+  <link rel="stylesheet" th:href="@{/css/commu/commu.css}"/>
+  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+  <!-- 페이지네이션 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+  <script defer th:src="@{/js/commu/commu-post.js}"></script>
+  <script defer th:src="@{/js/main/main.js}"></script>
+</head>
+
+<body>
+<!-- 헤더를 main 밖으로 이동 -->
+<header th:replace="~{fragment/header :: header}"></header>
+  <main>
+    <div class="commu-main">
+      <div class="commu">
+        <!--게시글 상단-->
+        <div class="commu-header">
+          <div class="navcontainer">
+            <ul id="navlist">
+              <li><a id="current" th:href="@{/commu/filter(cate='전체')}">전체</a></li>
+              <li><a th:href="@{/commu/good(cate='인기')}">인기</a></li>
+              <li><a th:href="@{/commu/filter(cate='자유')}">자유</a></li>
+              <li><a th:href="@{/commu/filter(cate='봉사후기')}">봉사 후기</a></li>
+              <li><a th:href="@{/commu/filter(cate='질문')}">질문</a></li>
+              <li><a th:href="@{/commu/filter(cate='자랑')}">자랑</a></li>
+            </ul>
+          </div>
+        </div>
+        <!--게시글 칼럼 구분-->
+        <div class="commu-container">
+          <div class="commu-container-cate">분류</div>
+          <div class="commu-container-title">제목</div>
+          <div class="commu-container-audate">닉네임</div>
+          <div class="commu-container-audate">작성일</div>
+          <div class="commu-container-good">조회수</div>
+
+        </div>
+        <!--게시글-->
+        <div class="commu-ul-all">
+          <ul class="commu-ul-main" th:each="commu : ${commuList}">
+            <li>
+              <div class="commu-cate" th:text="${commu.commuCate}"></div>
+            </li>
+            <li>
+              <div class="commu-title">
+                <a th:href="@{/commu/post/{no}(no=${commu.commuNo})}" th:text="${commu.commuTitle}"></a>
+              </div>
+            </li>
+            <li>
+              <div class="commu-author">
+                <span th:if="${commu.commuWriter % 2 != 0}" th:text="${commu.memberNickname}"></span>
+                <span th:if="${commu.commuWriter % 2 == 0}" th:text="${commu.centerMemberName}"></span>
+              </div>
+            </li>
+            <li>
+              <div class="commu-date" th:text="${#dates.format(commu.commuRegiDate, 'yyyy-MM-dd')}"></div>
+            </li>
+            <li>
+              <div class="commu-good" th:text="${commu.commuGood}"></div>
+
+            </li>
+          </ul>
+        </div>
+        <div id="pagination"></div>
+
+
+      <!-- 검색 창-->
+      <div class="bottom-search">
+        <form method="get" action="commu/main/commuSearch" name="search">
+          <select name="searchtype" id="search-type">
+            <option value="nickname">닉네임</option>
+            <option value="title">제목</option>
+          </select>
+          <span class="default">
+            <input type="text" name="keyword" id="keyword" value="" placeholder="검색어를 입력하세요">
+            <input type="submit" value="검색">
+          </span>
+        </form>
+      </div>
+
+        <div class="commu-admain-btuall">
+          <a class="commu-admain-btu" th:href="@{/commu/commuWrite}">
+            <span class="commu-admain-btu-sp">글쓰기</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+
+<footer>
+  <div class="footer-links">
+    <a href="../member/term.html">이용약관</a> |
+    <a href="../member/term.html">개인정보처리방침</a>
+  </div>
+  <h6>(06236)서울특별시 강남구 테헤란로 146, 신한은행 건물 (3층) | 대표이사 강수정 김규열 김민채 신승민 이기철 정시우 | 회사업자등록번호104-81-4522690 |<br>
+    통신판매업신고번호 2017-서울용산-066 | 사업자정보확인호스팅사업자 NT넥스트레벨 대표이메일 nextlevel_224@next.com<br>
+    © NEXT LEVEL. All Rights Reserved</h6>
+</footer>
+
+
+</html>

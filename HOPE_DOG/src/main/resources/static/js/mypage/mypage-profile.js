@@ -11,5 +11,5 @@ document.querySelector('#posts').addEventListener('click', function() {
 });
 
 document.querySelector('#inbox').addEventListener('click', function() {
-    location.href = '/mypage/noteboxR'; // 목록 페이지로 이동
+    location.href = '/mypage/noteboxReceiveList'; // 목록 페이지로 이동
 });

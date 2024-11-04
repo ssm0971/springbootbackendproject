@@ -13,12 +13,14 @@ import com.example.hope_dog.service.centermypage.WriteInfoService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -60,12 +62,87 @@ class CenterMypageController {
         return "centermypage/center-mypage-profile-update"; // 업데이트 페이지 HTML 파일 경로
     }
 
-    // 프로필 수정 처리
+    // 이메일 중복 체크
+    @GetMapping("/check-email")
+    @ResponseBody
+    public ResponseEntity<Map<String, Boolean>> checkCenterEmail(
+            @RequestParam(name = "newEmail") String newEmail,
+            @RequestParam(name = "currentEmail") String currentEmail) {
+
+        // 중복 검사 수행
+        boolean available = centerMypageService.updateCheckCenterEmail(newEmail, currentEmail);
+        return ResponseEntity.ok(Map.of("available", available));
+    }
+
+
+//    @PostMapping("/updateProfileOk") // HTTP POST 요청을 처리하는 메서드
+//    @ResponseBody // 메서드의 반환값을 HTTP 응답 본문에 직접 작성
+//    public ResponseEntity<Map<String, String>> updateProfile(@ModelAttribute CenterUpdateProfileDTO centerUpdateProfileDTO) {
+//        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+//
+//        if (centerMemberNo == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "로그인이 필요합니다."));
+//        }
+//
+//        centerUpdateProfileDTO.setCenterMemberNo(centerMemberNo);
+//
+//        try {
+//            int updateCount = centerMypageService.updateCenterProfile(centerUpdateProfileDTO);
+//            String message = (updateCount > 0)
+//                    ? "프로필이 성공적으로 업데이트되었습니다."
+//                    : "프로필 업데이트에 실패했습니다.";
+//
+//            return ResponseEntity.ok(Map.of("message", message));
+//        } catch (Exception e) {
+//            log.error("프로필 업데이트 중 오류 발생", e);
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "프로필 업데이트 중 오류가 발생했습니다."));
+//        }
+//    }
+
+
+//    @PostMapping("/updateProfileOk") // HTTP POST 요청을 처리하는 메서드
+//    @ResponseBody // 메서드의 반환값을 HTTP 응답 본문에 직접 작성
+//    public ResponseEntity<Map<String, String>> updateProfile(@ModelAttribute CenterUpdateProfileDTO centerUpdateProfileDTO) {
+//        // 세션에서 현재 사용자의 centerMemberNo를 가져옴
+//        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+//
+//        // 사용자가 로그인하지 않은 경우
+//        if (centerMemberNo == null) {
+//            // 로그인 필요 메시지를 포함하여 401 Unauthorized 응답 반환
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "로그인이 필요합니다."));
+//        }
+//
+//        // centerMemberNo를 DTO에 설정하여 업데이트할 프로필 정보를 준비
+//        centerUpdateProfileDTO.setCenterMemberNo(centerMemberNo);
+//
+//        // 프로필 업데이트 시도
+//        try {
+//            // 프로필 업데이트를 수행하고, 업데이트된 데이터의 수를 반환받음
+//            int updateCount = centerMypageService.updateCenterProfile(centerUpdateProfileDTO);
+//
+//            // 업데이트가 성공적으로 이루어진 경우
+//            if (updateCount > 0) {
+//                // 성공 메시지를 포함하여 200 OK 응답 반환
+//                return ResponseEntity.ok(Map.of("message", "프로필이 성공적으로 업데이트되었습니다."));
+//            } else {
+//                // 업데이트가 실패한 경우
+//                return ResponseEntity.ok(Map.of("message", "프로필 업데이트에 실패했습니다."));
+//            }
+//        } catch (Exception e) {
+//            // 예외 발생 시 오류 메시지를 로그에 기록
+//            log.error("프로필 업데이트 중 오류 발생", e);
+//            // 내부 서버 오류 메시지를 포함하여 500 Internal Server Error 응답 반환
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "프로필 업데이트 중 오류가 발생했습니다."));
+//        }
+//    }
+
+
+
     @PostMapping("/updateProfileOk")
-    public String updateProfile(@ModelAttribute CenterUpdateProfileDTO centerUpdateProfileDTO, Model model) {
+    public String updateProfile(@ModelAttribute CenterUpdateProfileDTO centerUpdateProfileDTO, RedirectAttributes redirectAttributes) {
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
         if (centerMemberNo == null) {
-            model.addAttribute("errorMessage", "로그인이 필요합니다.");
+            redirectAttributes.addFlashAttribute("errorMessage", "로그인이 필요합니다.");
             return "redirect:/login";
         }
 
@@ -76,17 +153,46 @@ class CenterMypageController {
         try {
             int updateCount = centerMypageService.updateCenterProfile(centerUpdateProfileDTO);
             if (updateCount > 0) {
-                model.addAttribute("successMessage", "프로필이 성공적으로 업데이트되었습니다.");
+                redirectAttributes.addFlashAttribute("successMessage", "프로필이 성공적으로 업데이트되었습니다.");
             } else {
-                model.addAttribute("errorMessage", "프로필 업데이트에 실패했습니다.");
+                redirectAttributes.addFlashAttribute("errorMessage", "프로필 업데이트에 실패했습니다.");
             }
         } catch (Exception e) {
             log.error("프로필 업데이트 중 오류 발생", e);
-            model.addAttribute("errorMessage", "프로필 업데이트 중 오류가 발생했습니다.");
+            redirectAttributes.addFlashAttribute("errorMessage", "프로필 업데이트 중 오류가 발생했습니다.");
         }
 
         return "redirect:/centerMypage/centerProfile"; // 업데이트 후 리다이렉트할 페이지
     }
+
+
+//    // 프로필 수정 처리
+//    @PostMapping("/updateProfileOk")
+//    public String updateProfile(@ModelAttribute CenterUpdateProfileDTO centerUpdateProfileDTO, Model model) {
+//        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+//        if (centerMemberNo == null) {
+//            model.addAttribute("errorMessage", "로그인이 필요합니다.");
+//            return "redirect:/login";
+//        }
+//
+//        // centerMemberNo를 DTO에 설정
+//        centerUpdateProfileDTO.setCenterMemberNo(centerMemberNo);
+//
+//        // 프로필 업데이트 시도
+//        try {
+//            int updateCount = centerMypageService.updateCenterProfile(centerUpdateProfileDTO);
+//            if (updateCount > 0) {
+//                model.addAttribute("successMessage", "프로필이 성공적으로 업데이트되었습니다.");
+//            } else {
+//                model.addAttribute("errorMessage", "프로필 업데이트에 실패했습니다.");
+//            }
+//        } catch (Exception e) {
+//            log.error("프로필 업데이트 중 오류 발생", e);
+//            model.addAttribute("errorMessage", "프로필 업데이트 중 오류가 발생했습니다.");
+//        }
+//
+//        return "redirect:/centerMypage/centerProfile"; // 업데이트 후 리다이렉트할 페이지
+//    }
 
 //    // 프로필 수정 처리
 //    @PostMapping("/updateProfileOk")

@@ -18,6 +18,7 @@
   
 <main>
   <div class="post-guest-main"  th:each="donation : ${donationViewList}">
+    <section class="dona-top">
       <div class="post-guest">
         <div class="topTitle" th:text="${donation.donaTitle}"></div>
           <div id="line"></div>
@@ -32,77 +33,65 @@
             </div>
             <div class="notice-addetail-content">
               <div class="notice-addetail-tcontent">작성일</div>
-              <div class="notice-addetail-ttxt" th:text="${#dates.format(donation.donaRegidate, 'yyyy-MM-dd HH:mm')}"></div></div>
+              <div class="notice-addetail-ttxt" th:text="${#dates.format(donation.donaRegidate, 'yyyy-MM-dd HH:mm')}"></div>
             </div>
 
             <div class="notice-addetail-maincont"  th:text="${donation.donaContent}"></div>
           </div>
         </div>
       </div>
-
+    </section>
     <section class="dona-bottom">
-      <div class="btn-wrap">
-        <th:block th:if="${donaion.centerMemberNo == session.centerMemberNo}">
-          <button type="button" class="btn-modify" th:data-id="${donaion.donaNo}">수정</button>
-          <button type="button" class="btn-remove" th:data-id="${donaion.donaNo}">삭제</button>
-        </th:block>
-        <button type="button" class="btn-back">뒤로 가기</button>
-      </div>
+        <div class="btn-wrap">
+          <div class="donaNo" th:text="${donation.donaNo}" style="display: none;"></div>
+          <button class="btn-modify" type="button" onclick="modifyClick()"
+                  th:if="${centerMemberNo == donation.centerMemberNo}">수정</button>
+          <button class="btn-remove" type="button" onclick="deleteClick()"
+                  th:if="${centerMemberNo == donation.centerMemberNo}">삭제</button>
+        </div>
 
-<!--      <div class="dona-button">-->
-<!--        <input type="hidden" name="centerMemberNo" th:value="${session.centerMemberNo}">-->
-<!--          <div th:if="${session.centerMemberNo == donation.centerMemberNo}">-->
-<!--            <div class="dona-admain-btuall">-->
-<!--                <button class="btn-modify" type="button">-->
-<!--                  <span class="btn-modify-sp" th:data="${donaNo}">수정</span>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        <form id="deleteForm" method="post">-->
-<!--          <input type="hidden" name="donaNo" value="${donation.donaNo}"/>-->
-<!--          <div class="dona-admain-btuall-delete">-->
-<!--            <button class="btn-remove" type="button" onclick="goDelete()">-->
-<!--              <span class="btn-remove-sp">삭제</span>-->
-<!--            </button>-->
-<!--          </div>-->
-<!--        </form>-->
-<!--      </div>-->
           <div class="dona-admain-btuall-complaint">
-            <button class="dona-admain-btu-complaint" type="button">
+            <a th:href="@{/dona/list}">
+              <button class="dona-admain-btu-complaint" type="button">
               <span class="dona-admain-btu-complaint-sp">목록</span>
-            </button>
+              </button>
+            </a>
           </div>
-      <!-- 댓글창 -->
-      <se class="dona-detail-box4">
-        <div class="dona-detail-commentbox">
-          <div class="dona-detail-name">행복이</div>
-          <div class="dona-detail-comment" id="dona-comment">저요</div>
-          <div class="dona-detail-comment" id="dona-modifyInput" style="display:none;">
+      <div id="bottom-line"></div>
+
+      <section class="dona-detail-box4">
+        <div class="dona-detail-commentbox"  th:each="donaComment : ${donationComment}">
+          <div class="dona-detail-name"  th:text="${donaComment.commentWriterName}">행복이</div>
+          <div class="dona-comment-buttonBox" id="adopt-comment-buttonBox">
+            <button class="dona-comment-button" type="button" onclick="modifyCommentBtnClcik()">수정</button>
+            <button class="dona-comment-button" type="button" onclick="CommentDeleteClick()">삭제</button>
+            <button class="dona-comment-button" type="button" onclick="CommentReportClick()">신고</button>
+          </div>
+          <div class="dona-detail-comment" id="dona-comment" th:text="${donaComment.donaCommentContent}"></div>
+          <div class="dona-detail-date" th:text="${#dates.format(donaComment.donaCommentRegidate, 'yyyy-MM-dd')}"></div>
+<!--          <div class="dona-detail-comment" id="dona-modifyInput" style="display:none;">-->
+          <div class="dona-detail-comment" id="dona-modifyInput">
             <input class="dona-modify-comment">
             <button class="dona-comment-button" onclick="editCommentBtnClcik()">등록</button>
           </div>
-          <div id="dona-comment-buttonBox">
-            <button class="dona-comment-button" type="button" onclick="modifyCommentBtnClcik()">수정</button>
-            <button class="dona-comment-button" type="button" onclick="CommentDeleteClick()">삭제</button>
-          </div>
-          <div class="dona-detail-date">2024-10-14</div>
         </div>
-        <div class="dona-detail-commentbox">
-          <div class="dona-detail-name">아가다</div>
-          <div class="dona-detail-comment" id="dona-comment">저여!</div>
-          <div class="dona-detail-comment" id="dona-modifyInput" style="display:none;">
-            <input class="dona-modify-comment">
-            <button class="dona-comment-button" onclick="editCommentBtnClcik()">등록</button>
-          </div>
-          <div id="dona-comment-buttonBox">
-            <button class="dona-comment-button" type="button" onclick="modifyCommentBtnClcik()">수정</button>
-            <button class="dona-comment-button" type="button" onclick="CommentDeleteClick()">삭제</button>
-          </div>
-          <div class="dona-detail-date">2024-10-14</div>
-        </div>
+      </section>
     </section>
   </div>
+
+  <form th:action="@{/dona/donaCommentModi(donaNo=${donaNo})}" method="post"
+        th:id="'dona-modifyInput-' + ${iterStat.index}" style="display:none;">
+    <input type="hidden" name="donaCommentNo" th:value="${donationComment.donaCommentNo}">
+    <input type="hidden" name="donaNo" th:value="${donaNo}">
+    <input type="text" name="donaComment" class="dona-modify-comment" th:value="${donationComment.donaCommentConent}">
+    <button type="submit" class="dona-comment-button">등록</button>
+  </form>
+
+
 </main>
 </body>
+
+
 
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 

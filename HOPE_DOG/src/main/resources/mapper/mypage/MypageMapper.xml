@@ -48,12 +48,12 @@
         SELECT
             'CAR' AS TYPE,
             C.CAR_TITLE AS TITLE,
-            M.MEMBER_NICKNAME AS WRITER,  -- 가정: TBL_MEMBER에 NICKNAME 컬럼이 있음
+            M.MEMBER_NICKNAME AS WRITER,
             C.CAR_REGIDATE AS REGIDATE
         FROM
             TBL_CAR C
                 JOIN
-            TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO  -- 작성자 매핑
+            TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO
         WHERE M.MEMBER_NO = #{memberNo}
         UNION ALL
         SELECT
@@ -78,42 +78,90 @@
             TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO
         WHERE M.MEMBER_NO = #{memberNo}
     </select>
-    <select id="mypageNoteReceiveList" resultType="MypageNoteReceiveDTO">
-        SELECT
-            N.NOTEBOX_RECEIVE_TITLE,
-            N.NOTEBOX_RECEIVE_CONTENT,
-            N.NOTEBOX_RECEIVE_READ,
-            N.NOTEBOX_RECEIVE_REGIDATE,
-            CASE
-                WHEN MOD(N.NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = N.NOTEBOX_RECEIVE_S)
-                WHEN MOD(N.NOTEBOX_RECEIVE_S, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = N.NOTEBOX_RECEIVE_S)
-                END AS NOTEBOX_RECEIVE_S_NAME,  -- 송신자 이름
-            CASE
-                WHEN MOD(N.NOTEBOX_RECEIVE_R, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = N.NOTEBOX_RECEIVE_R)
-                WHEN MOD(N.NOTEBOX_RECEIVE_R, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = N.NOTEBOX_RECEIVE_R)
-                END AS NOTEBOX_RECEIVE_R_NAME   -- 수신자 이름
-        FROM
-            TBL_NOTEBOX_RECEIVE N
-        WHERE
-            N.NOTEBOX_RECEIVE_R = #{memberNo}
-    </select>
 
-    <select id="mypageNoteSendList" resultType="MypageNoteSendDTO">
-        SELECT
-            N.NOTEBOX_SEND_TITLE,
-            N.NOTEBOX_SEND_CONTENT,
-            N.NOTEBOX_SEND_REGIDATE,
-            CASE
-                WHEN MOD(N.NOTEBOX_SEND_S, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = N.NOTEBOX_SEND_S)
-                WHEN MOD(N.NOTEBOX_SEND_S, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = N.NOTEBOX_SEND_S)
-                END AS NOTEBOX_SEND_S_NAME,  -- 송신자 이름
-            CASE
-                WHEN MOD(N.NOTEBOX_SEND_R, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = N.NOTEBOX_SEND_R)
-                WHEN MOD(N.NOTEBOX_SEND_R, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = N.NOTEBOX_SEND_R)
-                END AS NOTEBOX_SEND_R_NAME   -- 수신자 이름
-        FROM
-            TBL_NOTEBOX_SEND N
-        WHERE
-            N.NOTEBOX_SEND_R = #{memberNo}
-    </select>
+<!--    <select id="selectTotal" resultType="int">-->
+<!--        SELECT COUNT(*) AS TOTAL_COUNT-->
+<!--        FROM (-->
+<!--                 SELECT-->
+<!--                     'CAR' AS TYPE,-->
+<!--                     C.CAR_TITLE AS TITLE,-->
+<!--                     M.MEMBER_NICKNAME AS WRITER,-->
+<!--                     C.CAR_REGIDATE AS REGIDATE-->
+<!--                 FROM-->
+<!--                     TBL_CAR C-->
+<!--                         JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO-->
+<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
+
+<!--                 UNION ALL-->
+
+<!--                 SELECT-->
+<!--                     'COMMU' AS TYPE,-->
+<!--                     CO.COMMU_TITLE AS TITLE,-->
+<!--                     M.MEMBER_NICKNAME AS WRITER,-->
+<!--                     CO.COMMU_REGIDATE AS REGIDATE-->
+<!--                 FROM-->
+<!--                     TBL_COMMU CO-->
+<!--                         JOIN TBL_MEMBER M ON CO.COMMU_WRITER = M.MEMBER_NO-->
+<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
+
+<!--                 UNION ALL-->
+
+<!--                 SELECT-->
+<!--                     'REVIEW' AS TYPE,-->
+<!--                     R.REVIEW_TITLE AS TITLE,-->
+<!--                     M.MEMBER_NICKNAME AS WRITER,-->
+<!--                     R.REVIEW_REGIDATE AS REGIDATE-->
+<!--                 FROM-->
+<!--                     TBL_REVIEW R-->
+<!--                         JOIN TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO-->
+<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
+<!--             ) AS SUBQUERY-->
+<!--    </select>-->
+
+<!--    <select id="selectAllPage" parameterType="Criteria" resultType="MypagePostsDTO">-->
+<!--    <![CDATA[-->
+<!--        SELECT TYPE, TITLE, WRITER, REGIDATE-->
+<!--        FROM (-->
+<!--                 SELECT-->
+<!--                     'CAR' AS TYPE,-->
+<!--                     C.CAR_TITLE AS TITLE,-->
+<!--                     M.MEMBER_NICKNAME AS WRITER,-->
+<!--                     C.CAR_REGIDATE AS REGIDATE,-->
+<!--                     ROWNUM AS RNUM-->
+<!--                 FROM-->
+<!--                     TBL_CAR C-->
+<!--                         JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO-->
+<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
+
+<!--                 UNION ALL-->
+
+<!--                 SELECT-->
+<!--                     'COMMU' AS TYPE,-->
+<!--                     CO.COMMU_TITLE AS TITLE,-->
+<!--                     M.MEMBER_NICKNAME AS WRITER,-->
+<!--                     CO.COMMU_REGIDATE AS REGIDATE,-->
+<!--                     ROWNUM AS RNUM-->
+<!--                 FROM-->
+<!--                     TBL_COMMU CO-->
+<!--                         JOIN TBL_MEMBER M ON CO.COMMU_WRITER = M.MEMBER_NO-->
+<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
+
+<!--                 UNION ALL-->
+
+<!--                 SELECT-->
+<!--                     'REVIEW' AS TYPE,-->
+<!--                     R.REVIEW_TITLE AS TITLE,-->
+<!--                     M.MEMBER_NICKNAME AS WRITER,-->
+<!--                     R.REVIEW_REGIDATE AS REGIDATE,-->
+<!--                     ROWNUM AS RNUM-->
+<!--                 FROM-->
+<!--                     TBL_REVIEW R-->
+<!--                         JOIN TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO-->
+<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
+<!--             ) AS SUBQUERY-->
+<!--        WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount}-->
+<!--        ]]>-->
+<!--</select>-->
+
+
 </mapper>

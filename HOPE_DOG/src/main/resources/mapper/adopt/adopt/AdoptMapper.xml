@@ -64,6 +64,48 @@
     <!-- 여기까지 페이지네이션+게시글목록불러오기 -->
 
 
+    <!-- 입양 진행중인 전체게시글 수 -->
+    <select id="selectTotalKeep" resultType="int">
+        SELECT COUNT(ADOPT_NO) FROM TBL_ADOPT WHERE ADOPT_STATUS = 'T'
+    </select>
+
+    <!-- 입양 모집중인 게시글-->
+    <select id="adoptMainKeep" resultType="AdoptMainDTO">
+        SELECT ADOPT_NO, ADOPT_TITLE, ADOPT_INTRODUCE, ADOPT_NAME, ADOPT_GENDER,
+               ADOPT_NEUTERING, ADOPT_BIRTH, ADOPT_WEIGHT, ADOPT_REGIDATE,
+               ADOPT_PERIODEND, CENTER_MEMBER_NO, ADOPT_STATUS
+        FROM TBL_ADOPT
+        WHERE ADOPT_STATUS = 'T'
+        ORDER BY ADOPT_REGIDATE DESC
+    </select>
+
+
+    <!-- 입양 모집중 페이지마다 표시할 게시글-->
+    <select id="selectAllPageKeep" parameterType="Criteria" resultType="AdoptMainDTO">
+    <![CDATA[
+        SELECT ADOPT_NO, ADOPT_TITLE, ADOPT_INTRODUCE, ADOPT_NAME, ADOPT_GENDER,
+               ADOPT_NEUTERING, ADOPT_BIRTH, ADOPT_WEIGHT, ADOPT_REGIDATE,
+               ADOPT_PERIODEND, CENTER_MEMBER_NO, ADOPT_STATUS
+        FROM (
+                 SELECT ADOPT_NO, ADOPT_TITLE, ADOPT_INTRODUCE, ADOPT_NAME,
+                        ADOPT_GENDER, ADOPT_NEUTERING, ADOPT_BIRTH, ADOPT_WEIGHT,
+                        ADOPT_REGIDATE, ADOPT_PERIODEND, CENTER_MEMBER_NO, ADOPT_STATUS,
+                        ROWNUM AS RNUM
+                 FROM (
+                          SELECT ADOPT_NO, ADOPT_TITLE, ADOPT_INTRODUCE, ADOPT_NAME,
+                                 ADOPT_GENDER, ADOPT_NEUTERING, ADOPT_BIRTH, ADOPT_WEIGHT,
+                                 ADOPT_REGIDATE, ADOPT_PERIODEND, CENTER_MEMBER_NO, ADOPT_STATUS
+                          FROM TBL_ADOPT
+                          ORDER BY ADOPT_REGIDATE DESC
+                      )
+             )
+        WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount} AND ADOPT_STATUS = 'T'
+        ]]>
+</select>
+    <!-- 여기까지 페이지네이션+게시글목록불러오기 -->
+
+
+
     <!-- 게시글 작성 -->
     <insert id="adoptWrite" parameterType="AdoptWriteDTO">
         <selectKey keyProperty="adoptNo" resultType="Long" order="BEFORE">
@@ -95,7 +137,7 @@
     </delete>
 
     <!-- 게시글 신고 처리 -->
-    <insert id="adoptReport" parameterType="AdoptReportDTO">
+    <insert id="adoptContentReport" parameterType="AdoptReportDTO">
         <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
             SELECT SEQ_REPORT.NEXTVAL FROM DUAL
         </selectKey>
@@ -112,6 +154,7 @@
             ac.ADOPT_COMMENT_NO,
             ac.ADOPT_COMMENT,
             ac.ADOPT_COMMENT_REGIDATE,
+            ac.ADOPT_COMMENT_WRITER,
             CASE
                 WHEN MOD(ac.ADOPT_COMMENT_WRITER, 10) = 1 THEN m.MEMBER_NAME
                 WHEN MOD(ac.ADOPT_COMMENT_WRITER, 10) = 2 THEN cm.CENTER_MEMBER_NAME
@@ -126,6 +169,54 @@
             ac.ADOPT_NO = #{adoptNo}
     </select>
 
+    <!-- 댓글 등록 -->
+    <insert id="adoptCommentRegi" parameterType="AdoptCommentDTO">
+        <selectKey keyProperty="adoptCommentNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_ADOPT_COMMENT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_ADOPT_COMMENT (
+        ADOPT_COMMENT_NO, ADOPT_COMMENT, ADOPT_COMMENT_WRITER, ADOPT_NO
+        ) VALUES (
+        #{adoptCommentNo}, #{adoptComment}, #{adoptCommentWriter}, #{adoptNo}
+        )
+    </insert>
+
+    <!-- 댓글 수정 -->
+    <update id="adoptCommentModi" parameterType="AdoptCommentDTO">
+        UPDATE TBL_ADOPT_COMMENT
+        SET ADOPT_COMMENT = #{adoptComment}
+        WHERE ADOPT_COMMENT_WRITER = #{adoptCommentWriter} AND ADOPT_COMMENT_NO = #{adoptCommentNo} AND ADOPT_NO = #{adoptNo}
+    </update>
+
+    <!-- 댓글 삭제 -->
+    <delete id="adoptCommentDelete" parameterType="AdoptCommentDTO">
+        DELETE FROM TBL_ADOPT_COMMENT
+        WHERE ADOPT_COMMENT_WRITER = #{adoptCommentWriter} AND ADOPT_COMMENT_NO = #{adoptCommentNo} AND ADOPT_NO = #{adoptNo}
+    </delete>
+
+    <!-- 댓글 신고 (이거도 아가다가 만든거야 헤헤)-->
+<!--    <insert id="adoptCommentReport" parameterType="AdoptReportDTO">-->
+<!--        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">-->
+<!--            SELECT SEQ_REPORT.NEXTVAL FROM DUAL-->
+<!--        </selectKey>-->
+<!--        INSERT INTO TBL_REPORT (-->
+<!--        REPORT_NO, REPORT_CATE, REPORT_CONTENT, REPORT_WRITER, REPORT_CONTENT_NO-->
+<!--        ) VALUES (-->
+<!--        #{reportNo}, '입양', #{reportContent}, #{reportWriter},#{reportContentNo}-->
+<!--        )-->
+<!--    </insert>-->
+
+    <!-- 댓글 신고 처리 -->
+    <insert id="adoptCommentReport" parameterType="AdoptReportDTO">
+        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_COMMENT_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_COMMENT_REPORT (
+        COMMENT_REPORT_NO, COMMENT_REPORT_CATE, COMMENT_REPORT, COMMENT_REPORT_WRITER, COMMENT_NO, CONTENT_NO
+        ) VALUES (
+        #{reportNo}, '입양', #{reportComment}, #{reportWriter},#{reportCommentNo}, #{reportContentNo}
+        )
+    </insert>
 
     <!-- 입양신청서 등록 -->
     <insert id="adoptRequest" parameterType="AdoptRequestDTO">

@@ -1,6 +1,5 @@
 package com.example.hope_dog.mapper.volun.car;
 
-import com.example.hope_dog.controller.centermember.CenterMemberController;
 import com.example.hope_dog.dto.centerMember.CenterMemberDTO;
 import com.example.hope_dog.dto.member.MemberDTO;
 import com.example.hope_dog.dto.page.Criteria;
@@ -9,13 +8,9 @@ import com.example.hope_dog.dto.volun.car.CarDTO;
 import com.example.hope_dog.dto.volun.car.CarDetailDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Mapper
 public interface CarMapper {
@@ -42,7 +37,7 @@ public interface CarMapper {
     List<CarCommentDTO> selectCommentsByCarNo(@Param("carNo") Long carNo);
 
     // 검색 결과 조회
-    List<CarDTO> searchCars(@Param("params") Map<String, Object> params, @Param("criteria") Criteria criteria);
+    List<CarDTO> searchCars(@Param("params") Map<String, Object> params);
 
     // 검색 조건에 따른 총 게시글 수 조회
 //    int countCarsBySearch(@Param("params") Map<String, Object> params);

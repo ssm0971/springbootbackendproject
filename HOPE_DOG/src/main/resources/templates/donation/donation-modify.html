@@ -33,13 +33,14 @@
 
       <!-- 글작성 박스 -->
       <div class="dona-write-area">
-        <form action="링크" method="post" th:action="@{/dona/modify}" enctype="multipart/form-data">
+        <form action="링크" method="post" th:action="@{/dona/modify}"  th:object="${donation}" enctype="multipart/form-data">
           <br>
-          <input type="hidden" name="donaNo" th:value="${donation.donaNo}" />
+          <input type="hidden" th:field="*{donaNo}">
+          <input th:value="${centerMemberNo}" style="display: none" name="centerMemberNo">
           <!-- 썸머노트 -->
           <div class="content">
-              <input id="donaTitle" name="donaTitle" th:value="${donation.donaTitle}" class="donawrite-title" placeholder="제목을 입력해주세요" required />
-              <textarea id="donaContent" name="donaContent" th:value="${donation.donaContent}" required></textarea>
+              <input id="donaTitle" name="donaTitle"  th:field="*{donaTitle}" class="donawrite-title" placeholder="제목을 입력해주세요" required />
+              <textarea id="donaContent" name="donaContent"  th:field="*{donaContent}" required></textarea>
           </div>
 
           <!-- 등록/취소 버튼 -->

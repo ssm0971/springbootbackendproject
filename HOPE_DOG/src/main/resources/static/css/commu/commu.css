@@ -114,21 +114,22 @@ ul{
 /* 게시글 목록 ul>li 태그 내부 스타일 */
 .commu-ul-main {
   display: flex;
+  flex-direction: row; /* li들을 가로로 정렬 */
   width: 100%;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #F5EAD9;
-
+  list-style: none; /* li의 기본 점 제거 */
+  padding: 0; /* ul의 기본 패딩 제거 */
 }
 
-/* 분류*/
+/* 분류 */
 .commu-cate {
   color: rgb(76, 76, 76);
   text-align: center;
- /* margin: 0 auto; */
- padding-left: 21px;
- width: 80px;
-} 
+  padding-left: 21px;
+  width: 80px;
+}
 
 /* 제목 */
 .commu-title {
@@ -153,8 +154,8 @@ ul{
   color: rgb(153, 153, 153);
 }
 
-/*추천*/
-.commu-good{
+/* 추천 */
+.commu-good {
   text-align: center;
   padding: 20px 0px;
   flex-basis: 100px;

@@ -1,17 +1,12 @@
 package com.example.hope_dog.service.donation;
 
-import com.example.hope_dog.dto.donation.DonationListDTO;
-import com.example.hope_dog.dto.donation.DonationUpdateDTO;
-import com.example.hope_dog.dto.donation.DonationViewDTO;
-import com.example.hope_dog.dto.donation.DonationWriteDTO;
+import com.example.hope_dog.dto.donation.*;
 import com.example.hope_dog.dto.page.Criteria;
 import com.example.hope_dog.mapper.donation.DonationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 @Service // 비즈니스 로직 처리
 @Transactional // 트랜잭션을 지원
@@ -50,21 +45,25 @@ public class DonationService {
     }
 
     // Delete
-//    @Override
-//    @Transactional
     public void donationDelete(Long donaNo) {
         donationMapper.donationDelete(donaNo);
     }
-
 
     public DonationViewDTO findById(Long donaNo){
         return donationMapper.selectById(donaNo).orElseThrow(() -> new IllegalStateException("유효하지 않은 게시물 번호"));
     }
 
+//        DonationWriteDTO donationWriteDTO = donationService.getDonationById(id);
+//    public DonationWriteDTO getDonationById(Long donaNo){
+//        return donationMapper.selectById(donaNo).orElseThrow(() -> new IllegalStateException("유효하지 않은 게시물 번호"));
+//
+//    }
+
+
     // modify
-    public void modifyDonation(DonationUpdateDTO donationUpdateDTO) {
-        donationMapper.donationUpdate(donationUpdateDTO);
-        Long donaNo = donationUpdateDTO.getDonaNo();
+    public void donationUpdate(DonationWriteDTO donationWriteDTO) {
+        donationMapper.donationUpdate(donationWriteDTO);
+        Long donaNo = donationWriteDTO.getDonaNo();
 
         donationMapper.donationDelete(donaNo);
 
@@ -85,5 +84,25 @@ public class DonationService {
 //            fileMapper.insertFile(fileDTO);
 //        }
 //    }
+
+    // 댓글 목록
+    public List<DonaCommentDTO> donationComment(Long donaNo) {
+        return donationMapper.donationComment(donaNo);
+    }
+
+    // 댓글 등록
+    public void insertComment(DonaCommentDTO donaCommentDTO) {
+        donationMapper.insertComment(donaCommentDTO);
+    }
+
+    // 댓글 수정
+    public void updateComment(DonaCommentDTO donaCommentDTO) {
+        donationMapper.updateComment(donaCommentDTO);
+    }
+
+    // 댓글 삭제
+    public void deleteComment(Long donaNo) {
+        donationMapper.deleteComment(donaNo);
+    }
 
 }

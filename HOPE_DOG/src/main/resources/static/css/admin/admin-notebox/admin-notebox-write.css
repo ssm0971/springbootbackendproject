@@ -347,7 +347,7 @@ div#paging-wrap {
   margin-left: 20px;
 }
 
-.member-volun-nav-ul{
+.member-note-nav-ul{
   display: flex;
   text-decoration: none;
   list-style: none;
@@ -356,7 +356,7 @@ div#paging-wrap {
   font-size: 25px;
 }
 
-.member-volun-nav-ul a{
+.member-note-nav-ul a{
   display: flex;
   text-decoration: none;
   list-style: none;
@@ -364,7 +364,7 @@ div#paging-wrap {
   margin-right: 10px;
 }
 
-#volun-choice {
+#note-choice {
   width: 20px;
   height: 20px;
   border-radius: 100px;
@@ -413,6 +413,12 @@ a {
   text-align: center;
 }
 
+.note-title-sr{
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+}
+
 .note-write .note-title {
   margin-bottom: 20px;
 }
@@ -447,7 +453,7 @@ a {
 }
 
 /* '글쓰기' 버튼 파트 컨테이너 */
-.volun-admain-btuall {
+.note-admin-btnall {
   display: flex;
   width: 100%;
   padding: 10px 0px;
@@ -456,7 +462,7 @@ a {
 }
 
 /* '글쓰기' 버튼 */
-.volun-admain-btu {
+.note-admin-btn {
   display: block;
   padding: 0px 10px;
   text-align: center;
@@ -473,18 +479,18 @@ a {
 }
 
 /* '글쓰기' 폰트사이즈 */
-.volun-admain-btuall span {
+.note-admin-btnall span {
   font-size: 13px;
 }
 
 /* '글쓰기' 폰트 두께 */
-.volun-admain-btu-sp {
+.note-admin-btn-sp {
   display: inline-block;
   font-size: 16px;
   font-weight: 500;
 }
 
-.volun-admain-btu:hover {
+.note-admin-btn:hover {
   background-color: #9B805D; /* 마우스를 올렸을 때 배경색 */
   color: white; /* 마우스를 올렸을 때 텍스트 색상 */
 }

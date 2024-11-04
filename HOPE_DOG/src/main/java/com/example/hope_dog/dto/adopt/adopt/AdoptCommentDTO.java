@@ -16,4 +16,5 @@ public class AdoptCommentDTO {
     private Long adoptCommentWriter;
     private Date adoptCommentUpdate;
     private String commentWriterName;
+    private Long adoptNo;
 }

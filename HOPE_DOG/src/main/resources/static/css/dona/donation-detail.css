@@ -23,6 +23,16 @@
   height: 330px;
 }
 
+.dona-top{
+  width: 800px;
+  height: 300px; /*auto*/
+  justify-content: center;
+  align-items: center;
+  /*background-color: beige;*/
+  margin: 0 auto;
+  /*border-bottom: 2px solid #9B805D; !* 아래쪽 경계선 추가 *!*/
+}
+
 .dona-bottom{
   width: 800px;
   height: auto;
@@ -38,6 +48,16 @@
   background-color: #9B805D;
   margin: 5px auto;
 }
+
+#bottom-line{
+  width: 800px;
+  height: 2px;
+  background-color: #9B805D;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+
 
 .dona-view-content{
   justify-content: center;
@@ -229,12 +249,115 @@
   margin: 10px;
   width: 780px;
   height: auto;
-  border-bottom: 2px solid #F5EAD9;
+  /*border-bottom: 2px solid #F5EAD9;*/
 }
 
 .dona-detail-name{
   font-size: 14px;
   font-weight: bold;
+}
+
+.dona-detail-comment{
+  font-size: 14px;
+}
+
+.dona-detail-date{
+  font-size: 12px;
+  border-bottom: 2px solid #F5EAD9;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.dona-detail-commentregi{
+  width: 620px;
+  height: 50px;
+}
+
+.dona-commentregi-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dona-commentregi-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 댓글버튼 */
+.dona-comment-button{
+  width: 50px;
+  height: 25px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dona-comment-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 댓글수정 input 박스 */
+.dona-modify-comment{
+  width: 300px;
+  height: 30px;
+  margin-top: 20px;
+}
+
+.dona-detail-commentregi{
+  width: 620px;
+  height: 50px;
+}
+
+.dona-commentregi-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dona-commentregi-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+
+/*댓글관련 css*/
+.dona-detail-commentNum{
+  width: 745px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.dona-detail-commentbox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 745px;
+  min-height: 95px;
+}
+
+.dona-detail-name{
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
 }
 
 .dona-detail-comment{
@@ -289,23 +412,13 @@
   height: 30px;
 }
 
-.dona-detail-commentregi{
-  width: 620px;
-  height: 50px;
+.dona-comment-buttonBox{
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
 }
 
-.dona-commentregi-button{
-  width: 100px;
-  height: 50px;
-  background-color: #F5EAD9;
-  border: none;
-  border-radius: 15px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.dona-commentregi-button:hover {
-  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
-  color: white;
+a {
+  text-decoration: none;
+  color: inherit;
 }

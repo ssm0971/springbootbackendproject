@@ -2,136 +2,106 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>마이페이지-받은쪽지</title>
-  <link rel="stylesheet" th:href="@{/css/mypage/mypage-inbox.css}" />
-  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
-  <link rel="stylesheet" th:href="@{/css/main/main.css}">
-  <script defer th:src="@{/js/main/main.js}"></script>
-  <script defer th:src="@{/js/mypage/mypage-inbox.js}" ></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지-받은쪽지</title>
+    <link rel="stylesheet" th:href="@{/css/mypage/mypage-inbox.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/main/main.css}">
+    <script defer th:src="@{/js/main/main.js}"></script>
+    <script defer th:src="@{/js/mypage/mypage-inbox.js}"></script>
+    <!-- 페이지네이션 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </head>
 
 <body>
 
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
+<main>
     <div class="member-profile-navbox">
-      <nav>
-        <ul class="member-profile-nav-ul">
-          <li id="profile"><a href="../../html/mypage/mypage-update.html">개인정보수정</li></a>
-          <li id="posts"><a href="../../html/mypage/mypage-posts.html">작성글조회</li></a>
-          <li id="volunteer"><a href="../../html/mypage/mypage-volunteer.html">봉사</li></a>
-          <li id="adopt"><a href="../../html/mypage/mypage-adopt.html">입양</li></a>
-          <li id="inbox"><a href="#">쪽지함</li>          
-          <div id="choice"></div></a>
-          <li id="auth"><a href="../../html/mypage/mypage-auth.html">2차인증</li></a>
-          <li id="withdrawal"><a href="../../html/mypage/mypage-quit.html">회원탈퇴</li></a>
-        </ul>
-      </nav>
+        <nav>
+            <ul class="member-profile-nav-ul">
+                <li id="profile"><a href="../../html/mypage/mypage-update.html">개인정보수정</li>
+                </a>
+                <li id="posts"><a href="../../html/mypage/mypage-posts.html">작성글조회</li>
+                </a>
+                <li id="volunteer"><a href="../../html/mypage/mypage-volunteer.html">봉사</li>
+                </a>
+                <li id="adopt"><a href="../../html/mypage/mypage-adopt.html">입양</li>
+                </a>
+                <li id="inbox"><a href="#">쪽지함</li>
+                <div id="choice"></div>
+                </a>
+                <li id="auth"><a href="../../html/mypage/mypage-auth.html">2차인증</li>
+                </a>
+                <li id="withdrawal"><a href="../../html/mypage/mypage-quit.html">회원탈퇴</li>
+                </a>
+            </ul>
+        </nav>
     </div>
     <div class="member-inbox-navbox">
-      <nav>
-        <ul class="member-inbox-nav-ul">
-          <li id="member-inbox">받은 쪽지</li>
-            <div id="inbox-choice"></div>
-          <li id="member-outbox">보낸 쪽지</li>
-        </ul>
-      </nav>
+        <nav>
+            <ul class="member-inbox-nav-ul">
+                <li><a th:href="@{/mypage/noteboxReceiveList}">받은쪽지함</a></li>
+                <div id="inbox-choice"></div>
+                <li><a th:href="@{/mypage/noteboxSendList}">보낸쪽지함</a></li>
+            </ul>
+        </nav>
     </div>
     <div id="line"></div>
 
-        <!-- 게시글 리스트 영역 -->
+    <!-- 게시글 리스트 영역 -->
     <div class="member-notebox-container">
-      <!-- 게시글 제목 -->
-      <div>
-        <ul class="member-notebox-titlebox">
-          <li><b>상태</b></li>
-          <li><b>수신자</b></li>
-          <li><b>송신자</b></li>
-          <li><b>제목</b></li>
-          <li><b>내용</b></li>
-          <li><b>날짜</b></li>
-        </ul>
-      </div>
+        <!-- 게시글 제목 -->
+        <div>
+            <ul class="member-notebox-titlebox">
+                <li><b>상태</b></li>
+                <li><b>수신자</b></li>
+                <li><b>송신자</b></li>
+                <li><b>제목</b></li>
+                <li><b>내용</b></li>
+                <li><b>날짜</b></li>
+            </ul>
+        </div>
+        <div class="member-notebox-contentsbox" th:each="noteR : ${noteboxReceiveList}">
+            <ul class="member-notebox-contentbox">
+                <li>
+                    <div th:text="${noteR.readStatus}"></div>
+                </li>
+                <li>
+                    <div th:text="${noteR.noteboxReceiveS}"></div>
+                </li>
+                <li>
+                    <div th:text="${noteR.noteboxSenderName}"></div>
+                </li>
+                <li>
+                    <div th:text="${noteR.noteboxReceiveTitle}"></div>
+                </li>
+                <li>
+                    <div th:text="${noteR.noteboxReceiveContent}"></div>
+                </li>
+                <li>
+                    <div th:text="${noteR.noteboxReceiveRegiDate != null ? #dates.format(noteR.noteboxReceiveRegiDate, 'yyyy.MM.dd HH:mm:ss') : ''}"></div>
+                </li>
+            </ul>
+            <div class="noteboxReceiveNo" th:text="${noteR.noteboxReceiveNo}" style="display: none;"></div>
+        </div>
+    </div>
 
-      <!-- 게시글 목록 -->
-      <div class="member-notebox-contentsbox"  th:each="noteR : ${mypageNoteReceiveList}">
-        <ul class="member-notebox-content">
-          <li>
-            <div>
-              <ul class="member-notebox-contentbox">
-                <li><div th:if="${noteR.noteboxReceiveRead} == 'N'" th:text="안읽음"></div></li>
-                <li><div th:text="${noteR.noteboxReceiveRName}"></div></li>
-                <li><div th:text="${noteR.noteboxReceiveSName}"></div></li>
-                <li><div th:text="${noteR.noteboxReceiveTitle}"></div></li>
-                <li><div th:text="${noteR.noteboxReceiveContent}"></div></li>
-                <li><div th:text="${#dates.format(noteR.noteboxReceiveRegidate, 'yyyy.MM.dd hh:mm:ss')}"></div></li>
-              </ul>
-              <div class="memberNo" th:text="${noteR.memberNo}" style="display: none;"></div>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="member-notebox-contentbox">
-                <li>[읽음]</li>
-                <li>슈슈</li>
-                <li>아가다</li>
-                <li><a href="../../html/mypage/mypage-notebox-detail.html">아가다!</li></a>
-                <li><a href="../../html/mypage/mypage-notebox-detail.html">우리 코코 너무 예쁘지</li></a>
-                <li>24.07.29 14:20</li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="member-notebox-contentbox">
-                <li>[읽음]</li>
-                <li>슈슈</li>
-                <li>아가다</li>
-                <li><a href="../../html/mypage/mypage-notebox-detail.html">아가다!</li></a>
-                <li><a href="../../html/mypage/mypage-notebox-detail.html">우리 코코 너무 예쁘지</li></a>
-                <li>24.07.29 14:20</li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="member-notebox-contentbox">
-                <li>[읽음]</li>
-                <li>슈슈</li>
-                <li>아가다</li>
-                <li><a href="../../html/mypage/mypage-notebox-detail.html">아가다!</li></a>
-                <li><a href="../../html/mypage/mypage-notebox-detail.html">우리 코코 너무 예쁘지</li></a>
-                <li>24.07.29 14:20</li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      
-      
-          <!-- 페이지네이션 -->
-          <div class="pagination">
-            <button class="prev">◀</button>
-            <button class="page">1</button>
-            <button class="page">2</button>
-            <button class="page">3</button>
-            <button class="page">4</button>
-            <button class="page">5</button>
-            <button class="next">▶</button>
-    
-          </div>
-          <div class="inbox-admain-btuall">
-            <button class="inbox-admain-btu" type="button">
-              <a href="../../html/mypage/mypage-notebox-write.html"><span class="inbox-admain-btu-sp">쪽지쓰기</span></a>
-            </button>
-          </div>
-      </div>
+    <div class="inbox-admain-btuall">
+        <button class="inbox-admain-btu" type="button">
+            <a th:href="@{/mypage/noteboxWrite}"><span class="inbox-admain-btu-sp">쪽지쓰기</span></a>
+        </button>
+    </div>
+    <div id="pagination"></div>
 
 
-  </main>
+</main>
 
-</body>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
+</body>
+
 
 </html>

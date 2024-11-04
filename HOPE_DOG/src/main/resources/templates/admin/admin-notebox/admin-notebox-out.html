@@ -13,76 +13,79 @@
 </head>
 
 <body>
-    <div>
-        <div class="info-title-box info-title-box-flex">
-            <div class="logo-box-layout">
-                <div class="logo-box">
-                    <img src="../../../img/logo.jpg">
-                </div>
-            </div>
-            <div>
-                <div class="select-name">
-                    <span>보낸 쪽지함</span>
-                </div>
+<div>
+    <div class="info-title-box info-title-box-flex">
+        <div class="logo-box-layout">
+            <div class="logo-box">
+                <img src="../../../img/logo.jpg">
             </div>
         </div>
-        <div class="wrap">
-
-            <!-- 사이드 바 -->
-            <th:block th:replace="~{admin/admin-main/admin-sidemenu :: sidemenu}"></th:block>
-
-            <div class="container">
-                <div class="container-margin">
-                    <!-- 헤더 -->
-                    <div class="delete-box-layout">
-                        <form class="search-box" action="" method="get">
-                            <input type="text" class="search-text" name=""placeholder="검색어를 입력하세요.">
-                            <button class="search-btn" type="submit">검색</button>
-                            <button class="search-btn" type="submit" th:href="@{/admin/noteboxOut}">초기화</button>
-                         </form>
-                        <div class="delete-box">
-                            <button class="deleteButton delete-button">선택 항목 삭제</button>
-                        </div>
-                    </div>
-
-                    <!-- 내용 섹션 -->
-                    <section class="board-info-box-layout">
-                        <div class="board-info-box">
-                            <div class="board-info-title-box">
-                                <span><a class="notebox-btn" th:href="@{/admin/noteboxIn}">받은 쪽지함</a>&emsp;&emsp;&emsp;<a class="notebox-btn" th:href="@{/admin/noteboxOut}">보낸 쪽지함</a></span>
-                                <span class="write-btn"><a href="./admin-notebox-write.html">쪽지 쓰기</a></span>
-                            </div>
-                    
-                            <div class="info-table">
-                                <!-- Header -->
-                                <div class="info-row header-row">
-                                    <div class="info-cell checkbox-line"> 
-                                        <input type="checkbox" id="allSelect">
-                                    </div>
-                                    <div class="info-cell-cate info-cell">송신자</div>
-                                    <div class="info-cell-cate info-cell">수신자</div>
-                                    <div class="info-cell-title info-cell">제목</div>
-                                    <div class="info-cell-content info-cell">내용</div>
-                                </div>
-                    
-                                <!-- Data rows -->
-                                <div th:each="noteSend, iterStat : ${noteSendList}" class="info-row" >
-                                    <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
-                                    </div>
-                                    <div class="info-cell info-cell-cate" th:text="${noteSend.noteboxSendRname}"></div>
-                                    <div class="info-cell info-cell-cate">관리자</div>
-                                    <div class="info-cell info-cell-title" th:text="${noteSend.noteboxSendTitle}"></div>
-                                    <div class="info-cell info-cell-content" th:text="${noteSend.noteboxSendContent}"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                </div>
+        <div>
+            <div class="select-name">
+                <span>보낸 쪽지함</span>
             </div>
         </div>
     </div>
+    <div class="wrap">
+
+        <!-- 사이드 바 -->
+        <th:block th:replace="~{admin/admin-main/admin-sidemenu :: sidemenu}"></th:block>
+
+        <div class="container">
+            <div class="container-margin">
+                <!-- 헤더 -->
+                <div class="delete-box-layout">
+                    <form class="search-box" action="/admin/searchNoteboxOut" method="get">
+                        <input type="text" class="search-text" name="keyword" placeholder="검색어를 입력하세요.">
+                        <button class="search-btn" type="submit">검색</button>
+                        <button class="search-btn" type="submit" th:href="@{/admin/noteboxOut}">초기화</button>
+                    </form>
+                    <div class="delete-box">
+                        <button class="deleteButton delete-button">선택 항목 삭제</button>
+                    </div>
+                </div>
+
+                <!-- 내용 섹션 -->
+                <section class="board-info-box-layout">
+                    <div class="board-info-box">
+                        <div class="board-info-title-box">
+                            <span><a class="notebox-btn" th:href="@{/admin/noteboxIn}" th:classappend="${currentPage == 'receive'} ? 'active'">받은 쪽지함</a>
+                                &emsp;&emsp;&emsp;
+                                <a class="notebox-btn" th:href="@{/admin/noteboxOut}" th:classappend="${currentPage == 'send'} ? 'active'">보낸 쪽지함</a></span>
+                            <span class="write-btn"><a href="/admin/noteboxWrite" >쪽지 쓰기</a></span>
+                        </div>
+
+                        <div class="info-table">
+                            <!-- Header -->
+                            <div class="info-row header-row">
+                                <div class="info-cell checkbox-line">
+                                    <input type="checkbox" id="allSelect">
+                                </div>
+                                <div class="info-cell-cate info-cell">송신자</div>
+                                <div class="info-cell-cate info-cell">수신자</div>
+                                <div class="info-cell-title info-cell">제목</div>
+                                <div class="info-cell-content info-cell">내용</div>
+                            </div>
+
+                            <div th:each="noteSend, iterStat : ${noteSendList}" class="info-row" >
+                                <div class="info-cell checkbox-line">
+                                    <input type="checkbox" class="checkbox" name="check">
+                                </div>
+                                <a th:href="@{/admin/noteboxOutDetail(noteboxSendNo=${noteSend.noteboxSendNo})}" style="display: flex; justify-content: center">
+                                    <div class="info-cell info-cell-cate">관리자</div>
+                                    <div class="info-cell info-cell-cate" th:text="${noteSend.noteboxSendRname}"></div>
+                                    <div class="info-cell info-cell-title" th:text="${noteSend.noteboxSendTitle}"></div>
+                                    <div class="info-cell info-cell-content" th:text="${noteSend.noteboxSendContent}"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
 <script th:src="@{/js/admin/allCheck.js}"></script>

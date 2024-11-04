@@ -5,7 +5,7 @@ main{
   align-items: center;
 }
 
-.protectrequest-main-size{
+.adoptrequest-main-size{
   width: 1080px;
   min-height: 1200px;
   display: flex;
@@ -14,7 +14,7 @@ main{
 }
 
 
-.protectrequest-nav{
+.adoptrequest-nav{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,18 +26,18 @@ main{
   border-bottom: solid 2px #9B805D;
 }
 
-.protectrequest-navList{
+.adoptrequest-navList{
   font-size: 18px;
   font-weight: bold;
   width: 180px;
   text-align: center;
 }
 
-.protectrequest-navList:hover {
-  cursor: pointer; /* 마우스 오버 시 커서를 포인터로 변경 */
+.adoptrequest-navList:hover {
+  cursor: pointer;
 }
 
-.protectrequest-wirtebanner{
+.adoptrequest-writebanner{
   background-color: #F5EAD9;
   width: 1080px;
   height: 70px;
@@ -48,7 +48,7 @@ main{
   font-weight: bold;
 }
 
-.protectrequest-write-area{
+.adoptrequest-write-area{
   width: 800px;
   min-height: 3300px;
   border: solid 1px #9B805D;
@@ -59,7 +59,7 @@ main{
   gap: 15px;
 }
 
-.protectrequest-content-box{
+.adoptrequest-content-box{
   width: 680px;
   height: 50px;
   display: flex;
@@ -67,7 +67,7 @@ main{
   align-items: center;
 }
 
-.protectrequest-content-title{
+.adoptrequest-content-title{
   width: 170px;
   height: 30px;
   display: flex;
@@ -75,17 +75,17 @@ main{
   font-size: 14px;
 }
 
-.protectrequest-input-small{
+.adoptrequest-input-small{
   width: 400px;
   height: 25px;
 }
 
-.protectrequest-input-small2{
+.adoptrequest-input-small2{
   width: 300px;
   height: 25px;
 }
 
-.protectrequest-agreement-box{
+.adoptrequest-agreement-box{
   border: solid 1px #9B805D;
   border-radius: 15px;
   width: 680px;
@@ -96,10 +96,11 @@ main{
 }
 
 p{
-  font-size: 12px;
+  font-size: 11px;
+  margin: 0;
 }
 
-.protectrequest-agreement-box2{
+.adoptrequest-agreement-box2{
   border: solid 1px #9B805D;
   border-radius: 15px;
   width: 680px;
@@ -108,7 +109,7 @@ p{
   justify-content: center;
 }
 
-.protectrequest-content-title2{
+.adoptrequest-content-title2{
   width: 650px;
   height: 35px;
   display: flex;
@@ -116,12 +117,12 @@ p{
   font-size: 14px;
 }
 
-.protectrequest-input-big{
+.adoptrequest-input-big{
   width: 600px;
   height: 70px;
 }
 
-.protectrequest-agreement-box2{
+.adoptrequest-agreement-box2{
   border: solid 1px #9B805D;
   border-radius: 15px;
   width: 680px;
@@ -131,8 +132,8 @@ p{
   justify-content: center;
 }
 
-.protectrequest-search-button{
-  width: 50px;
+.adoptrequest-search-button{
+  width: 70px;
   height: 28px;
   background-color: #F5EAD9;
   border: none;
@@ -141,12 +142,12 @@ p{
   cursor: pointer;
 }
 
-.protectrequest-search-button:hover {
+.adoptrequest-search-button:hover {
   background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
   color: white;
 }
 
-.protectrequest-buttonbox{
+.adoptrequest-buttonbox{
   width: 680px;
   height: 50px;
   display: flex;
@@ -155,7 +156,7 @@ p{
   gap: 35px;
 }
 
-.protectrequest-button{
+.adoptrequest-button{
   width: 100px;
   height: 50px;
   background-color: #F5EAD9;
@@ -166,7 +167,7 @@ p{
   cursor: pointer;
 }
 
-.protectrequest-button:hover {
+.adoptrequest-button:hover {
   background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
   color: white;
 }
@@ -177,5 +178,5 @@ p{
 
 a {
   text-decoration: none;
-  color: inherit; 
+  color: inherit;
 }

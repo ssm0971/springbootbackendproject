@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마이페이지-받은쪽지</title>
+  <link rel="stylesheet" th:href="@{/css/mypage/mypage-notebox-detail.css}" />
+  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+  <link rel="stylesheet" th:href="@{/css/main/main.css}">
+  <script defer th:src="@{/js/main/main.js}"></script>
+  <script defer th:src="@{/js/mypage/mypage-inbox.js}" ></script>
+</head>
+
+<body>
+
+<header th:replace="~{fragment/header :: header}"></header>
+  <main>
+    <div class="member-profile-navbox">
+      <nav>
+        <ul class="member-profile-nav-ul">
+          <li id="profile"><a href="../../html/mypage/mypage-update.html">개인정보수정</li></a>
+          <li id="posts"><a href="../../html/mypage/mypage-posts.html">작성글조회</li></a>
+          <li id="volunteer"><a href="../../html/mypage/mypage-volunteer.html">봉사</li></a>
+          <li id="adopt"><a href="../../html/mypage/mypage-adopt.html">입양</li></a>
+          <li id="inbox"><a href="#">쪽지함</li>          
+          <div id="choice"></div></a>
+          <li id="auth"><a href="../../html/mypage/mypage-auth.html">2차인증</li></a>
+          <li id="withdrawal"><a href="../../html/mypage/mypage-quit.html">회원탈퇴</li></a>
+        </ul>
+      </nav>
+    </div>
+
+          <!-- 내용 섹션 -->
+          <div class="note-wrap">
+            <div class="note-title">
+              <h1>쪽지</h1>
+            </div>
+            <form method="get">
+              <div class="note-write-wrap">
+                <div class="note-write">
+                  <div class="noteboxReceiveNo" th:text="${mpNoteboxReceiveDetail.noteboxReceiveNo}" style="display: none;"></div>
+                  <div class="note-title" th:text="${mpNoteboxReceiveDetail.noteboxReceiveTitle}">제목</div>
+                  <div class="note-title" th:text="${mpNoteboxReceiveDetail.noteboxSenderName}">닉네임</div>
+                  <div class="note-cont" th:text="${mpNoteboxReceiveDetail.noteboxReceiveRegiDate}">시간</div><br>
+                  <div class="note-cont" th:text="${mpNoteboxReceiveDetail.noteboxReceiveContent}">내용</div>
+              </div>
+              </div>
+              <div class="notebox-admain-btuall">
+                <a th:href="@{/mypage/noteboxReceiveList}">
+                  <button class="notebox-admain-btu" type="button">
+                    <span class="notebox-admain-btu-sp">이전</span>
+                  </button></a>
+                <button class="notebox-admain-btu" type="button">
+                  <a href="#"><span class="notebox-admain-btu-sp">답장하기</span></a>
+                </button>
+              </div>
+            </form>
+          </div>
+
+
+</div>
+
+
+</main>
+
+</body>
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+
+
+
+</html>

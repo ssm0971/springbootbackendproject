@@ -99,11 +99,11 @@ public class CarService {
         return carMapper.selectCarPage(criteria);
     }
 
-//    검색기능
-    public List<CarDTO> searchCars(String searchType, String keyword, Criteria criteria) {
+
+    // 검색기능
+    public List<CarDTO> searchCars(String searchType, String keyword) {
         Map<String, Object> params = new HashMap<>();
         System.out.println("서비스 Map 들어옴");
-
 
         // 검색 조건 설정
         if ("title".equals(searchType)) {
@@ -118,7 +118,7 @@ public class CarService {
         }
 
         // Mapper 호출
-        List<CarDTO> carList = carMapper.searchCars(params, criteria);
+        List<CarDTO> carList = carMapper.searchCars(params);
         System.out.println("메소드 리스트 들어오세요");
 
         // 작성자 정보 설정
@@ -141,19 +141,6 @@ public class CarService {
         return carList;
     }
 
-    public int findCarSearch(Criteria criteria, String searchType, String keyword) {
-        String cate = criteria.getCate(); // 카테고리 정보 추출
-        if (searchType.equals("title")) {
-            return carMapper.countCarsByTitle(keyword); // 제목으로 검색할 때
-        } else if (searchType.equals("nickname")) {
-            return carMapper.countCarsByNickname(keyword); // 닉네임으로 검색할 때
-        }
-        // 카테고리 정보가 있을 경우
-        if (cate != null && !cate.isEmpty()) {
-            return carMapper.countCarsByCategory(cate); // 카테고리별 총 개수 조회
-        }
-        return carMapper.carTotal(); // 카테고리 없는 경우 전체 개수 조회
-    }
 
 
 

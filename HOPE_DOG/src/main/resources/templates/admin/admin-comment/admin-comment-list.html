@@ -67,7 +67,7 @@
                                 <!-- Data rows -->
                                 <div th:each="comment, iterStat : ${commentList}" class="info-row" >
                                     <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
+                                        <input type="checkbox" class="checkbox" name="check" th:data-comment-no="${comment.commentNo}" th:data-comment-type="${comment.commentType}">
                                     </div>
                                     <a style="display: flex; justify-content: center" th:href="@{/admin/postDetail(postType=${comment.commentType}, postNo=${comment.postNo})}">
                                     <div class="info-cell info-cell-no" th:text="${comment.commentNo}"></div>
@@ -100,4 +100,5 @@
 
 <script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
 <script th:src="@{/js/admin/allCheck.js}"></script>
+<script th:src="@{/js/admin/deleteComment.js}"></script>
 </html>

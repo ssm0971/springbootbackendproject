@@ -18,10 +18,10 @@ public class DonationViewDTO {
     private Long centerMemberNo;
     private String centerMemberName;
     private String centerMemberId;
-    private Long donaCommentNo;
-    private String donaCommentRegidate;
+//    private Long donaCommentNo;
+//    private String donaCommentRegidate;
 //    private String donaCommentUpdatedate;
-    private String donaCommentContent;
-    private String donaCommentWriter;
+//    private String donaCommentContent;
+//    private String donaCommentWriter;
 
 }

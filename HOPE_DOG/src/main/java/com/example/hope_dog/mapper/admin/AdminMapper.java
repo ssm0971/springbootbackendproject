@@ -3,8 +3,10 @@ package com.example.hope_dog.mapper.admin;
 import com.example.hope_dog.dto.admin.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Mapper
@@ -41,7 +43,15 @@ public interface AdminMapper {
 
     List<AdminPostDTO> searchPostByKeyword(@Param("keyword") String keyword);
 
+    void deletePost(@Param("item") AdminPostDTO item);
+
+    void deleteComment(@Param("item") AdminCommentDTO item);
+
     AdminPostDTO selectPostDetail(@Param("postType") String postType,@Param("postNo") Long postNo);
+
+    void deletePostDetail(@Param("item") AdminPostDTO item);
+
+    void deleteCommentDetail(@Param("item") AdminCommentDTO item);
 
     List<AdminCommentDTO> selectCommentListByPostNo(@Param("postType") String postType, @Param("postNo") Long postNo);
 
@@ -76,4 +86,16 @@ public interface AdminMapper {
     List<AdminNoteSendDTO> selectNoteSendList();
 
     List<AdminNoteReceiveDTO> selectNoteReceiveList();
+
+    AdminNoteReceiveDTO selectNoteReceiveDetail(@Param("noteboxReceiveNo") Long noteboxReceiveNo);
+
+    AdminNoteSendDTO selectNoteSendDetail(@Param("noteboxSendNo") Long noteboxSendNo);
+
+    void insertNoteWriteReceive(@Param("title") String title, @Param("content") String content, @Param("receiver") String receiver);
+
+    void insertNoteWriteSend(@Param("title") String title, @Param("content") String content, @Param("receiver") String receiver);
+
+    List<AdminNoteReceiveDTO> searchNoteInByKeyword(@Param("keyword") String keyword);
+
+    List<AdminNoteSendDTO> searchNoteOutByKeyword(@Param("keyword") String keyword);
 }

@@ -111,6 +111,9 @@ main{
 .adopt-banner3-title{
   width: 500px;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .adopt-banner3-nickname{

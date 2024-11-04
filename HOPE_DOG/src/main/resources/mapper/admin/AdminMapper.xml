@@ -494,6 +494,41 @@
         ORDER BY post_update_date DESC
     </select>
 
+    <delete id="deletePost" parameterType="AdminPostDTO">
+        <choose>
+            <when test="item.postType == 'COMMU'">
+                DELETE FROM TBL_COMMU
+                WHERE COMMU_NUMBER = #{item.postNo}
+            </when>
+            <when test="item.postType == 'VOLUN'">
+                DELETE FROM TBL_VOLUN
+                WHERE VOLUN_NO = #{item.postNo}
+            </when>
+            <when test="item.postType == 'DONA'">
+                DELETE FROM TBL_DONA
+                WHERE DONA_NO = #{item.postNo}
+            </when>
+            <when test="item.postType == 'ADOPT'">
+                DELETE FROM TBL_ADOPT
+                WHERE ADOPT_NO = #{item.postNo}
+            </when>
+            <when test="item.postType == 'CAR'">
+                DELETE FROM TBL_CAR
+                WHERE CAR_NO = #{item.postNo}
+            </when>
+            <when test="item.postType == 'PROTECT'">
+                DELETE FROM TBL_PROTECT
+                WHERE PROTECT_NO = #{item.postNo}
+            </when>
+            <when test="item.postType == 'REVIEW'">
+                DELETE FROM TBL_REVIEW
+                WHERE REVIEW_NO = #{item.postNo}
+            </when>
+        </choose>
+    </delete>
+
+
+
 <!--게시글 상세 조회-->
     <select id="selectPostDetail" parameterType="map" resultType="AdminPostDTO">
         <choose>
@@ -586,6 +621,71 @@
         </choose>
     </select>
 
+    <delete id="deletePostDetail" parameterType="AdminPostDTO">
+        <choose>
+            <when test="item.postType == 'COMMU'">
+                DELETE FROM TBL_COMMU
+                WHERE COMMU_NUMBER = #{item.postNo}
+            </when>
+            <when test="item.postType == 'VOLUN'">
+                DELETE FROM TBL_VOLUN
+                WHERE VOLUN_NO = #{item.postNo}
+            </when>
+            <when test="item.postType == 'DONA'">
+                DELETE FROM TBL_DONA
+                WHERE DONA_NO = #{item.postNo}
+            </when>
+            <when test="item.postType == 'ADOPT'">
+                DELETE FROM TBL_ADOPT
+                WHERE ADOPT_NO = #{item.postNo}
+            </when>
+            <when test="item.postType == 'CAR'">
+                DELETE FROM TBL_CAR
+                WHERE CAR_NO = #{item.postNo}
+            </when>
+            <when test="item.postType == 'PROTECT'">
+                DELETE FROM TBL_PROTECT
+                WHERE PROTECT_NO = #{item.postNo}
+            </when>
+            <when test="item.postType == 'REVIEW'">
+                DELETE FROM TBL_REVIEW
+                WHERE REVIEW_NO = #{item.postNo}
+            </when>
+        </choose>
+    </delete>
+
+    <delete id="deleteCommentDetail" parameterType="AdminCommentDTO">
+        <choose>
+            <when test="item.commentType == 'COMMU'">
+                DELETE FROM TBL_COMMU_COMMENT
+                WHERE COMMU_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'VOLUN'">
+                DELETE FROM TBL_VOLUN_COMMENT
+                WHERE VOLUN_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'DONA'">
+                DELETE FROM TBL_DONA_COMMENT
+                WHERE DONA_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'ADOPT'">
+                DELETE FROM TBL_ADOPT_COMMENT
+                WHERE ADOPT_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'CAR'">
+                DELETE FROM TBL_CAR_COMMENT
+                WHERE CAR_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'PROTECT'">
+                DELETE FROM TBL_PROTECT_COMMENT
+                WHERE PROTECT_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'REVIEW'">
+                DELETE FROM TBL_REVIEW_COMMENT
+                WHERE REVIEW_COMMENT_NO = #{item.commentNo}
+            </when>
+        </choose>
+    </delete>
     <!--댓글 목록 조회-->
     <select id="selectCommentList" resultType="AdminCommentDTO">
         WITH AllComments AS (
@@ -692,6 +792,40 @@
         FROM AllComments
         ORDER BY comment_update_date DESC
     </select>
+
+    <delete id="deleteComment" parameterType="AdminCommentDTO">
+        <choose>
+            <when test="item.commentType == 'COMMU'">
+                DELETE FROM TBL_COMMU_COMMENT
+                WHERE COMMU_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'VOLUN'">
+                DELETE FROM TBL_VOLUN_COMMENT
+                WHERE VOLUN_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'DONA'">
+                DELETE FROM TBL_DONA_COMMENT
+                WHERE DONA_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'ADOPT'">
+                DELETE FROM TBL_ADOPT_COMMENT
+                WHERE ADOPT_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'CAR'">
+                DELETE FROM TBL_CAR_COMMENT
+                WHERE CAR_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'PROTECT'">
+                DELETE FROM TBL_PROTECT_COMMENT
+                WHERE PROTECT_COMMENT_NO = #{item.commentNo}
+            </when>
+            <when test="item.commentType == 'REVIEW'">
+                DELETE FROM TBL_REVIEW_COMMENT
+                WHERE REVIEW_COMMENT_NO = #{item.commentNo}
+            </when>
+        </choose>
+    </delete>
+
 <!--댓글 검색 조회 목록-->
     <select id="searchCommentByKeyword" parameterType="String" resultType="AdminCommentDTO">
         WITH AllComments AS (
@@ -1334,6 +1468,7 @@
             NOTEBOX_RECEIVE_TITLE,
             NOTEBOX_RECEIVE_CONTENT,
             NOTEBOX_RECEIVE_REGIDATE,
+            NOTEBOX_RECEIVE_READ,
             NOTEBOX_RECEIVE_S,
             CASE
                 WHEN MOD(NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = NOTEBOX_RECEIVE_S)
@@ -1357,7 +1492,8 @@
             CASE
                 WHEN MOD(NOTEBOX_SEND_R, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = NOTEBOX_SEND_R)
                 WHEN MOD(NOTEBOX_SEND_R, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = NOTEBOX_SEND_R)
-            END AS NOTEBOX_SEND_RNAME
+                WHEN MOD(NOTEBOX_SEND_R, 10) = 3 THEN '관리자'
+                END AS NOTEBOX_SEND_RNAME
         FROM
             TBL_NOTEBOX_SEND
                 LEFT JOIN
@@ -1366,4 +1502,119 @@
             TBL_CENTER_MEMBER ON TBL_NOTEBOX_SEND.NOTEBOX_SEND_R = TBL_CENTER_MEMBER.CENTER_MEMBER_NO
         WHERE NOTEBOX_SEND_S = 3
     </select>
+
+    <select id="selectNoteReceiveDetail" parameterType="Long" resultType="AdminNoteReceiveDTO">
+        SELECT
+            NOTEBOX_RECEIVE_NO,
+            NOTEBOX_RECEIVE_TITLE,
+            NOTEBOX_RECEIVE_CONTENT,
+            NOTEBOX_RECEIVE_REGIDATE,
+            NOTEBOX_RECEIVE_READ,
+            NOTEBOX_RECEIVE_S,
+            CASE
+                WHEN MOD(NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = NOTEBOX_RECEIVE_S)
+                WHEN MOD(NOTEBOX_RECEIVE_S, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = NOTEBOX_RECEIVE_S)
+                WHEN MOD(NOTEBOX_RECEIVE_S, 10) = 3 THEN '관리자'
+                END AS NOTEBOX_RECEIVE_SNAME
+        FROM
+            TBL_NOTEBOX_RECEIVE
+                LEFT JOIN
+            TBL_MEMBER ON TBL_NOTEBOX_RECEIVE.NOTEBOX_RECEIVE_S = TBL_MEMBER.MEMBER_NO
+                LEFT JOIN
+            TBL_CENTER_MEMBER ON TBL_NOTEBOX_RECEIVE.NOTEBOX_RECEIVE_S = TBL_CENTER_MEMBER.CENTER_MEMBER_NO
+        WHERE NOTEBOX_RECEIVE_R = 3 AND NOTEBOX_RECEIVE_NO = #{noteboxReceiveNo}
+    </select>
+
+    <select id="selectNoteSendDetail" parameterType="Long" resultType="AdminNoteSendDTO">
+        SELECT
+            NOTEBOX_SEND_NO,
+            NOTEBOX_SEND_TITLE,
+            NOTEBOX_SEND_CONTENT,
+            NOTEBOX_SEND_REGIDATE,
+            NOTEBOX_SEND_R,
+            CASE
+                WHEN MOD(NOTEBOX_SEND_R, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = NOTEBOX_SEND_R)
+                WHEN MOD(NOTEBOX_SEND_R, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = NOTEBOX_SEND_R)
+                WHEN MOD(NOTEBOX_SEND_R, 10) = 3 THEN '관리자'
+                END AS NOTEBOX_SEND_RNAME
+        FROM
+            TBL_NOTEBOX_SEND
+                LEFT JOIN
+            TBL_MEMBER ON TBL_NOTEBOX_SEND.NOTEBOX_SEND_R = TBL_MEMBER.MEMBER_NO
+                LEFT JOIN
+            TBL_CENTER_MEMBER ON TBL_NOTEBOX_SEND.NOTEBOX_SEND_R = TBL_CENTER_MEMBER.CENTER_MEMBER_NO
+        WHERE NOTEBOX_SEND_S = 3 AND NOTEBOX_SEND_NO = #{noteboxSendNo}
+    </select>
+
+    <insert id="insertNoteWriteReceive" parameterType="map">
+        <selectKey keyProperty="receiverNumber" resultType="Long" order="BEFORE">
+            SELECT MEMBER_NO
+            FROM TBL_MEMBER
+            WHERE MEMBER_NICKNAME = #{receiver}
+            UNION
+            SELECT CENTER_MEMBER_NO
+            FROM TBL_CENTER_MEMBER
+            WHERE CENTER_MEMBER_NAME = #{receiver}
+        </selectKey>
+        INSERT INTO TBL_NOTEBOX_RECEIVE(notebox_receive_no, notebox_receive_title, notebox_receive_content, notebox_receive_regidate, notebox_receive_read, notebox_receive_readdate, notebox_receive_s, notebox_receive_r)
+        VALUES (SEQ_NOTE_RECEIVE.nextval, #{title}, #{content}, sysdate, 'N', null, 3, #{receiverNumber})
+    </insert>
+
+    <insert id="insertNoteWriteSend" parameterType="map">
+        <selectKey keyProperty="receiverNumber" resultType="Long" order="BEFORE">
+            SELECT MEMBER_NO
+            FROM TBL_MEMBER
+            WHERE MEMBER_NICKNAME = #{receiver}
+            UNION
+            SELECT CENTER_MEMBER_NO
+            FROM TBL_CENTER_MEMBER
+            WHERE CENTER_MEMBER_NAME = #{receiver}
+        </selectKey>
+        INSERT INTO TBL_NOTEBOX_SEND(notebox_send_no, notebox_send_title, notebox_send_content, notebox_send_regidate, notebox_send_s, notebox_send_r)
+        VALUES (SEQ_NOTE_SEND.nextval, #{title}, #{content}, sysdate, 3, #{receiverNumber})
+    </insert>
+
+    <select id="searchNoteInByKeyword" parameterType="String" resultType="AdminNoteReceiveDTO">
+        SELECT
+            NR.NOTEBOX_RECEIVE_NO,
+            NR.NOTEBOX_RECEIVE_TITLE,
+            NR.NOTEBOX_RECEIVE_CONTENT,
+            NR.NOTEBOX_RECEIVE_REGIDATE,
+            NR.NOTEBOX_RECEIVE_READ,
+            NR.NOTEBOX_RECEIVE_S,
+            COALESCE(M.MEMBER_NICKNAME, C.CENTER_MEMBER_NAME) AS NOTEBOX_RECEIVE_SNAME
+        FROM
+            TBL_NOTEBOX_RECEIVE NR
+                LEFT JOIN
+            TBL_MEMBER M ON NR.NOTEBOX_RECEIVE_S = M.MEMBER_NO AND MOD(NR.NOTEBOX_RECEIVE_S, 10) = 1
+                LEFT JOIN
+            TBL_CENTER_MEMBER C ON NR.NOTEBOX_RECEIVE_S = C.CENTER_MEMBER_NO AND MOD(NR.NOTEBOX_RECEIVE_S, 10) = 2
+        WHERE
+            NR.NOTEBOX_RECEIVE_R = 3 AND
+            (COALESCE(M.MEMBER_NICKNAME, C.CENTER_MEMBER_NAME) LIKE '%' || #{keyword} || '%' OR
+             NR.NOTEBOX_RECEIVE_TITLE LIKE '%' || #{keyword} || '%' OR
+             NR.NOTEBOX_RECEIVE_CONTENT LIKE '%' || #{keyword} || '%')
+    </select>
+
+    <select id="searchNoteOutByKeyword" parameterType="String" resultType="AdminNoteSendDTO">
+        SELECT
+            NS.NOTEBOX_SEND_NO,
+            NS.NOTEBOX_SEND_TITLE,
+            NS.NOTEBOX_SEND_CONTENT,
+            NS.NOTEBOX_SEND_REGIDATE,
+            NS.NOTEBOX_SEND_S,
+            COALESCE(M.MEMBER_NICKNAME, C.CENTER_MEMBER_NAME) AS NOTEBOX_SEND_RNAME
+        FROM
+            TBL_NOTEBOX_SEND NS
+                LEFT JOIN
+            TBL_MEMBER M ON NS.NOTEBOX_SEND_R = M.MEMBER_NO AND MOD(NS.NOTEBOX_SEND_R, 10) = 1
+                LEFT JOIN
+            TBL_CENTER_MEMBER C ON NS.NOTEBOX_SEND_R = C.CENTER_MEMBER_NO AND MOD(NS.NOTEBOX_SEND_R, 10) = 2
+        WHERE
+            NS.NOTEBOX_SEND_S = 3 AND
+            (COALESCE(M.MEMBER_NICKNAME, C.CENTER_MEMBER_NAME) LIKE '%' || #{keyword} || '%' OR
+             NS.NOTEBOX_SEND_TITLE LIKE '%' || #{keyword} || '%' OR
+             NS.NOTEBOX_SEND_CONTENT LIKE '%' || #{keyword} || '%')
+    </select>
+    
 </mapper>

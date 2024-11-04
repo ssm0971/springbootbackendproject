@@ -60,7 +60,7 @@
 
                   <!-- 수정/취소 버튼 -->
                   <div class="post-write-button-box">
-                    <button class="post-delete-button">삭제</button>
+                    <button th:data-post-type="${post.postType}" th:data-post-no="${post.postNo}" class="post-delete-button">삭제</button>
                   </div>
                 </div>
 
@@ -68,7 +68,7 @@
                   <div class="review-detail-commentNum">댓글 <span th:text="${commentList.size()}"></span></div>
                   <div class="review-detail-commentbox" th:each="comment, iterStat : ${commentList}">
                     <div class="review-detail-name" th:text="${comment.commentWriter}"></div>
-                    <div class="review-detail-comment"><span th:text="${comment.commentContent}"></span><button class="post-comment-delete-button" style="margin-left: 50px;">삭제</button></div>
+                    <div class="review-detail-comment"><span th:text="${comment.commentContent}"></span><button th:data-comment-type="${post.postType}" th:data-comment-no="${comment.commentNo}" class="post-comment-delete-button" style="margin-left: 50px;">삭제</button></div>
                     <div class="review-detail-date"><span th:text="${comment.commentUpdateDate}"></span></div>
                   </div>
                 </div>
@@ -81,5 +81,6 @@
     </div>
   </div>
 </body>
-
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
+<script th:src="@{/js/admin/deletePostDetail.js}"></script>
 </html>

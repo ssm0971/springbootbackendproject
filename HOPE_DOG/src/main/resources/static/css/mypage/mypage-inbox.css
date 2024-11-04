@@ -149,7 +149,7 @@ main{
 /* 게시글 목록 */
 .member-notebox-contentsbox{
   width: 850px;
-  height: 650px;
+  height: 50px;
   /* border: 1px solid blue; */
 }
 

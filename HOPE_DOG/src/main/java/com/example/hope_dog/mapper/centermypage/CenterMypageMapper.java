@@ -20,4 +20,10 @@ public interface CenterMypageMapper {
 
     // 비밀번호 일치 확인
     boolean checkPasswordMatch(@Param("centerMemberNo") Long centerMemberNo, @Param("centerMemberPw") String centerMemberPw);
+
+    // 이메일 중복 검사 메서드
+    int updateCheckCenterEmail(
+            @Param("centerMemberEmail") String centerMemberEmail,
+            @Param("currentEmail") String currentEmail
+    );
 }
