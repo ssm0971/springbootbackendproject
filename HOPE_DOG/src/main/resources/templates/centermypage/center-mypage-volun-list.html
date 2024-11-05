@@ -8,6 +8,7 @@
   <link rel="stylesheet" th:href="@{/css/centermypage/center-mypage-volun.css}">
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
 </head>
 
 <body>
@@ -18,12 +19,12 @@
   <div class="center-member-profile-navbox">
     <nav>
       <ul class="center-member-profile-nav-ul">
-        <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
-        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
-        <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
+        <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
+        <li id="mywrite"><a th:href="@{/centerMypage/writeInfoCommuList}"> 작성글조회</a></li>
+        <li id="volunteer"><a th:href="@{/centerMypage/volunRequestList}"> 봉사</a></li>
         <div id="choice"></div>
-        <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
-        <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
+        <li id="adopt"><a th:href="@{/centerMypage/adoptRequestList}"> 입양</a></li>
+        <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
         <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
       </ul>
     </nav>
@@ -37,47 +38,26 @@
     <!-- 게시글 제목 -->
     <div>
       <ul class="center-member-profile-cumuboard-titlebox">
-        <li><b>제목</b></li>
-        <li><b>센터명</b></li>
+        <li><span>[상태]</span> <b> 제목</b></li>
+        <li><b>신청자</b>(닉네임)</li>
         <li><b>날짜</b></li>
       </ul>
     </div>
     <!-- 게시글 목록 -->
     <div class="center-member-profile-cumuboard-contentsbox">
-      <ul class="center-member-profile-cumuboard-content">
+      <ul class="center-member-profile-cumuboard-content" th:each="volRequest : ${volRequestList}">
         <li>
           <div>
             <ul class="center-member-profile-cumuboard-contentbox">
-              <li><a href="./center-mypage-volun-signup.html">인천 봉사신청서</a></li>
-              <li>홍길동</li>
-              <li>2024.07.29</li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <div>
-            <ul class="center-member-profile-cumuboard-contentbox">
-              <li>인천 봉사신청서</li>
-              <li>홍길동</li>
-              <li>2024.07.29</li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <div>
-            <ul class="center-member-profile-cumuboard-contentbox">
-              <li>인천 봉사신청서</li>
-              <li>홍길동</li>
-              <li>2024.07.29</li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <div>
-            <ul class="center-member-profile-cumuboard-contentbox">
-              <li>인천 봉사신청서</li>
-              <li>홍길동</li>
-              <li>2024.07.29</li>
+              <li>
+                <span th:text="'[' + ${volRequest.volunStatus} + ']'">[심사중]</span>
+                <a th:href="@{/#(requestNo=${volRequest.volunRequestNo})}" th:text="${volRequest.volunTitle}">봉사신청서 제목</a>
+              </li>
+              <li>
+                <span th:text="${volRequest.volunRequestName}">신청자</span>
+                <span th:text="'(' + ${volRequest.memberNickName} + ')'">(닉네임)</span>
+              </li>
+              <li th:text="${#dates.format(volRequest.volunRegiDate, 'yyyy.MM.dd')}">날짜</li>
             </ul>
           </div>
         </li>
@@ -85,15 +65,16 @@
     </div>
   </div>
   <!-- 페이지네이션 -->
-  <div class="pagination">
-    <button class="prev">◀</button>
-    <button class="page">1</button>
-    <button class="page">2</button>
-    <button class="page">3</button>
-    <button class="page">4</button>
-    <button class="page">5</button>
-    <button class="next">▶</button>
-  </div>
+  <div id="pagination" class="pagination"></div>
+  <!--  <div class="pagination">-->
+  <!--    <button class="prev">◀</button>-->
+  <!--    <button class="page">1</button>-->
+  <!--    <button class="page">2</button>-->
+  <!--    <button class="page">3</button>-->
+  <!--    <button class="page">4</button>-->
+  <!--    <button class="page">5</button>-->
+  <!--    <button class="next">▶</button>-->
+  <!--  </div>-->
 
 
 </main>
@@ -101,4 +82,6 @@
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </html>

@@ -22,8 +22,8 @@
         <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
         <li id="mywrite"><a th:href="@{/centerMypage/writeInfoCommuList}"> 작성글조회</a></li>
         <div id="choice"></div>
-        <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
-        <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
+        <li id="volunteer"><a th:href="@{/centerMypage/volunRequestList}"> 봉사</a></li>
+        <li id="adopt"><a th:href="@{/centerMypage/adoptRequestList}">입양</a></li>
         <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
         <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
       </ul>
@@ -60,7 +60,7 @@
               <li>입양</li>
               <li>
                 <span th:text="'[' + ${adoptList.adoptStatus} + ']'">[상태]</span>
-                <a th:href="@{centerMypage/adoptDetail(adoptNo=${adoptList.adoptNo})}">
+                <a th:href="@{/adopt/adopt/adoptdetail(adoptNo=${adoptList.adoptNo})}">
                   <span th:text="${adoptList.adoptTitle}">제목</span>
                 </a>
                   <span th:text="' [' + ${adoptList.commentCount} + ']'">[댓글수]</span>

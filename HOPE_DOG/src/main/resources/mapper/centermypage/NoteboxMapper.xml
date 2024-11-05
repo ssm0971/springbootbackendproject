@@ -89,11 +89,13 @@
         WHERE NOTEBOX_RECEIVE_NO = #{noteboxReceiveNo}
     </select>
 
-    <!--    쪽지보내기-->
+<!--    쪽지보내기-->
+<!--    이름으로 회원번호찾기-->
     <select id="findMemberNoByNickname" parameterType="String" resultType="Long">
         SELECT member_no FROM TBL_MEMBER WHERE MEMBER_NICKNAME = #{nickname}
     </select>
 
+<!--    이름으로 센터번호찾기-->
     <select id="findCenterMemberNoByNickname" parameterType="String" resultType="Long">
         SELECT center_member_no FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NAME = #{nickname}
     </select>
@@ -110,6 +112,7 @@
         VALUES (SEQ_NOTE_SEND.NEXTVAL, #{noteboxTitle}, #{noteboxContent}, #{noteboxS}, #{noteboxR})
     </insert>
 
+<!--    쪽지삭제 delete-->
     <delete id="deleteNoteByReceiveNo" parameterType="Long">
         DELETE FROM TBL_NOTEBOX_RECEIVE tnr
         WHERE NOTEBOX_RECEIVE_NO = #{noteboxReceiveNo}

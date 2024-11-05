@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.centermypage.request.RequestMapper">
+
+<!--    봉사신청서 조회-->
+    <select id="volunRequestList" parameterType="Long" resultType="VolunRequestListDTO">
+        SELECT  tvr.VOLUN_REQUEST_NO,
+                tvr.VOLUN_REQUEST_NAME,
+                tv.VOLUN_TITLE,
+                tv.VOLUN_REGIDATE,
+                tvr.MEMBER_NO,
+                tm.MEMBER_NICKNAME,
+                tvr.VOLUN_REQUEST_AGREEMENT ,
+                CASE
+                    WHEN tvr.VOLUN_REQUEST_AGREEMENT  = 'Y' THEN '수락'
+                    WHEN tvr.VOLUN_REQUEST_AGREEMENT  = 'N' THEN '거절'
+                    ELSE '심사중'
+                    END AS volunStatus
+        FROM TBL_VOLUN_REQUEST tvr
+                 LEFT JOIN TBL_VOLUN tv ON tv.VOLUN_NO = tvr.VOLUN_NO
+                 LEFT JOIN TBL_MEMBER tm ON tvr.MEMBER_NO = tm.MEMBER_NO
+        WHERE tvr.CENTER_MEMBER_NO = #{centerMemberNo}
+    </select>
+
+<!--    입양신청서 조회-->
+    <select id="adoptRequestList" parameterType="Long" resultType="AdoptRequestListDTO">
+        SELECT
+            tar.ADOPT_REQUEST_NO,
+            tar.ADOPT_REQUEST_NAME,
+            ta.ADOPT_TITLE,
+            ta.ADOPT_REGIDATE,
+            tar.MEMBER_NO,
+            tm.MEMBER_NICKNAME,
+            tar.ADOPT_REQUEST_ADOPT_AGREEMENT,
+            CASE
+                WHEN tar.ADOPT_REQUEST_ADOPT_AGREEMENT = 'Y' THEN '수락'
+                WHEN tar.ADOPT_REQUEST_ADOPT_AGREEMENT = 'N' THEN '거절'
+                ELSE '심사중'
+                END AS adoptStatus
+        FROM
+            TBL_ADOPT_REQUEST tar
+                LEFT JOIN
+            TBL_ADOPT ta ON ta.ADOPT_NO = tar.ADOPT_NO
+                LEFT JOIN
+            TBL_MEMBER tm ON tm.MEMBER_NO = tar.MEMBER_NO
+        WHERE
+            tar.CENTER_MEMBER_NO = #{centerMemberNo}
+    </select>
+
+<!--    임시보호신청서 조회-->
+    <select id="protectRequestList" parameterType="Long" resultType="ProtectRequestListDTO">
+        SELECT
+            tpr.PROTECT_REQUEST_NO,
+            tpr.PROTECT_REQUEST_NAME,
+            tp.PROTECT_TITLE,
+            tp.PROTECT_REGIDATE,
+            tpr.MEMBER_NO,
+            tm.MEMBER_NICKNAME,
+            tpr.PROTECT_REQUEST_AGREEMENT,
+            CASE
+                WHEN tpr.PROTECT_REQUEST_AGREEMENT = 'Y' THEN '수락'
+                WHEN tpr.PROTECT_REQUEST_AGREEMENT = 'N' THEN '거절'
+                ELSE '심사중'
+                END AS protectStatus
+        FROM
+            TBL_PROTECT_REQUEST tpr
+                LEFT JOIN
+            TBL_PROTECT tp ON tp.PROTECT_NO = tpr.PROTECT_NO
+                LEFT JOIN
+            TBL_MEMBER tm ON tm.MEMBER_NO = tpr.MEMBER_NO
+        WHERE
+            tpr.CENTER_MEMBER_NO = #{centerMemberNo}
+    </select>
+
+<!--    임시보호 신청서 상세페이지-->
+    <select id="protectRequestDetailInfo" parameterType="Long" resultType="ProtectRequestDetailDTO">
+        SELECT
+            tpr.PROTECT_REQUEST_NO,
+            tpr.PROTECT_REQUEST_NAME,
+            tpr.PROTECT_REQUEST_PHONE,
+            tpr.PROTECT_REQUEST_PHONE_SUB,
+            tpr.PROTECT_REQUEST_EMAIL,
+            tpr.PROTECT_REQUEST_GENDER,
+            tpr.PROTECT_REQUEST_AGE,
+            tpr.PROTECT_REQUEST_ZIPCODE,
+            tpr.PROTECT_REQUEST_ADDRESS,
+            tpr.PROTECT_REQUEST_ADDRESS_DETAIL,
+            tpr.PROTECT_REQUEST_JOB,
+            tpr.PROTECT_REQUEST_MARRY,
+            tpr.PROTECT_REQUEST_INFO_AGREEMENT,
+            tpr.PROTECT_REQUEST_Q1,
+            tpr.PROTECT_REQUEST_Q2,
+            tpr.PROTECT_REQUEST_Q3,
+            tpr.PROTECT_REQUEST_Q4,
+            tpr.PROTECT_REQUEST_Q5,
+            tpr.PROTECT_REQUEST_Q6,
+            tpr.PROTECT_REQUEST_Q7,
+            tpr.PROTECT_REQUEST_Q8,
+            tpr.PROTECT_REQUEST_Q9,
+            tpr.PROTECT_REQUEST_Q10,
+            tpr.PROTECT_REQUEST_Q11,
+            tpr.PROTECT_REQUEST_Q12,
+            tpr.PROTECT_REQUEST_Q13,
+            tpr.PROTECT_REQUEST_Q14,
+            tpr.PROTECT_REQUEST_Q15,
+            tpr.PROTECT_REQUEST_AGREEMENT,
+            tpr.PROTECT_NO,
+            tpr.MEMBER_NO,
+            tpr.CENTER_MEMBER_NO,
+            tp.PROTECT_TITLE ,
+            tp.PROTECT_REGIDATE ,
+            tm.MEMBER_NICKNAME ,
+            tcm.CENTER_MEMBER_NAME
+        FROM TBL_PROTECT_REQUEST tpr
+                 LEFT JOIN TBL_PROTECT tp ON tpr.PROTECT_NO = tp.PROTECT_NO
+                 LEFT JOIN TBL_MEMBER tm ON tpr.MEMBER_NO = tm.MEMBER_NO
+                 LEFT JOIN TBL_CENTER_MEMBER tcm ON tpr.CENTER_MEMBER_NO =tcm.CENTER_MEMBER_NO
+        WHERE tpr.PROTECT_REQUEST_NO = #{protectRequestNo}
+    </select>
+
+</mapper>
