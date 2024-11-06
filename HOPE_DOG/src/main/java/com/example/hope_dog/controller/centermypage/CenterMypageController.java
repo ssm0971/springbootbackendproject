@@ -355,6 +355,14 @@ class CenterMypageController {
 
         return "centermypage/center-mypage-adopt-protect-list";
     }
+//    //임시보호 신청서 상태처리
+//    @GetMapping("/adoptRequestDetail")
+
+
+
+
+
+
 
     //임시보호 신청서 상세 조회
     @GetMapping("/protectRequestDetail")
@@ -372,9 +380,25 @@ class CenterMypageController {
         return "centermypage/center-mypage-adopt-protectrequest";
     }
 
+    //임시보호 신청서 상태처리
+    @GetMapping("/protectStatus")
+    public String centerMypageProtectStatus(@RequestParam("protectRequestStatus") String protectRequestStatus,
+                                            @RequestParam("protectRequestNo") Long protectRequestNo, Model model) {
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+        if (centerMemberNo == null) {
+            log.warn("세션에서 centerMemberNo가 존재하지 않습니다.");
+            return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
+        }
 
+        try {
+            requestService.updateProtectRequestStatus(protectRequestNo, protectRequestStatus);
+        } catch (Exception e) {
+            log.error("요청 상태 업데이트 중 오류 발생: ", e);
+            return "redirect:/error"; // 에러 페이지로 리다이렉트
+        }
 
-
+        return "redirect:/centerMypage/protectRequestList";
+    }
 
 
 

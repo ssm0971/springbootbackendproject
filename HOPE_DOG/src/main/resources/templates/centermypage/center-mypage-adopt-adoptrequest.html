@@ -381,9 +381,30 @@
 
         <br><br>
 
-        <div class="adoptrequest-buttonbox">
-          <button class="adoptrequest-button" onclick="validateInputs()" type="button">확인</button>
-          <button class="adoptrequest-button">취소</button>
+        <div class="protectrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == null}">
+          <a th:href="@{/centerMypage/adoptStatus(adoptRequestStatus='Y', adoptRequestNo=${protectRequestInfo.adoptRequestNo})}">
+            <button class="protectrequest-button" type="button">수락</button>
+          </a>
+          <a th:href="@{/centerMypage/adoptStatus(adoptRequestStatus='N', adoptRequestNo=${adoptRequestInfo.adoptRequestNo})}">
+            <button class="protectrequest-button" type="button">거절</button>
+          </a>
+          <a th:href="@{/centerMypage/adoptRequestList}">
+            <button class="protectrequest-button" type="button">이전</button>
+          </a>
+        </div>
+
+        <div class="protectrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == 'Y'}">
+          <div>수락하셨습니다</div>
+          <a th:href="@{/centerMypage/adoptRequestList}">
+            <button class="protectrequest-button" type="button">이전</button>
+          </a>
+        </div>
+
+        <div class="protectrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == 'N'}">
+          <div>거절하셨습니다</div>
+          <a th:href="@{/centerMypage/adoptRequestList}">
+            <button class="protectrequest-button" type="button">이전</button>
+          </a>
         </div>
         <br>
 

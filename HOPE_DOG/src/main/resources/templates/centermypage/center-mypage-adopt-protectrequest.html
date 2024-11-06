@@ -159,7 +159,7 @@
                 </div>
                 <div class="agreement-checkbox">
                     <input type="checkbox" id="info-agreement"
-                           th:checked="${protectRequestInfo.protectRequestInfoAgreement}" readonly>
+                           th:checked="${protectRequestInfo.protectRequestInfoAgreement}" disabled>
                     <label for="info-agreement">위 약관에 동의합니다.</label>
                 </div>
 
@@ -363,9 +363,31 @@
 
                 <br><br>
 
-                <div class="protectrequest-buttonbox">
-                    <button class="protectrequest-button" onclick="validateInputs()" type="button">신청</button>
-                    <button class="protectrequest-button" type="button" onclick="window.history.back();">취소</button>
+<!--                <div class="protectrequest-buttonbox">-->
+                <div class="protectrequest-buttonbox" th:if="${protectRequestInfo.protectRequestStatus == null}">
+                    <a th:href="@{/centerMypage/protectStatus(protectRequestStatus='Y', protectRequestNo=${protectRequestInfo.protectRequestNo})}">
+                        <button class="protectrequest-button" type="button">수락</button>
+                    </a>
+                    <a th:href="@{/centerMypage/protectStatus(protectRequestStatus='N', protectRequestNo=${protectRequestInfo.protectRequestNo})}">
+                        <button class="protectrequest-button" type="button">거절</button>
+                    </a>
+                    <a th:href="@{/centerMypage/protectRequestList}">
+                        <button class="protectrequest-button" type="button">이전</button>
+                    </a>
+                </div>
+
+                <div class="protectrequest-buttonbox" th:if="${protectRequestInfo.protectRequestStatus == 'Y'}">
+                    <div>수락하셨습니다</div>
+                    <a th:href="@{/centerMypage/protectRequestList}">
+                        <button class="protectrequest-button" type="button">이전</button>
+                    </a>
+                </div>
+
+                <div class="protectrequest-buttonbox" th:if="${protectRequestInfo.protectRequestStatus == 'N'}">
+                    <div>거절하셨습니다</div>
+                    <a th:href="@{/centerMypage/protectRequestList}">
+                        <button class="protectrequest-button" type="button">이전</button>
+                    </a>
                 </div>
                 <br>
 

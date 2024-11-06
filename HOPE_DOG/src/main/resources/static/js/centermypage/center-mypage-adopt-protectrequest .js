@@ -265,56 +265,56 @@ function checkQuest15Input() {
 }
 
 // 전체검사
-function validateInputs() {
-  const inputs = [
-      { id: 'nameInput', errors: ['nameError', 'nameError2'] },
-      { id: 'phoneInput', errors: ['phoneError', 'phoneError2'] },
-      { id: 'phone2Input', errors: ['phone2Error', 'phone2Error2'] },
-      { id: 'emailInput', errors: ['emailError', 'emailError2'] },
-      { id: 'ageInput', errors: ['ageError', 'ageError2'] },
-      { id: 'jobInput', errors: ['jobError', 'jobError2'] },
-      { id: 'detailAddress', errors: ['addressError', 'addressError2'] },
-      { id: 'quest1Input', errors: ['quest1Error'] },
-      { id: 'quest2Input', errors: ['quest2Error'] },
-      { id: 'quest3Input', errors: ['quest3Error'] },
-      { id: 'quest4Input', errors: ['quest4Error'] },
-      { id: 'quest5Input', errors: ['quest5Error'] },
-      { id: 'quest6Input', errors: ['quest6Error'] },
-      { id: 'quest7Input', errors: ['quest7Error'] },
-      { id: 'quest8Input', errors: ['quest8Error'] },
-      { id: 'quest9Input', errors: ['quest9Error'] },
-      { id: 'quest10Input', errors: ['quest10Error'] },
-      { id: 'quest11Input', errors: ['quest11Error'] },
-      { id: 'quest12Input', errors: ['quest12Error'] },
-      { id: 'quest13Input', errors: ['quest13Error'] },
-      { id: 'quest14Input', errors: ['quest14Error'] },
-      { id: 'quest15Input', errors: ['quest15Error'] },
-  ];
-
-  let allValid = true;
-
-  inputs.forEach(input => {
-      const inputField = document.getElementById(input.id);
-      const isEmpty = inputField.value.trim() === '';
-      
-      input.errors.forEach(errorId => {
-          const errorElement = document.getElementById(errorId);
-          if (isEmpty) {
-              errorElement.style.display = 'block'; // 메시지 표시
-              allValid = false;
-          } else {
-              errorElement.style.display = 'none'; // 메시지 숨김
-          }
-      });
-  });
-
-  if (!allValid) {
-      alert('모든 질문을 입력해 주세요.'); // 경고창 표시
-  } else {
-      alert('신청이 완료되었습니다'); // 모든 입력이 유효한 경우
-      // 여기에 추가적인 처리 코드 작성 가능
-  }
-}
+// function validateInputs() {
+//   const inputs = [
+//       { id: 'nameInput', errors: ['nameError', 'nameError2'] },
+//       { id: 'phoneInput', errors: ['phoneError', 'phoneError2'] },
+//       { id: 'phone2Input', errors: ['phone2Error', 'phone2Error2'] },
+//       { id: 'emailInput', errors: ['emailError', 'emailError2'] },
+//       { id: 'ageInput', errors: ['ageError', 'ageError2'] },
+//       { id: 'jobInput', errors: ['jobError', 'jobError2'] },
+//       { id: 'detailAddress', errors: ['addressError', 'addressError2'] },
+//       { id: 'quest1Input', errors: ['quest1Error'] },
+//       { id: 'quest2Input', errors: ['quest2Error'] },
+//       { id: 'quest3Input', errors: ['quest3Error'] },
+//       { id: 'quest4Input', errors: ['quest4Error'] },
+//       { id: 'quest5Input', errors: ['quest5Error'] },
+//       { id: 'quest6Input', errors: ['quest6Error'] },
+//       { id: 'quest7Input', errors: ['quest7Error'] },
+//       { id: 'quest8Input', errors: ['quest8Error'] },
+//       { id: 'quest9Input', errors: ['quest9Error'] },
+//       { id: 'quest10Input', errors: ['quest10Error'] },
+//       { id: 'quest11Input', errors: ['quest11Error'] },
+//       { id: 'quest12Input', errors: ['quest12Error'] },
+//       { id: 'quest13Input', errors: ['quest13Error'] },
+//       { id: 'quest14Input', errors: ['quest14Error'] },
+//       { id: 'quest15Input', errors: ['quest15Error'] },
+//   ];
+//
+//   let allValid = true;
+//
+//   inputs.forEach(input => {
+//       const inputField = document.getElementById(input.id);
+//       const isEmpty = inputField.value.trim() === '';
+//
+//       input.errors.forEach(errorId => {
+//           const errorElement = document.getElementById(errorId);
+//           if (isEmpty) {
+//               errorElement.style.display = 'block'; // 메시지 표시
+//               allValid = false;
+//           } else {
+//               errorElement.style.display = 'none'; // 메시지 숨김
+//           }
+//       });
+//   });
+//
+//   if (!allValid) {
+//       alert('모든 질문을 입력해 주세요.'); // 경고창 표시
+//   } else {
+//       alert('신청이 완료되었습니다'); // 모든 입력이 유효한 경우
+//       // 여기에 추가적인 처리 코드 작성 가능
+//   }
+// }
 
   // 주소 검색
   document.addEventListener('DOMContentLoaded', function() {

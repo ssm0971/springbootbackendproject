@@ -1,9 +1,6 @@
 package com.example.hope_dog.mapper.centermypage.request;
 
-import com.example.hope_dog.dto.centermypage.request.AdoptRequestListDTO;
-import com.example.hope_dog.dto.centermypage.request.ProtectRequestDetailDTO;
-import com.example.hope_dog.dto.centermypage.request.ProtectRequestListDTO;
-import com.example.hope_dog.dto.centermypage.request.VolunRequestListDTO;
+import com.example.hope_dog.dto.centermypage.request.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,5 +19,8 @@ public interface RequestMapper {
 
 //    임시보호신청서 상세페이지 정보 조회
     ProtectRequestDetailDTO protectRequestDetailInfo(Long protectRequestNo);
+
+//    임시보호신청서 수락/거절
+    void protectRequestStatusChoice(ProtectRequestChoiceDTO protectRequestChoiceDTO);
 
 }

@@ -55,7 +55,7 @@
             <ul class="center-member-profile-cumuboard-contentbox">
               <li>
                 <span th:text="'[' + ${adoptRequest.adoptStatus} + ']'">[심사중]</span>
-                <a th:href="@{/#(requestNo=${adoptRequest.adoptRequestNo})}" th:text="${adoptRequest.adoptTitle}">입양신청서 제목</a>
+                <a th:href="@{/centerMypage/adoptRequestDetail(adoptRequestNo=${adoptRequest.adoptRequestNo})}" th:text="${adoptRequest.adoptTitle}">입양신청서 제목</a>
               </li>
               <li>
                 <span th:text="${adoptRequest.adoptRequestName}">신청자</span>
