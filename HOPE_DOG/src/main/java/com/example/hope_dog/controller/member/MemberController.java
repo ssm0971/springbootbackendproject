@@ -27,15 +27,19 @@ public class MemberController {
     private final MemberService memberService;
 
 
-   // 회원가입 페이지 이동
+    // 회원가입 페이지로 이동
     @GetMapping("/join")
     public String join() {
+        // member/join 뷰 템플릿을 반환
+        // ViewResolver가 실제 뷰 페이지를 찾아 렌더링
         return "member/join";
     }
 
-    // 로그인 페이지 이동
+    // 로그인 페이지로 이동
     @GetMapping("/login")
     public String login() {
+        // member/login 뷰 템플릿을 반환
+        // ViewResolver가 실제 뷰 페이지를 찾아 렌더링
         return "member/login";
     }
 
@@ -430,34 +434,41 @@ public class MemberController {
 
 
 
-    @GetMapping("/additional-info")  // "/member/additional-info" 대신
+    // 추가 정보 입력 폼 페이지 표시
+    @GetMapping("/additional-info")
     public String additionalInfoForm(HttpSession session, Model model) {
+        // 세션에서 임시 저장된 이메일과 닉네임을 가져와 모델에 추가
         model.addAttribute("email", session.getAttribute("tempEmail"));
         model.addAttribute("nickname", session.getAttribute("tempNickname"));
+
+        // 추가 정보 입력 페이지로 이동
         return "member/additional-info";
     }
 
+    // 소셜 로그인 후 추가 정보 처리
     @PostMapping("/additional-info")
     public String processAdditionalInfo(@ModelAttribute MemberDTO memberDTO,
                                         HttpSession session) {
+        // 세션에서 임시 저장된 providerId와 provider 정보 가져오기
         String providerId = (String) session.getAttribute("tempProviderId");
         String provider = (String) session.getAttribute("provider");
 
+        // 회원 DTO에 소셜 로그인 관련 정보 설정
         memberDTO.setProvider(provider);
         memberDTO.setProviderId(providerId);
         memberDTO.setMemberId(provider + "_" + providerId);
 
-        // 통합 메서드 사용
+        // 소셜 회원 등록 처리
         MemberDTO savedMember = memberService.registerSocialMember(memberDTO);
 
-        // 임시 세션 정보 제거
+        // 임시 세션 데이터 삭제
         session.removeAttribute("tempEmail");
         session.removeAttribute("tempNickname");
         session.removeAttribute("tempProviderId");
         session.removeAttribute("provider");
         session.removeAttribute("needAdditionalInfo");
 
-        // 실제 세션 정보 설정
+        // 실제 회원 세션 정보 설정
         session.setAttribute("memberNo", savedMember.getMemberNo());
         session.setAttribute("memberId", savedMember.getMemberId());
         session.setAttribute("memberName", savedMember.getMemberName());
@@ -466,6 +477,7 @@ public class MemberController {
         session.setAttribute("memberLoginStatus", provider.toUpperCase());
         session.setAttribute("memberTwoFactorEnabled", savedMember.getMemberTwoFactorEnabled());
 
+        // 메인 페이지로 리다이렉트
         return "redirect:/main/main";
     }
 }

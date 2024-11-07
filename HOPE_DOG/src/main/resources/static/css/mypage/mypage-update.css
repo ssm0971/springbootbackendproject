@@ -8,13 +8,11 @@ main{
   width: 1080px;
   height: auto;
   margin: auto;
-
 }
 
 /* 마이페이지 목록 */
 .member-profile-navbox{
   margin: 0 auto;
-  /* border: 1px solid black; */
   border-bottom: 2px solid #9B805D;
   border-top: 2px solid #9B805D;
   width: 1080px;
@@ -53,7 +51,6 @@ main{
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid black; */
   margin-top: 20px;
 }
 
@@ -70,7 +67,6 @@ main{
   align-items: center;
   width: 1080px;
   height: auto;
-  /* border: 1px solid black; */
 }
 
 .member-profile-info{
@@ -78,39 +74,20 @@ main{
   height: auto;
   margin: 30px;
   border: 2px solid #F5EAD9;
-  display: flex;  
+  display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center; /* 가로 가운데 정렬 */
 }
-
 
 .member-profile-infoarea{
   width: 600px;
   display: flex;
   align-items: center;
   margin-left: -20px;
-  /* border: 1px solid black; */
-}
-
-.member-profile-info-textarea{
-  width: 300px;
-  margin: 20px;
-}
-
-.member-profile-info-textarea li{
-  margin: 20px 0px 20px 0px;
-  list-style: none;
-}
-
-a{
-  text-decoration: none;
-  color: black;
 }
 
 .member-profile-info-textarea{
   width: 600px;
-  /* border: 1px solid black; */
   margin: 30px;
 }
 
@@ -120,23 +97,24 @@ a{
   align-items: center;
 }
 
-.member-profile-infobox input[type=text]{
+/* text와 password 타입 input에 동일한 스타일 적용 */
+.member-profile-infobox input[type=text],
+.member-profile-infobox input[type=password]{
   margin: 10px 0px 10px 0px;
   width: 250px;
   height: 30px;
-  border: none;  
+  border: none;
 }
 
 .member-profile-info-textarea input[type=radio]{
   margin: 10px 15px 10px 15px;
   height: 30px;
-  
 }
 
 #contents{
   display: flex;
   align-items: center;
-  border-bottom: 2px solid #9B805D ;
+  border-bottom: 2px solid #9B805D;
   font-size: 18px;
 }
 
@@ -144,7 +122,17 @@ a{
   width: 150px;
 }
 
-/* 버튼 */
+/* 에러 메시지 스타일 */
+.Error {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.Error div {
+  font-size: 14px;
+}
+
+/* 버튼 스타일 */
 .member-profile-button-small{
   width: 120px;
   height: 40px;
@@ -154,7 +142,6 @@ a{
   margin-left: 30px;
   border: none;
 }
-
 
 .member-profile-button{
   display: flex;
@@ -172,7 +159,7 @@ a{
   border: none;
 }
 
-/* 페이지선택 */
+/* 페이지 선택 표시 */
 #choice {
   width: 20px;
   height: 20px;
@@ -181,4 +168,42 @@ a{
   transform: translate(-30px, 15px);
   position: relative;
   z-index: -1;
+}
+
+/* 타이머 스타일 */
+#timer {
+  color: #9B805D;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+/* 링크 스타일 */
+a{
+  text-decoration: none;
+  color: black;
+}
+
+/* 비활성화된 input 스타일 */
+input[disabled] {
+  background-color: #F5EAD9;
+  cursor: not-allowed;
+}
+
+/* 리스트 스타일 제거 */
+.member-profile-info-textarea li{
+  margin: 20px 0px 20px 0px;
+  list-style: none;
+}
+
+/* 버튼 호버 효과 */
+.member-profile-button-small:hover,
+.member-profile-button button:hover {
+  background-color: #9B805D;
+  color: white;
+  transition: 0.3s;
+}
+
+/* 에러 상태의 input 스타일 */
+input.error {
+  border-bottom: 1px solid red;
 }

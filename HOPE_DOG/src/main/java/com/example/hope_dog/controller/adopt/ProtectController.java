@@ -145,8 +145,16 @@ public class ProtectController {
 
     //임시보호글수정
     @GetMapping("/protect/protectmodify")
-    public String protectModify() {
-        return "adopt/protect/protect-protectmodify";
+    public String adoptModify(@RequestParam("adoptNo") Long adoptNo, Model model, HttpSession session) {
+        List<ProtectDetailDTO> protectDetailList = protectService.getProtectDetail(adoptNo);
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+        Long memberNo = (Long) session.getAttribute("memberNo");
+
+        model.addAttribute("protectDetailList", protectDetailList);
+        model.addAttribute("centerMemberNo", centerMemberNo);
+        model.addAttribute("memberNo", memberNo);
+
+        return "adopt/protect/adopt-protectmodify";
     }
 
     // 임시보호 신청서 페이지 열기

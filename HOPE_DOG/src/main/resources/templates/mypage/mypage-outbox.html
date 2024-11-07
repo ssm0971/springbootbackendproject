@@ -59,7 +59,7 @@
             <ul class="member-notebox-titlebox">
                 <!-- <li><b>상태</b></li> -->
                 <li><b>수신자</b></li>
-                <li><b>송신자</b></li>
+<!--                <li><b>송신자</b></li>-->
                 <li><b>제목</b></li>
                 <li><b>내용</b></li>
                 <li><b>날짜</b></li>
@@ -71,9 +71,9 @@
                     <li>
                         <div th:text="${noteS.noteboxReceiverName}"></div>
                     </li>
-                    <li>
-                        <div th:text="${noteS.noteboxSendR}"></div>
-                    </li>
+<!--                    <li>-->
+<!--                        <div th:text="${noteS.noteboxSendR}"></div>-->
+<!--                    </li>-->
                     <li>
                         <div th:text="${noteS.noteboxSendTitle}"></div>
                     </li>
@@ -85,6 +85,7 @@
                     </li>
                 </ul>
             <div class="noteboxSendNo" th:text="${noteS.noteboxSendNo}" style="display: none;"></div>
+<!--            <div class="noteboxReceiveNo" th:text="${noteS.noteboxReceiveNo}" style="display: none;"></div>-->
         </div>
 
         <div class="outbox-admain-btuall">

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.donation.DonaCommentMapper">
+
+    <!--    댓글 등록-->
+    <insert id="insertComment" parameterType="DonaCommentWriteDTO">
+        <selectKey keyProperty="donaCommentNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_DONA_COMMENT_NO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_DONA_COMMENT(DONA_COMMENT_NO, DONA_COMMENT_CONTENT, DONA_NO, DONA_COMMENT_WRITER)
+        VALUES (#{donaCommentNo}, #{donaCommentContent}, #{donaNo}, #{donaCommentWriter})
+    </insert>
+
+    <!-- 댓글불러오기 -->
+    <select id="selectCommentList" parameterType="Long" resultType="DonaCommentListDTO">
+        SELECT
+            dc.DONA_NO,
+            dc.DONA_COMMENT_NO,
+            dc.DONA_COMMENT_CONTENT,
+            dc.DONA_COMMENT_REGIDATE,
+            m.MEMBER_NICKNAME AS COMMENT_WRITER_NAME
+        FROM
+            TBL_DONA_COMMENT dc
+                LEFT JOIN
+            TBL_MEMBER m ON dc.DONA
+         WHERE
+            dc.DONA_NO = #{donaNo}
+    </select>
+
+    <select id="selectCommentSlice" resultType="DonaCommentListDTO">
+        <![CDATA[
+        SELECT RNUM, dc.DONA_COMMENT_NO, dc.DONA_COMMENT_CONTENT, dc.DONA_COMMENT_REGIDATE, COMMENT_WRITER_NAME
+        FROM (
+                 SELECT ROWNUM AS RNUM, dc.DONA_COMMENT_NO, dc.DONA_COMMENT_CONTENT, dc.DONA_COMMENT_REGIDATE,
+                        CASE
+                            WHEN MOD(dc.DONA_COMMENT_WRITER, 10) = 1 THEN m.MEMBER_NAME
+                            WHEN MOD(dc.DONA_COMMENT_WRITER, 10) = 2 THEN cm.CENTER_MEMBER_NAME
+                            END AS COMMENT_WRITER_NAME
+                 FROM TBL_DONA_COMMENT dc
+                          LEFT JOIN TBL_MEMBER m ON MOD(dc.DONA_COMMENT_WRITER, 10) = 1 AND dc.DONA_COMMENT_WRITER = m.MEMBER_NO
+                          LEFT JOIN TBL_CENTER_MEMBER cm ON MOD(dc.DONA_COMMENT_WRITER, 10) = 2 AND dc.DONA_COMMENT_WRITER = cm.CENTER_MEMBER_NO
+                 WHERE dc.DONA_NO = #{donaNo}
+                 ORDER BY dc.DONA_COMMENT_REGIDATE DESC
+             ) WHERE ROWNUM <= #{criteria.page} * #{criteria.amount} + 1
+            ) WHERE RNUM > (#{criteria.page} - 1) * #{criteria.amount}
+        ]]>
+
+    </select>
+
+    <!--     댓글 수정-->
+    <update id="updateComment" parameterType="DonaCommentUpdateDTO">
+        UPDATE TBL_DONA_COMMENT
+        SET DONA_COMMENT_CONTENT = #{donaCommentContent}, DONA_COMMENT_REGIDATE = SYSDATE
+        WHERE DONA_COMMENT_NO = #{donaCommentNo}
+    </update>
+
+    <!--     댓글 삭제-->
+    <delete id="deleteComment" parameterType="Long">
+        DELETE FROM TBL_DONA_COMMENT
+        WHERE DONA_COMMENT_NO = #{donaCommentNo}
+    </delete>
+</mapper>

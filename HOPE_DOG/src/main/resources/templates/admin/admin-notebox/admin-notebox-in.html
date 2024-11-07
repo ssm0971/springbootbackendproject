@@ -69,7 +69,7 @@
 
                                 <div th:each="noteReceive, iterStat : ${noteReceiveList}" class="info-row" >
                                     <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
+                                        <input type="checkbox" class="checkbox" name="check" th:data-notebox-receive-no="${noteReceive.noteboxReceiveNo}">
                                     </div>
                                     <a th:href="@{/admin/noteboxInDetail(noteboxReceiveNo=${noteReceive.noteboxReceiveNo})}" style="display: flex; justify-content: center">
                                     <div class="info-cell info-cell-cate" th:text="${noteReceive.noteboxReceiveSname}"></div>
@@ -89,4 +89,5 @@
 </body>
 <script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
 <script th:src="@{/js/admin/allCheck.js}"></script>
+<script th:src="@{/js/admin/deleteNoteIn.js}"></script>
 </html>

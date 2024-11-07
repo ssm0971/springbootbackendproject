@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
-  <script defer th:src="@{/js/commu/commu-post.js}"></script>
-  <script defer th:src="@{/js/main/main.js}"></script>
+  <script defer th:src="@{/js/commu/commu-main.js}"></script>
+<!--  <script defer th:src="@{/js/main/main.js}"></script>-->
 </head>
 
 <body>
@@ -86,6 +86,9 @@
           </span>
         </form>
       </div>
+
+        <!-- 검색 결과를 표시할 공간 -->
+        <div id="search-results"></div>
 
         <div class="commu-admain-btuall">
           <a class="commu-admain-btu" th:href="@{/commu/commuWrite}">

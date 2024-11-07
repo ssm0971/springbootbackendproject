@@ -13,65 +13,73 @@
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <!-- 입양/임시보호 후기 메인 크기 -->
-    <div class="review-main-size">
-      <!-- 입양/임보/후기 게시판 바 -->
-      <div class="review-nav">
-        <div class="review-navList" id="adoptPage">안심입양</div>
-        <div class="review-navList" id="protectPage">임시보호</div>
-        <div class="review-navList" id="reviewPage">후기</div>
-      </div>
-      <!-- 후기 소제목 -->
-      <div class="review-title1">
-        후기
-      </div>
-      <!-- 최신순/오래된순 버튼-->
-      <div class="review-title2">
-        <label>
-          <input type="radio" name="review-radio" value="" checked>
-          최신순
-        </label>
-        <label>
-          <input type="radio" name="review-radio" value="">
-          오래된순
-        </label>
-      </div>
+<main>
+  <!-- 입양 메인 크기 -->
+  <div class="adopt-main-size">
+    <!-- 입양/임보/후기 게시판 바 -->
+    <div class="adopt-nav">
+      <div class="adopt-navList" id="adoptPage">안심입양</div>
+      <div class="adopt-navList" id="protectPage">임시보호</div>
+      <div class="adopt-navList" id="reviewPage">후기</div>
+    </div>
+    <!-- 안심입양 소제목 -->
+    <div class="adopt-title1">
+      후기
+    </div>
 
-      <!-- 후기 글 목록 -->
-      <div class="review-postlist">
-        <a href="../../html/adopt/adopt-reviewdetail.html">
-          <div class="review-post">
-            <div class="review-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
-            <div class="review-post-intro">
-              <div class="review-post-title">말티즈 여아 3세</div>
-            </div>
-            <div class="review-post-content">데려가주세요 제발 글1</div>
-            <div class="review-post-date">등록일 : <span>2024-10-14</div>
-          </div>
+    <br>
+
+    <!-- 입양 글 목록 -->
+    <div class="adopt-postlist">
+      <div class="adopt-post" th:each="review : ${ReviewMainList}">
+        <div class="adopt-post-img"><img src="../../img/adopt-main.jpg" width="250px" height="200px"></div>
+        <div class="adopt-post-intro">
+          <div th:text="${review.memberNo}" style="display: none"></div>
+          <div th:text="${review.reviewNo}" style="display: none" class="adoptNo"></div>
+          <div class="adopt-post-title" th:text="${review.reviewTitle}"></div>
+        </div>
+        <div class="adopt-post-content" th:utext="${review.reviewContent}"></div>
+        <div class="adopt-post-content2">등록일 : <span th:text="${#dates.format(review.reviewRegidate, 'yyyy-MM-dd')}"></div>
+        <div class="adopt-post-content2">작성자 : <span th:text="${review.memberName}"></div>
+      </div>
+    </div>
+
+    <br>
+
+    <!-- 입양 등록 버튼 -->
+    <div class="adopt-button-box" th:if="${memberNo != null}">
+      <a href="/adopt/review/reviewwrite">
+        <button class="adopt-button">등록</button>
+      </a>
+    </div>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+      <ul class="page-box">
+        <a th:href="@{/adopt/review(page=${page.startPage - 1})}" class="page-a" th:if="${page.prev}">
+          <li class="page-num prev">&lt</li>
         </a>
-      </div>
 
-      <br>
+        <!--        th:block은 화면에 영향을 주지않는 가짜 태그
+                    타임리프 문법을 사용하기 위해 만들어 쓴다.
+        -->
+        <th:block th:each="i : ${#numbers.sequence(page.startPage, page.endPage)}">
+          <a th:href="@{/adopt/review(page=${i})}" class="page-a">
+            <li class="page-num" th:classappend="${i == page.criteria.page ? 'active' : ''}" th:text="${i}"></li>
+          </a>
+        </th:block>
 
-      <!-- 후기 등록 버튼 -->
-      <div class="review-button-box">
-        <a href="../../html/adopt/adopt-reviewwrite.html">
-          <button class="review-button">등록</button>
+        <a th:href="@{/adopt/review(page=${page.endPage + 1})}" class="page-a" th:if="${page.next}">
+          <li class="page-num next">&gt</li>
         </a>
-      </div>
+      </ul>
+    </div>
 
-      <!-- 페이지네이션 -->
-      <div class="review-pagenation">
-        <div>&lt;</div>
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>&gt;</div>
-      </div>
-  </main>
+    <br>
+
+</main>
+
+
 
 </body>
 

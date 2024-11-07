@@ -31,8 +31,7 @@
     </div>
     <div class="note-wrap">
       <div class="note-title">
-        <h1>쪽지 보내기</h1>
-<!--        <h1 th:text="${noteboxWriteDTO.noteboxReceiverName != null ? '답장 보내기' : '쪽지 보내기'}"></h1>-->
+        <h1 th:text="${mpNoteboxWriteDTO.noteboxReceiverName != null ? '답장 보내기' : '쪽지 보내기'}"></h1>
       </div>
       <form method="post" id="noteForm" th:action="@{/mypage/sendingNote}" th:object="${mpNoteboxWriteDTO}">
         <div class="note-write-wrap">

@@ -22,46 +22,45 @@
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <!-- 입양 후기 메인 크기 -->
-    <div class="review-main-size">
-      <!-- 입양/임보/후기 게시판 바 -->
-      <div class="review-nav">
-        <div class="review-navList" id="adoptPage">안심입양</div>
-        <div class="review-navList" id="protectPage">임시보호</div>
-        <div class="review-navList" id="reviewPage">후기</div>
+<main>
+  <!-- 입양 메인 크기 -->
+  <div class="adopt-main-size">
+    <!-- 입양/임보/후기 게시판 바 -->
+    <div class="adopt-nav">
+      <div class="adopt-navList" id="adoptPage">안심입양</div>
+      <div class="adopt-navList" id="protectPage">임시보호</div>
+      <div class="adopt-navList" id="reviewPage">후기</div>
+    </div>
+
+    <!-- 입양신청 글 등록 -->
+    <div class="adopt-wirtebanner">후기 등록</div>
+
+    <br>
+
+    <!-- 글작성 박스 -->
+    <form th:action="@{/adopt/review/reviewWriteRegi}" method="post">
+      <div class="adopt-write-area">
+        <br>
+        <!-- 임시보호 기간 입력 -->
+        <div class="adopt-write-box">
+        </div>
+        <input th:value="${memberNo}" style="display: none" name="memberNo">
+        <!-- 썸머노트 -->
+        <div class="content">
+          <input id="subject" name="reviewTitle" class="adoptwrite-title" placeholder="제목을 입력해주세요">
+          <textarea id="contents" name="reviewContent" maxlength="100"></textarea>
+        </div>
+
+        <!-- 등록/취소 버튼 -->
+        <div class="adopt-write-button-box">
+          <button class="adopt-write-button" type="submit">등록</button>
+          <button class="adopt-cancle-button" type="button" onclick="cancleClick()">취소</button>
+        </div>
       </div>
+    </form>
 
-      <!-- 후기 글 등록 -->
-      <div class="review-wirtebanner">후기 등록</div>
 
-      <br>
-
-      <!-- 글작성 박스 -->
-      <div class="review-write-area">
-        <form action="링크" method="post">
-          <br>
-
-          <br><br>
-
-          <!-- 썸머노트 -->
-          <div class="content">
-            <form method="post" action="">
-              <input id="subject" name="subject" class="adoptwrite-title" placeholder="제목을 입력해주세요">
-              <textarea id="contents" name="contents"></textarea>
-            </form>
-          </div>
-
-          <!-- 등록/취소 버튼 -->
-          <div class="review-write-button-box">
-            <a href="../../html/adopt/adopt-reviewdetail.html">
-              <button class="review-write-button" type="button">등록</button>
-            </a>
-            <button class="review-cancle-button" type="button" onclick="cancleClick()">취소</button>
-          </div>
-        </form>
-      </div>
-  </main>
+</main>
 
 </body>
 
@@ -72,7 +71,7 @@
 </footer>
 
 <script defer src="../../js/main/header.js"></script>
-<script defer th:src="@{/js/adopt/reivew/adopt-reviewwrite.js}"></script>
+<script defer th:src="@{/js/adopt/review/adopt-reviewwrite.js}"></script>
 
 
 

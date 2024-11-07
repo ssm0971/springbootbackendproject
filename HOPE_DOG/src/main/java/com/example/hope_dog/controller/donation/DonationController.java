@@ -45,7 +45,6 @@ public class DonationController {
     @GetMapping("/view/{donaNo}")
     public String view(@PathVariable("donaNo") Long donaNo, Model model, HttpSession session) {
         List<DonationViewDTO> donationViewList = donationService.getDonationViewList(donaNo);
-        List<DonaCommentDTO> donationComment = donationService.donationComment(donaNo);
 
         System.out.println("DonationViewList: " + donationViewList);  // 로그 추가
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
@@ -54,7 +53,6 @@ public class DonationController {
         model.addAttribute("centerMemberNo", centerMemberNo);
         model.addAttribute("memberNo", memberNo);
         model.addAttribute("donationViewList", donationViewList);
-        model.addAttribute("donationComment", donationComment);
 
         return "donation/donation-detail";
     }
@@ -118,24 +116,6 @@ public class DonationController {
         return "redirect:/dona/list"; // 수정 후 목록으로 리다이렉트
     }
 
-/*    // 댓글 등록
-    @PostMapping("/writeComment")
-    public String insertComment(@RequestParam DonationWriteDTO donationWriteDTO, @PathVariable("donaNo") Long donaNo) {
-        donationWriteDTO.setDonaNo(donaNo);
-        donationWriteDTO.setCenterMemberNo();
-    }*/
 
-    // 댓글 삭제
-//    @GetMapping("/deleteComment")
-//    public String deleteComment(@RequestParam("donaNo") Long donaNo) {
-//        DonaCommentDTO donaCommentDTO = new DonaCommentDTO();
-//        donaCommentDTO.setDonaNo(donaNo);
-//
-//        donationService.donationComment(donaNo);
-//
-//        return "redirect:/dona/view/" + donaNo;
-//    }
-
-//    @DeleteMapping
 
 }

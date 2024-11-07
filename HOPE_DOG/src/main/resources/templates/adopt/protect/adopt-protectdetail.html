@@ -70,7 +70,7 @@
     <div class="adopt-detail-box3" th:each="protect : ${protectDetailList}">
       <div>
         <button class="adopt-modify-button" type="button" onclick="modifyClick()"
-                th:if="${centerMemberNo == protect.centerMemberNo}">수정</button>
+                th:if="${centerMemberNo == protect.centerMemberNo} and ${protect.protectStatus != 'F'}">수정</button>
         <button class="adopt-delete-button" type="button" onclick="deleteClick()"
                 th:if="${centerMemberNo == protect.centerMemberNo}">삭제</button>
       </div>

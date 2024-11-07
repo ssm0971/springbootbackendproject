@@ -14,7 +14,7 @@
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
 
-  <link rel="stylesheet" th:href="@{/css/adopt/adopt/adopt-adoptmodify.css}" />
+  <link rel="stylesheet" th:href="@{/css/adopt/adopt/adopt-adoptwrite.css}" />
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
   <script defer th:src="@{/js/main/main.js}"></script>
@@ -22,111 +22,110 @@
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <!-- 입양 메인 크기 -->
-    <div class="adopt-main-size">
-      <!-- 입양/임보/후기 게시판 바 -->
-      <div class="adopt-nav">
-        <div class="adopt-navList" id="adoptPage">안심입양</div>
-        <div class="adopt-navList" id="protectPage">임시보호</div>
-        <div class="adopt-navList" id="reviewPage">후기</div>
-      </div>
-
-      <!-- 입양신청 글 등록 -->
-      <div class="adopt-wirtebanner">안심입양 수정</div>
-
-      <br>
-
-      <!-- 글작성 박스 -->
-      <div class="adopt-write-area">
-        <form action="링크" method="post">
-          <br>
-          <!-- 임시보호 기간 입력 -->
-          <div class="adopt-write-box">
-            <div class="adopt-write-subtitle">*입양 기한</div>
-            시작일 : 　<input class="adopt-write-period" type="date" name="start-date">　　
-            종료일 : 　<input class="adopt-write-period" type="date" name="end-date">
-          </div>
-          <!-- 이름입력 -->
-          <div class="adopt-write-box">
-            <div class="adopt-write-subtitle">*이름</div>
-            <input class="adopt-write-breed" type="text" id="nameInput" onblur="checkNameInput()">　　
-          </div>
-          <!-- 이름 미입력 에러메세지 -->
-          <div class="breadError">
-            <div class="adopt-write-subtitle" id="nameError2" style="display: none;"></div>
-            <div id="nameError" style="color: red; display: none;">이름을 입력해주세요</div>
-          </div>
-          <!-- 견종입력 -->
-          <div class="adopt-write-box">
-            <div class="adopt-write-subtitle">*견종</div>
-            <input class="adopt-write-breed" type="text" id="breedInput" onblur="checkBreedInput()">　　
-          </div>
-          <!-- 견종 미입력 에러메세지 -->
-          <div class="breadError">
-            <div class="adopt-write-subtitle" id="breadError2" style="display: none;"></div>
-            <div id="breadError" style="color: red; display: none;">견종을 입력해주세요</div>
-          </div>
-          <!-- 중성화 여부 입력 -->
-          <div class="adopt-write-box">
-            <div class="adopt-write-subtitle">*중성화 여부</div>
-            <input class="adopt-write-sterilization" type="radio" name="sterilization" value="O" checked>네　
-            <input class="adopt-write-sterilization" type="radio" name="sterilization" value="X">아니요
-          </div>
-          <!-- 성별 입력 -->
-          <div class="adopt-write-box">
-            <div class="adopt-write-subtitle">*성별</div>
-            <input class="adopt-write-gender" type="radio" name="gender" value="male"> 남　
-            <input class="adopt-write-gender" type="radio" name="gender" value="female"> 여
-          </div>
-          <!-- 몸무게 입력 -->
-          <div class="adopt-write-box">
-            <div class="adopt-write-subtitle">*몸무게</div>
-            <input class="adopt-write-weight" type="text" id="weightInput" onblur="checkWeightInput()">　　
-          </div>
-          <!-- 몸무게 미입력 에러메세지 -->
-          <div class="weightError">
-            <div class="adopt-write-subtitle" id="weightError2" style="display: none;"></div>
-            <div id="weightError" style="color: red; display: none;">몸무게를 입력해주세요</div>
-          </div>
-          <!-- 생년월일 입력 -->
-          <div class="adopt-write-box">
-            <div class="adopt-write-subtitle">*생년월일</div><input class="adopt-write-birth" type="date">
-            <div class="adopt-brirth-ex">　*정확한 생년월일을 모를 시 예상 생년월일을 선택해주세요</div>
-          </div>
-          <!-- 한줄소개 입력 -->
-          <div class="adopt-write-box">
-            <div class="adopt-write-subtitle">*한줄소개</div>
-            <input class="adopt-write-introduce" type="text" id="introduceInput" onblur="checkIntroduceInput()"
-              placeholder="ex)애교가 많아요~">　　
-          </div>
-          <!-- 한줄소개 미입력 에러메세지 -->
-          <div class="introduceError">
-            <div class="adopt-write-subtitle" id="introduceError2" style="display: none;"></div>
-            <div id="introduceError" style="color: red; display: none;">한줄소개를 입력해주세요</div>
-          </div>
-
-          <br><br>
-
-          <!-- 썸머노트 -->
-          <div class="content">
-            <form method="post" action="">
-              <input id="subject" name="subject" class="adoptwrite-title" placeholder="제목을 입력해주세요">
-              <textarea id="contents" name="contents"></textarea>
-            </form>
-          </div>
-
-          <!-- 등록/취소 버튼 -->
-          <div class="adopt-write-button-box">
-            <a href="../../html/adopt/adopt-adoptdetail.html">
-              <button class="adopt-write-button">등록</button>
-            </a>
-            <button class="adopt-cancle-button" onclick="modifyCancle()">취소</button>
-          </div>
-        </form>
-      </div>
+<main>
+  <!-- 입양 메인 크기 -->
+  <div class="adopt-main-size">
+    <!-- 입양/임보/후기 게시판 바 -->
+    <div class="adopt-nav">
+      <div class="adopt-navList" id="adoptPage">안심입양</div>
+      <div class="adopt-navList" id="protectPage">임시보호</div>
+      <div class="adopt-navList" id="reviewPage">후기</div>
     </div>
-  </main>
+
+    <!-- 입양신청 글 등록 -->
+    <div class="adopt-wirtebanner">후기 등록</div>
+
+    <br>
+
+    <!-- 글작성 박스 -->
+    <form th:action="@{/adopt/adopt/adoptModifyRegi}" method="post">
+      <input type="hidden" name="_method" value="put"/>
+      <div class="adopt-write-area" th:each="adopt : ${adoptDetailList}">
+        <br>
+        <!-- 임시보호 기간 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*입양 기한</div>
+          시작일 : 　<input class="adopt-write-period" type="date" name="adoptPeriodstart" th:value="${adopt.adoptPeriodStart}">　　
+          종료일 : 　<input class="adopt-write-period" type="date" name="adoptPeriodend" th:value="${adopt.adoptPeriodEnd}">
+        </div>
+        <input th:value="${centerMemberNo}" style="display: none" name="centerMemberNo">
+        <!-- 이름입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*이름</div>
+          <input class="adopt-write-breed" type="text" id="nameInput" onblur="checkNameInput()" name="adoptName" th:value="${adopt.adoptName}">　　
+        </div>
+        <!-- 이름 미입력 에러메세지 -->
+        <div class="breadError">
+          <div class="adopt-write-subtitle" id="nameError2" style="display: none;"></div>
+          <div id="nameError" style="color: red; display: none;">이름을 입력해주세요</div>
+        </div>
+        <!-- 견종입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*견종</div>
+          <input class="adopt-write-breed" type="text" id="breedInput" onblur="checkBreedInput()" name="adoptBreed" th:value="${adopt.adoptBreed}">　　
+        </div>
+        <!-- 견종 미입력 에러메세지 -->
+        <div class="breadError">
+          <div class="adopt-write-subtitle" id="breadError2" style="display: none;"></div>
+          <div id="breadError" style="color: red; display: none;">견종을 입력해주세요</div>
+        </div>
+        <!-- 중성화 여부 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*중성화 여부</div>
+          <input class="adopt-write-sterilization" type="radio" name="adoptNeutering" value="Y" checked>네　
+          <input class="adopt-write-sterilization" type="radio" name="adoptNeutering" value="N">아니요
+        </div>
+        <!-- 성별 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*성별</div>
+          <input class="adopt-write-gender" type="radio" name="adoptGender" value="M" checked> 남　
+          <input class="adopt-write-gender" type="radio" name="adoptGender" value="F"> 여
+        </div>
+        <!-- 몸무게 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*몸무게</div>
+          <input class="adopt-write-weight" type="text" id="weightInput" onblur="checkWeightInput()" name="adoptWeight" th:value="${adopt.adoptWeight}">　　
+        </div>
+        <!-- 몸무게 미입력 에러메세지 -->
+        <div class="weightError">
+          <div class="adopt-write-subtitle" id="weightError2" style="display: none;"></div>
+          <div id="weightError" style="color: red; display: none;">몸무게를 입력해주세요</div>
+        </div>
+        <!-- 생년월일 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*생년월일</div><input class="adopt-write-birth" type="date" name="adoptBirth" th:value="${adopt.adoptBirth}">
+          <div class="adopt-brirth-ex">　*정확한 생년월일을 모를 시 예상 생년월일을 선택해주세요</div>
+        </div>
+        <!-- 한줄소개 입력 -->
+        <div class="adopt-write-box">
+          <div class="adopt-write-subtitle">*한줄소개</div>
+          <input class="adopt-write-introduce" type="text" id="introduceInput" onblur="checkIntroduceInput()"
+                 placeholder="ex)애교가 많아요~" name="adoptIntroduce" th:value="${adopt.adoptIntroduce}">　　
+        </div>
+        <!-- 한줄소개 미입력 에러메세지 -->
+        <div class="introduceError">
+          <div class="adopt-write-subtitle" id="introduceError2" style="display: none;"></div>
+          <div id="introduceError" style="color: red; display: none;">한줄소개를 입력해주세요</div>
+        </div>
+
+        <br><br>
+
+        <!-- 썸머노트 -->
+        <div class="content">
+          <input id="subject" name="adoptTitle" class="adoptwrite-title" placeholder="제목을 입력해주세요" th:value="${adopt.adoptTitle}">
+          <textarea id="contents" name="adoptContent" maxlength="1000" th:value="${adopt.adoptContent}"></textarea>
+        </div>
+
+        <!-- 등록/취소 버튼 -->
+        <div class="adopt-write-button-box">
+          <button class="adopt-write-button" type="submit">등록</button>
+          <button class="adopt-cancle-button" type="button" onclick="cancleClick()">취소</button>
+        </div>
+      </div>
+    </form>
+
+
+</main>
 
 </body>
 
@@ -136,7 +135,6 @@
     © NEXT LEVEL. All Rights Reserved</h6>
 </footer>
 
-<script defer src="../../js/main/header.js"></script>
 <script defer th:src="@{/js/adopt/adopt/adopt-adoptmodify.js}"></script>
 
 

@@ -69,6 +69,32 @@
         <ul class="user-actions"
             th:if="${session.memberNo != null && (session.memberLoginStatus == 'HOPEDOG' || session.memberLoginStatus == 'KAKAO' || session.memberLoginStatus == 'NAVER') && session.centerMemberNo == null}">
             <li class="user-action"><a th:href="@{/mypage/mypage}">마이페이지</a></li>
+            <li class="user-action">
+                <div class="notification-container">
+                    <a class="notification-bell">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-badge">0</span>
+                    </a>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <span>알림</span>
+                            <button class="mark-all-read">모두 읽음 처리</button>
+                        </div>
+                        <div class="notification-list">
+                            <!-- 샘플 알림 -->
+                            <div class="notification-item unread">
+                                <div class="notification-content">새로운 메시지가 있습니다.</div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all">모든 알림 보기</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
             <li class="user-action"><a th:href="@{/member/logout}">로그아웃</a></li>
         </ul>
 
@@ -76,9 +102,35 @@
         <ul class="user-actions"
             th:if="${session.centerMemberNo != null && session.memberNo == null}">
             <li class="user-action"><a th:href="@{/centerMypage/centerProfile}">센터마이페이지</a></li>
+            <li class="user-action">
+                <div class="notification-container">
+                    <a class="notification-bell">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-badge">0</span>
+                    </a>
+                    <div class="notification-dropdown">
+                        <div class="notification-header">
+                            <span>알림</span>
+                            <button class="mark-all-read">모두 읽음 처리</button>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-content">새로운 메시지가 있습니다.</div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a class="view-all">모든 알림 보기</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
             <li class="user-action"><a th:href="@{/center/center-logout}">로그아웃</a></li>
         </ul>
     </div>
 </header>
+<script th:src="@{/js/fragment/header.js}"></script>
 </body>
 </html>

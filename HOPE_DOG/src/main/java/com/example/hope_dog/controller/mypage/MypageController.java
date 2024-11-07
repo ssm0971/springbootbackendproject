@@ -1,5 +1,6 @@
 package com.example.hope_dog.controller.mypage;
 
+import com.example.hope_dog.dto.centermypage.CenterViewProfileDTO;
 import com.example.hope_dog.dto.centermypage.notebox.*;
 import com.example.hope_dog.dto.member.MemberSessionDTO;
 import com.example.hope_dog.dto.mypage.*;
@@ -10,6 +11,7 @@ import com.example.hope_dog.service.mypage.MypageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import jakarta.servlet.http.HttpSession; // Jakarta EE 사용
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -49,6 +52,69 @@ public class MypageController {
         model.addAttribute("mypageProfile", mypageProfile);
 
         return "mypage/mypage-profile";
+    }
+
+    // 개인정보수정
+    @GetMapping("/update")
+    public String updateProfile(Model model) {
+        Long memberNo = (Long) session.getAttribute("memberNo");
+
+        // 프로필 정보 가져오기
+        MypageViewProfileDTO profile = mypageService.getMypageViewProfile(memberNo);
+        model.addAttribute("profile", profile);
+
+        return "mypage/mypage-update";
+    }
+
+    // 닉네임 중복 체크
+    @GetMapping("/checkNickname")
+    @ResponseBody
+    public ResponseEntity<Map<String, Boolean>> checkedNickname(
+            @RequestParam(name = "newNickname") String newNickname,
+            @RequestParam(name = "currentNickname") String currentNickname) {
+
+        boolean available = mypageService.checkedNickname(newNickname, currentNickname);
+        return ResponseEntity.ok(Map.of("available", available));
+
+    }
+
+
+    // 이메일 중복 체크
+    @GetMapping("/checkEmail")
+    @ResponseBody
+    public ResponseEntity<Map<String, Boolean>> checkedEmail(
+            @RequestParam(name = "newEmail") String newEmail,
+            @RequestParam(name = "currentEmail") String currentEmail) {
+
+        // 중복 검사 수행
+        boolean available = mypageService.updateCheckedEmail(newEmail, currentEmail);
+        return ResponseEntity.ok(Map.of("available", available));
+    }
+
+    @PostMapping("/updateProfileOk")
+    public String updateProfileOk(@ModelAttribute MypageUpdateProfileDTO mypageUpdateProfileDTO, RedirectAttributes redirectAttributes) {
+        Long memberNo = (Long) session.getAttribute("memberNo");
+        if(memberNo == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "로그인이 필요합니다.");
+            return "redirect:/login";
+        }
+
+        // memberNo를 DTO에 설정
+        mypageUpdateProfileDTO.setMemberNo(memberNo);
+
+        try {
+            int updateCount = mypageService.updateProfile(mypageUpdateProfileDTO);
+            if (updateCount > 0) {
+                redirectAttributes.addFlashAttribute("successMessage", "프로필이 성공적으로 업데이트되었습니다.");
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "프로필 업데이트에 실패했습니다.");
+            }
+        } catch (Exception e) {
+            log.error("프로필 업데이트 중 오류 발생", e);
+            redirectAttributes.addFlashAttribute("errorMessage", "프로필 업데이트 중 오류가 발생했습니다.");
+        }
+
+        return "redirect:/mypage/update";
     }
 
     @GetMapping("/adopt")
@@ -110,32 +176,6 @@ public class MypageController {
 
         return "mypage/mypage-posts";
     }
-
-//    @GetMapping("/noteboxR")
-//    public String noteboxR(HttpSession session, Model model) {
-//        Long memberNo = (Long) session.getAttribute("memberNo");
-//        if (memberNo == null) {
-//            return "redirect:/login";
-//        }
-//
-//        List<MypageNoteReceiveDTO> mypageNoteReceiveList = mypageService.getMypageNoteReceiveProfile(memberNo);
-//        model.addAttribute("mypageNoteReceiveList", mypageNoteReceiveList);
-//
-//        return "mypage/mypage-inbox";
-//    }
-//
-//    @GetMapping("/noteboxS")
-//    public String noteboxS(HttpSession session, Model model) {
-//        Long memberNo = (Long) session.getAttribute("memberNo");
-//        if (memberNo == null) {
-//            return "redirect:/login";
-//        }
-//
-//        List<MypageNoteSendDTO> mypageNoteSendList = mypageService.getMypageNoteSendProfile(memberNo);
-//        model.addAttribute("mypageNoteSendList", mypageNoteSendList);
-//
-//        return "mypage/mypage-outbox";
-//    }
 
 //    @GetMapping("/profile")
 //    public String viewProfile(HttpSession session, Model model) {

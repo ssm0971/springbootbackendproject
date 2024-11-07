@@ -1,16 +1,9 @@
 package com.example.hope_dog.service.mypage;
 
-import com.example.hope_dog.dto.adopt.adopt.MainDTO;
-import com.example.hope_dog.dto.member.MemberSessionDTO;
+import com.example.hope_dog.dto.centermypage.CenterUpdateProfileDTO;
 import com.example.hope_dog.dto.mypage.*;
-import com.example.hope_dog.dto.notice.NoticeListDTO;
-import com.example.hope_dog.dto.page.Criteria;
-import com.example.hope_dog.mapper.member.MemberMapper;
 import com.example.hope_dog.mapper.mypage.MypageMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,16 +39,39 @@ public class MypageService {
     public List<MypagePostsDTO> getMypagePostsProfile(Long memberNo) {
         return mypageMapper.mypagePostsList(memberNo);
     }
-//
-//    //noteR
-//    public List<MypageNoteReceiveDTO> getMypageNoteReceiveProfile(Long memberNo) {
-//        return mypageMapper.mypageNoteReceiveList(memberNo);
-//    }
-//
-//    //noteS
-//    public List<MypageNoteSendDTO> getMypageNoteSendProfile(Long memberNo) {
-//        return mypageMapper.mypageNoteSendList(memberNo);
-//    }
+
+    // 프로필 조회
+    public MypageViewProfileDTO getMypageViewProfile(Long memberNo) {
+        return mypageMapper.viewProfile(memberNo);
+    }
+
+    // 닉네임 중복체크
+    public boolean checkedNickname(String newNickname, String currentNickname) {
+        if (newNickname.equals(currentNickname)) {
+            return true;
+        }
+
+        int count = mypageMapper.checkedNickname(newNickname, currentNickname);
+        return count == 0;
+    }
+
+    // 이메일 중복체크
+    public boolean updateCheckedEmail(String newEmail, String currentEmail) {
+        // 입력한 이메일이 현재 이메일과 같다면 중복 검사 없이 사용 가능으로 처리
+        if (newEmail.equals(currentEmail)) {
+            return true;  // 중복 검사 없이 사용 가능
+        }
+
+        // 입력한 이메일이 현재 이메일과 다를 때만 중복 체크 수행
+        int count = mypageMapper.updateCheckedEmail(newEmail, currentEmail);
+        return count == 0;  // 중복된 이메일이 없으면 true 반환, 중복되면 false 반환
+    }
+
+
+    // 프로필 업데이트 메서드
+    public int updateProfile(MypageUpdateProfileDTO mypageUpdateProfileDTO) {
+        return mypageMapper.updateProfile(mypageUpdateProfileDTO);
+    }
 
     // 페이지네이션
 //    public List<MypagePostsDTO> findAll() {
@@ -72,31 +88,6 @@ public class MypageService {
 
 
 
-    // 프로필 조회
-//    public MypageDTO getMypageProfile(String memberId) {
-//        return mypageMapper.mypageProfile(@Param(Long memberNo));
-//    }
-
-//    @Autowired
-//    public MypageService(MemberMapper memberMapper, MypageMapper mypageMapper) {
-//        this.memberMapper = memberMapper;
-//        this.mypageMapper = mypageMapper;
-//    }
-
-//    public MemberSessionDTO getMemberInfo(String memberId) {
-//        return memberMapper.findMemberById(memberId);
-//        return mypageMapper.findMemberByName(memberId);
-//        return mypageMapper.findMemberById(memberId);
-
-//        return memberMapper.selectMemberNo(getMemberInfo());
-//    }
-
-
-        // 회원의 입양 목록을 가져오는 메서드
-//        public List<MypageAdoptListDTO> mypageAdoptList(Long memberNo) {
-//            // 매퍼의 메서드를 호출하여 입양 목록을 조회
-//            return mypageMapper.mypageAdoptList(memberNo);
-//        }
 }
 
 

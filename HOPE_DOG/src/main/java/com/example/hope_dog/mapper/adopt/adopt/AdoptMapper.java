@@ -1,6 +1,7 @@
 package com.example.hope_dog.mapper.adopt.adopt;
 
 import com.example.hope_dog.dto.adopt.adopt.*;
+import com.example.hope_dog.dto.file.AdoptFileDTO;
 import com.example.hope_dog.dto.page.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -30,6 +31,12 @@ public interface AdoptMapper {
 
     //입양글작성
     void adoptWrite(AdoptWriteDTO adoptWriteDTO);
+
+    //입양글수정
+    void adoptModify(AdoptWriteDTO adoptWriteDTO);
+    
+    //입양게시글파일저장
+    void adoptFileInsert(AdoptFileDTO adoptFileDTO);
 
     //입양글마감처리
     void adoptEnd(AdoptDetailDTO adoptDetailDTO);

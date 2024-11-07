@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -14,9 +15,11 @@ public class CommuDTO {
     private String commuCate;       // 커뮤니티 분류
     private String commuTitle;      // 커뮤니티 제목
     private String commuContent;    // 커뮤니티 내용
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date commuRegiDate;     // 등록일
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date commuUpdateDate;   // 수정일
-    private Long commuGood;      // 조회 수(인기)
+    private Long commuGood =0L;      // 조회 수(인기)
     private Long commuWriter;       // 작성자 ID
 
     private Long memberNo;      //일반회원넘버

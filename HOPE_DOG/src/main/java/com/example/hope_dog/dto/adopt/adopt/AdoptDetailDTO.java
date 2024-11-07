@@ -25,4 +25,5 @@ public class AdoptDetailDTO {
     private String adoptContent;
     private Long centerMemberNo;
     private String adoptStatus;
+    private String adoptIntroduce;
 }

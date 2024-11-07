@@ -14,6 +14,13 @@ public interface RequestMapper {
 //    입양신청서 목록 조회
     List<AdoptRequestListDTO> adoptRequestList(Long centerMemberNo);
 
+//    입양신청서 상세페이지 정보 조회
+    AdoptRequestDetailDTO adoptRequestDetailInfo(Long adoptRequestNo);
+
+//    입양신청서 수락/거절
+    void adoptRequestStatusChoice(AdoptRequestChoiceDTO adoptRequestChoiceDTO);
+
+
 //    임시보호신청서 목록 조회
     List<ProtectRequestListDTO> protectRequestList(Long centerMemberNo);
 

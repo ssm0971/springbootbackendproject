@@ -8,8 +8,8 @@
   <link rel="stylesheet" th:href="@{/css/dona/donation-detail.css}" />
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
-  <script defer th:src="@{/js/main/main.js}"></script>
-  <script defer th:src="@{/js/dona/donation-detail.js}"></script>
+  <script type="module" defer th:src="@{/js/dona/donation-detail.js}"></script>
+
 </head>
 
 <body>
@@ -59,33 +59,45 @@
           </div>
       <div id="bottom-line"></div>
 
-      <section class="dona-detail-box4">
-        <div class="dona-detail-commentbox"  th:each="donaComment : ${donationComment}">
-          <div class="dona-detail-name"  th:text="${donaComment.commentWriterName}">행복이</div>
-          <div class="dona-comment-buttonBox" id="adopt-comment-buttonBox">
-            <button class="dona-comment-button" type="button" onclick="modifyCommentBtnClcik()">수정</button>
-            <button class="dona-comment-button" type="button" onclick="CommentDeleteClick()">삭제</button>
-            <button class="dona-comment-button" type="button" onclick="CommentReportClick()">신고</button>
+      <div class="dona-detail-box4">
+<!--        <th:block th:if="${donation.centerMemberNo == session.centerMemberNo}">-->
+          <button type="button" class="dona-comment-button" th:data-id="${donation.donaNo}">수정</button>
+          <button type="button" class="dona-comment-button" th:data-id="${donation.donaNo}">삭제</button>
+          <button class="dona-comment-button" type="button" onclick="CommentReportClick()">신고</button>
+<!--        </th:block>-->
+<!--        <button type="button" class="btn-back">뒤로 가기</button>-->
+      </div>
+      <div class="reply-wrap">
+        <th:block th:if="${session.memberNo != null}">
+<!--          <h3>댓글 작성</h3>-->
+          <div class="reply-wrap__box">
+            <div class="reply-content__box">
+              <div class="reply-writer" th:text="${session.memberNickname}"></div>
+              <textarea name="replyContent" id="reply-content" cols="30" rows="10"></textarea>
+            </div>
+            <div class="reply-btn-wrap">
+              <button type="button" class="btn-reply">작성 완료</button>
+            </div>
           </div>
-          <div class="dona-detail-comment" id="dona-comment" th:text="${donaComment.donaCommentContent}"></div>
-          <div class="dona-detail-date" th:text="${#dates.format(donaComment.donaCommentRegidate, 'yyyy-MM-dd')}"></div>
-<!--          <div class="dona-detail-comment" id="dona-modifyInput" style="display:none;">-->
-          <div class="dona-detail-comment" id="dona-modifyInput">
-            <input class="dona-modify-comment">
-            <button class="dona-comment-button" onclick="editCommentBtnClcik()">등록</button>
-          </div>
+        </th:block>
+
+        <!-- 댓글 리스트 -->
+        <div class="reply-list-wrap">
+
         </div>
-      </section>
+      </div>
+
+
     </section>
   </div>
 
-  <form th:action="@{/dona/donaCommentModi(donaNo=${donaNo})}" method="post"
-        th:id="'dona-modifyInput-' + ${iterStat.index}" style="display:none;">
-    <input type="hidden" name="donaCommentNo" th:value="${donationComment.donaCommentNo}">
-    <input type="hidden" name="donaNo" th:value="${donaNo}">
-    <input type="text" name="donaComment" class="dona-modify-comment" th:value="${donationComment.donaCommentConent}">
-    <button type="submit" class="dona-comment-button">등록</button>
-  </form>
+<!--  <form th:action="@{/dona/donaCommentModi(donaNo=${donaNo})}" method="post"-->
+<!--        th:id="'dona-modifyInput-' + ${iterStat.index}" style="display:none;">-->
+<!--    <input type="hidden" name="donaCommentNo" th:value="${donationComment.donaCommentNo}">-->
+<!--    <input type="hidden" name="donaNo" th:value="${donaNo}">-->
+<!--    <input type="text" name="donaComment" class="dona-modify-comment" th:value="${donationComment.donaCommentConent}">-->
+<!--    <button type="submit" class="dona-comment-button">등록</button>-->
+<!--  </form>-->
 
 
 </main>

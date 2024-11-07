@@ -23,7 +23,7 @@
         <li id="adopt"><a th:href="@{/centerMypage/adoptRequestList}"> 입양</a></li>
         <div id="choice"></div>
         <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
-        <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
+        <li id="withdrawal"><a th:href="@{/centerMypage/withdrawal}"> 회원탈퇴</a></li>
       </ul>
     </nav>
   </div>
@@ -49,19 +49,19 @@
     </div>
     <!-- 게시글 목록 -->
     <div class="center-member-profile-cumuboard-contentsbox">
-      <ul class="center-member-profile-cumuboard-content" th:each="protectrequest : ${protectRequestList}">
+      <ul class="center-member-profile-cumuboard-content" th:each="protectRequest : ${protectRequestList}">
         <li>
           <div>
             <ul class="center-member-profile-cumuboard-contentbox">
               <li>
-                <span th:text="'['+ ${protectrequest.protectStatus} +']'">[심사중]</span>
-                <a th:href="@{/centerMypage/protectRequestDetail(protectRequestNo=${protectrequest.protectRequestNo})}" th:text="${protectrequest.protectTitle}">임시보호신청서 제목</a>
+                <span th:text="'['+ ${protectRequest.protectStatus} +']'">[심사중]</span>
+                <a th:href="@{/centerMypage/protectRequestDetail(protectRequestNo=${protectRequest.protectRequestNo})}" th:text="${protectRequest.protectTitle}">임시보호신청서 제목</a>
               </li>
               <li>
-                <span th:text="${protectrequest.protectRequestName}">신청자</span>
-                <span th:text="'(' + ${protectrequest.memberNickName} + ')'">(닉네임)</span>
+                <span th:text="${protectRequest.protectRequestName}">신청자</span>
+                <span th:text="'(' + ${protectRequest.memberNickName} + ')'">(닉네임)</span>
               </li>
-              <li th:text="${#dates.format(protectrequest.protectRegiDate, 'yyyy.MM.dd')}">날짜</li>
+              <li th:text="${#dates.format(protectRequest.protectRegiDate, 'yyyy.MM.dd')}">날짜</li>
             </ul>
           </div>
         </li>

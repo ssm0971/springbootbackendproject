@@ -1,13 +1,3 @@
-// 글수정버튼
-function modifyClick() {
-  if (confirm('정말 수정하시겠습니까?')) {
-    console.log('입양글이 수정되었습니다.');
-    window.location.href = '../../html/adopt/adopt-adoptmodify.html'
-  } else {
-    console.log('입양글이 수정되지 않았습니다.');
-  }
-}
-
 // 글 삭제 버튼
 function deleteClick() {
   // adoptNo 가져오기
@@ -53,6 +43,19 @@ function ContentReportClick() {
 function getParameter(name) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(name);
+}
+
+// 게시글수정 버튼
+function modifyClick() {
+  const adoptNo = document.querySelector('.adoptNo').textContent.trim(); // adoptNo를 HTML에서 가져옵니다.
+  const centerMemberNo = document.querySelector('.centerMemberNo').textContent.trim(); // centerMemberNo를 HTML에서 가져옵니다.
+
+  if (confirm('정말 수정하시겠습니까?')) {
+    console.log('수정페이지로 이동합니다.');
+    location.href = `/adopt/adopt/adoptmodify?adoptNo=${adoptNo}&centerMemberNo=${centerMemberNo}`;
+  } else {
+    console.log('신청서페이지로 이동하지 않습니다.');
+  }
 }
 
 // 신청서 이동 버튼

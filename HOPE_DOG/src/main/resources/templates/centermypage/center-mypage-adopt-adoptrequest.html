@@ -23,7 +23,7 @@
         <li id="adopt"><a th:href="@{/centerMypage/adoptRequestList}">입양</a></li>
         <div id="choice"></div>
         <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
-        <li id="withdrawal"><a th:href="@{/centerMypage/}">회원 탈퇴</a></li>
+        <li id="withdrawal"><a th:href="@{/centerMypage/withdrawal}">회원 탈퇴</a></li>
       </ul>
     </nav>
   </div>
@@ -31,132 +31,121 @@
   <div class="center-member-profile-navboard">
     <nav>
       <ul class="center-member-profile-navboard-ul">
-        <li><a href="./center-mypage-adopt-adopt-list.html">입양신청</a></li>
+        <li><a th:href="@{/centerMypage/adoptRequestList}"> 입양신청</a></li>
         <div id="choice"></div>
-        <li><a href="./center-mypage-adopt-protect-list.html">임시보호신청</a></li>
+        <li><a th:href="@{/centerMypage/protectRequestList}"> 임시보호신청</a></li>
       </ul>
     </nav>
   </div>
   <!-- 제목/작성자/등록일 크기 -->
   <div class="protect-detail-box1">
-    <div class="protect-detail-title">웰시코기 데려가세요</div>
-    <div class="protect-detail-info"><span>작성자 : 안성재</span>
-      <sapn>등록일 : 2024-10-05</sapn>
+    <div class="protect-detail-title" th:text="${adoptRequestInfo.adoptTitle}">웰시코기 데려가세요</div>
+    <div class="protect-detail-info">
+      <span>작성자 : <span th:text="${adoptRequestInfo.centerMemberName}"></span></span>
+      <span>등록일 : <span th:text="${#dates.format(adoptRequestInfo.adoptRegiDate, 'yyyy-MM-dd')}"></span></span>
+    </div>
+    <div class="protect-detail-info">
+      <span th:text="'신청자 : ' + ${adoptRequestInfo.memberNickname}">신청자 : 안성재</span>
     </div>
   </div>
+<!--  <div class="protect-detail-box1">-->
+<!--    <div class="protect-detail-title">웰시코기 데려가세요</div>-->
+<!--    <div class="protect-detail-info"><span>작성자 : 안성재</span>-->
+<!--      <sapn>등록일 : 2024-10-05</sapn>-->
+<!--    </div>-->
+<!--  </div>-->
   <!-- 글작성 박스 -->
+
   <div class="main-input">
     <div class="adoptrequest-write-area">
       <br>
       <div style="font-weight: bold;">입양 신청서</div>
-      <!-- 이름 -->
       <form>
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">성명</div>
-          <input class="adoptrequest-input-small" id="nameInput" type="text" onblur="checkNameInput()" readonly>
+          <input class="adoptrequest-input-small" id="nameInput" type="text" th:value="${adoptRequestInfo.adoptRequestName}" readonly>
         </div>
-        <!-- 이름 미입력 에러메세지 -->
         <div class="Error">
-          <div class="adoptrequest-content-title" id="nameError2" style="display: none;"></div>
           <div id="nameError" style="color: red; display: none;">성명을 입력해주세요</div>
         </div>
 
-        <!-- 연락처 -->
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">연락처</div>
-          <input class="adoptrequest-input-small" id="phoneInput" type="text" onblur="checkPhoneInput()" readonly>
+          <input class="adoptrequest-input-small" id="phoneInput" type="text" th:value="${adoptRequestInfo.adoptRequestPhone}" readonly>
         </div>
-        <!-- 연락처 미입력 에러메세지 -->
         <div class="Error">
-          <div class="adoptrequest-content-title" id="phoneError2" style="display: none;"></div>
           <div id="phoneError" style="color: red; display: none;">연락처를 입력해주세요</div>
         </div>
 
-        <!-- 대체 연락처 -->
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">대체 연락처</div>
           <input class="adoptrequest-input-small" type="text"
-                 id="phone2Input" onblur="checkPhone2Input()" readonly>
+                 id="phone2Input" th:value="${adoptRequestInfo.adoptRequestPhoneSub}" readonly>
         </div>
-        <!-- 대체 연락처 미입력 에러메세지 -->
         <div class="Error">
-          <div class="adoptrequest-content-title" id="phone2Error2" style="display: none;"></div>
           <div id="phone2Error" style="color: red; display: none;">대체 연락처를 입력해주세요</div>
         </div>
 
-        <!-- 이메일 주소 -->
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">이메일 주소</div>
           <input class="adoptrequest-input-small" type="text"
-                 id="emailInput" onblur="checkEmailInput()" readonly>
+                 id="emailInput" th:value="${adoptRequestInfo.adoptRequestEmail}" readonly>
         </div>
-        <!-- 대체 연락처 미입력 에러메세지 -->
         <div class="Error">
-          <div class="adoptrequest-content-title" id="emailError2" style="display: none;"></div>
           <div id="emailError" style="color: red; display: none;">이메일 주소를 입력해주세요</div>
         </div>
 
-        <!-- 성별 -->
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">성별</div>
           <div class="gender-options">
-            <input type="radio" name="gender" value="male" checked disabled> 남자
-            <input type="radio" name="gender" value="female" disabled> 여자
+            <input type="radio" name="gender" value="M" th:checked="${adoptRequestInfo.adoptRequestGender == 'M'}" disabled> 남자
+            <input type="radio" name="gender" value="F" th:checked="${adoptRequestInfo.adoptRequestGender == 'F'}" disabled> 여자
           </div>
         </div>
 
-        <!-- 나이 -->
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">나이</div>
           <input class="adoptrequest-input-small" type="date"
-                 id="ageInput" onblur="checkAgeInput()" readonly>
+                 id="ageInput" th:value="${#dates.format(adoptRequestInfo.adoptRequestAge, 'yyyy-MM-dd')}" readonly>
         </div>
-        <!-- 나이 미입력 에러메세지 -->
         <div class="Error">
-          <div class="adoptrequest-content-title" id="ageError2" style="display: none;"></div>
           <div id="ageError" style="color: red; display: none;">나이를 입력해주세요</div>
         </div>
 
-        <!-- 우편번호 -->
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">우편번호</div>
-          <input id="zipcode" class="adoptrequest-input-small2" type="text" readonly>　　　
+          <input id="zipcode" class="adoptrequest-input-small2" type="text" th:value="${adoptRequestInfo.adoptRequestZipcode}" readonly>
           <button id="addressSearch" class="adoptrequest-search-button" type="button" style="display: none;">주소찾기</button>
         </div>
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">주소</div>
-          <input id="address" class="adoptrequest-input-small" type="text" readonly>
+          <input id="address" class="adoptrequest-input-small" type="text" th:value="${adoptRequestInfo.adoptRequestAddress}" readonly>
         </div>
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">상세주소</div>
-          <input id="detailAddress" class="adoptrequest-input-small" type="text" onblur="checkAddressInput()" readonly>
+          <input id="detailAddress" class="adoptrequest-input-small" type="text" th:value="${adoptRequestInfo.adoptRequestAddressDetail}" onblur="checkAddressInput()" readonly>
         </div>
-        <!-- 주소 미입력 에러메세지 -->
         <div class="Error">
-          <div class="adoptrequest-content-title" id="addressError2" style="display: none;"></div>
           <div id="addressError" style="color: red; display: none;">상세주소를 입력해주세요</div>
         </div>
 
-        <!-- 직장 -->
         <div class="adoptrequest-content-box">
-          <div class="adoptrequest-content-title">직업/직장명</div><input class="adoptrequest-input-small" type="text"
-                                                                     id="jobInput" onblur="checkJobInput()">
+          <div class="adoptrequest-content-title">직업/직장명</div>
+          <input class="adoptrequest-input-small" type="text"
+                 id="jobInput" th:value="${adoptRequestInfo.adoptRequestJob}" onblur="checkJobInput()">
         </div>
-        <!-- 직장 미입력 에러메세지 -->
         <div class="Error">
-          <div class="adoptrequest-content-title" id="jobError2" style="display: none;"></div>
           <div id="jobError" style="color: red; display: none;">직업/직장명을 입력해주세요</div>
         </div>
 
-        <!-- 결혼여부 -->
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">결혼여부</div>
           <div class="gender-options">
-            <input type="radio" name="marry" value="Yes" checked disabled> 미혼
-            <input type="radio" name="marry" value="No" disabled> 기혼
+            <input type="radio" name="marry" value="Yes" th:checked="${adoptRequestInfo.adoptRequestMarry == 'Y'}" disabled> 미혼
+            <input type="radio" name="marry" value="No" th:checked="${adoptRequestInfo.adoptRequestMarry == 'N'}" disabled> 기혼
           </div>
         </div>
-        <!-- 개인정보수집이용동의 -->
+
         <div class="adoptrequest-content-box">
           <div class="adoptrequest-content-title">개인정보수집이용동의</div>
         </div>
@@ -166,7 +155,7 @@
           <p>개인정보의 보유 및 이용기간: 5년(관계법령에서 정한 일정한 기간)</p>
         </div>
         <div class="agreement-checkbox">
-          <input type="checkbox" id="info-agreement" disabled>
+          <input type="checkbox" id="info-agreement" th:checked="${adoptRequestInfo.adoptRequestInfoAgreement == 'Yes'}" disabled>
           <label for="info-agreement">위 약관에 동의합니다.</label>
         </div>
 
@@ -174,202 +163,166 @@
 
         <div style="font-weight: bold;">입양 질문</div>
         <br>
-        <!-- 입양질문1-->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">입양을 희망하는 아이의 이름을 적어주세요.</div>
-          <input class="adoptrequest-input-small" type="text" id="quest1Input" onblur="checkQuest1Input()" readonly>
+          <input class="adoptrequest-input-small" type="text" id="quest1Input" th:value="${adoptRequestInfo.adoptRequestQ1}" onblur="checkQuest1Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest1Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문2 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">입양하기를 희망하는 아이가 없을 경우 앞으로 입양하고자 하는 아이에 대해 간단히 설명해주세요.</div>
-          <input class="adoptrequest-input-small" type="text" id="quest2Input" onblur="checkQuest2Input()" readonly>
+          <input class="adoptrequest-input-small" type="text" id="quest2Input" th:value="${adoptRequestInfo.adoptRequestQ2}" onblur="checkQuest2Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest2Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문3 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">입양을 결정하시기 까지 얼마나 오랜 시간을 고민하셨나요?</div>
-          <input class="adoptrequest-input-small" type="text" id="quest3Input" onblur="checkQuest3Input()" readonly>
+          <input class="adoptrequest-input-small" type="text" id="quest3Input" th:value="${adoptRequestInfo.adoptRequestQ3}" onblur="checkQuest3Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest3Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문4 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">입양을 원하시는 가장 큰 이유는 무엇인가요?</div>
-          <input class="adoptrequest-input-big"
-                 type="text" id="quest4Input" onblur="checkQuest4Input()" readonly>
+          <input class="adoptrequest-input-big" type="text" id="quest4Input" th:value="${adoptRequestInfo.adoptRequestQ4}" onblur="checkQuest4Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest4Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문5 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">가족구성원 및 거주하는 시간을 알려주세요.</div>
-          <input class="adoptrequest-input-big"
-                 type="text" id="quest5Input" onblur="checkQuest5Input()" readonly>
+          <input class="adoptrequest-input-big" type="text" id="quest5Input" th:value="${adoptRequestInfo.adoptRequestQ5}" onblur="checkQuest5Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest5Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문6 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">가족 모두가 입양에 동의하시나요?</div>
-          <input class="adoptrequest-input-small"
-                 type="text" id="quest6Input" onblur="checkQuest6Input()" readonly>
+          <input class="adoptrequest-input-small" type="text" id="quest6Input" th:value="${adoptRequestInfo.adoptRequestQ6}" onblur="checkQuest6Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest6Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문7 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">키우고 계신 반려동물이 있나요? 있다면 소개해주세요.</div>
-          <input class="adoptrequest-input-big" type="text" id="quest7Input" onblur="checkQuest7Input()" readonly>
+          <input class="adoptrequest-input-big" type="text" id="quest7Input" th:value="${adoptRequestInfo.adoptRequestQ7}" onblur="checkQuest7Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest7Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문8 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">주거의 형태는?</div>
-          <input class="adoptrequest-input-big" type="text"
-                 id="quest8Input" onblur="checkQuest8Input()" readonly>
+          <input class="adoptrequest-input-big" type="text" id="quest8Input" th:value="${adoptRequestInfo.adoptRequestQ8}" onblur="checkQuest8Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest8Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문9 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">입대한 주택의 경우 집주인의 동의를 얻으셨나요?</div>
-          <input class="adoptrequest-input-big" type="text" id="quest9Input" onblur="checkQuest9Input()" readonly>
+          <input class="adoptrequest-input-big" type="text" id="quest9Input" th:value="${adoptRequestInfo.adoptRequestQ9}" onblur="checkQuest9Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest9Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문10 -->
         <div class="adoptrequest-content-box2">
-          <div class="adoptrequest-content-title2">소음이나 위생 등으로 인한 이웃과의 마찰로 양육이 불가능해질경우 어떻게 하실건가요?</div>
-          <input class="adoptrequest-input-big" type="text" id="quest10Input" onblur="checkQuest10Input()" readonly>
+          <div class="adoptrequest-content-title2">소음이나 위생 등으로 인한 이웃과의 마찰로 양육이 불가능해질 경우 어떻게 하실건가요?</div>
+          <input class="adoptrequest-input-big" type="text" id="quest10Input" th:value="${adoptRequestInfo.adoptRequestQ10}" onblur="checkQuest10Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest10Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문11 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">이사 또는 해외로 이주 시 반려동물의 거취문제에 대해 어떻게 생각하십니까?</div>
-          <input class="adoptrequest-input-big" type="text" id="quest11Input" onblur="checkQuest11Input()" readonly>
+          <input class="adoptrequest-input-big" type="text" id="quest11Input" th:value="${adoptRequestInfo.adoptRequestQ11}" onblur="checkQuest11Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest11Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문12 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">앞으로 결혼, 임신, 출산 등 가족의 변화가 있는 경우 반려동물의 거취문제에 대해 어떻게 생각하십니까?</div>
-          <input class="adoptrequest-input-big" type="text" id="quest12Input" onblur="checkQuest12Input()" readonly>
+          <input class="adoptrequest-input-big" type="text" id="quest12Input" th:value="${adoptRequestInfo.adoptRequestQ12}" onblur="checkQuest12Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest12Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문13 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">동물 관련 활동경험이 있으십니까? ex)봉사 및 구조경험</div>
-          <input class="adoptrequest-input-big" type="text" id="quest13Input" onblur="checkQuest13Input()" readonly>
+          <input class="adoptrequest-input-big" type="text" id="quest13Input" th:value="${adoptRequestInfo.adoptRequestQ13}" onblur="checkQuest13Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest13Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문14 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">입양희망 동물에 대해 어떻게 알게 되셨나요?</div>
-          <input class="adoptrequest-input-big"
-                 type="text" id="quest14Input" onblur="checkQuest14Input()" readonly>
+          <input class="adoptrequest-input-big" type="text" id="quest14Input" th:value="${adoptRequestInfo.adoptRequestQ14}" onblur="checkQuest14Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest14Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
         <br>
 
-        <!-- 입양질문15 -->
         <div class="adoptrequest-content-box2">
           <div class="adoptrequest-content-title2">센터방문 또는 전화상담이 가능한 날짜와 시간을 적어주세요.</div>
-          <input class="adoptrequest-input-big" type="text" id="quest15Input" onblur="checkQuest15Input()" readonly>
+          <input class="adoptrequest-input-big" type="text" id="quest15Input" th:value="${adoptRequestInfo.adoptRequestQ15}" onblur="checkQuest15Input()" readonly>
         </div>
-        <!-- 에러메세지 -->
         <div class="Error">
           <div id="quest15Error" style="color: red; display: none;">필수입력사항입니다</div>
         </div>
 
         <br><br>
 
-        <!-- 입양동의 -->
         <div style="font-weight: bold;">입양동의</div>
         <br>
         <div class="adoptrequest-agreement-box2">
-          <p>본인(이하 ‘임양인’이라 합니다.)은 ‘동물권향상’과 (이하 ‘단체’라 합니다.)를 통해서 반려동물(이하 ‘임양동물’이라 합니다.)이 임양인이 있으며 임양동물이 자연사하는 시점까지 적합한
-            보호자와 임양동물에게 최적의 환경과 보살핌을 제공할 것에 대한 헌신을 다하겠다는 의사를 표현합니다.</p>
-          <br>
-          <p>임양인은 임양동물이 흥미가 포함된 제 각호의 고의 또는 과실로 인해 임양동물에 대한 학대행위가 발생하였을 경우, 임양동물이 양호, 유기, 유실된 경우에는 단체로부터 어떠한 임양동물의 제재가
-            없음을 동의합니다. 임양인은 임양동물의 경우, 매개, 면회, 의무, 유기, 이행의 중지에 즉시 단체에 통지할 의무를 지니며 임양동물들에 대한 책임을 의무가 있습니다.</p>
-          <br>
-          <p>만일 임양동물이 질병에 걸렸을 때 임양인은 신속하게 필요한 수의학적 치료를 받기 위해 성실하게 그 치료를 받을 것이며 만일 임양동물의 완치 불가능하고 그 혹이 구식한 경우에는 이를 단체에
-            통지하고 단체의 협의에 따라 임양동물에게 처리해서는 안 됩니다. 임양인은 임양동물이 자연사한 경우에도 즉시 사실을 단체에 통지할 의무가 있습니다.</p>
-          <br>
-          <p>임양인은 상시 임양동물에게 임양인의 연락처가 기재된 이표를 반입시켜야 하며 임양동인의 연락처가 변경되거나 주치의 변동사항이 있을 시에는 즉시 단체에 대한 정보변경을 의무가 있습니다.</p>
-          <br>
-          <p>임양인은 단체에서 단체에서 시행하는 임양동물의 미니터링을 요청할 전환 또는 방문을 할 것을 다짐하며 단체가 임양동물의 면회나 사진을 요청할 시 연제된 의무에 대한 협조를 의무가 있습니다.
-          </p>
-          <br>
-          <p>임양인은 단체의 특별한 사정에 따라 들어가며, 임양인이 미리 종료를 시행할 수 있는 경우에는 임양동물의 건강상태가 유지하고 그럼에도 불구하고 단체가 임양동물의 삶을 시행하기에 단체에서
-            사실을 기단체에 증명서류를 제출할 의무가 있습니다.</p>
-          <br>
-          <p>임양인은 본인에 대한 의사를 파악하는 경우에는, 반드시 단체에 통보해야 하며 임양동에 대한 지연이 있을 수 있습니다. 또한, 단체에 임양동물에 반환을 정당할 수 있습니다.</p>
+          <p>본인(이하 ‘임양인’이라 합니다.)은 ‘동물권향상’과 (이하 ‘단체’라 합니다.)를 통해서 반려동물(이하 ‘임양동물’이라 합니다.)이 임양인이 있으며 임양동물이 자연사하는 시점까지 적합한-->
+                        보호자와 임양동물에게 최적의 환경과 보살핌을 제공할 것에 대한 헌신을 다하겠다는 의사를 표현합니다.</p>
+                      <br>
+                      <p>임양인은 임양동물이 흥미가 포함된 제 각호의 고의 또는 과실로 인해 임양동물에 대한 학대행위가 발생하였을 경우, 임양동물이 양호, 유기, 유실된 경우에는 단체로부터 어떠한 임양동물의 제재가
+                        없음을 동의합니다. 임양인은 임양동물의 경우, 매개, 면회, 의무, 유기, 이행의 중지에 즉시 단체에 통지할 의무를 지니며 임양동물들에 대한 책임을 의무가 있습니다.</p>
+                      <br>
+                      <p>만일 임양동물이 질병에 걸렸을 때 임양인은 신속하게 필요한 수의학적 치료를 받기 위해 성실하게 그 치료를 받을 것이며 만일 임양동물의 완치 불가능하고 그 혹이 구식한 경우에는 이를 단체에
+                        통지하고 단체의 협의에 따라 임양동물에게 처리해서는 안 됩니다. 임양인은 임양동물이 자연사한 경우에도 즉시 사실을 단체에 통지할 의무가 있습니다.</p>
+                      <br>
+                      <p>임양인은 상시 임양동물에게 임양인의 연락처가 기재된 이표를 반입시켜야 하며 임양동인의 연락처가 변경되거나 주치의 변동사항이 있을 시에는 즉시 단체에 대한 정보변경을 의무가 있습니다.</p>
+                      <br>
+                      <p>임양인은 단체에서 단체에서 시행하는 임양동물의 미니터링을 요청할 전환 또는 방문을 할 것을 다짐하며 단체가 임양동물의 면회나 사진을 요청할 시 연제된 의무에 대한 협조를 의무가 있습니다.
+                      </p>
+                      <br>
+                      <p>임양인은 단체의 특별한 사정에 따라 들어가며, 임양인이 미리 종료를 시행할 수 있는 경우에는 임양동물의 건강상태가 유지하고 그럼에도 불구하고 단체가 임양동물의 삶을 시행하기에 단체에서
+                        사실을 기단체에 증명서류를 제출할 의무가 있습니다.</p>
+                      <br>
+                      <p>임양인은 본인에 대한 의사를 파악하는 경우에는, 반드시 단체에 통보해야 하며 임양동에 대한 지연이 있을 수 있습니다. 또한, 단체에 임양동물에 반환을 정당할 수 있습니다.</p>
         </div>
         <div class="agreement-checkbox">
-          <input type="checkbox" id="adopt-agreement" disabled>
+          <input type="checkbox" id="adopt-agreement" th:checked="${adoptRequestInfo.adoptRequestAdoptAgreement == 'Y'}" disabled>
           <label for="adopt-agreement">위 약관에 동의합니다.</label>
         </div>
 
@@ -381,38 +334,407 @@
 
         <br><br>
 
-        <div class="protectrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == null}">
-          <a th:href="@{/centerMypage/adoptStatus(adoptRequestStatus='Y', adoptRequestNo=${protectRequestInfo.adoptRequestNo})}">
-            <button class="protectrequest-button" type="button">수락</button>
+        <div class="adoptrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == null}">
+          <a th:href="@{/centerMypage/adoptStatus(adoptRequestStatus='Y', adoptRequestNo=${adoptRequestInfo.adoptRequestNo})}">
+            <button class="adoptrequest-button" type="button">수락</button>
           </a>
           <a th:href="@{/centerMypage/adoptStatus(adoptRequestStatus='N', adoptRequestNo=${adoptRequestInfo.adoptRequestNo})}">
-            <button class="protectrequest-button" type="button">거절</button>
+            <button class="adoptrequest-button" type="button">거절</button>
           </a>
           <a th:href="@{/centerMypage/adoptRequestList}">
-            <button class="protectrequest-button" type="button">이전</button>
+            <button class="adoptrequest-button" type="button">이전</button>
           </a>
         </div>
 
-        <div class="protectrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == 'Y'}">
+        <div class="adoptrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == 'Y'}">
           <div>수락하셨습니다</div>
           <a th:href="@{/centerMypage/adoptRequestList}">
-            <button class="protectrequest-button" type="button">이전</button>
+            <button class="adoptrequest-button" type="button">이전</button>
           </a>
         </div>
 
-        <div class="protectrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == 'N'}">
+        <div class="adoptrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == 'N'}">
           <div>거절하셨습니다</div>
           <a th:href="@{/centerMypage/adoptRequestList}">
-            <button class="protectrequest-button" type="button">이전</button>
+            <button class="adoptrequest-button" type="button">이전</button>
           </a>
         </div>
         <br>
-
       </form>
     </div>
-
     <br>
   </div>
+
+
+
+  <!--  <div class="main-input">-->
+<!--    <div class="adoptrequest-write-area">-->
+<!--      <br>-->
+<!--      <div style="font-weight: bold;">입양 신청서</div>-->
+<!--      &lt;!&ndash; 이름 &ndash;&gt;-->
+<!--      <form>-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">성명</div>-->
+<!--          <input class="adoptrequest-input-small" id="nameInput" type="text" onblur="checkNameInput()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 이름 미입력 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div class="adoptrequest-content-title" id="nameError2" style="display: none;"></div>-->
+<!--          <div id="nameError" style="color: red; display: none;">성명을 입력해주세요</div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 연락처 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">연락처</div>-->
+<!--          <input class="adoptrequest-input-small" id="phoneInput" type="text" onblur="checkPhoneInput()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 연락처 미입력 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div class="adoptrequest-content-title" id="phoneError2" style="display: none;"></div>-->
+<!--          <div id="phoneError" style="color: red; display: none;">연락처를 입력해주세요</div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 대체 연락처 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">대체 연락처</div>-->
+<!--          <input class="adoptrequest-input-small" type="text"-->
+<!--                 id="phone2Input" onblur="checkPhone2Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 대체 연락처 미입력 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div class="adoptrequest-content-title" id="phone2Error2" style="display: none;"></div>-->
+<!--          <div id="phone2Error" style="color: red; display: none;">대체 연락처를 입력해주세요</div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 이메일 주소 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">이메일 주소</div>-->
+<!--          <input class="adoptrequest-input-small" type="text"-->
+<!--                 id="emailInput" onblur="checkEmailInput()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 대체 연락처 미입력 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div class="adoptrequest-content-title" id="emailError2" style="display: none;"></div>-->
+<!--          <div id="emailError" style="color: red; display: none;">이메일 주소를 입력해주세요</div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 성별 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">성별</div>-->
+<!--          <div class="gender-options">-->
+<!--            <input type="radio" name="gender" value="male" checked disabled> 남자-->
+<!--            <input type="radio" name="gender" value="female" disabled> 여자-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 나이 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">나이</div>-->
+<!--          <input class="adoptrequest-input-small" type="date"-->
+<!--                 id="ageInput" onblur="checkAgeInput()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 나이 미입력 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div class="adoptrequest-content-title" id="ageError2" style="display: none;"></div>-->
+<!--          <div id="ageError" style="color: red; display: none;">나이를 입력해주세요</div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 우편번호 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">우편번호</div>-->
+<!--          <input id="zipcode" class="adoptrequest-input-small2" type="text" readonly>　　　-->
+<!--          <button id="addressSearch" class="adoptrequest-search-button" type="button" style="display: none;">주소찾기</button>-->
+<!--        </div>-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">주소</div>-->
+<!--          <input id="address" class="adoptrequest-input-small" type="text" readonly>-->
+<!--        </div>-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">상세주소</div>-->
+<!--          <input id="detailAddress" class="adoptrequest-input-small" type="text" onblur="checkAddressInput()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 주소 미입력 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div class="adoptrequest-content-title" id="addressError2" style="display: none;"></div>-->
+<!--          <div id="addressError" style="color: red; display: none;">상세주소를 입력해주세요</div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 직장 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">직업/직장명</div><input class="adoptrequest-input-small" type="text"-->
+<!--                                                                     id="jobInput" onblur="checkJobInput()">-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 직장 미입력 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div class="adoptrequest-content-title" id="jobError2" style="display: none;"></div>-->
+<!--          <div id="jobError" style="color: red; display: none;">직업/직장명을 입력해주세요</div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 결혼여부 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">결혼여부</div>-->
+<!--          <div class="gender-options">-->
+<!--            <input type="radio" name="marry" value="Yes" checked disabled> 미혼-->
+<!--            <input type="radio" name="marry" value="No" disabled> 기혼-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 개인정보수집이용동의 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box">-->
+<!--          <div class="adoptrequest-content-title">개인정보수집이용동의</div>-->
+<!--        </div>-->
+<!--        <div class="adoptrequest-agreement-box">-->
+<!--          <p>수집하는 개인정보의 항목: 성명, 주소, 이메일, 휴대전화번호</p>-->
+<!--          <p>개인정보의 수집 이용 목적: 본 서명의 목적에 맞는 희멍의집 캠페인에 활용하고, 추후 전개되는 바에 대한 소식을 전달하기 위함</p>-->
+<!--          <p>개인정보의 보유 및 이용기간: 5년(관계법령에서 정한 일정한 기간)</p>-->
+<!--        </div>-->
+<!--        <div class="agreement-checkbox">-->
+<!--          <input type="checkbox" id="info-agreement" disabled>-->
+<!--          <label for="info-agreement">위 약관에 동의합니다.</label>-->
+<!--        </div>-->
+
+<!--        <br><br>-->
+
+<!--        <div style="font-weight: bold;">입양 질문</div>-->
+<!--        <br>-->
+<!--        &lt;!&ndash; 입양질문1&ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">입양을 희망하는 아이의 이름을 적어주세요.</div>-->
+<!--          <input class="adoptrequest-input-small" type="text" id="quest1Input" onblur="checkQuest1Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest1Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문2 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">입양하기를 희망하는 아이가 없을 경우 앞으로 입양하고자 하는 아이에 대해 간단히 설명해주세요.</div>-->
+<!--          <input class="adoptrequest-input-small" type="text" id="quest2Input" onblur="checkQuest2Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest2Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문3 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">입양을 결정하시기 까지 얼마나 오랜 시간을 고민하셨나요?</div>-->
+<!--          <input class="adoptrequest-input-small" type="text" id="quest3Input" onblur="checkQuest3Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest3Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문4 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">입양을 원하시는 가장 큰 이유는 무엇인가요?</div>-->
+<!--          <input class="adoptrequest-input-big"-->
+<!--                 type="text" id="quest4Input" onblur="checkQuest4Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest4Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문5 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">가족구성원 및 거주하는 시간을 알려주세요.</div>-->
+<!--          <input class="adoptrequest-input-big"-->
+<!--                 type="text" id="quest5Input" onblur="checkQuest5Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest5Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문6 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">가족 모두가 입양에 동의하시나요?</div>-->
+<!--          <input class="adoptrequest-input-small"-->
+<!--                 type="text" id="quest6Input" onblur="checkQuest6Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest6Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문7 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">키우고 계신 반려동물이 있나요? 있다면 소개해주세요.</div>-->
+<!--          <input class="adoptrequest-input-big" type="text" id="quest7Input" onblur="checkQuest7Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest7Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문8 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">주거의 형태는?</div>-->
+<!--          <input class="adoptrequest-input-big" type="text"-->
+<!--                 id="quest8Input" onblur="checkQuest8Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest8Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문9 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">입대한 주택의 경우 집주인의 동의를 얻으셨나요?</div>-->
+<!--          <input class="adoptrequest-input-big" type="text" id="quest9Input" onblur="checkQuest9Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest9Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문10 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">소음이나 위생 등으로 인한 이웃과의 마찰로 양육이 불가능해질경우 어떻게 하실건가요?</div>-->
+<!--          <input class="adoptrequest-input-big" type="text" id="quest10Input" onblur="checkQuest10Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest10Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문11 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">이사 또는 해외로 이주 시 반려동물의 거취문제에 대해 어떻게 생각하십니까?</div>-->
+<!--          <input class="adoptrequest-input-big" type="text" id="quest11Input" onblur="checkQuest11Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest11Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문12 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">앞으로 결혼, 임신, 출산 등 가족의 변화가 있는 경우 반려동물의 거취문제에 대해 어떻게 생각하십니까?</div>-->
+<!--          <input class="adoptrequest-input-big" type="text" id="quest12Input" onblur="checkQuest12Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest12Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문13 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">동물 관련 활동경험이 있으십니까? ex)봉사 및 구조경험</div>-->
+<!--          <input class="adoptrequest-input-big" type="text" id="quest13Input" onblur="checkQuest13Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest13Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문14 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">입양희망 동물에 대해 어떻게 알게 되셨나요?</div>-->
+<!--          <input class="adoptrequest-input-big"-->
+<!--                 type="text" id="quest14Input" onblur="checkQuest14Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest14Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--        &lt;!&ndash; 입양질문15 &ndash;&gt;-->
+<!--        <div class="adoptrequest-content-box2">-->
+<!--          <div class="adoptrequest-content-title2">센터방문 또는 전화상담이 가능한 날짜와 시간을 적어주세요.</div>-->
+<!--          <input class="adoptrequest-input-big" type="text" id="quest15Input" onblur="checkQuest15Input()" readonly>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 에러메세지 &ndash;&gt;-->
+<!--        <div class="Error">-->
+<!--          <div id="quest15Error" style="color: red; display: none;">필수입력사항입니다</div>-->
+<!--        </div>-->
+
+<!--        <br><br>-->
+
+<!--        &lt;!&ndash; 입양동의 &ndash;&gt;-->
+<!--        <div style="font-weight: bold;">입양동의</div>-->
+<!--        <br>-->
+<!--        <div class="adoptrequest-agreement-box2">-->
+<!--          <p>본인(이하 ‘임양인’이라 합니다.)은 ‘동물권향상’과 (이하 ‘단체’라 합니다.)를 통해서 반려동물(이하 ‘임양동물’이라 합니다.)이 임양인이 있으며 임양동물이 자연사하는 시점까지 적합한-->
+<!--            보호자와 임양동물에게 최적의 환경과 보살핌을 제공할 것에 대한 헌신을 다하겠다는 의사를 표현합니다.</p>-->
+<!--          <br>-->
+<!--          <p>임양인은 임양동물이 흥미가 포함된 제 각호의 고의 또는 과실로 인해 임양동물에 대한 학대행위가 발생하였을 경우, 임양동물이 양호, 유기, 유실된 경우에는 단체로부터 어떠한 임양동물의 제재가-->
+<!--            없음을 동의합니다. 임양인은 임양동물의 경우, 매개, 면회, 의무, 유기, 이행의 중지에 즉시 단체에 통지할 의무를 지니며 임양동물들에 대한 책임을 의무가 있습니다.</p>-->
+<!--          <br>-->
+<!--          <p>만일 임양동물이 질병에 걸렸을 때 임양인은 신속하게 필요한 수의학적 치료를 받기 위해 성실하게 그 치료를 받을 것이며 만일 임양동물의 완치 불가능하고 그 혹이 구식한 경우에는 이를 단체에-->
+<!--            통지하고 단체의 협의에 따라 임양동물에게 처리해서는 안 됩니다. 임양인은 임양동물이 자연사한 경우에도 즉시 사실을 단체에 통지할 의무가 있습니다.</p>-->
+<!--          <br>-->
+<!--          <p>임양인은 상시 임양동물에게 임양인의 연락처가 기재된 이표를 반입시켜야 하며 임양동인의 연락처가 변경되거나 주치의 변동사항이 있을 시에는 즉시 단체에 대한 정보변경을 의무가 있습니다.</p>-->
+<!--          <br>-->
+<!--          <p>임양인은 단체에서 단체에서 시행하는 임양동물의 미니터링을 요청할 전환 또는 방문을 할 것을 다짐하며 단체가 임양동물의 면회나 사진을 요청할 시 연제된 의무에 대한 협조를 의무가 있습니다.-->
+<!--          </p>-->
+<!--          <br>-->
+<!--          <p>임양인은 단체의 특별한 사정에 따라 들어가며, 임양인이 미리 종료를 시행할 수 있는 경우에는 임양동물의 건강상태가 유지하고 그럼에도 불구하고 단체가 임양동물의 삶을 시행하기에 단체에서-->
+<!--            사실을 기단체에 증명서류를 제출할 의무가 있습니다.</p>-->
+<!--          <br>-->
+<!--          <p>임양인은 본인에 대한 의사를 파악하는 경우에는, 반드시 단체에 통보해야 하며 임양동에 대한 지연이 있을 수 있습니다. 또한, 단체에 임양동물에 반환을 정당할 수 있습니다.</p>-->
+<!--        </div>-->
+<!--        <div class="agreement-checkbox">-->
+<!--          <input type="checkbox" id="adopt-agreement" disabled>-->
+<!--          <label for="adopt-agreement">위 약관에 동의합니다.</label>-->
+<!--        </div>-->
+
+<!--        <br><br>-->
+
+<!--        <p>*임양인은 이하에 서명함으로써 상기의 조항에 동의하며, 입양인 상기의 조항을 위반 시에는 단체의 어떠한 처벌조치에도 <br>-->
+<!--          이의를 제기함이 없이 따를 것을 서약합니다.</p>-->
+<!--        <p>*이후 입양에 관한 절차 및 안내사항은 개별적으로 연락드릴 예정입니다.</p>-->
+
+<!--        <br><br>-->
+
+<!--        <div class="protectrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == null}">-->
+<!--          <a th:href="@{/centerMypage/adoptStatus(adoptRequestStatus='Y', adoptRequestNo=${protectRequestInfo.adoptRequestNo})}">-->
+<!--            <button class="protectrequest-button" type="button">수락</button>-->
+<!--          </a>-->
+<!--          <a th:href="@{/centerMypage/adoptStatus(adoptRequestStatus='N', adoptRequestNo=${adoptRequestInfo.adoptRequestNo})}">-->
+<!--            <button class="protectrequest-button" type="button">거절</button>-->
+<!--          </a>-->
+<!--          <a th:href="@{/centerMypage/adoptRequestList}">-->
+<!--            <button class="protectrequest-button" type="button">이전</button>-->
+<!--          </a>-->
+<!--        </div>-->
+
+<!--        <div class="protectrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == 'Y'}">-->
+<!--          <div>수락하셨습니다</div>-->
+<!--          <a th:href="@{/centerMypage/adoptRequestList}">-->
+<!--            <button class="protectrequest-button" type="button">이전</button>-->
+<!--          </a>-->
+<!--        </div>-->
+
+<!--        <div class="protectrequest-buttonbox" th:if="${adoptRequestInfo.adoptRequestStatus == 'N'}">-->
+<!--          <div>거절하셨습니다</div>-->
+<!--          <a th:href="@{/centerMypage/adoptRequestList}">-->
+<!--            <button class="protectrequest-button" type="button">이전</button>-->
+<!--          </a>-->
+<!--        </div>-->
+<!--        <br>-->
+
+<!--      </form>-->
+<!--    </div>-->
+
+<!--    <br>-->
+<!--  </div>-->
 </main>
 
 </body>

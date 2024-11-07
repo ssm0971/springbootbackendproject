@@ -67,5 +67,9 @@
 <!--        WHERE CENTER_MEMBER_NO = #{centerMemberNo}-->
 <!--</select>-->
 
+    <delete id="deleteCenterMember" parameterType="Long">
+        DELETE FROM TBL_CENTER_MEMBER tcm
+        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+    </delete>
 
 </mapper>

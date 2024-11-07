@@ -51,9 +51,10 @@
                   <button class="notebox-admain-btu" type="button">
                     <span class="notebox-admain-btu-sp">이전</span>
                   </button></a>
+                <a th:href="@{/mypage/noteboxResponse(noteboxSenderName=${mpNoteboxReceiveDetail.noteboxSenderName})}">
                 <button class="notebox-admain-btu" type="button">
-                  <a href="#"><span class="notebox-admain-btu-sp">답장하기</span></a>
-                </button>
+                  <span class="notebox-admain-btu-sp">답장하기</span>
+                </button></a>
               </div>
             </form>
           </div>

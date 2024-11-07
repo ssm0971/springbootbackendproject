@@ -1,10 +1,56 @@
-// 글작성도중취소버튼
-function modifyCancle() {
-  if (confirm('정말 취소하시겠습니까? 수정중이던 글은 저장되지 않습니다')) {
-    console.log('후기 글수정이 취소되었습니다.');
-    window.location.href = '../../html/adopt/adopt-reviewdetail.html'
+function checkNameInput() {
+  const inputField = document.getElementById('nameInput');
+  const nameError = document.getElementById('nameError');
+  const nameError2 = document.getElementById('nameError2');
+
+  if (inputField.value.trim() === '') {
+    nameError.style.display = 'block'; // 메시지 표시
+    nameError2.style.display = 'block'; // 메시지 표시
   } else {
-    console.log('후기 글수정이 취소되지 않았습니다.');
+    nameError.style.display = 'none'; // 메시지 숨김
+    nameError2.style.display = 'none'; // 메시지 숨김
+  }
+}
+
+function checkBreedInput() {
+  const inputField = document.getElementById('breedInput');
+  const breadError = document.getElementById('breadError');
+  const breadError2 = document.getElementById('breadError2');
+
+  if (inputField.value.trim() === '') {
+    breadError.style.display = 'block'; // 메시지 표시
+    breadError2.style.display = 'block'; // 메시지 표시
+  } else {
+    breadError.style.display = 'none'; // 메시지 숨김
+    breadError2.style.display = 'none'; // 메시지 숨김
+  }
+}
+
+function checkWeightInput() {
+  const inputField = document.getElementById('weightInput');
+  const weightError = document.getElementById('weightError');
+  const weightError2 = document.getElementById('weightError2');
+
+  if (inputField.value.trim() === '') {
+    weightError.style.display = 'block'; // 메시지 표시
+    weightError2.style.display = 'block'; // 메시지 표시
+  } else {
+    weightError.style.display = 'none'; // 메시지 숨김
+    weightError2.style.display = 'none'; // 메시지 숨김
+  }
+}
+
+function checkIntroduceInput() {
+  const inputField = document.getElementById('introduceInput');
+  const introduceError = document.getElementById('introduceError');
+  const introduceError2 = document.getElementById('introduceError2');
+
+  if (inputField.value.trim() === '') {
+    introduceError.style.display = 'block'; // 메시지 표시
+    introduceError2.style.display = 'block'; // 메시지 표시
+  } else {
+    introduceError.style.display = 'none'; // 메시지 숨김
+    introduceError2.style.display = 'none'; // 메시지 숨김
   }
 }
 
@@ -33,6 +79,17 @@ $(function () {
     ]
   });
 });
+
+// 글작성도중취소버튼
+function modifyCancle() {
+  if (confirm('정말 취소하시겠습니까? 수정중이던 글은 저장되지 않습니다')) {
+    console.log('입양 글수정이 취소되었습니다.');
+    window.location.href = '../../html/adopt/adopt-adoptdetail.html'
+  } else {
+    console.log('입양 글수정이 취소되지 않았습니다.');
+  }
+}
+
 
 {
   let adoptPageBtn = document.getElementById('adoptPage');

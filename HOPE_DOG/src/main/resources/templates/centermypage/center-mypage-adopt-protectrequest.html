@@ -17,13 +17,13 @@
     <div class="center-member-profile-navbox">
         <nav>
             <ul class="center-member-profile-nav-ul">
-                <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보 수정</a></li>
+                <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
                 <li id="mywrite"><a th:href="@{/centerMypage/writeInfoCommuList}"> 작성글조회</a></li>
                 <li id="volunteer"><a th:href="@{/centerMypage/volunRequestList}"> 봉사</a></li>
-                <li id="adopt"><a th:href="@{/centerMypage/adoptRequestList}">입양</a></li>
+                <li id="adopt"><a th:href="@{/centerMypage/adoptRequestList}"> 입양</a></li>
                 <div id="choice"></div>
                 <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
-                <li id="withdrawal"><a th:href="@{/centerMypage/}">회원 탈퇴</a></li>
+                <li id="withdrawal"><a th:href="@{/centerMypage/withdrawal}"> 회원탈퇴</a></li>
             </ul>
         </nav>
     </div>
@@ -43,7 +43,7 @@
         <div class="protect-detail-title" th:text="${protectRequestInfo.protectTitle}">웰시코기 데려가세요</div>
         <div class="protect-detail-info">
             <span th:text="'작성자 : ' + ${protectRequestInfo.centerMemberName}">작성자 : 안성재</span>
-            <span th:text="'등록일 : ' + ${#dates.format(protectRequestInfo.protectRegidate, 'yyyy-MM-dd')}">등록일 : 2024-10-05</span>
+            <span th:text="'등록일 : ' + ${#dates.format(protectRequestInfo.protectRegiDate, 'yyyy-MM-dd')}">등록일 : 2024-10-05</span>
         </div>
         <div class="protect-detail-info">
             <span th:text="'신청자 : ' + ${protectRequestInfo.memberNickname}">신청자 : 안성재</span>

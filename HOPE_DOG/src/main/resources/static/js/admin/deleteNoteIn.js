@@ -41,7 +41,7 @@ $(document).ready(function () {
             data: JSON.stringify(itemList),  // 배열만 전송
             success: function (response) {
                 alert(response.message || "선택된 회원이 삭제되었습니다.");
-                location.href='/admin/memberList'; // 페이지 새로고침으로 삭제 반영
+                location.reload(); // 페이지 새로고침으로 삭제 반영
             },
             error: function (xhr, status, error) {
                 alert("회원 삭제 중 오류가 발생했습니다.");

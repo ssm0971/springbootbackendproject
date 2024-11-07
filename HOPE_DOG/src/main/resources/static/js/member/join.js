@@ -45,17 +45,34 @@ document.addEventListener('DOMContentLoaded', function() {
     let isEmailAvailable = false;
 
     const errorFields = {
-        memberId: 'memberId-error',
-        memberPw: 'memberPw-error',
-        memberPwConfirm: 'memberPwConfirm-error',
-        memberName: 'memberName-error',
-        memberNickname: 'memberNickname-error',
-        memberEmail: 'memberEmail-error',
-        memberPhoneNumber: 'memberPhoneNumber-error',
-        memberGender: 'memberGender-error',
-        memberZipcode: 'memberZipcode-error',
-        memberAddress: 'memberAddress-error',
-        memberDetailAddress: 'memberDetailAddress-error'
+        memberName: 'name-error',           // <span id="name-error">
+        memberNickname: 'nickname-error',   // <span id="nickname-error">
+        memberGender: 'gender-error',       // <span id="gender-error">
+        memberId: 'userid-error',           // <span id="userid-error">
+        memberPw: 'password-error',         // <span id="password-error">
+        passwordConfirm: 'passwordConfirm-error', // <span id="passwordConfirm-error">
+        memberPhoneNumber: 'phone-error',   // <span id="phone-error">
+        phoneVerifyCode: 'phoneVerifyCode-error', // <span id="phoneVerifyCode-error">
+        memberEmail: 'email-error',         // <span id="email-error">
+        memberZipcode: 'zipcode-error',     // <span id="zipcode-error">
+        memberAddress: 'address-error',     // <span id="address-error">
+        memberDetailAddress: 'detailAddress-error' // <span id="detailAddress-error">
+    };
+
+    // 필드 한글 이름 매핑
+    const fieldNames = {
+        memberName: '이름',
+        memberNickname: '닉네임',
+        memberGender: '성별',
+        memberId: '아이디',
+        memberPw: '비밀번호',
+        passwordConfirm: '비밀번호 확인',
+        memberPhoneNumber: '연락처',
+        phoneVerifyCode: '인증번호',
+        memberEmail: '이메일',
+        memberZipcode: '우편번호',
+        memberAddress: '주소',
+        memberDetailAddress: '상세주소'
     };
 
     // 성별 선택
@@ -91,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert('사용 가능한 닉네임입니다.');
                     isNicknameAvailable = true;
                     hideError(nicknameInput);
-                //     data.available 값이 false일 경우:
+                    //     data.available 값이 false일 경우:
                     // "이미 사용 중인 닉네임입니다."라는 오류 메시지를 표시하고,
                     // isNicknameAvailable 변수를 false로 설정하여 중복된 상태로 표시합니다
                 } else {
@@ -339,26 +356,181 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 에러 표시 함수
     function showError(inputElement, message) {
-        // 입력 요소의 이름에 따라 에러 ID 결정
-        const errorId = inputElement.name ? errorFields[inputElement.name] : `${inputElement.id}-error`;
+        let errorId;
+        // input 요소의 name 속성이 있는 경우
+        if (inputElement.name && errorFields[inputElement.name]) {
+            errorId = errorFields[inputElement.name];
+        }
+        // 특수한 경우 (비밀번호 확인, 인증번호)
+        else if (inputElement.id === 'passwordConfirm' || inputElement.id === 'phoneVerifyCode') {
+            errorId = `${inputElement.id}-error`;
+        }
+        // 그 외의 경우
+        else {
+            errorId = `${inputElement.id}-error`;
+        }
+
         const errorElement = document.getElementById(errorId);
         if (errorElement) {
-            errorElement.textContent = message; // 에러 메시지 설정
-            errorElement.style.display = 'block'; // 에러 메시지 표시
-            inputElement.classList.add('error'); // 입력 요소에 에러 클래스 추가
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            inputElement.classList.add('error');
+            console.log('Showing error for:', errorId, message); // 디버깅용
+        } else {
+            console.log('Error element not found:', errorId); // 디버깅용
         }
     }
 
     // 에러 숨김 함수
     function hideError(inputElement) {
-        // 입력 요소의 이름에 따라 에러 ID 결정
-        const errorId = inputElement.name ? errorFields[inputElement.name] : `${inputElement.id}-error`;
+        let errorId;
+        if (inputElement.name && errorFields[inputElement.name]) {
+            errorId = errorFields[inputElement.name];
+        }
+        else if (inputElement.id === 'passwordConfirm' || inputElement.id === 'phoneVerifyCode') {
+            errorId = `${inputElement.id}-error`;
+        }
+        else {
+            errorId = `${inputElement.id}-error`;
+        }
+
         const errorElement = document.getElementById(errorId);
         if (errorElement) {
-            errorElement.style.display = 'none'; // 에러 메시지 숨김
-            errorElement.textContent = ''; // 에러 메시지 내용 삭제
-            inputElement.classList.remove('error'); // 입력 요소에서 에러 클래스 제거
+            errorElement.style.display = 'none';
+            errorElement.textContent = '';
+            inputElement.classList.remove('error');
+            console.log('Hiding error for:', errorId); // 디버깅용
+        } else {
+            console.log('Error element not found:', errorId); // 디버깅용
         }
     }
 
+
+    // 유효성 검사 규칙 추가
+    const validationRules = {
+        memberId: {
+            pattern: /^[a-zA-Z0-9]{4,20}$/,
+            message: '아이디는 4~20자의 영문자 또는 숫자여야 합니다.'
+        },
+        memberPw: {
+            pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            message: '비밀번호는 8자 이상의 영문자, 숫자, 특수문자를 포함해야 합니다.'
+        },
+        memberName: {
+            pattern: /^[가-힣]{2,10}$/,
+            message: '이름은 2~10자의 한글만 입력 가능합니다.'
+        },
+        memberNickname: {
+            pattern: /^[a-zA-Z0-9가-힣]{2,10}$/,
+            message: '닉네임은 2~10자의 한글, 영문, 숫자만 가능합니다.'
+        },
+        memberEmail: {
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: '올바른 이메일 형식이 아닙니다.'
+        }
+    };
+
+    // validateInput 함수 수정
+    function validateInput(inputElement) {
+        const value = inputElement.value.trim();
+        const rule = validationRules[inputElement.name];
+        // 필드의 한글 이름 가져오기
+        const fieldName = fieldNames[inputElement.name] || fieldNames[inputElement.id] || inputElement.name;
+
+        if (inputElement.required && value === '') {
+            showError(inputElement, `${fieldName}을(를) 입력해주세요.`);
+            return false;
+        }
+
+        if (rule && rule.pattern && !rule.pattern.test(value)) {
+            showError(inputElement, rule.message);
+            return false;
+        }
+
+        hideError(inputElement);
+        return true;
+    }
+
+    // 폼 제출 시 전체 유효성 검사
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let isValid = true;
+
+        // 필수 필드 검사
+        const requiredFields = form.querySelectorAll('[required]');
+        requiredFields.forEach(field => {
+            if (!validateInput(field)) {
+                isValid = false;
+            }
+        });
+
+        // 비밀번호 확인 검사
+        const pwInput = document.getElementById('memberPw');
+        const pwConfirmInput = document.getElementById('passwordConfirm');
+        if (pwInput.value !== pwConfirmInput.value) {
+            showError(pwConfirmInput, '비밀번호가 일치하지 않습니다.');
+            isValid = false;
+        }
+
+        // 성별 선택 검사
+        if (!document.getElementById('memberGender').value) {
+            showError(document.getElementById('memberGender'), '성별을 선택해주세요.');
+            isValid = false;
+        }
+
+        // 휴대폰 인증 검사
+        if (!isPhoneVerified) {
+            showError(document.getElementById('memberPhoneNumber'), '휴대폰 인증이 필요합니다.');
+            isValid = false;
+        }
+
+        // 필수 인증 검사
+        if (!isNicknameAvailable) {
+            showError(nicknameInput, '닉네임 중복 확인이 필요합니다.');
+            isValid = false;
+        }
+
+        if (!isEmailAvailable) {
+            showError(emailInput, '이메일 중복 확인이 필요합니다.');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            return false;
+        }
+    });
+
+    // 실시간 입력값 검사 이벤트 리스너 추가
+    const inputs = form.querySelectorAll('input[required]');
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            validateInput(this);
+        });
+
+        input.addEventListener('blur', function() {
+            validateInput(this);
+        });
+    });
+
+    // 비밀번호 확인 실시간 검사
+    const pwConfirmInput = document.getElementById('passwordConfirm');
+    pwConfirmInput.addEventListener('input', function() {
+        if (this.value !== document.getElementById('memberPw').value) {
+            showError(this, '비밀번호가 일치하지 않습니다.');
+        } else {
+            hideError(this);
+        }
+    });
+
+    // 입력값 변경 시 중복 확인 상태 초기화
+    nicknameInput.addEventListener('input', function() {
+        isNicknameAvailable = false;
+    });
+
+    emailInput.addEventListener('input', function() {
+        isEmailAvailable = false;
+    });
+
+    // 페이지 로드 시 초기화
+    document.getElementById('phoneVerifyCode').setAttribute('disabled', 'true');
 });

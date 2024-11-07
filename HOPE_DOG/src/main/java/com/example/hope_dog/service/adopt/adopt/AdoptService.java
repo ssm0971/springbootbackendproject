@@ -1,6 +1,7 @@
 package com.example.hope_dog.service.adopt.adopt;
 
 import com.example.hope_dog.dto.adopt.adopt.*;
+import com.example.hope_dog.dto.file.AdoptFileDTO;
 import com.example.hope_dog.dto.page.Criteria;
 import com.example.hope_dog.mapper.adopt.adopt.AdoptMapper;
 import lombok.RequiredArgsConstructor;
@@ -65,14 +66,24 @@ public class AdoptService {
         adoptMapper.adoptWrite(adoptWriteDTO);
     }
 
+    //게시글 파일 첨부
+    public void aodptFileInsert(AdoptFileDTO adoptFileDTO) {
+        adoptMapper.adoptFileInsert(adoptFileDTO);
+    }
+
     //입양글 마감처리
     public void adoptEnd(AdoptDetailDTO adoptDetailDTO) {
         adoptMapper.adoptEnd(adoptDetailDTO); // 매퍼 호출
     }
 
-    //입양글 마감처리
+    //입양글 삭제 처리
     public void adoptDelete(AdoptDetailDTO adoptDetailDTO) {
         adoptMapper.adoptDelete(adoptDetailDTO); // 매퍼 호출
+    }
+
+    //입양글 수정 처리
+    public void adoptModify(AdoptWriteDTO adoptWriteDTO) {
+        adoptMapper.adoptModify(adoptWriteDTO); // 매퍼 호출
     }
 
     //입양글 신고처리

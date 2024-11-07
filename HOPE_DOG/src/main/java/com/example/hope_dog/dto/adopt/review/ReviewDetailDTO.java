@@ -14,4 +14,6 @@ public class ReviewDetailDTO {
     private String  reviewTitle;
     private String memberName;
     private String  reviewContent;
+    private Date reviewRegidate;
+    private Long memberNo;
 }

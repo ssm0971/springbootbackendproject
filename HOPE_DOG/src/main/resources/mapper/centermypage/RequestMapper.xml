@@ -31,10 +31,10 @@
             ta.ADOPT_REGIDATE,
             tar.MEMBER_NO,
             tm.MEMBER_NICKNAME,
-            tar.ADOPT_REQUEST_ADOPT_AGREEMENT,
+            tar.ADOPT_REQUEST_STATUS,
             CASE
-                WHEN tar.ADOPT_REQUEST_ADOPT_AGREEMENT = 'Y' THEN '수락'
-                WHEN tar.ADOPT_REQUEST_ADOPT_AGREEMENT = 'N' THEN '거절'
+                WHEN tar.ADOPT_REQUEST_STATUS = 'Y' THEN '수락'
+                WHEN tar.ADOPT_REQUEST_STATUS = 'N' THEN '거절'
                 ELSE '심사중'
                 END AS adoptStatus
         FROM
@@ -81,6 +81,8 @@
             tar.ADOPT_NO,
             tar.MEMBER_NO,
             tar.CENTER_MEMBER_NO,
+            ta.ADOPT_TITLE,
+            ta.ADOPT_REGIDATE,
             tm.MEMBER_NICKNAME ,
             tcm.CENTER_MEMBER_NAME ,
             tar.ADOPT_REQUEST_STATUS
@@ -89,16 +91,16 @@
                  LEFT JOIN TBL_MEMBER tm ON tar.MEMBER_NO = tm.MEMBER_NO
                  LEFT JOIN TBL_CENTER_MEMBER tcm ON tar.CENTER_MEMBER_NO =tcm.CENTER_MEMBER_NO
         WHERE tar.ADOPT_REQUEST_NO = #{adoptRequestNo}
-
     </select>
 
+<!--    입양 신청서 승인/거절-->
     <update id="adoptRequestStatusChoice" parameterType="AdoptRequestChoiceDTO">
         UPDATE TBL_ADOPT_REQUEST
         SET ADOPT_REQUEST_STATUS = #{adoptRequestStatus} -- 'Y'는 승인
         WHERE ADOPT_REQUEST_NO = #{adoptRequestNo} -- 특정 신청서 번호로 조건 설정
     </update>
 
-<!--    임시보호신청서 조회-->
+<!--    임시보호 신청서 조회-->
     <select id="protectRequestList" parameterType="Long" resultType="ProtectRequestListDTO">
         SELECT
             tpr.PROTECT_REQUEST_NO,
@@ -170,7 +172,7 @@
         WHERE tpr.PROTECT_REQUEST_NO = #{protectRequestNo}
     </select>
 
-<!--    임시보호 승인/거절-->
+<!--    임시보호 신청서 승인/거절-->
     <update id="protectRequestStatusChoice" parameterType="ProtectRequestChoiceDTO">
         UPDATE TBL_PROTECT_REQUEST
         SET PROTECT_REQUEST_STATUS = #{protectRequestStatus} -- 'Y'는 승인

@@ -5,16 +5,16 @@ main{
   align-items: center;
 }
 
-.review-main-size{
+.adopt-main-size{
   width: 1080px;
-  min-height: 850px;
+  min-height: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 
-.review-nav{
+.adopt-nav{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,18 +26,18 @@ main{
   border-bottom: solid 2px #9B805D;
 }
 
-.review-navList{
+.adopt-navList{
   font-size: 18px;
   font-weight: bold;
   width: 180px;
   text-align: center;
 }
 
-.review-navList:hover {
+.adopt-navList:hover {
   cursor: pointer; /* 마우스 오버 시 커서를 포인터로 변경 */
 }
 
-.review-wirtebanner{
+.adopt-wirtebanner{
   background-color: #F5EAD9;
   width: 1080px;
   height: 70px;
@@ -48,7 +48,7 @@ main{
   font-weight: bold;
 }
 
-.review-write-area{
+.adopt-write-area{
   width: 800px;
   height: auto;
   border: solid 1px #9B805D;
@@ -58,7 +58,70 @@ main{
   align-items: center;
 }
 
-.review-write-button-box{
+.adopt-write-box{
+  width: 780px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.adopt-write-subtitle{
+  width: 170px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adopt-write-name{
+  width: 180px;
+  height: 20px;
+}
+
+.adopt-write-breed{
+  width: 180px;
+  height: 20px;
+}
+
+.breadError{
+  display: flex;
+  align-items: center;
+  width: 780px;
+}
+
+.adopt-write-weight{
+  width: 180px;
+  height: 20px;
+}
+
+.weightError{
+  display: flex;
+  align-items: center;
+  width: 780px;
+}
+
+.adopt-write-birth{
+  width: 180px;
+  height: 20px;
+  font-size: 12px;
+}
+
+.adopt-brirth-ex{
+  font-size: 12px;
+}
+
+.adopt-write-introduce{
+  width: 500px;
+  height: 20px;
+}
+
+.introduceError{
+  display: flex;
+  align-items: center;
+  width: 780px;
+}
+
+.adopt-write-button-box{
   width: 780px;
   height: 70px;
   display: flex;
@@ -67,7 +130,7 @@ main{
   gap: 20px;
 }
 
-.review-write-button{
+.adopt-write-button{
   width: 100px;
   height: 50px;
   background-color: #F5EAD9;
@@ -78,12 +141,12 @@ main{
   cursor: pointer;
 }
 
-.review-write-button:hover {
+.adopt-write-button:hover {
   background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
   color: white;
 }
 
-.review-cancle-button{
+.adopt-cancle-button{
   width: 100px;
   height: 50px;
   background-color: #F5EAD9;
@@ -94,7 +157,7 @@ main{
   cursor: pointer;
 }
 
-.review-cancle-button:hover {
+.adopt-cancle-button:hover {
   background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
   color: white;
 }
@@ -112,5 +175,10 @@ main{
 
 a {
   text-decoration: none;
-  color: inherit; 
+  color: inherit;
+}
+
+.adopt-nav a:hover {
+  text-decoration: none;
+  color: inherit;
 }

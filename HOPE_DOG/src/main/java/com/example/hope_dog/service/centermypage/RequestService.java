@@ -15,25 +15,33 @@ public class RequestService {
 
 //    봉사 신청 목록 조회
     public List<VolunRequestListDTO> volRequestList(Long centerMemberNo){
-        List<VolunRequestListDTO> volRequestList = requestMapper.volunRequestList(centerMemberNo);
         return requestMapper.volunRequestList(centerMemberNo);
     }
 
 //    입양 신청 목록 조회
     public List<AdoptRequestListDTO> adoptRequestList(Long centerMemberNo){
-        List<AdoptRequestListDTO> adoptRequestList = requestMapper.adoptRequestList(centerMemberNo);
         return requestMapper.adoptRequestList(centerMemberNo);
     }
 
+//    입양 신청서 상세페이지
+    public AdoptRequestDetailDTO adoptRequestDetail(Long adoptRequestNo){
+        return requestMapper.adoptRequestDetailInfo(adoptRequestNo);
+    }
+
+//    입양 신청서 수락/거절 처리
+    public void updateAdoptRequestStatus(Long adoptRequestNo, String adoptRequsetStatus){
+        AdoptRequestChoiceDTO adoptRequestChoiceDTO = new AdoptRequestChoiceDTO(adoptRequestNo, adoptRequsetStatus);
+        requestMapper.adoptRequestStatusChoice(adoptRequestChoiceDTO);
+    }
+
+
 //    임시보호 신청 목록 조회
     public List<ProtectRequestListDTO> protectRequestList(Long centerMemberNo){
-        List<ProtectRequestListDTO> protectRequestList = requestMapper.protectRequestList(centerMemberNo);
         return requestMapper.protectRequestList(centerMemberNo);
     }
 
 //    임시보호 신청서 상세페이지
     public ProtectRequestDetailDTO protectRequestDetail(Long protectRequestNo){
-        ProtectRequestDetailDTO protectRequestDetail = requestMapper.protectRequestDetailInfo(protectRequestNo);
         return requestMapper.protectRequestDetailInfo(protectRequestNo);
     }
 

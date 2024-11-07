@@ -18,7 +18,7 @@
     <select id="adoptDetail" resultType="AdoptDetailDTO">
         SELECT a.ADOPT_TITLE, c.CENTER_MEMBER_NAME, a.ADOPT_REGIDATE, a.ADOPT_PERIODSTART , a.ADOPT_PERIODEND , a.ADOPT_NAME ,
                a.ADOPT_BREED , a.ADOPT_NEUTERING , a.ADOPT_GENDER , a.ADOPT_WEIGHT , a.ADOPT_BIRTH , a.ADOPT_INTRODUCE ,
-               a.ADOPT_CONTENT, a.ADOPT_NO, a.CENTER_MEMBER_NO, a.ADOPT_STATUS
+               a.ADOPT_CONTENT, a.ADOPT_NO, a.CENTER_MEMBER_NO, a.ADOPT_STATUS, a.ADOPT_INTRODUCE
         FROM TBL_ADOPT a JOIN TBL_CENTER_MEMBER c ON a.CENTER_MEMBER_NO = c.CENTER_MEMBER_NO
         WHERE ADOPT_NO = #{adoptNo}
     </select>
@@ -122,6 +122,15 @@
         )
     </insert>
 
+    <!-- 게시글 수정 -->
+    <update id="adoptModify" parameterType="AdoptWriteDTO">
+        UPDATE TBL_ADOPT
+        SET ADOPT_PERIODSTART = #{adoptPeriodstart}, ADOPT_PERIODEND = #{adoptPeriodend}, ADOPT_NAME = #{adoptName}, ADOPT_BREED = #{adoptBreed},
+            ADOPT_NEUTERING = #{adoptNeutering}, ADOPT_GENDER = #{adoptGender}, ADOPT_WEIGHT = #{adoptWeight}, ADOPT_BIRTH = #{adoptBirth},
+            ADOPT_INTRODUCE = #{adoptIntroduce}, ADOPT_TITLE = #{adoptTitle}, ADOPT_CONTENT = #{adoptContent}, ADOPT_UPDATEDATE
+        WHERE ADOPT_NO = #{adoptNo}
+    </update>
+
     <!-- 게시글 마감 처리 -->
     <update id="adoptEnd" parameterType="AdoptDetailDTO">
         UPDATE TBL_ADOPT
@@ -156,7 +165,7 @@
             ac.ADOPT_COMMENT_REGIDATE,
             ac.ADOPT_COMMENT_WRITER,
             CASE
-                WHEN MOD(ac.ADOPT_COMMENT_WRITER, 10) = 1 THEN m.MEMBER_NAME
+                WHEN MOD(ac.ADOPT_COMMENT_WRITER, 10) = 1 THEN m.MEMBER_NICKNAME
                 WHEN MOD(ac.ADOPT_COMMENT_WRITER, 10) = 2 THEN cm.CENTER_MEMBER_NAME
                 END AS COMMENT_WRITER_NAME
         FROM
@@ -167,6 +176,8 @@
             TBL_CENTER_MEMBER cm ON MOD(ac.ADOPT_COMMENT_WRITER, 10) = 2 AND ac.ADOPT_COMMENT_WRITER = cm.CENTER_MEMBER_NO
         WHERE
             ac.ADOPT_NO = #{adoptNo}
+        ORDER BY
+            ac.ADOPT_COMMENT_REGIDATE ASC
     </select>
 
     <!-- 댓글 등록 -->

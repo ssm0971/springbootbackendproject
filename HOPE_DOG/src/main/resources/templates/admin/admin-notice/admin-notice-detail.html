@@ -49,7 +49,7 @@
                   <!-- 수정/취소 버튼 -->
                   <div class="notice-write-button-box">
                     <button class="notice-write-button"><a href="./admin-notice-modify.html">수정</a></button>
-                    <button class="notice-cancel-button">삭제</button>
+                    <button class="deleteOneButton notice-cancel-button" th:data-notice-no="${notice.noticeNo}">삭제</button>
                   </div>
               </div>
             </div>
@@ -60,5 +60,7 @@
     </div>
   </div>
 </body>
-
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
+<script th:src="@{/js/admin/allCheck.js}"></script>
+<script th:src="@{/js/admin/deleteNotice.js}"></script>
 </html>

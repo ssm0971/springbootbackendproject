@@ -49,3 +49,8 @@ $(function() {
   // 처음 로드 시 첫 번째 페이지의 항목만 보여주기
   container.pagination('goToPage', 1);
 });
+
+// 삭제버튼 클릭 시 삭제 완료 알림창을 띄우는 함수
+function showDeleteAlert() {
+  alert('삭제가 완료되었습니다');
+}

@@ -18,5 +18,7 @@ public class MypageNoteSendDTO {
     private String noteboxSendContent; // NOTEBOX_SEND_CONTENT
     private Date noteboxSendRegiDate; // NOTEBOX_SEND_REGIDATE
     private Long noteboxSendR; // NOTEBOX_SEND_R
-    private String noteboxReceiverName; // noteboxReceiverName
+    private String noteboxReceiverName;// noteboxReceiverName
+    private String noteboxSenderName;
+    private Long noteboxReceiveNo;
 }

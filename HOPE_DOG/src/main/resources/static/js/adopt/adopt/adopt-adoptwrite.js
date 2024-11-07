@@ -106,10 +106,48 @@ $(function () {
           const trimmedHTMLContent = $('<div>').text(trimmedText).html();
           $('#contents').summernote('code', trimmedHTMLContent);
         }
+      },
+
+      // 이미지 업로드
+      onImageUpload: function(files, editor, welEditable) {
+        // 다중 이미지 처리를 위해 for문을 사용했습니다.
+        for (var i = 0; i < files.length; i++) {
+          imageUploader(files[i], this);
+        }
       }
     }
   });
 });
+
+// 이미지 업로드 AJAX로 보내기
+function imageUploader(file, el) {
+  var formData = new FormData();
+  formData.append('file', file);
+
+  $.ajax({
+    data: formData,
+    type: "POST",
+    // 서버에서 이미지를 업로드 처리하는 경로
+    url: '/post/image-upload',
+    contentType: false,
+    processData: false,
+    enctype: 'multipart/form-data',
+    success: function(data) {
+      // 서버에서 반환된 이미지 파일 이름을 사용하여 URL 생성
+      const imageUrl = "/file/adopt/adopt/" + data;
+
+      // Summernote 에디터에 이미지 삽입
+      $(el).summernote('insertImage', imageUrl, function($image) {
+        $image.css('width', "100%"); // 이미지 크기 조정
+      });
+
+      console.log(data); // 업로드된 이미지 경로 확인
+    },
+    error: function(xhr, status, error) {
+      alert("이미지 업로드 실패");
+    }
+  });
+}
 
 
 

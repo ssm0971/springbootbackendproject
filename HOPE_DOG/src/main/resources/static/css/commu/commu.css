@@ -103,7 +103,7 @@ ul{
 .commu-ul-all {
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
+  /*display: -ms-flexbox;*/
   display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
@@ -116,7 +116,7 @@ ul{
   display: flex;
   flex-direction: row; /* li들을 가로로 정렬 */
   width: 100%;
-  justify-content: center;
+  /*justify-content: center;*/
   align-items: center;
   border-bottom: 1px solid #F5EAD9;
   list-style: none; /* li의 기본 점 제거 */
@@ -127,15 +127,17 @@ ul{
 .commu-cate {
   color: rgb(76, 76, 76);
   text-align: center;
-  padding-left: 21px;
   width: 80px;
+  margin: 0px 21px;
 }
 
 /* 제목 */
 .commu-title {
   color: rgb(76, 76, 76);
   text-align: center;
-  margin: 0 auto;
+  /*margin: 0 auto;*/
+  width: 340px;
+  /*margin: 0px 30px;*/
 }
 
 /* 글쓴이 */
@@ -143,23 +145,26 @@ ul{
   text-align: center;
   padding: 20px 0px;
   color: rgb(76, 76, 76);
-  flex-basis: 100px;
+  width: 100px;
+  margin: 0 35px;
 }
 
 /* 작성날짜 */
 .commu-date {
   text-align: center;
   padding: 20px 0px;
-  flex-basis: 100px;
   color: rgb(153, 153, 153);
+  width: 100px;
+  margin: 0 -26px;
 }
 
 /* 추천 */
 .commu-good {
   text-align: center;
   padding: 20px 0px;
-  flex-basis: 100px;
   color: rgb(153, 153, 153);
+  width: 100px;
+  margin: 0 20px;
 }
 
 /* 페이지네이션 */
@@ -281,6 +286,7 @@ input[type="submit"]:hover{
   display: inline-block;
   font-size: 16px;
   font-weight: 500;
+  margin-top: 10px;
 }
 
 .commu-admain-btu:hover {
@@ -291,6 +297,53 @@ input[type="submit"]:hover{
 
 
 
+/* 페이지네이션 컨테이너 기본 스타일 */
+#pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#pagination .paginationjs-pages {
+  display: flex;
+  gap: 8px; /* 버튼 사이 간격 */
+}
+
+#pagination .paginationjs-page {
+  padding: 8px 12px;
+  background-color: #f0f0f0; /* 기본 버튼 배경색 */
+  color: #9B805D; /* 기본 글자색 */
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#pagination .paginationjs-page:hover {
+  background-color: #ddd; /* 호버 시 배경색 */
+}
+
+#pagination .paginationjs-page.active {
+  background-color: #9B805D; /* 활성화된 버튼 배경색 */
+  color: #fff; /* 활성화된 버튼 글자색 */
+  font-weight: bold;
+}
+
+#pagination .paginationjs-prev,
+#pagination .paginationjs-next {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  color: #F5EAD9;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#pagination .paginationjs-prev:hover,
+#pagination .paginationjs-next:hover {
+  background-color: #ddd; /* 이전/다음 버튼 호버 시 배경색 */
+}
 
 
 

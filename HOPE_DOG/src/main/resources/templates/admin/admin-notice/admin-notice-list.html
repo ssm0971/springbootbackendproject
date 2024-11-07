@@ -68,7 +68,7 @@
                                 <!-- Data rows -->
                                 <div th:each="notice, iterStat : ${noticeList}" class="info-row" >
                                     <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check">
+                                        <input type="checkbox" class="checkbox" name="check" th:data-notice-no="${notice.noticeNo}">
                                     </div>
                                     <a style="display: flex; justify-content: center" th:href="@{/admin/noticeDetail(noticeNo=${notice.noticeNo})}">
                                         <div class="info-cell info-cell-no" th:text="${notice.noticeNo}"></div>
@@ -88,4 +88,5 @@
 </body>
 <script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
 <script th:src="@{/js/admin/allCheck.js}"></script>
+<script th:src="@{/js/admin/deleteNotice.js}"></script>
 </html>

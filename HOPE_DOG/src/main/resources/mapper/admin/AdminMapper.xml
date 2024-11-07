@@ -1092,6 +1092,14 @@
         ORDER BY NOTICE_UPDATEDATE DESC
     </select>
 
+    <delete id="deleteNotice" parameterType="list">
+        DELETE FROM TBL_NOTICE
+        WHERE TBL_NOTICE.NOTICE_NO IN
+        <foreach collection="noticeNoList" item="noticeNo" open="(" separator="," close=")">
+            #{noticeNo}
+        </foreach>
+    </delete>
+
 <!--    공지사항 상세 조회-->
     <select id="selectNoticeDetail" resultType="AdminNoticeDTO">
         SELECT NOTICE_NO, ADMIN_NO, NOTICE_CATE, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_UPDATEDATE
@@ -1555,6 +1563,10 @@
             SELECT CENTER_MEMBER_NO
             FROM TBL_CENTER_MEMBER
             WHERE CENTER_MEMBER_NAME = #{receiver}
+            UNION
+            SELECT ADMIN_NO
+            FROM TBL_ADMIN
+            WHERE #{receiver} = '관리자'
         </selectKey>
         INSERT INTO TBL_NOTEBOX_RECEIVE(notebox_receive_no, notebox_receive_title, notebox_receive_content, notebox_receive_regidate, notebox_receive_read, notebox_receive_readdate, notebox_receive_s, notebox_receive_r)
         VALUES (SEQ_NOTE_RECEIVE.nextval, #{title}, #{content}, sysdate, 'N', null, 3, #{receiverNumber})
@@ -1569,6 +1581,10 @@
             SELECT CENTER_MEMBER_NO
             FROM TBL_CENTER_MEMBER
             WHERE CENTER_MEMBER_NAME = #{receiver}
+            UNION
+            SELECT ADMIN_NO
+            FROM TBL_ADMIN
+            WHERE #{receiver} = '관리자'
         </selectKey>
         INSERT INTO TBL_NOTEBOX_SEND(notebox_send_no, notebox_send_title, notebox_send_content, notebox_send_regidate, notebox_send_s, notebox_send_r)
         VALUES (SEQ_NOTE_SEND.nextval, #{title}, #{content}, sysdate, 3, #{receiverNumber})
@@ -1616,5 +1632,34 @@
              NS.NOTEBOX_SEND_TITLE LIKE '%' || #{keyword} || '%' OR
              NS.NOTEBOX_SEND_CONTENT LIKE '%' || #{keyword} || '%')
     </select>
-    
+
+    <delete id="deleteNoteIn" parameterType="list">
+        DELETE FROM TBL_NOTEBOX_RECEIVE
+        WHERE TBL_NOTEBOX_RECEIVE.NOTEBOX_RECEIVE_NO IN
+        <foreach collection="noteNoList" item="noteNo" open="(" separator="," close=")">
+            #{noteNo}
+        </foreach>
+    </delete>
+    <delete id="deleteNoteOut" parameterType="list">
+        DELETE FROM TBL_NOTEBOX_SEND
+        WHERE NOTEBOX_SEND_NO IN
+        <foreach collection="noteNoList" item="noteNo" open="(" separator="," close=")">
+            #{noteNo}
+        </foreach>
+    </delete>
+
+    <update id="approveCenterMember" parameterType="List">
+        UPDATE TBL_CENTER_MEMBER
+        SET CENTER_MEMBER_STATUS = 'Y'
+        WHERE CENTER_MEMBER_NO IN
+        <foreach collection="itemList" item="centerMemberNo" open="(" separator="," close=")">
+            #{centerMemberNo}
+        </foreach>
+    </update>
+
+    <select id="findCenterMemberNameByNo" parameterType="Long" resultType="String">
+        SELECT CENTER_MEMBER_NAME
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_NO=#{centerMemberNo}
+    </select>
 </mapper>

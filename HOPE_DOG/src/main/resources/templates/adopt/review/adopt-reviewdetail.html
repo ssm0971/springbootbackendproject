@@ -13,93 +13,105 @@
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <!-- 후기 메인 크기 -->
-    <div class="review-main-size">
-      <!-- 입양/임보/후기 게시판 바 -->
-      <div class="review-nav">
-        <div class="review-navList" id="adoptPage">안심입양</div>
-        <div class="review-navList" id="protectPage">임시보호</div>
-        <div class="review-navList" id="reviewPage">후기</div>
+<main>
+  <!-- 입양 메인 크기 -->
+  <div class="adopt-main-size">
+    <!-- 입양/임보/후기 게시판 바 -->
+    <div class="adopt-nav">
+      <div class="adopt-navList" id="adoptPage">안심입양</div>
+      <div class="adopt-navList" id="protectPage">임시보호</div>
+      <div class="adopt-navList" id="reviewPage">후기</div>
+    </div>
+
+    <!-- 제목/작성자/등록일 크기 -->
+    <div class="adopt-detail-box1" th:each="review : ${reviewDetailList}">
+      <div class="adopt-detail-title" th:text="${review.reviewTitle}"></div>
+      <div class="adopt-detail-info">
+        <span th:text="'작성자 : ' + ${review.memberName}"></span>
+        <span th:text="'등록일 : ' + ${#dates.format(review.reviewRegidate, 'yyyy-MM-dd')}"></span>
       </div>
+    </div>
 
-      <!-- 제목/작성자/등록일 크기 -->
-      <div class="review-detail-box1">
-        <div class="review-detail-title">웰시코기 데려가세요</div>
-        <div class="review-detail-info"><span>작성자 : 안성재</span>
-          <sapn>등록일 : 2024-10-05</sapn>
-        </div>
+    <!-- 글내용 크기 -->
+    <div class="adopt-detail-box2" th:each="review : ${reviewDetailList}">
+      <div class="adopt-detail-content">
+
+        <div th:utext="${review.reviewContent}"></div>
+        <div class="reviewNo" th:text="${review.reviewNo}" style="display: none"></div>
+    </div>
+    </div>
+
+    <br>
+
+    <!-- 버튼 -->
+    <div class="adopt-detail-box3" th:each="review : ${reviewDetailList}">
+      <div>
+        <button class="adopt-modify-button" type="button" onclick="modifyClick()"
+                th:if="${memberNo == review.memberNo}">수정</button>
+        <button class="adopt-delete-button" type="button" onclick="deleteClick()"
+                th:if="${memberNo == review.memberNo}">삭제</button>
       </div>
+      <button class="adopt-end-button" type="button" onclick="ContentReportClick()"
+              th:if="${memberNo != review.memberNo and (centerMemberNo != null or memberNo != null)}">신고</button>
+    </div>
 
-      <!-- 글내용 크기 -->
-      <div class="review-detail-box2">
-        <div class="review-detail-content">
-          <img src="../../img/adopt-main.jpg" width="200px" height="200px">
-          <img src="../../img/adopt-main.jpg" width="200px" height="200px">
-          <img src="../../img/adopt-main.jpg" width="200px" height="200px">
-          <div>모수에서 킥이었어요</div>
-        </div>
-      </div>
 
-      <br>
+    <br>
 
-      <!-- 버튼 -->
-      <div class="review-detail-box3">
-        <div>
-          <button class="review-modify-button" type="button" onclick="modifyClick()">수정</button>　
-          <button class="review-delete-button" type="button" onclick="deleteClick()">삭제</button>
-        </div>
-        <!-- 신고버튼 자기글엔 안나옴 + 로그인한 회원만 노출 / 반대의 경우 신고버튼 숨기기 -->
-        <!-- <button class="review-end-button" type="button" onclick="ContentReportClick()">신고</button> -->
-      </div>
-
-      <br>
-
-      <!-- 댓글 주석처리한건 백단할때 로그인/비로그인, 일반회원/센터회원, 본인작성/타인작성 if로 노출 결정 -->
-      <!-- 댓글창 / 자기댓글-->
-      <div class="review-detail-commentbox">
-        <div class="review-detail-name">에드워드리
-          <div id="review-comment-buttonBox">
-            <button class="review-comment-button" type="button" onclick="modifyCommentBtnClcik()">수정</button>
-            <button class="review-comment-button" type="button" onclick="CommentDeleteClick()">삭제</button>
-            <!-- <button class="review-comment-button" type="button" onclick="CommentReportClick()">신고</button> -->
+    <!-- 댓글 수정/삭제/신고 -->
+    <div th:with="reviewNo=${reviewDetailList[0]?.reviewNo}">
+      <div class="adopt-detail-commentbox" th:each="reviewComment, iterStat : ${reviewCommentList}">
+        <div class="adopt-detail-name">
+          <div class="adopt-detail-name" th:text="${reviewComment.commentWriterName}"></div>
+          <div class="reviewCommentNo" th:text="${reviewComment.reviewCommentNo}" style="display: none"></div>
+          <div class="adopt-comment-buttonBox" th:id="'adopt-comment-buttonBox-' + ${iterStat.index}">
+            <button class="adopt-comment-button" type="button"
+                    th:onclick="'modifyCommentBtnClick(' + ${iterStat.index} + ')'"
+                    th:if="${(memberNo != null and memberNo == reviewComment.reviewCommentWriter)
+                   or (centerMemberNo != null and centerMemberNo == reviewComment.reviewCommentWriter)}">수정</button>
+            <button class="adopt-comment-button" type="button"
+                    th:onclick="'CommentDeleteClick(' + ${reviewComment.reviewCommentNo} + ', ' + ${reviewNo} + ')'"
+                    th:if="${(memberNo != null and memberNo == reviewComment.reviewCommentWriter)
+                   or (centerMemberNo != null and centerMemberNo == reviewComment.reviewCommentWriter)}">삭제</button>
+            <button class="adopt-comment-button" type="button"
+                    th:onclick="'CommentReportClick(' + ${reviewComment.reviewCommentNo} + ', ' + ${reviewNo} + ')'"
+                    th:if="${(centerMemberNo != null or memberNo != null)
+                   and (centerMemberNo != reviewComment.reviewCommentWriter)
+                   and (memberNo != reviewComment.reviewCommentWriter)}">신고</button>
           </div>
         </div>
-        <div class="review-detail-comment" id="review-comment">싫어요</div>
-        <div class="review-detail-comment" id="review-modifyInput" style="display:none;">
-          <input class="review-modify-comment">
-          <button class="review-comment-button" onclick="editCommentBtnClcik()">등록</button>
-        </div>
-        <div class="review-detail-date">2024-10-14</div>
+
+        <div class="adopt-detail-comment" th:id="'adopt-comment-' + ${iterStat.index}" th:text="${reviewComment.reviewComment}"></div>
+
+        <!-- 댓글 수정 form 추가 -->
+        <form th:action="@{/adopt/review/reviewCommentModi(reviewNo=${reviewNo})}" method="post"
+              th:id="'adopt-modifyInput-' + ${iterStat.index}" style="display:none;">
+          <input type="hidden" name="reviewCommentNo" th:value="${reviewComment.reviewCommentNo}">
+          <input type="hidden" name="reviewNo" th:value="${reviewNo}">
+          <input type="text" name="reviewComment" class="adopt-modify-comment" th:value="${reviewComment.reviewComment}">
+          <button type="submit" class="adopt-comment-button">등록</button>
+        </form>
+
+        <div class="adopt-detail-date" th:text="${#dates.format(reviewComment.reviewCommentRegidate, 'yyyy-MM-dd')}"></div>
       </div>
+    </div>
 
-      <!-- 댓글창 / 타인댓글-->
-      <div class="review-detail-commentbox">
-        <div class="review-detail-name">에드워드리
-          <div id="review-comment-buttonBox">
-            <!-- <button class="review-comment-button" type="button" onclick="modifyCommentBtnClcik()">수정</button> -->
-            <!-- <button class="review-comment-button" type="button" onclick="CommentDeleteClick()">삭제</button> -->
-            <button class="review-comment-button" type="button" onclick="CommentReportClick()">신고</button>
-          </div>
-        </div>
-        <div class="review-detail-comment" id="review-comment">싫어요</div>
-        <div class="review-detail-comment" id="review-modifyInput" style="display:none;">
-          <input class="review-modify-comment">
-          <!-- <button class="adopt-comment-button" onclick="editCommentBtnClcik()">등록</button> -->
-        </div>
-        <div class="review-detail-date">2024-10-14</div>
-      </div>
 
-      <br>
 
-      <!-- 댓글입력 -->
-      <form>
-        <input class="review-detail-commentregi" type="text" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요">　
-        <button class="review-commentregi-button">등록</button>
+
+    <br>
+
+    <!-- 댓글입력 -->
+    <div th:if="${memberNo != null or centerMemberNo != null}">
+      <form action="/adopt/review/reviewCommentRegi" method="get" th:each="review : ${reviewDetailList}">
+        <input class="adopt-detail-commentregi" type="text" name="reviewComment" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요" maxlength="1000">
+        <input th:value="${review.reviewNo}" style="display: none" name="reviewNo">
+        <button class="adopt-commentregi-button" type="submit">등록</button>
       </form>
+    </div>
 
-      <br>
-  </main>
+    <br>
+</main>
 
 </body>
 
@@ -110,7 +122,7 @@
 </footer>
 
 <script defer src="../../js/main/header.js"></script>
-<script defer src="../../js/adopt/adopt-reviewdetail.js"></script>
+<script defer th:src="@{/js/adopt/review/adopt-reviewdetail.js}"></script>
 
 
 

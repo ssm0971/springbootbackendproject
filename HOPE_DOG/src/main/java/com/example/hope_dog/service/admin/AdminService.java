@@ -126,4 +126,14 @@ public class AdminService {
     public List<AdminNoteReceiveDTO> searchNoteInByKeyword(String keyword){ return adminMapper.searchNoteInByKeyword(keyword);}
 
     public List<AdminNoteSendDTO> searchNoteOutByKeyword(String keyword){ return adminMapper.searchNoteOutByKeyword(keyword); }
+
+    public void deleteNoteIn(List<Long> noteNoList){adminMapper.deleteNoteIn(noteNoList);}
+
+    public void deleteNoteOut(List<Long> noteNoList){adminMapper.deleteNoteOut(noteNoList);}
+
+    public void approveCenterMember(List<Long> itemList){adminMapper.approveCenterMember(itemList);}
+
+    public String findCenterMemberNameByNo(Long centerMemberNo){ return adminMapper.findCenterMemberNameByNo(centerMemberNo); }
+
+    public void deleteNotice(List<Long> noticeNoList){adminMapper.deleteNotice(noticeNoList);}
 }

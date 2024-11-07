@@ -80,7 +80,7 @@ a{
 .center-withdrawal-container{
   margin: 0 auto;
   width: 800px;
-  height: 600px;
+  /*height: 600px;*/
   border: 1px solid #9B805D;
   display: flex;
   flex-direction: column;

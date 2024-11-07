@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.adopt.review.ReviewMapper">
+
+    <!-- 게시글 상세페이지 불러오기 -->
+    <select id="reviewDetail" resultType="ReviewDetailDTO">
+        SELECT a.REVIEW_TITLE, c.MEMBER_NAME, a.REVIEW_REGIDATE,
+               a.REVIEW_CONTENT, a.REVIEW_NO, a.MEMBER_NO
+        FROM TBL_REVIEW a JOIN TBL_MEMBER c ON a.MEMBER_NO = c.MEMBER_NO
+        WHERE REVIEW_NO = #{reviewNo}
+    </select>
+
+    <!-- 여기서 부터 페이지네이션 관련 쿼리문-->
+    <!-- 후기 전체게시글 수 -->
+    <select id="selectTotal" resultType="int">
+        SELECT COUNT(REVIEW_NO) FROM TBL_REVIEW
+    </select>
+
+    <!-- 후기 전체게시글 -->
+    <select id="reviewMain" resultType="ReviewMainDTO">
+        SELECT REVIEW_NO, REVIEW_TITLE, REVIEW_REGIDATE, REVIEW_CONTENT, M.MEMBER_NAME
+        FROM TBL_REVIEW R
+                 JOIN TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO
+        ORDER BY REVIEW_REGIDATE DESC
+    </select>
+
+    <!-- 후기 페이지마다 표시할 게시글 -->
+    <select id="selectAllPage" parameterType="Criteria" resultType="ReviewMainDTO">
+    <![CDATA[
+        SELECT REVIEW_NO, REVIEW_TITLE, REVIEW_REGIDATE, REVIEW_CONTENT, MEMBER_NAME
+        FROM (
+                 SELECT R.REVIEW_NO, R.REVIEW_TITLE, R.REVIEW_REGIDATE, R.REVIEW_CONTENT, M.MEMBER_NAME,
+                        ROWNUM AS RNUM
+                 FROM (
+                          SELECT REVIEW_NO, REVIEW_TITLE, REVIEW_REGIDATE, REVIEW_CONTENT, MEMBER_NO
+                          FROM TBL_REVIEW
+                          ORDER BY REVIEW_REGIDATE DESC
+                      ) R
+                          JOIN TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO
+             )
+        WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount}
+        ]]>
+</select>
+
+
+    <!-- 게시글 작성 -->
+    <insert id="reviewWrite" parameterType="ReviewWriteDTO">
+        <selectKey keyProperty="reviewNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_REVIEW.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_REVIEW (
+        REVIEW_NO, REVIEW_TITLE, REVIEW_CONTENT, MEMBER_NO
+        ) VALUES (
+        #{reviewNo}, #{reviewTitle}, #{reviewContent}, #{memberNo}
+        )
+    </insert>
+
+
+    <!-- 게시글 삭제 처리 -->
+    <delete id="reviewDelete" parameterType="ReviewDetailDTO">
+        DELETE FROM TBL_REVIEW
+        WHERE REVIEW_NO = #{reviewNo}
+    </delete>
+
+    <!-- 게시글 신고 처리 -->
+    <insert id="reviewContentReport" parameterType="ReviewReportDTO">
+        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_REPORT (
+        REPORT_NO, REPORT_CATE, REPORT_CONTENT, REPORT_WRITER, REPORT_CONTENT_NO
+        ) VALUES (
+        #{reportNo}, '후기', #{reportContent}, #{reportWriter},#{reportContentNo}
+        )
+    </insert>
+
+    <!-- 댓글불러오기 -->
+    <select id="reviewComment" parameterType="Long" resultType="ReviewCommentDTO">
+        SELECT
+            ac.REVIEW_COMMENT_NO,
+            ac.REVIEW_COMMENT,
+            ac.REVIEW_COMMENT_REGIDATE,
+            ac.REVIEW_COMMENT_WRITER,
+            CASE
+                WHEN MOD(ac.REVIEW_COMMENT_WRITER, 10) = 1 THEN m.MEMBER_NICKNAME
+                WHEN MOD(ac.REVIEW_COMMENT_WRITER, 10) = 2 THEN cm.CENTER_MEMBER_NAME
+                END AS COMMENT_WRITER_NAME
+        FROM
+            TBL_REVIEW_COMMENT ac
+                LEFT JOIN
+            TBL_MEMBER m ON MOD(ac.REVIEW_COMMENT_WRITER, 10) = 1 AND ac.REVIEW_COMMENT_WRITER = m.MEMBER_NO
+                LEFT JOIN
+            TBL_CENTER_MEMBER cm ON MOD(ac.REVIEW_COMMENT_WRITER, 10) = 2 AND ac.REVIEW_COMMENT_WRITER = cm.CENTER_MEMBER_NO
+        WHERE
+            ac.REVIEW_NO = #{reviewNo}
+        ORDER BY
+            ac.REVIEW_COMMENT_REGIDATE ASC
+    </select>
+
+    <!-- 댓글 등록 -->
+    <insert id="reviewCommentRegi" parameterType="ReviewCommentDTO">
+        <selectKey keyProperty="reviewCommentNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_REVIEW_COMMENT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_REVIEW_COMMENT (
+        REVIEW_COMMENT_NO, REVIEW_COMMENT, REVIEW_COMMENT_WRITER, REVIEW_NO
+        ) VALUES (
+        #{reviewCommentNo}, #{reviewComment}, #{reviewCommentWriter}, #{reviewNo}
+        )
+    </insert>
+
+    <!-- 댓글 수정 -->
+    <update id="reviewCommentModi" parameterType="ReviewCommentDTO">
+        UPDATE TBL_REVIEW_COMMENT
+        SET REVIEW_COMMENT = #{reviewComment}
+        WHERE REVIEW_COMMENT_WRITER = #{reviewCommentWriter} AND REVIEW_COMMENT_NO = #{reviewCommentNo} AND REVIEW_NO = #{reviewNo}
+    </update>
+
+    <!-- 댓글 삭제 -->
+    <delete id="reviewCommentDelete" parameterType="ReviewCommentDTO">
+        DELETE FROM TBL_REVIEW_COMMENT
+        WHERE REVIEW_COMMENT_WRITER = #{reviewCommentWriter} AND REVIEW_COMMENT_NO = #{reviewCommentNo} AND REVIEW_NO = #{reviewNo}
+    </delete>
+
+    <!-- 댓글 신고 (이거도 아가다가 만든거야 헤헤)-->
+    <!--    <insert id="adoptCommentReport" parameterType="AdoptReportDTO">-->
+    <!--        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">-->
+    <!--            SELECT SEQ_REPORT.NEXTVAL FROM DUAL-->
+    <!--        </selectKey>-->
+    <!--        INSERT INTO TBL_REPORT (-->
+    <!--        REPORT_NO, REPORT_CATE, REPORT_CONTENT, REPORT_WRITER, REPORT_CONTENT_NO-->
+    <!--        ) VALUES (-->
+    <!--        #{reportNo}, '후기', #{reportContent}, #{reportWriter},#{reportContentNo}-->
+    <!--        )-->
+    <!--    </insert>-->
+
+    <!-- 댓글 신고 처리 -->
+    <insert id="reviewCommentReport" parameterType="ReviewReportDTO">
+        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_COMMENT_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_COMMENT_REPORT (
+        COMMENT_REPORT_NO, COMMENT_REPORT_CATE, COMMENT_REPORT, COMMENT_REPORT_WRITER, COMMENT_NO, CONTENT_NO
+        ) VALUES (
+        #{reportNo}, '후기', #{reportComment}, #{reportWriter},#{reportCommentNo}, #{reportContentNo}
+        )
+    </insert>
+
+</mapper>

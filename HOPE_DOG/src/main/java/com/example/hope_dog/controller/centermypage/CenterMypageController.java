@@ -4,10 +4,7 @@ import com.example.hope_dog.dto.centermypage.CenterProfileDTO;
 import com.example.hope_dog.dto.centermypage.CenterUpdateProfileDTO;
 import com.example.hope_dog.dto.centermypage.CenterViewProfileDTO;
 import com.example.hope_dog.dto.centermypage.notebox.*;
-import com.example.hope_dog.dto.centermypage.request.AdoptRequestListDTO;
-import com.example.hope_dog.dto.centermypage.request.ProtectRequestDetailDTO;
-import com.example.hope_dog.dto.centermypage.request.ProtectRequestListDTO;
-import com.example.hope_dog.dto.centermypage.request.VolunRequestListDTO;
+import com.example.hope_dog.dto.centermypage.request.*;
 import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoAdoptListDTO;
 import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoCommuListDTO;
 import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoVolListDTO;
@@ -246,11 +243,66 @@ class CenterMypageController {
 //        return "redirect:/updateProfile";
 //    }
 
+    @GetMapping("/withdrawal")
+    public String withdrawal(Model model) {
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+        if (centerMemberNo == null) {
+            return "redirect:/login";
+        }
+
+        return "centermypage/center-mypage-withdrawal";
+    }
+
+//    @DeleteMapping
+// 회원 탈퇴 요청 처리
+//    @PostMapping("/withdrawalOK")
+//    public ResponseEntity<?> withdrawal() {
+//    // 로그인된 회원의 ID를 세션에서 가져옵니다.
+//    Long centerMemberNo = (Long) session.getAttribute("centerMember");
+//
+//    if (centerMemberNo != null) {
+//        // 탈퇴 로직을 서비스에서 처리합니다.
+//        boolean isWithdrawal = centerMypageService.withdraw(centerMemberNo);
+//        if (isWithdrawal) {
+//            session.invalidate(); // 세션 무효화
+//            log.info("회원 탈퇴가 완료되었습니다. 회원 번호 : {}", centerMemberNo);
+//            return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
+//        } else {
+//            log.error("탈퇴 처리 중 오류 발생. 회원 번호 : {}", centerMemberNo);
+//            return ResponseEntity.status(500).body("탈퇴 처리 중 오류가 발생했습니다.");
+//        }
+//    } else {
+//        log.warn("로그인 세션이 만료되었습니다.");
+//        return ResponseEntity.status(403).body("로그인 세션이 만료되었습니다.");
+//    }
+//}
+
+    @PostMapping("/withdrawalOK")
+    public String withdrawalOK() {
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+
+        // 세션이 만료된 경우 로그인 페이지로 리다이렉트
+        if (centerMemberNo == null) {
+            return "redirect:/login";
+        }
+
+        // 탈퇴 로직을 서비스에서 처리
+        boolean isWithdrawal = centerMypageService.withdraw(centerMemberNo);
+
+        if (isWithdrawal) {
+            session.invalidate(); // 세션 무효화
+            log.info("회원 탈퇴가 완료되었습니다. 회원 번호 : {}", centerMemberNo);
+            return "redirect:/main/main"; // 메인 페이지로 리다이렉트
+        } else {
+            log.error("탈퇴 처리 중 오류 발생. 회원 번호 : {}", centerMemberNo);
+            return "redirect:/login"; // 오류 발생 시 로그인 페이지로 리다이렉트
+        }
+    }
 
 
 
 
-//게시글 조회
+    //게시글 조회
     private final WriteInfoService writeInfoService;
 
     //커뮤니티 작성글 페이지
@@ -304,9 +356,10 @@ class CenterMypageController {
         return "centermypage/center-mypage-writeinfo-adopt";
     }
 
-
+//신청서
     private final RequestService requestService;
 
+//봉사
     //봉사 신청서 목록 조회
     @GetMapping("/volunRequestList")
     public String centerMypageVolunRequestList(Model model) {
@@ -323,6 +376,9 @@ class CenterMypageController {
         return "centermypage/center-mypage-volun-list";
     }
 
+
+
+//입양
     //입양 신청서 목록 조회
     @GetMapping("/adoptRequestList")
     public String centerMypageAdoptRequestList(Model model) {
@@ -340,6 +396,46 @@ class CenterMypageController {
     }
 
 
+    //입양 신청서 상세 조회
+    @GetMapping("/adoptRequestDetail")
+    public String getAdoptRequestDetail(@RequestParam("adoptRequestNo") Long adoptRequestNo, Model model) {
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+
+        if (centerMemberNo == null) {
+            log.warn("세션에서 centerMemberNo가 존재하지 않습니다.");
+            return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
+        }
+
+        AdoptRequestDetailDTO adoptRequestInfo = requestService.adoptRequestDetail(adoptRequestNo);
+        model.addAttribute("adoptRequestInfo", adoptRequestInfo);
+
+        return "centermypage/center-mypage-adopt-adoptrequest";
+    }
+
+    //임시보호 신청서 상태처리
+    @GetMapping("/adoptStatus")
+    public String centerMypageAdoptStatus(@RequestParam("adoptRequestStatus") String adoptRequestStatus,
+                                          @RequestParam("adoptRequestNo") Long adoptRequestNo, Model model) {
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+        if (centerMemberNo == null) {
+            log.warn("세션에서 centerMemberNo가 존재하지 않습니다.");
+            return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
+        }
+
+        try {
+            requestService.updateAdoptRequestStatus(adoptRequestNo, adoptRequestStatus);
+        } catch (Exception e) {
+            log.error("요청 상태 업데이트 중 오류 발생: ", e);
+            return "redirect:/error"; // 에러 페이지로 리다이렉트
+        }
+
+        return "redirect:/centerMypage/adoptRequestList";
+    }
+
+
+
+
+//임시보호
     //임시보호 신청서 목록 조회
     @GetMapping("/protectRequestList")
     public String centerMypageProtectRequestList(Model model) {
@@ -355,14 +451,6 @@ class CenterMypageController {
 
         return "centermypage/center-mypage-adopt-protect-list";
     }
-//    //임시보호 신청서 상태처리
-//    @GetMapping("/adoptRequestDetail")
-
-
-
-
-
-
 
     //임시보호 신청서 상세 조회
     @GetMapping("/protectRequestDetail")
@@ -399,6 +487,8 @@ class CenterMypageController {
 
         return "redirect:/centerMypage/protectRequestList";
     }
+
+
 
 
 

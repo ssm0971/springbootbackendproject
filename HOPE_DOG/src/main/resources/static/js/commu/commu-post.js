@@ -38,94 +38,163 @@
 //     console.log('게시글 신고가 취소되었습니다.');
 //     alert('게시글 신고가 취소되었습니다.'); // 알림창 추가
 //   }
+//게시글 삭제
+function deleteAlert() {
+    const commuNo = document.querySelector('.commuNo').textContent.trim();
 
-// DOMContentLoaded 이벤트를 사용하여 모든 요소가 로드된 후에 스크립트 실행
-document.addEventListener("DOMContentLoaded", function() {
-  const items = $('.commu-ul-all ul'); // 게시글 항목 선택
+    if (confirm('정말 삭제하시겠습니까?')) {
+        console.log('글이 삭제되었습니다.');
+        console.log(commuNo);
 
-  // 게시글 수가 10개 이하인 경우 페이지네이션 처리
-  if (items.length <= 10) {
-    items.show(); // 모든 항목 표시
-    return; // 페이지네이션 초기화 중지
-  }
-
-  // 처음 10개 항목만 보이게 하고 나머지는 숨김
-  items.hide().slice(0, 10).show(); // 첫 10개 항목만 표시
-
-  // 페이지네이션 설정
-  const container = $('#pagination');
-  const pageSize = 10; // 한 페이지에 보여줄 항목 수 (첫 페이지 10개)
-
-  container.pagination({
-    dataSource: items.toArray(), // 게시글 항목을 배열로 변환
-    pageSize: pageSize,
-    callback: function(data, pagination) {
-      items.hide(); // 기존에 보여진 항목 숨김
-      $.each(data, function(index, item) {
-        $(item).show(); // 현재 페이지에 해당하는 항목만 표시
-      });
+        // fetch를 사용하여 DELETE 요청을 보냅니다.
+        fetch(`/commu/commuDelete/${commuNo}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (response.status === 200) {  // 서버가 200 상태 코드를 반환하면 성공
+                    // 삭제 성공 시 리다이렉트
+                    window.location.href = '/commu/main';
+                } else {
+                    alert('삭제에 실패했습니다.'); // 실패 시 알림 표시
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error); // 오류 메시지 출력
+                alert('삭제 중 오류가 발생했습니다.'); // 오류 발생 시 알림 표시
+            });
     }
-  });
+}
 
-  // 페이지네이션 플러그인이 초기화된 후에 첫 번째 페이지로 이동
-  container.pagination('goToPage', 1);
-});
+//게시글 신고버튼
+    function ReportAlert() {
+        const reportContent = prompt('신고사유를 100글자 이내로 입력해주세요');
+        const commuNo = document.querySelector('.commuNo').textContent.trim();
+        //commuNo인 요소에서 텍스트 내용 가져오고 commuNo 변수에 저장
+        console.log(commuNo);
 
-// 검색 함수
-function searchCars() {
-  const searchType = document.getElementById("search-type").value;
-  const keyword = document.getElementById("keyword").value;
-  const resultsDiv = document.getElementById("search-results");
+        location.href = `/commu/commuReport?commuNo=${commuNo}&reportContent=${encodeURIComponent(reportContent)}`;
 
-  if (!resultsDiv) return;
 
-  console.log("검색 타입:", searchType, "키워드:", keyword);
+    }
 
-  fetch(`/main/commuSearch?searchType=${encodeURIComponent(searchType)}&keyword=${encodeURIComponent(keyword)}`)
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return response.json();
-      })
-      .then(data => {
-        console.log("검색 결과:", data);
-        if (data.length === 0) {
-          resultsDiv.innerHTML = "<p>검색 결과가 없습니다.</p>";
-          $('#pagination').pagination('destroy'); // 결과가 없으면 페이지네이션 제거
-        } else {
-          displayResults(data); // 검색 결과 표시
-          initializePagination(data); // 페이지네이션 설정
+    //댓글 수정 버튼
+    function modifyCommentBtnClick(index) {
+        const commentBox1 = document.getElementById(`commu-comment-buttonBox-${index}`);
+        const commentBox2 = document.getElementById(`commu-modifyInput-${index}`);
+        const commentBox3 = document.getElementById(`commu-comment-${index}`);
+
+        // 수정 버튼을 누르면 수정/삭제 div와 기존 댓글을 숨기고, 수정 입력창을 표시
+        commentBox1.style.display = 'none';
+        // 수정,삭제 버튼div
+        commentBox3.style.display = 'none';
+        //댓글 수정 입력창
+        commentBox2.style.display = 'block';
+        //기존 댓글 div
+    }
+
+function editCommentBtnClick(index) {
+    const commentBox1 = document.getElementById(`commu-comment-buttonBox-${index}`); // 수정/삭제 버튼 div
+    const commentBox2 = document.getElementById(`commu-modifyInput-${index}`);       // 댓글 수정하는 div
+    const commentBox3 = document.getElementById(`commu-comment-${index}`);           // 기존 댓글
+
+    // 수정한 댓글 값을 가져옴
+    const modifiedComment = document.getElementById(`modifiedCommentInput-${index}`).value;
+
+    // AJAX 요청을 통해 수정된 댓글을 서버로 전송
+    const commuNo = document.getElementById(`commuNo-${index}`).value; // 게시글 번호
+    const commuCommentNo = document.getElementById(`commuCommentNo-${index}`).value; // 댓글 번호
+
+    fetch('/commu/commuCommentModi', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            commuNo: commuNo,
+            commuCommentNo: commuCommentNo,
+            commuComment: modifiedComment
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // 서버에서 수정된 댓글을 받아서 화면에 갱신
+                commentBox3.textContent = modifiedComment; // 기존 댓글을 수정된 댓글로 갱신
+                commentBox1.style.display = 'block'; // 수정/삭제 div 표시
+                commentBox3.style.display = 'block'; // 기존 댓글 표시
+                commentBox2.style.display = 'none'; // 댓글 수정 입력창 숨기기
+            } else {
+                alert('댓글 수정에 실패했습니다.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('댓글 수정 요청에 문제가 발생했습니다.');
+        });
+}
+
+    // 댓글삭제버튼
+    function CommentDeleteClick(commuCommentNo, commuNo) {
+        if (confirm('정말 삭제하시겠습니까?')) {
+            // 삭제 요청을 위한 폼 생성
+            const form = document.createElement('form');
+            form.method = 'post'; // POST 방식
+            form.action = `/commu/commuCommentDelete`; // URL 설정
+
+            // commuCommentNo와 commuNo를 위한 input 요소 추가
+            const commuCommentNoInput = document.createElement('input');
+            commuCommentNoInput.type = 'hidden';
+            commuCommentNoInput.name = 'commuCommentNo';
+            commuCommentNoInput.value = commuCommentNo;
+            form.appendChild(commuCommentNoInput);
+
+            const commuNoInput = document.createElement('input');
+            commuNoInput.type = 'hidden';
+            commuNoInput.name = 'commuNo';
+            commuNoInput.value = commuNo;
+            form.appendChild(commuNoInput);
+
+            // 폼 제출
+            document.body.appendChild(form);
+            form.submit(); // 폼 제출
         }
-      })
-      .catch(error => console.error("검색 결과 가져오기 오류:", error));
-}
+    }
 
-// 검색 결과를 화면에 표시하는 함수
-function displayResults(data) {
-  const resultsDiv = document.getElementById("search-results");
+ //댓글 신고 버튼
+    function CommentReportClick() {
+        const reportComment = prompt('신고사유를 100글자 이내로 입력해주세요');
+        const commuNo = document.querySelector('.commuNo').textContent.trim();
+        const commuCommentNo = document.querySelector('.commuCommentNo').textContent.trim();
 
-  if (!resultsDiv) return;
+        location.href = `/commu/commuCommentReport?commuNo=${commuNo}&reportComment=${encodeURIComponent(reportComment)}&commuCommentNo=${commuCommentNo}`;
+    }
 
-  resultsDiv.innerHTML = ""; // 이전 결과 초기화
 
-  data.forEach(commu => {
-    const commuElement = document.createElement("div");
-    commuElement.innerHTML = `
-            <h3>${commu.commuTitle}</h3>
-            <p>카테고리: ${commu.commuCate}</p>
-            <p>내용: ${commu.commuContent}</p>
-            <p>등록일: ${new Date(commu.commuRegiDate).toLocaleString()}</p>
-        `;
-    resultsDiv.appendChild(commuElement);
-  });
-}
 
-// 폼 제출 시 검색 수행
-document.addEventListener("DOMContentLoaded", function() {
-  const searchForm = document.querySelector('form[name="search"]');
-  if (searchForm) {
-    searchForm.addEventListener('submit', function(e) {
-      e.preventDefault(); // 기본 제출 방지
-      searchCars(); // 검색 함수 호출
-    });
-  }
-});
+
+    // {
+    //     let commuPageBtn = document.getElementById('commuPage');
+    //     commuPageBtn.addEventListener('click', function(){
+    //         location.href='/commu/commu';
+    //     });
+    // }
+
+    // {
+    //     let protectPageBtn = document.getElementById('protectPage');
+    //     protectPageBtn.addEventListener('click', function(){
+    //         location.href='/commu/protect';
+    //     });
+    // }
+    //
+    // {
+    //     let reviewPageBtn = document.getElementById('reviewPage');
+    //     reviewPageBtn.addEventListener('click', function () {
+    //         location.href = '/commu/review';
+    //     });
+    // }
+    //
+
+
+
+
+

@@ -225,6 +225,19 @@ public class AdminController {
         return "admin/admin-notice/admin-notice-search-list";
     }
 
+    @PostMapping("/deleteNotice")
+    @DeleteMapping
+    @ResponseBody
+    public String deleteNotice(@RequestBody List<Long> itemList, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        adminService.deleteNotice(itemList);
+
+        return "redirect:/admin/noticeList";
+    }
+
     @GetMapping("/noticeDetail")
     public String noticeDetail(@RequestParam("noticeNo") Long noticeNo, Model model, HttpSession session) {
         if (!isAdminLoggedIn(session)) {
@@ -600,5 +613,65 @@ public class AdminController {
         adminService.insertNoteWriteSend(title, content, receiver);
 
         return "redirect:/admin/noteboxOut";
+    }
+
+    @PostMapping("/deleteNoteIn")
+    @DeleteMapping
+    @ResponseBody
+    public String deleteNoteIn(@RequestBody List<Long> receiveList, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        adminService.deleteNoteIn(receiveList);
+
+        return "redirect:/admin/noteboxIn";
+    }
+
+    @PostMapping("/deleteNoteOut")
+    @DeleteMapping
+    @ResponseBody
+    public String deleteNoteOut(@RequestBody List<Long> sendList, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        adminService.deleteNoteOut(sendList);
+
+        return "redirect:/admin/noteboxOut";
+
+    }
+
+    @PostMapping("/approveCenterMember")
+    @ResponseBody
+    public String approveCenterMember(@RequestBody List<Long> itemList, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        adminService.approveCenterMember(itemList);
+
+        for(Long item : itemList) {
+            adminService.insertNoteWriteReceive("회원 가입 심사 요청 결과", "회원 가입 심사 요청 결과 - 승인됨", adminService.findCenterMemberNameByNo(item));
+            adminService.insertNoteWriteSend("회원 가입 심사 요청 결과", "회원 가입 심사 요청 결과 - 승인됨", adminService.findCenterMemberNameByNo(item));
+        }
+
+        return "redirect:/admin/centerApplyList";
+    }
+
+    @PostMapping("/refuseCenterMember")
+    @ResponseBody
+    public String refuseCenterMember(@RequestBody List<Long> itemList, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        for(Long item : itemList) {
+            System.out.println("asdasd" + item);
+            adminService.insertNoteWriteReceive("회원 가입 심사 요청 결과", "회원 가입 심사 요청 결과 - 거절됨", adminService.findCenterMemberNameByNo(item));
+            adminService.insertNoteWriteSend("회원 가입 심사 요청 결과", "회원 가입 심사 요청 결과 - 거절됨", adminService.findCenterMemberNameByNo(item));
+        }
+
+        return "redirect:/admin/centerApplyList";
     }
 }

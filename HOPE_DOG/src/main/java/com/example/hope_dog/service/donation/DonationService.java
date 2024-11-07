@@ -85,24 +85,6 @@ public class DonationService {
 //        }
 //    }
 
-    // 댓글 목록
-    public List<DonaCommentDTO> donationComment(Long donaNo) {
-        return donationMapper.donationComment(donaNo);
-    }
 
-    // 댓글 등록
-    public void insertComment(DonaCommentDTO donaCommentDTO) {
-        donationMapper.insertComment(donaCommentDTO);
-    }
-
-    // 댓글 수정
-    public void updateComment(DonaCommentDTO donaCommentDTO) {
-        donationMapper.updateComment(donaCommentDTO);
-    }
-
-    // 댓글 삭제
-    public void deleteComment(Long donaNo) {
-        donationMapper.deleteComment(donaNo);
-    }
 
 }

@@ -25,4 +25,5 @@ public class ProtectDetailDTO {
     private String  protectContent;
     private Long centerMemberNo;
     private String  protectStatus;
+    private String  protectIntroduce;
 }

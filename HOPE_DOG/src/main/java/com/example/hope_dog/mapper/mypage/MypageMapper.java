@@ -1,6 +1,9 @@
 package com.example.hope_dog.mapper.mypage;
 
 import com.example.hope_dog.dto.adopt.adopt.AdoptDetailDTO;
+import com.example.hope_dog.dto.centermypage.CenterProfileDTO;
+import com.example.hope_dog.dto.centermypage.CenterUpdateProfileDTO;
+import com.example.hope_dog.dto.centermypage.CenterViewProfileDTO;
 import com.example.hope_dog.dto.member.MemberDTO;
 import com.example.hope_dog.dto.member.MemberSessionDTO;
 import com.example.hope_dog.dto.mypage.*;
@@ -25,9 +28,26 @@ public interface MypageMapper {
 
     List<MypagePostsDTO> mypagePostsList(Long memberNo);
 
-//    List<MypageNoteReceiveDTO> mypageNoteReceiveList(Long memberNo);
-//
-//    List<MypageNoteSendDTO> mypageNoteSendList(Long memberNo);
+    // 프로필 수정 페이지 정보 조회
+    MypageViewProfileDTO viewProfile(Long memberNo);
+
+    // 프로필 업데이트
+    int updateProfile(MypageUpdateProfileDTO mypageUpdateProfileDTO);
+
+    // 비밀번호 일치 확인
+    boolean checkPasswordMatch(@Param("memberNo") Long memberNo, @Param("memberPw") String memberPw);
+
+    // 닉네임 중복 검사 메서드
+    int checkedNickname(
+            @Param("memberNickname") String memberNickname,
+            @Param("currentNickname") String currentNickname
+    );
+
+    // 이메일 중복 검사 메서드
+    int updateCheckedEmail(
+            @Param("memberEmail") String memberEmail,
+            @Param("currentEmail") String currentEmail
+    );
 
     //페이지네이션
 //    List<MypagePostsDTO> selectAll();
@@ -40,26 +60,6 @@ public interface MypageMapper {
 //    MypageDTO mypageProfile(@Param("memberNo") Long memberNo);
 
 //    List<NoticeViewDTO> noticeView(Long noticeNo);
-
-    // 사용자 ID로 회원 정보를 가져오는 메서드
-//    MemberSessionDTO findMemberById(@Param("memberId") String memberId);
-//
-//    MemberSessionDTO findMemberByNo(@Param("memberNo") String memberNo);
-//
-//    MemberSessionDTO findMemberByEmail(@Param("memberEmail") String memberEmail);
-//
-//    MemberSessionDTO findMemberByName(@Param("memberName") String memberName);
-//
-//    MemberSessionDTO findMemberByNickname(@Param("memberNickname") String memberNickname);
-    //    public class MemberSessionDTO {
-//        private Long memberNo;
-//        private String memberId;
-//        private String memberEmail;
-//        private String memberName;
-//        private String memberNickname;
-//        private String memberLoginStatus;
-//        private String memberTwoFactorEnabled;
-//    }
 
 
 }

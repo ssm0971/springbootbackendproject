@@ -26,4 +26,7 @@ public interface CenterMypageMapper {
             @Param("centerMemberEmail") String centerMemberEmail,
             @Param("currentEmail") String currentEmail
     );
+
+    // 회원 탈퇴
+    int deleteCenterMember(Long centerMemberNo);
 }

@@ -149,10 +149,30 @@ public class AdoptController {
         return "redirect:/adopt/adopt/adoptdetail?adoptNo=" + adoptNo;
     }
 
-    //입양글수정
+    //입양글수정페이지이동
     @GetMapping("/adopt/adoptmodify")
-    public String adoptModify() {
+    public String adoptModify(@RequestParam("adoptNo") Long adoptNo, Model model, HttpSession session) {
+        List<AdoptDetailDTO> adoptDetailList = adoptService.getAdoptDetail(adoptNo);
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+        Long memberNo = (Long) session.getAttribute("memberNo");
+
+        model.addAttribute("adoptDetailList", adoptDetailList);
+        model.addAttribute("centerMemberNo", centerMemberNo);
+        model.addAttribute("memberNo", memberNo);
+
         return "adopt/adopt/adopt-adoptmodify";
+    }
+
+    //입양글 수정
+    @PutMapping("/adopt/adoptModifyRegi")
+    public String postAdoptModifyRegi(
+            @DateTimeFormat(pattern = "yyyy-MM-dd") AdoptWriteDTO adoptWriteDTO,
+            HttpSession session) {
+        // 서비스 호출하여 데이터베이스에 저장
+        adoptService.adoptModify(adoptWriteDTO);
+
+        // 리다이렉트
+        return "redirect:/adopt/adopt";
     }
 
     // 입양 신청서 페이지 열기
@@ -242,14 +262,6 @@ public class AdoptController {
 
         return "redirect:/adopt/adopt/adoptdetail?adoptNo=" + adoptNo;
     }
-
-
-    //후기메인
-    @GetMapping("/review")
-    public String reviewMain() {
-        return "adopt/review/adopt-review";
-    }
-
 
 
 }

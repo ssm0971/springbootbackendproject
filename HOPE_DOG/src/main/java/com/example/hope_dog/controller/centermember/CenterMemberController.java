@@ -193,13 +193,17 @@ public class CenterMemberController {
 
 
 
+    // 약관 동의 페이지
     @GetMapping("/center-terms")
     public String terms(Model model) {
+        // Map.of()를 사용하여 서비스 약관과 개인정보 처리방침을 모델에 추가
         Map<String, String> terms = Map.of(
                 "serviceTerms", SERVICE_TERMS,
                 "privacyTerms", PRIVACY_TERMS
         );
+        // 뷰에서 사용할 수 있도록 terms 데이터를 모델에 추가
         model.addAttribute("terms", terms);
+        // 약관 동의 페이지로 이동
         return "center/center-terms";
     }
 
@@ -308,22 +312,59 @@ public class CenterMemberController {
         return "center/center-findPw";
     }
 
-    // 비밀번호 찾기(재설정) API
+    /**
+     * 비밀번호 찾기(재설정) API 엔드포인트
+     * 회원의 이름, 아이디, 이메일을 받아 임시 비밀번호를 발급하고 이메일로 전송
+     *
+     * @PostMapping: POST 방식의 HTTP 요청 처리
+     *              - 비밀번호와 같은 민감한 정보를 처리하므로 POST 방식 사용
+     *              - URL에 데이터가 노출되지 않아 보안상 안전
+     *
+     * @ResponseBody: HTTP 응답 본문에 직접 데이터를 작성
+     *              - Spring이 반환값을 자동으로 JSON으로 변환하여 클라이언트에게 전송
+     *              - RESTful API 구현에 적합
+     *
+     * @RequestBody: HTTP 요청 본문의 JSON 데이터를 자동으로 FindPwRequestDTO 객체로 변환
+     *             - 클라이언트에서 전송한 JSON 데이터를 쉽게 처리 가능
+     *             - POST 요청의 복잡한 데이터 구조 처리에 적합
+     *
+     * ResponseEntity<?>:
+     *   - HTTP 응답을 상세하게 제어할 수 있는 클래스
+     *   - 상태 코드, 헤더, 본문을 모두 설정 가능
+     *   - 와일드카드(?)를 사용하여 다양한 타입의 응답 처리 가능
+     *
+     * @param requestDTO 비밀번호 재설정에 필요한 회원 정보를 담은 DTO
+     * @return ResponseEntity 처리 결과를 담은 응답 객체
+     *         - 성공 시: 200 OK와 회원 이름
+     *         - 실패 시: 400 Bad Request와 에러 메시지
+     */
     @PostMapping("/center-findPw")
     @ResponseBody
     public ResponseEntity<?> findPw(@RequestBody FindPwRequestDTO requestDTO) {
+        // 요청 DTO 로깅 - 디버깅 및 모니터링을 위한 로그
         log.info("Received request DTO: {}", requestDTO);
         try {
+            // 비밀번호 재설정 서비스 호출
+            // - 임시 비밀번호 생성
+            // - 비밀번호 암호화 및 DB 저장
+            // - 이메일 발송
             centerMemberService.centerResetPassword(
                     requestDTO.getMemberName(),
                     requestDTO.getMemberId(),
                     requestDTO.getMemberEmail()
             );
 
+            // 성공 응답 생성
+            // HashMap 사용 이유: 동적으로 데이터 추가 가능
             Map<String, String> response = new HashMap<>();
             response.put("centerMemberName", requestDTO.getMemberName());
+            // ResponseEntity.ok(): 200 상태 코드와 함께 응답 반환
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
+            // 유효하지 않은 요청에 대한 에러 응답
+            // - 존재하지 않는 회원
+            // - 잘못된 이메일 주소 등
+            // ResponseEntity.badRequest(): 400 상태 코드와 함께 에러 메시지 반환
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -331,7 +372,10 @@ public class CenterMemberController {
     // 비밀번호 찾기 완료 페이지
     @GetMapping("/center-findPwOk")
     public String findPwOk(@RequestParam("centerMemberName") String centerMemberName, Model model) {
+        // 뷰에서 사용할 회원 이름을 모델에 추가
         model.addAttribute("centerMemberName", centerMemberName);
+        // 비밀번호 찾기 완료 페이지로 이동
         return "center/center-findPwOk";
     }
+
 }

@@ -45,7 +45,7 @@ public class ProtectRequestDetailDTO {
     private Long memberNo;
     private Long centerMemberNo;
     private String protectTitle;
-    private Date protectRegidate; // 날짜 형식에 따라 LocalDate 또는 LocalDateTime 사용
+    private Date protectRegiDate;
     private String memberNickname;
     private String centerMemberName;
     private String protectRequestStatus;

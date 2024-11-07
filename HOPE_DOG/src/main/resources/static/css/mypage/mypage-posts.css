@@ -173,10 +173,59 @@ button {
 }
 
 button:hover {
-  background-color: #9B805D;
+  background-color: #F5EAD9;
   color:white;
 }
 
 button.prev, button.next {
   font-weight: bold;
 }
+
+/* 페이지네이션 컨테이너 기본 스타일 */
+#pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#pagination .paginationjs-pages {
+  display: flex;
+  gap: 8px; /* 버튼 사이 간격 */
+}
+
+#pagination .paginationjs-page {
+  padding: 8px 12px;
+  background-color: #f0f0f0; /* 기본 버튼 배경색 */
+  color: #9B805D; /* 기본 글자색 */
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#pagination .paginationjs-page:hover {
+  background-color: #ddd; /* 호버 시 배경색 */
+}
+
+#pagination .paginationjs-page.active {
+  background-color: #9B805D; /* 활성화된 버튼 배경색 */
+  color: #fff; /* 활성화된 버튼 글자색 */
+  font-weight: bold;
+}
+
+#pagination .paginationjs-prev,
+#pagination .paginationjs-next {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  color: #F5EAD9;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#pagination .paginationjs-prev:hover,
+#pagination .paginationjs-next:hover {
+  background-color: #ddd; /* 이전/다음 버튼 호버 시 배경색 */
+}
+

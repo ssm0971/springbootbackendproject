@@ -9,6 +9,7 @@
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
   <script defer th:src="@{/js/main/main.js}"></script>
+
 </head>
 
 <body>
@@ -31,66 +32,128 @@
         </div>
 
       <!-- 제목/작성자/등록일 크기 -->
-      <div class="comm-detail-box1">
-        <div class="comm-detail-title" th:text="${commuDetail.commuTitle}">[1]
+      <div class="comm-detail-box1" th:each="commu : ${commuDetailList}">
+        <div class="comm-detail-title" th:text="${commu.commuTitle}">
         </div>
         <div class="comm-detail-info"><span>작성자 :
-                <span th:if="${commuDetail.commuWriter % 2 != 0}" th:text="${commuDetail.memberNickname}"></span>
-                <span th:if="${commuDetail.commuWriter % 2 == 0}" th:text="${commuDetail.centerMemberName}"></span>
+                <span th:if="${commu.commuWriter % 2 != 0}" th:text="${commu.memberNickname}"></span>
+                <span th:if="${commu.commuWriter % 2 == 0}" th:text="${commu.centerMemberName}"></span>
         </span>
-          <span>등록일 : <span th:text="${#dates.format(commuDetail.commuRegiDate, 'yyyy-MM-dd')}"></span></span>
+          <span>등록일 : <span th:text="${#dates.format(commu.commuRegiDate, 'yyyy-MM-dd')}"></span></span>
         </div>
       </div>
 
       <!-- 글내용 크기 -->
-      <div class="comm-detail-box2">
+      <div class="comm-detail-box2" th:each="commu : ${commuDetailList}">
         <div class="comm-detail-content">
           <div class="comm-detail-basicinfo">
             <div class="comm-detail-basicinfo-title"></div>
-            <div th:text="${commuDetail.commuContent}"></div>
+            <div th:utext="${commu.commuContent}"></div>
 
           </div>
 
         </div>
       </div>
 
+
       <br>
 
-      <!-- 버튼 -->
-      <div class="comm-detail-box3">
+
+      <!-- 글 작성에서 수정,삭제,신고 버튼 -->
+      <div class="comm-detail-box3" th:each="commu : ${commuDetailList}">
         <div>
-          <button class="comm-modify-button" onclick="modifyAlert()">수정</button>　
-          <button class="comm-delete-button" onclick="deleteAlert()">삭제</button>
+          <!-- 작성자 ID가 일치할 때만 수정 버튼과 삭제 버튼 표시 -->
+          <button class="comm-modify-button" type="button"
+                  onclick="window.location.href='/commu/rewrite/${commuDetail.commuNo}'"
+                  th:if="${memberNo == commu.memberNo or centerMemberNo == commu.centerMemberNo}">수정</button>
+          <button class="comm-delete-button" type="button"
+                  onclick="deleteAlert()"
+                  th:if="${memberNo == commu.memberNo or centerMemberNo == commu.centerMemberNo}">삭제</button>
         </div>
-        <button class="comm-end-button" onclick="endAlert()">신고</button>
+
+        <!-- 작성자 ID가 일치하지 않을 때 신고 버튼 표시 -->
+        <button class="comm-end-button" type="button"
+                onclick="ReportAlert()"
+                th:if="${memberNo != commu.memberNo and centerMemberNo != commu.centerMemberNo}">신고</button>
+
+        <div class="commuNo" th:text="${commu.commuNo}" style="display: none;"></div>
       </div>
+
 
       <br>
 
       <!-- 댓글창 -->
-      <div class="comm-detail-box4">
-        <div th:each="comment : ${commuDetail.comments}">
-          <div class="comm-detail-name">
-            <span th:if="${comment.commuCommentWriter % 2 != 0}" th:text="${comment.memberNickname}"></span>
-            <span th:if="${comment.commuCommentWriter % 2 == 0}" th:text="${comment.centerMemberName}"></span>
+<!--      <div class="comm-detail-box4">-->
+<!--        <div th:each="comment : ${commuCommentList}">-->
+<!--          <div class="comm-detail-name">-->
+<!--            <span th:if="${comment.commuCommentWriter % 2 != 0}" th:text="${comment.memberNickname}"></span>-->
+<!--            <span th:if="${comment.commuCommentWriter % 2 == 0}" th:text="${comment.centerMemberName}"></span>-->
+<!--          </div>-->
+<!--          <div class="comm-detail-comment" th:text="${comment.commuComment}"></div>-->
+<!--          <div class="comm-detail-date" th:text="${#dates.format(comment.commuCommetRegiDate, 'yyyy-MM-dd')}"></div>-->
+<!--        </div>-->
+<!--        <br>-->
+<!--      </div>-->
+
+      <br>
+
+      <!-- 댓글 수정/삭제/신고 -->
+      <div th:with="commuNo=${commuDetailList[0]?.commuNo}">
+        <div class="commu-detail-commentbox" th:each="commuComment, iterStat : ${commuCommentList}">
+          <div class="commu-detail-name">
+            <div class="commu-detail-name" th:text="${commuComment.commentWriterName}"></div>
+            <div class="commuCommentNo" th:text="${commuComment.commuCommentNo}" style="display: none"></div>
+            <div class="commu-comment-buttonBox" th:id="'commu-comment-buttonBox-' + ${iterStat.index}">
+              <button class="commu-comment-button" type="button"
+                      th:onclick="'modifyCommentBtnClick(' + ${iterStat.index} + ')'"
+                      th:if="${(centerMemberNo != null and centerMemberNo == commuComment.commuCommentWriter)
+                   or (memberNo != null and memberNo == commuComment.commuCommentWriter)}">수정</button>
+             <button class="commu-comment-button" type="button"
+                     th:onclick="'CommentDeleteClick(' + ${commuComment.commuCommentNo} + ', ' + ${commuNo} + ')'"
+                 th:if="${(centerMemberNo != null and centerMemberNo == commuComment.commuCommentWriter)
+               or (memberNo != null and memberNo == commuComment.commuCommentWriter)}">삭제</button>
+              <button class="commu-comment-button" type="button"
+                      th:onclick="'CommentReportClick(' + ${commuComment.commuCommentNo} + ', ' + ${commuNo} + ')'"
+                      th:if="${(centerMemberNo != null or memberNo != null)
+                   and (centerMemberNo != commuComment.commuCommentWriter)
+                   and (memberNo != commuComment.commuCommentWriter)}">신고</button>
+            </div>
           </div>
-          <div class="comm-detail-comment" th:text="${comment.commuComment}"></div>
-          <div class="comm-detail-date" th:text="${#dates.format(comment.commuCommetRegiDate, 'yyyy-MM-dd')}"></div>
+
+          <div class="commu-detail-comment" th:id="'commu-comment-' + ${iterStat.index}" th:text="${commuComment.commuComment}"></div>
+
+          <!-- 댓글 수정 form 추가 -->
+          <form th:action="@{/commu/commuCommentModi(commuNo=${commuNo})}" method="post"
+                th:id="'commu-modifyInput-' + ${iterStat.index}" style="display:none;">
+            <input type="hidden" name="commuCommentNo" th:value="${commuComment.commuCommentNo}">
+            <input type="hidden" name="commuNo" th:value="${commuNo}">
+            <input type="text" name="commuComment" class="commu-modify-comment" th:value="${commuComment.commuComment}">
+            <button type="submit" class="commu-comment-button">등록</button>
+          </form>
+
+          <div class="commu-detail-date" th:text="${#dates.format(commuComment.commuCommetRegiDate, 'yyyy-MM-dd')}"></div>
         </div>
-        <br>
       </div>
 
+
+
+
       <br>
+
 
       <!-- 댓글입력 -->
-      <form onsubmit="return Comment()">
-        <input class="comm-detail-commentregi" type="text" id="commentInput" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요">　
-        <button type="submit" class="comm-commentregi-button">등록</button>
-      </form>
+        <div th:if="${memberNo != null or centerMemberNo != null}">
+          <form action="/commu/commuCommentRegi" method="post" th:each="commu : ${commuDetailList}">
+          <input class="comm-detail-commentregi" type="text" name="commuComment" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요" maxlength="1000">
+          <input th:value="${commu.commuNo}" style="display: none" name="commuNo">　
+          <button class="comm-commentregi-button" type="submit">등록</button>
+          </form>
+        </div>
 
-      <br>
-    </div>
+        <br>
+      </div>
   </main>
+<script defer th:src="@{/js/commu/commu-post.js}"></script>
 </body>
 
 <footer>
@@ -104,6 +167,5 @@
 </footer>
 
 
-<!--<script defer src="../../js/commu/commu-post.js"></script>-->
 
 </html>

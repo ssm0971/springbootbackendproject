@@ -3,6 +3,7 @@ package com.example.hope_dog.mapper.donation;
 import com.example.hope_dog.dto.donation.*;
 import com.example.hope_dog.dto.page.Criteria;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,17 +34,5 @@ public interface DonationMapper {
     // 기부 글 수정
     void donationUpdate(DonationWriteDTO donationWriteDTO);
 //    void updateBoard(BoardUpdateDTO boardUpdateDTO);
-
-    // 댓글 불러오기
-    List<DonaCommentDTO> donationComment(Long donaNo);
-
-    // 댓글 등록
-    void insertComment(DonaCommentDTO donaCommentDTO);
-
-    // 댓글 수정
-    void updateComment(DonaCommentDTO donaCommentDTO);
-
-    // 댓글 삭제
-    void deleteComment(Long donaCommentNo);
 
 }

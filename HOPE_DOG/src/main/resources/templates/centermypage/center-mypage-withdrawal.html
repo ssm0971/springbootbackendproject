@@ -18,12 +18,12 @@
   <div class="center-member-profile-navbox">
     <nav>
       <ul class="center-member-profile-nav-ul">
-        <li id="profile"><a href="./center-mypage-profile-update.html"> 개인정보수정</a></li>
-        <li id="mywrite"><a href="./center-mypage-writeinfo-my.html"> 작성글조회</a></li>
-        <li id="volunteer"><a href="./center-mypage-volun-list.html"> 봉사</a></li>
-        <li id="adopt"><a href="./center-mypage-adopt-adopt-list.html"> 입양</a></li>
-        <li id="notebox"><a href="./center-mypage-notebox-send.html"> 쪽지함</a></li>
-        <li id="withdrawal"><a href="./center-mypage-withdrawal.html"> 회원탈퇴</a></li>
+        <li id="profile"><a th:href="@{/centerMypage/updateProfile}">개인정보수정</a></li>
+        <li id="mywrite"><a th:href="@{/centerMypage/writeInfoCommuList}"> 작성글조회</a></li>
+        <li id="volunteer"><a th:href="@{/centerMypage/volunRequestList}"> 봉사</a></li>
+        <li id="adopt"><a th:href="@{/centerMypage/adoptRequestList}"> 입양</a></li>
+        <li id="notebox"><a th:href="@{/centerMypage/noteboxSendList}">쪽지함</a></li>
+        <li id="withdrawal"><a th:href="@{/centerMypage/withdrawal}"> 회원탈퇴</a></li>
         <div id="choice"></div>
       </ul>
     </nav>
@@ -40,9 +40,18 @@
   <div class="center-withdrawal-container">
     <div class="center-withdrawal-terms">
       <b>회원 탈퇴 약관</b>
+
       <p>회원탈퇴를 진행하기 전에 아래 약관 및 주의사항을 반드시 확인하시기 바랍니다.</p>
-      <p>약관 내용: 회원 탈퇴 시 모든 데이터가 삭제되며 복구할 수 없습니다.</p>
-      <p>위 내용에 동의하면 아래에 "동의합니다"라고 적어주세요</p>
+      <p>1. 회원 탈퇴 시, 본인의 모든 정보가 즉시 삭제되며, 복구할 수 없습니다. 이에는 개인 정보, 작성한 글, 댓글, 메시지, 사진 등 모든 데이터가 포함됩니다.</p>
+      <p>2. 회원 탈퇴를 진행하기 전에, 봉사신청 등록, 유기견 입양 신청, 유기견 임시 보호 요청 등 작성해놓은 모든 글이 삭제됩니다. 탈퇴 후에는 해당 글에 대한 복구가 불가능하며, 이로 인해 발생하는 모든 문제에 대해서는 사이트 측에서 어떠한 책임도 지지 않습니다.</p>
+      <p>3. 작성글이 삭제될 경우, 그에 따른 정보의 손실이나 불이익에 대해서는 탈퇴하는 회원 본인이 책임을 지게 됩니다. 예를 들어, 봉사활동이나 입양 관련 요청이 진행 중인 경우, 해당 요청이 자동으로 취소되거나 연관된 모든 정보가 삭제될 수 있습니다.</p>
+      <p>4. 회원 탈퇴 후, 사이트에서 제공하는 모든 서비스에 대한 접근이 차단되며, 탈퇴한 회원이 다시 가입하고자 할 경우, 새로운 계정을 생성해야 합니다. 이전 계정의 정보는 복구할 수 없으므로, 이 점 유의하시기 바랍니다.</p>
+      <p>5. 위 내용을 충분히 이해하고 동의하신 경우, 아래의 '동의합니다'란에 서명하여 탈퇴 절차를 진행해 주시기 바랍니다.</p>
+      <!--      <b>회원 탈퇴 약관</b>-->
+<!--      <p>회원탈퇴를 진행하기 전에 아래 약관 및 주의사항을 반드시 확인하시기 바랍니다.</p>-->
+<!--      <p>약관 내용: 회원 탈퇴 시 모든 데이터가 삭제되며 복구할 수 없습니다.</p>-->
+<!--      <p>또한 봉사, 입양, 임시보호 등 작성글이 있는 상태로 탈퇴 진행시 정보가 사라지며 이후 문제는 사이트에서 책임을 지지 않습니다</p>-->
+<!--      <p>위 내용에 동의하면 아래에 "동의합니다"라고 적어주세요</p>-->
     </div>
     <div>
       <input type="text" id="agreement" class="center-withdrawal-agreeinput" placeholder="동의합니다" oninput="checkAgreement()">
@@ -55,7 +64,9 @@
 
   <div class="modal" id="modal">
     <div>
+      <p style="color: red; font-size: 14px">회원 탈퇴 시 모든 데이터가 삭제되며 복구할 수 없습니다</p>
       <p>정말 회원탈퇴를 진행하시겠습니까?</p>
+
       <button onclick="confirmWithdrawal()">예</button>
       <button onclick="closeModal()">아니오</button>
     </div>

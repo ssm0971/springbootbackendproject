@@ -6,6 +6,7 @@ import com.example.hope_dog.dto.centermypage.CenterViewProfileDTO;
 import com.example.hope_dog.mapper.centermypage.CenterMypageMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,10 +40,32 @@ public class CenterMypageService {
     }
 
 
-    // 프로필 업데이트 메서드
+    // 프로필 업데이트
     public int updateCenterProfile(CenterUpdateProfileDTO centerUpdateProfileDTO) {
         return centerMypageMapper.updateCenterProfile(centerUpdateProfileDTO);
     }
+
+    // 회원 탈퇴
+    public boolean withdraw(Long centerMemberNo) {
+        try {
+            // 회원 정보를 삭제합니다.
+            int rowsAffected = centerMypageMapper.deleteCenterMember(centerMemberNo);
+            if (rowsAffected > 0) {
+                log.info("회원 탈퇴 성공. 회원 번호: {}", centerMemberNo);
+                return true; // 삭제 성공
+            } else {
+                log.warn("탈퇴할 회원이 존재하지 않음. 회원 번호: {}", centerMemberNo);
+                return false; // 삭제할 회원이 없음
+            }
+        } catch (DataAccessException e) {
+            log.error("데이터베이스 오류 발생. 회원 번호: {}. 오류: {}", centerMemberNo, e);
+            return false; // 데이터베이스 오류 발생
+        } catch (Exception e) {
+            log.error("회원 탈퇴 중 예기치 않은 오류 발생. 회원 번호: {}. 오류: {}", centerMemberNo, e);
+            return false; // 일반 오류 발생
+        }
+    }
+
 
 //
 //    // 비밀번호 확인 후 프로필 수정

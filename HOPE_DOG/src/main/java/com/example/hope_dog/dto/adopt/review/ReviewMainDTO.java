@@ -12,6 +12,8 @@ import java.util.Date;
 public class ReviewMainDTO {
     private Long  reviewNo;
     private String  reviewTitle;
-    private Date  protectRegidate;
+    private Date  reviewRegidate;
     private Long memberNo;
+    private String  memberName;
+    private String reviewContent;
 }

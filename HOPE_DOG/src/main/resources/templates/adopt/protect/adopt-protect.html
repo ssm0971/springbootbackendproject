@@ -57,7 +57,7 @@
         <div class="adopt-post-content" th:text="${protect.protectName}"></div>
         <div class="adopt-post-content">
           <span th:if="${protect.protectGender == 'M'}" th:text="남자"></span>
-          <span th:if="${protect.protectGender == 'F'}" th:text="남자"></span>
+          <span th:if="${protect.protectGender == 'F'}" th:text="여자"></span>
           /
           <span th:if="${protect.protectNeutering == 'Y'}" th:text="'중성화(O)'"></span>
           <span th:if="${protect.protectNeutering == 'N'}" th:text="'중성화(X)'"></span>

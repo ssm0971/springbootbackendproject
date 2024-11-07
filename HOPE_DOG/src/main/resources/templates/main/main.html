@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
     <link rel="stylesheet" th:href="@{/css/main/main.css}">
     <script defer th:src="@{/js/main/main.js}"></script>
+    <script defer th:src="@{/js/fragment/header.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 </head>
 <body>
@@ -104,38 +105,24 @@
             </div>
         </div>
 
-        <section class="section6">
-            <div class="section6-content">
-                <h2>봉사 활동</h2>
-                <p class="section-description">봉사자분들과 이렇게 봉사하고 있어요.</p>
-                <div class="donation-grid">
-                    <div class="donation-item" th:each="month : ${#numbers.sequence(9, 1)}">
-                        <a th:href="${month == 9} ? @{/volun/volun-volundetail} : '#'" class="donation-link">
-                            <img th:src="@{/img/main-dum{imgNum}.png(imgNum=${month % 3 == 0 ? 3 : month % 3})}"
-                                 th:alt="|2024년 ${month}월 봉사활동|"
-                                 class="donation-image">
-                            <p class="donation-date" th:text="|2024년 ${month}월 봉사|"></p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+
 
     <div class="chat-container">
         <div class="chat-icon" id="chatIcon" role="button" aria-label="채팅 시작하기">
-            <div class="chat-bubble"></div>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
         </div>
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
                 <h3>무엇을 도와드릴까요?</h3>
-                <button class="close-btn" id="closeChat">X</button>
+                <button class="close-btn" id="closeChat" aria-label="채팅 닫기">×</button>
             </div>
-            <div class="chat-messages" id="chatMessages">
-                <!-- 메세지 -->
-            </div>
-            <div class="chat-questions" id="chatQuestions">
-                <!-- 질문 -->
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-questions" id="chatQuestions"></div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="메시지를 입력하세요..." aria-label="메시지 입력">
+                <button id="sendMessage" aria-label="메시지 보내기">전송</button>
             </div>
         </div>
     </div>

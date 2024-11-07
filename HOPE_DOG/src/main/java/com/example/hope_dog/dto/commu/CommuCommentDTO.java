@@ -16,6 +16,7 @@ public class CommuCommentDTO {
     private Date commuCommetRegiDate; // 댓글 작성일 //commet로 오타
     private Date commuUpdateDate;     // 댓글 수정일
     private Long commuCommentWriter;  // 댓글 작성자
+    private String commentWriterName;    //작성자 이름
 
     private String memberNickname; // 댓글 작성자 닉네임(회원)
     private String centerMemberName;    // 댓글 작성자 이름(센터)

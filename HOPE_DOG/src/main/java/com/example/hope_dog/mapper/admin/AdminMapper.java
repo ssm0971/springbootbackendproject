@@ -98,4 +98,14 @@ public interface AdminMapper {
     List<AdminNoteReceiveDTO> searchNoteInByKeyword(@Param("keyword") String keyword);
 
     List<AdminNoteSendDTO> searchNoteOutByKeyword(@Param("keyword") String keyword);
+
+    void deleteNoteIn(@Param("noteNoList") List<Long> noteNoList);
+
+    void deleteNoteOut(@Param("noteNoList") List<Long> noteNoList);
+
+    void approveCenterMember(@Param("itemList") List<Long> itemList);
+
+    String findCenterMemberNameByNo(@Param("centerMemberNo") Long centerMemberNo);
+
+    void deleteNotice (@Param("noticeNoList") List<Long> noticeNoList);
 }
