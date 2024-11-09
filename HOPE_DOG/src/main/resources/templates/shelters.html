@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shelters</title>
+</head>
+<body>
+<h1>Animal Shelters</h1>
+<table>
+    <thead>
+    <ul>
+        <li>센터명</li>
+        <li>소재지</li>
+        <li>전화번호</li>
+    </ul>
+    </thead>
+    <tbody>
+    <ul th:each="shelter : ${shelters}">
+        <li th:text="${shelter.careNm}">센터명</li>
+        <li th:text="${shelter.careAddr}">소재지</li>
+        <li th:text="${shelter.careTel}">전화번호</li>
+    </ul>
+    </tbody>
+</table>
+</body>
+</html>
