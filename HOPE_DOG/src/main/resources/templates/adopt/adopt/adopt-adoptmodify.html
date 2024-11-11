@@ -33,20 +33,20 @@
     </div>
 
     <!-- 입양신청 글 등록 -->
-    <div class="adopt-wirtebanner">후기 등록</div>
+    <div class="adopt-wirtebanner">안심입양 글수정</div>
 
     <br>
 
     <!-- 글작성 박스 -->
     <form th:action="@{/adopt/adopt/adoptModifyRegi}" method="post">
-      <input type="hidden" name="_method" value="put"/>
       <div class="adopt-write-area" th:each="adopt : ${adoptDetailList}">
+        <input th:value="${adopt.adoptNo}" style="display: none" name="adoptNo">
         <br>
         <!-- 임시보호 기간 입력 -->
         <div class="adopt-write-box">
           <div class="adopt-write-subtitle">*입양 기한</div>
-          시작일 : 　<input class="adopt-write-period" type="date" name="adoptPeriodstart" th:value="${adopt.adoptPeriodStart}">　　
-          종료일 : 　<input class="adopt-write-period" type="date" name="adoptPeriodend" th:value="${adopt.adoptPeriodEnd}">
+          시작일 : 　<input class="adopt-write-period" type="date" name="adoptPeriodstart" th:value="${#dates.format(adopt.adoptPeriodStart, 'yyyy-MM-dd')}">　　
+          종료일 : 　<input class="adopt-write-period" type="date" name="adoptPeriodend" th:value="${#dates.format(adopt.adoptPeriodEnd, 'yyyy-MM-dd')}">
         </div>
         <input th:value="${centerMemberNo}" style="display: none" name="centerMemberNo">
         <!-- 이름입력 -->
@@ -72,14 +72,14 @@
         <!-- 중성화 여부 입력 -->
         <div class="adopt-write-box">
           <div class="adopt-write-subtitle">*중성화 여부</div>
-          <input class="adopt-write-sterilization" type="radio" name="adoptNeutering" value="Y" checked>네　
-          <input class="adopt-write-sterilization" type="radio" name="adoptNeutering" value="N">아니요
+          <input class="adopt-write-sterilization" type="radio" name="adoptNeutering" value="Y" th:checked="${adopt.adoptNeutering == 'Y'}">네　
+          <input class="adopt-write-sterilization" type="radio" name="adoptNeutering" value="N" th:checked="${adopt.adoptNeutering == 'N'}">아니요
         </div>
         <!-- 성별 입력 -->
         <div class="adopt-write-box">
           <div class="adopt-write-subtitle">*성별</div>
-          <input class="adopt-write-gender" type="radio" name="adoptGender" value="M" checked> 남　
-          <input class="adopt-write-gender" type="radio" name="adoptGender" value="F"> 여
+          <input class="adopt-write-gender" type="radio" name="adoptGender" value="M" th:checked="${adopt.adoptGender == 'M'}"> 남　
+          <input class="adopt-write-gender" type="radio" name="adoptGender" value="F" th:checked="${adopt.adoptGender == 'F'}"> 여
         </div>
         <!-- 몸무게 입력 -->
         <div class="adopt-write-box">
@@ -93,7 +93,7 @@
         </div>
         <!-- 생년월일 입력 -->
         <div class="adopt-write-box">
-          <div class="adopt-write-subtitle">*생년월일</div><input class="adopt-write-birth" type="date" name="adoptBirth" th:value="${adopt.adoptBirth}">
+          <div class="adopt-write-subtitle">*생년월일</div><input class="adopt-write-birth" type="date" name="adoptBirth" th:value="${#dates.format(adopt.adoptBirth, 'yyyy-MM-dd')}">
           <div class="adopt-brirth-ex">　*정확한 생년월일을 모를 시 예상 생년월일을 선택해주세요</div>
         </div>
         <!-- 한줄소개 입력 -->
@@ -113,7 +113,7 @@
         <!-- 썸머노트 -->
         <div class="content">
           <input id="subject" name="adoptTitle" class="adoptwrite-title" placeholder="제목을 입력해주세요" th:value="${adopt.adoptTitle}">
-          <textarea id="contents" name="adoptContent" maxlength="1000" th:value="${adopt.adoptContent}"></textarea>
+          <textarea id="contents" name="adoptContent" maxlength="1000" th:text="${adopt.adoptContent}"></textarea>
         </div>
 
         <!-- 등록/취소 버튼 -->

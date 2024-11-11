@@ -2,176 +2,175 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>마이페이지-개인정보수정</title>
-  <link rel="stylesheet" th:href="@{/css/mypage/mypage-update.css}" />
-  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
-  <link rel="stylesheet" th:href="@{/css/main/main.css}">
-  <script defer th:src="@{/js/main/main.js}"></script>
-  <script defer th:src="@{/js/mypage/mypage-update.js}" ></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지-개인정보수정</title>
+    <link rel="stylesheet" th:href="@{/css/mypage/mypage-update.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/main/main.css}">
+    <script defer th:src="@{/js/main/main.js}"></script>
+    <script defer th:src="@{/js/mypage/mypage-update.js}" ></script>
 </head>
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
 <main>
-  <div class="member-profile-navbox">
-    <nav>
-      <ul class="member-profile-nav-ul">
-        <li id="profile"><a th:href="@{/mypage/update}">개인정보수정</a></li>
-        <div id="choice"></div>
-        <li id="posts"><a th:href="@{/mypage/posts}">작성글조회</a></li>
-        <li id="volunteer"><a th:href="@{/mypage/volun}">봉사</a></li>
-        <li id="adopt"><a th:href="@{/mypage/adopt}">입양</a></li>
-        <li id="inbox"><a th:href="@{/mypage/noteboxReceiveList}">쪽지함</a></li>
-        <li id="auth"><a href="../../html/mypage/mypage-auth.html">2차인증</a></li>
-        <li id="withdrawal"><a href="../../html/mypage/mypage-quit.html">회원탈퇴</a></li>
-      </ul>
-    </nav>
-  </div>
-
-  <div class="member-update-contents">
-    <div class="member-profile-infobox">
-      <div class="member-profile-info">
-        <div class="member-profile-infoarea">
-          <div class="member-profile-info-textarea">
-            <form id="signupForm" th:action="@{/mypage/updateProfileOk}" method="post">
-              <div class="member-profile-inputbox">
-                <label for="name">
-                  <div id="contents">
-                    <div id="labelname">이름 : </div>
-                    <div><input type="text" id="name" name="memberName" th:value="${profile.memberName}" readonly></div>
-                  </div>
-                </label>
-
-                <label for="nickname">
-                  <div id="contents">
-                    <div id="labelname">닉네임 : </div>
-                    <div><input type="text" id="nickname" name="memberNickname" th:value="${profile.memberNickname}" onblur="checkNicknameInput()"></div>
-                    <button type="button" class="member-profile-button-small" onclick="checkNickname()">중복확인</button>
-                  </div>
-                  <div class="Error">
-                    <div class="myupdate-content-title" id="nicknameError2" style="display: none;"></div>
-                    <div id="nicknameError" style="color: red; display: none;">닉네임을 정확히 입력해주세요</div>
-                  </div>
-                </label>
-
-                <label for="email">
-                  <div id="contents">
-                    <div id="labelname">이메일 : </div>
-                    <div><input type="text" id="email" name="memberEmail" th:value="${profile.memberEmail}" onblur="checkEmailInput()"></div>
-                    <button type="button" class="member-profile-button-small" onclick="checkEmail()">중복확인</button>
-                  </div>
-                  <div class="Error">
-                    <div class="myupdate-content-title" id="emailError2" style="display: none;"></div>
-                    <div id="emailError" style="color: red; display: none;">이메일을 정확히 입력해주세요</div>
-                  </div>
-                  <input type="hidden" id="currentEmail" th:value="${profile.memberEmail}">
-                </label>
-
-                <label for="phonenumber">
-                  <div id="contents">
-                    <div id="labelname">연락처 : </div>
-                    <div><input type="text" id="phonenumber" name="memberPhoneNumber" placeholder="000-0000-0000" th:value="${profile.memberPhoneNumber}" onblur="checkPhoneInput()"></div>
-                    <button type="button" class="member-profile-button-small" onclick="sendVerification()">인증번호발송</button>
-                  </div>
-                  <div class="Error">
-                    <div class="myupdate-content-title" id="phoneError2" style="display: none;"></div>
-                    <div id="phoneError" style="color: red; display: none;">연락처를 정확히 입력해주세요</div>
-                  </div>
-                </label>
-
-                <label for="phonecheckInput">
-                  <div id="contents">
-                    <div id="labelname">인증번호 : </div>
-                    <div><input type="text" id="phonecheckInput" onblur="checkPnumberInput()"></div>
-                    <button type="button" class="member-profile-button-small" onclick="confirmVerification()">인증번호확인</button>
-                  </div>
-                  <div class="Error">
-                    <div class="myupdate-content-title" id="phonecheckError2" style="display: none;"></div>
-                    <div id="phonecheckError" style="color: red; display: none;">인증번호를 정확히 입력해주세요</div>
-                  </div>
-                </label>
-
-                <label for="address">
-                  <div id="contents">
-                    <div id="labelname">우편번호 : </div>
-                    <div><input type="text" id="address" name="memberZipcode" th:value="${profile.memberZipcode}" readonly onblur="checkAddressInput()"></div>
-                    <button type="button" class="member-profile-button-small" onclick="searchAddress()">주소찾기</button>
-                  </div>
-                  <div class="Error">
-                    <div class="myupdate-content-title" id="addressError2" style="display: none;"></div>
-                    <div id="addressError" style="color: red; display: none;">주소를 정확히 입력해주세요</div>
-                  </div>
-
-                  <div id="contents">
-                    <div id="labelname">주소 : </div>
-                    <div><input type="text" id="addressInput" name="memberAddress" th:value="${profile.memberAddress}" readonly onblur="checkAddressInput()"></div>
-                  </div>
-
-                  <div id="contents">
-                    <div id="labelname">상세주소 : </div>
-                    <div><input type="text" id="addInput" name="memberDetailAddress" th:value="${profile.memberDetailAddress}" onblur="checkAddInput()"></div>
-                  </div>
-                  <div class="Error">
-                    <div class="myupdate-content-title" id="addError2" style="display: none;"></div>
-                    <div id="addError" style="color: red; display: none;">상세주소를 정확히 입력해주세요</div>
-                  </div>
-                </label>
-
-                <label for="password">
-                  <div id="contents">
-                    <div id="labelname">현재 비밀번호 : </div>
-                    <div><input type="password" id="password" name="memberPassword" placeholder="현재 비밀번호 입력" onblur="checkPasswordInput()"></div>
-                  </div>
-                  <div class="Error">
-                    <div class="myupdate-content-title" id="passwordError2" style="display: none;"></div>
-                    <div id="passwordError" style="color: red; display: none;">비밀번호를 정확히 입력해주세요</div>
-                  </div>
-                </label>
-
-                <label for="passwordInput">
-                  <div id="contents">
-                    <div id="labelname">새 비밀번호 : </div>
-                    <div><input type="password" id="passwordInput" name="memberNewPassword" placeholder="새 비밀번호 입력" onblur="checkPasswordInput()"></div>
-                  </div>
-                  <div class="Error">
-                    <div class="myupdate-content-title" id="passwordError2" style="display: none;"></div>
-                    <div id="passwordError" style="color: red; display: none;">비밀번호를 정확히 입력해주세요</div>
-                  </div>
-                </label>
-
-                <label for="passwordcheck">
-                  <div id="contents">
-                    <div id="labelname">새 비밀번호 확인 : </div>
-                    <div><input type="password" id="passwordcheck" placeholder="새 비밀번호 확인" onblur="checkPcheckInput()"></div>
-                  </div>
-                  <div class="Error">
-                    <div class="myupdate-content-title" id="passwordcheckError2" style="display: none;"></div>
-                    <div id="passwordcheckError" style="color: red; display: none;">비밀번호 확인을 정확히 입력해주세요</div>
-                  </div>
-                </label>
-
-                <div id="contents">
-                  <div id="labelname">알림수신 동의 </div>
-                  <div>
-                    <input type="radio" name="memberAgree" id="Y" value="Y">
-                    <label for="Y">동의</label>
-                    <input type="radio" name="memberAgree" id="N" value="N" checked>
-                    <label for="N">비동의</label>
-                  </div>
-                </div>
-
-                <div class="member-profile-button">
-                  <button type="button" class="member-profile-button-small" onclick="validateInputs()">수정하기</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+    <div class="member-profile-navbox">
+        <nav>
+            <ul class="member-profile-nav-ul">
+                <li id="profile"><a th:href="@{/mypage/update}">개인정보수정</li>
+                <div id="choice"></div></a>
+                <li id="posts"><a th:href="@{/mypage/posts}">작성글조회</li></a>
+                <li id="volunteer"><a th:href="@{/mypage/volun}">봉사</li></a>
+                <li id="adopt"><a th:href="@{/mypage/adopt}">입양</li></a>
+                <li id="inbox"><a th:href="@{/mypage/noteboxReceiveList}">쪽지함</li></a>
+                <li id="withdrawal"><a th:href="@{/mypage/withdrawal}">회원탈퇴</li></a>
+            </ul>
+        </nav>
     </div>
-  </div>
+
+    <div class="member-update-contents">
+        <div class="member-profile-infobox">
+            <div class="member-profile-info">
+                <div class="member-profile-infoarea">
+                    <div class="member-profile-info-textarea">
+                        <form id="signupForm" th:action="@{/mypage/updateProfileOk}" method="post">
+                            <div class="member-profile-inputbox">
+                                <label for="name">
+                                    <div id="contents">
+                                        <div id="labelname">이름 : </div>
+                                        <div><input type="text" id="name" name="memberName" th:value="${profile.memberName}" readonly></div>
+                                    </div>
+                                </label>
+
+                                <label for="nickname">
+                                    <div id="contents">
+                                        <div id="labelname">닉네임 : </div>
+                                        <div><input type="text" id="nickname" name="memberNickname" th:value="${profile.memberNickname}" onblur="checkNameInput()" ></div>
+                                        <button type="button" class="member-profile-button-small" onclick="checkNickname()">중복확인</button>
+                                    </div>
+                                    <div class="Error">
+                                        <div class="myupdate-content-title" id="nicknameError2" style="display: none;"></div>
+                                        <div id="nicknameError" style="color: red; display: none;">닉네임을 정확히 입력해주세요</div>
+                                    </div>
+                                </label>
+
+                                <label for="email">
+                                    <div id="contents">
+                                        <div id="labelname">이메일 : </div>
+                                        <div><input type="text" id="email" name="memberEmail" th:value="${profile.memberEmail}"  onblur="checkEmailInput()" ></div>
+                                        <button type="button" class="member-profile-button-small" onclick="checkEmail()">중복확인</button>
+                                    </div>
+                                    <div class="Error">
+                                        <div class="myupdate-content-title" id="emailError2" style="display: none;"></div>
+                                        <div id="emailError" style="color: red; display: none;">이메일을 정확히 입력해주세요</div>
+                                    </div>
+                                    <input type="hidden" id="currentEmail" th:value="${profile.memberEmail}">
+                                </label>
+
+                                <label for="phonenumber">
+                                    <div id="contents">
+                                        <div id="labelname">연락처 : </div>
+                                        <div><input type="text" id="phonenumber" name="memberPhoneNumber" placeholder="000-0000-0000" th:value="${profile.memberPhoneNumber}" onblur="checkPhoneInput()"></div>
+                                        <button type="button" class="member-profile-button-small" onclick="sendVerification()">인증번호발송</button>
+                                    </div>
+                                    <div class="Error">
+                                        <div class="myupdate-content-title" id="phoneError2" style="display: none;"></div>
+                                        <div id="phoneError" style="color: red; display: none;">연락처를 정확히 입력해주세요</div>
+                                    </div>
+                                </label>
+
+                                <label for="phonecheckInput">
+                                    <div id="contents">
+                                        <div id="labelname">인증번호 : </div>
+                                        <div><input type="text" id="phonecheckInput" onblur="checkPnumberInput()"></div>
+                                        <button type="button" class="member-profile-button-small" onclick="confirmVerification()">인증번호확인</button>
+                                    </div>
+                                    <div class="Error">
+                                        <div class="myupdate-content-title" id="phonecheckError2" style="display: none;"></div>
+                                        <div id="phonecheckError" style="color: red; display: none;">인증번호를 정확히 입력해주세요</div>
+                                    </div>
+                                </label>
+
+                                <label for="address">
+                                    <div id="contents">
+                                        <div id="labelname">우편번호 : </div>
+                                        <div><input type="text" id="address" name="memberZipcode" th:value="${profile.memberZipcode}" readonly onblur="checkAddressInput()"></div>
+                                        <button type="button" class="member-profile-button-small" onclick="searchAddress()">주소찾기</button>
+                                    </div>
+                                    <div class="Error">
+                                        <div class="myupdate-content-title" id="addressError2" style="display: none;"></div>
+                                        <div id="addressError" style="color: red; display: none;">주소를 정확히 입력해주세요</div>
+                                    </div>
+
+                                    <div id="contents">
+                                        <div id="labelname">주소 : </div>
+                                        <div><input type="text" id="addressInput" name="memberAddress" th:value="${profile.memberAddress}" readonly onblur="checkAddressInput()"></div>
+                                    </div>
+
+                                    <div id="contents">
+                                        <div id="labelname">상세주소 : </div>
+                                        <div><input type="text" id="addInput" name="memberDetailAddress" th:value="${profile.memberDetailAddress}" onblur="checkAddInput()"></div>
+                                    </div>
+                                    <div class="Error">
+                                        <div class="myupdate-content-title" id="addError2" style="display: none;"></div>
+                                        <div id="addError" style="color: red; display: none;">상세주소를 정확히 입력해주세요</div>
+                                    </div>
+                                </label>
+
+                                <label for="password">
+                                    <div id="contents">
+                                        <div id="labelname">현재 비밀번호 : </div>
+                                        <div><input type="password" id="password" name="memberPassword" placeholder="현재 비밀번호 입력" onblur="checkPasswordInput()"></div>
+                                    </div>
+                                    <div class="Error">
+                                        <div class="myupdate-content-title" id="passwordError2" style="display: none;"></div>
+                                        <div id="passwordError" style="color: red; display: none;">비밀번호를 정확히 입력해주세요</div>
+                                    </div>
+                                </label>
+
+                                <label for="passwordInput">
+                                    <div id="contents">
+                                        <div id="labelname">새 비밀번호 : </div>
+                                        <div><input type="password" id="passwordInput" name="memberNewPassword" placeholder="새 비밀번호 입력" onblur="checkPasswordInput()"></div>
+                                    </div>
+                                    <div class="Error">
+                                        <div class="myupdate-content-title" id="passwordError2" style="display: none;"></div>
+                                        <div id="passwordError" style="color: red; display: none;">비밀번호를 정확히 입력해주세요</div>
+                                    </div>
+                                </label>
+
+                                <label for="passwordcheck">
+                                    <div id="contents">
+                                        <div id="labelname">새 비밀번호 확인 : </div>
+                                        <div><input type="password" id="passwordcheck" placeholder="새 비밀번호 확인" onblur="checkPcheckInput()"></div>
+                                    </div>
+                                    <div class="Error">
+                                        <div class="myupdate-content-title" id="passwordcheckError2" style="display: none;"></div>
+                                        <div id="passwordcheckError" style="color: red; display: none;">비밀번호 확인을 정확히 입력해주세요</div>
+                                    </div>
+                                </label>
+
+                                <div id="contents">
+                                    <div id="labelname">알림수신 동의 </div>
+                                    <div>
+                                        <input type="radio" name="memberAgree" id="Y" value="Y">
+                                        <label for="Y">동의</label>
+                                        <input type="radio" name="memberAgree" id="N" value="N" checked>
+                                        <label for="N">비동의</label>
+                                    </div>
+                                </div>
+
+                                <div class="member-profile-button">
+                                    <button type="submit" class="member-profile-button-small" onclick="validateInputs()">수정하기</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <footer th:replace="~{fragment/footer :: footer}"></footer>

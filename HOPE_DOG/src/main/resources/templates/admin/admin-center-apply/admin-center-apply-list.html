@@ -9,7 +9,10 @@
     <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
     <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
     <link rel="stylesheet" th:href="@{/css/admin/admin-center-apply/admin-center-apply-list.css}"/>
-    <link rel="icon" href="/im/logo/favicon.png">
+<!-- 페이지네이션 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </head>
 
 <body>
@@ -63,7 +66,7 @@
 
                                 <div th:each="centerMember, iterStat : ${centerMemberList}" class="info-row" >
                                     <div class="info-cell checkbox-line">
-                                        <input type="checkbox" class="checkbox" name="check" ath:data-center-member-no="${centerMember.centerMemberNo}">
+                                        <input type="checkbox" class="checkbox" name="check" th:data-center-member-no="${centerMember.centerMemberNo}">
                                     </div>
                                     <a style="display: flex; justify-content: center" th:href="@{/admin/centerApplyDetail(centerMemberNo=${centerMember.centerMemberNo})}">
                                         <div class="info-cell info-cell-no" th:text="${centerMember.centerMemberStatus}"></div>
@@ -71,6 +74,7 @@
                                     <div class="info-cell info-cell-cate" th:text="${centerMember.centerFileName}"></div>
                                     <div class="info-cell info-cell-phone" th:text="${centerMember.centerMemberPhoneNumber}"></div>
                                     <div class="info-cell info-cell-email" th:text="${centerMember.centerMemberEmail}"></div>
+                                    </a>
                                 </div>
                             </div>
                         </div>

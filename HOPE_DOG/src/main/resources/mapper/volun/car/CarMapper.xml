@@ -14,122 +14,202 @@
 
 
 
-
-<!--    카테고리 분류별 게시글 조회+페이지네이션 -->
-    <select id="selectCate" resultType="CarDTO">
-    <![CDATA[
-        SELECT * FROM (
-                          SELECT C.CAR_NO, C.CAR_CATE, C.CAR_TITLE, C.CAR_CONTENT,
-                                 C.CAR_REGIDATE, C.CAR_UPDATEDATE, C.CAR_WRITER,
-                                 M.MEMBER_NO, M.MEMBER_NICKNAME,
-                                 CM.CENTER_MEMBER_NO, CM.CENTER_MEMBER_NAME,
-                                 ROW_NUMBER() OVER (ORDER BY C.CAR_REGIDATE DESC) AS rn
-                          FROM TBL_CAR C
-                                   LEFT JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO
-                                   LEFT JOIN TBL_CENTER_MEMBER CM ON C.CAR_WRITER = CM.CENTER_MEMBER_NO
-                          WHERE C.CAR_CATE = #{cate}
-                      )
-        WHERE rn > (#{criteria.page} - 1) * #{criteria.amount}
-          AND rn <= #{criteria.page} * #{criteria.amount}
-        ]]>
-</select>
-
-    <!-- 카테고리별 게시글 수 카운트 -->
-    <select id="countCarsByCategory" resultType="int">
-        SELECT COUNT(CAR_NO)
-        FROM TBL_CAR
-        WHERE CAR_CATE = #{cate}
+<!--카테고리 분류 별-->
+    <select id="findCarByCate" parameterType="string" resultType="CarDTO">
+        SELECT
+        C.CAR_NO,
+        C.CAR_CATE,
+        C.CAR_TITLE,
+        C.CAR_CONTENT,
+        C.CAR_REGIDATE,
+        C.CAR_UPDATEDATE,
+        C.CAR_WRITER,
+        M.MEMBER_NICKNAME AS MEMBER_NICKNAME,
+        CM.CENTER_MEMBER_NAME AS CENTER_MEMBER_NAME
+        FROM
+        TBL_CAR C
+        LEFT JOIN
+        TBL_MEMBER M
+        ON C.CAR_WRITER = M.MEMBER_NO
+        LEFT JOIN
+        TBL_CENTER_MEMBER CM
+        ON C.CAR_WRITER = CM.CENTER_MEMBER_NO
+        <where>
+            <if test="cate != null and (cate == '태워주세요' or cate == '태워줄게요')">
+                C.CAR_CATE = #{cate}
+            </if>
+        </where>
+        ORDER BY
+        C.CAR_REGIDATE DESC, C.CAR_NO DESC
     </select>
 
-    <select id="getCarList" resultType="CarDTO">
-        <![CDATA[
-            SELECT C.CAR_NO, C.CAR_CATE, C.CAR_TITLE, C.CAR_CONTENT,
-                C.CAR_REGIDATE, C.CAR_UPDATEDATE, C.CAR_WRITER,
-                M.MEMBER_NO, M.MEMBER_NICKNAME,
-                CM.CENTER_MEMBER_NO, CM.CENTER_MEMBER_NAME
-            FROM (
-            SELECT C.CAR_NO, C.CAR_CATE, C.CAR_TITLE, C.CAR_CONTENT,
-                C.CAR_REGIDATE, C.CAR_UPDATEDATE, C.CAR_WRITER,
-                M.MEMBER_NO, M.MEMBER_NICKNAME,
-                CM.CENTER_MEMBER_NO, CM.CENTER_MEMBER_NAME,
-                ROW_NUMBER() OVER (ORDER BY C.CAR_REGIDATE DESC) AS rn
-            FROM TBL_CAR C
-                LEFT JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO
-                LEFT JOIN TBL_CENTER_MEMBER CM ON C.CAR_WRITER = CM.CENTER_MEMBER_NO
-            WHERE C.CAR_CATE = #{cate}
-            )
-            WHERE rn > (#{page} - 1) * #{amount} AND rn <= #{page} * #{amount}
-        ]]>
+<!--    검색-->
+    <select id="carSearch" resultType="CarDetailDTO">
+        SELECT
+        c.CAR_NO,
+        c.CAR_CATE,
+        c.CAR_TITLE,
+        c.CAR_CONTENT,
+        c.CAR_REGIDATE,
+        c.CAR_UPDATEDATE,
+        c.CAR_WRITER,
+        m.MEMBER_NICKNAME AS memberNickname,
+        cm.CENTER_MEMBER_NAME AS centerMemberName
+        FROM
+        TBL_CAR c
+        LEFT JOIN
+        TBL_MEMBER m ON c.CAR_WRITER = m.MEMBER_NO
+        LEFT JOIN
+        TBL_CENTER_MEMBER cm ON c.CAR_WRITER = cm.CENTER_MEMBER_NO
+        WHERE
+        <choose>
+            <!-- 제목 검색 -->
+            <when test="carTitle != null">
+                c.CAR_TITLE LIKE '%' || #{carTitle} || '%'
+            </when>
+
+            <!-- 닉네임 검색 -->
+            <when test="memberNickname != null">
+                (m.MEMBER_NICKNAME LIKE '%' || #{memberNickname} || '%'
+                OR cm.CENTER_MEMBER_NAME LIKE '%' || #{memberNickname} || '%')
+            </when>
+        </choose>
+        ORDER BY c.CAR_REGIDATE DESC
     </select>
+
 
 <!--    게시글 상세 조회 (게시글과 댓글 정보 포함)-->
     <select id="selectCarDetail" resultType="CarDetailDTO">
         SELECT c.CAR_NO, c.CAR_CATE, c.CAR_TITLE, c.CAR_CONTENT,
                c.CAR_REGIDATE, c.CAR_UPDATEDATE, c.CAR_WRITER,
-               m.MEMBER_NICKNAME, cm.CENTER_MEMBER_NAME
-        FROM TBL_CAR c
-                 LEFT JOIN TBL_MEMBER m ON c.CAR_WRITER = m.MEMBER_NO
-                 LEFT JOIN TBL_CENTER_MEMBER cm ON c.CAR_WRITER = cm.CENTER_MEMBER_NO
-        WHERE c.CAR_NO = #{carNo}
-    </select>
-
-    <select id="selectCommentsByCarNo" parameterType="long" resultType="CarCommentDTO">
-        SELECT CAR_COMMENT_NO, CAR_COMMENT, CAR_COMMENT_REGIDATE, CAR_UPDATEDATE AS COMMENT_UPDATEDATE, CAR_COMMENT_WRITER
-        FROM TBL_CAR_COMMENT
-        WHERE CAR_NO = #{carNo}
-        ORDER BY CAR_COMMENT_REGIDATE ASC
-    </select>
-
-    <!-- 검색 기능 (페이지네이션 제거) -->
-    <select id="searchCars" parameterType="map" resultType="CarDTO">
-<![CDATA[
-        SELECT C.CAR_NO, C.CAR_CATE, C.CAR_TITLE, C.CAR_CONTENT,
-               C.CAR_REGIDATE, C.CAR_UPDATEDATE, C.CAR_WRITER,
-               M.MEMBER_NO, M.MEMBER_NICKNAME,
-               CM.CENTER_MEMBER_NO, CM.CENTER_MEMBER_NAME
+               M.MEMBER_NO, M.MEMBER_NICKNAME,CM.CENTER_MEMBER_NO,CM.CENTER_MEMBER_NAME
         FROM TBL_CAR C
-                 LEFT JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO
-                 LEFT JOIN TBL_CENTER_MEMBER CM ON C.CAR_WRITER = CM.CENTER_MEMBER_NO
+                 LEFT JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO AND MOD(M.MEMBER_NO, 2) != 0
+             LEFT JOIN TBL_CENTER_MEMBER CM ON C.CAR_WRITER = CM.CENTER_MEMBER_NO AND MOD(CM.CENTER_MEMBER_NO, 2) = 0
+        WHERE C.CAR_NO = #{carNo}
+    </select>
+
+
+
+<!--    게시글 작성-->
+
+    <insert id="carWriter" parameterType="CarDTO">
+        <selectKey keyProperty="carNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_CAR.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_CAR (
+        car_no, car_cate, car_title, car_content,
+        car_regidate, car_writer
+        ) VALUES (
+        #{carNo}, #{carCate}, #{carTitle}, #{carContent},
+        SYSDATE, #{carWriter}
+        )
+    </insert>
+
+<!--    게시글 수정-->
+    <update id="carModify" parameterType="CarDetailDTO">
+        UPDATE TBL_CAR
+        SET
+            CAR_CATE = #{carCate},
+            CAR_TITLE = #{carTitle},
+            CAR_CONTENT = #{carContent},
+            CAR_UPDATEDATE = #{carUpdateDate},
+            CAR_WRITER = #{carWriter}
+        WHERE CAR_NO = #{carNo}
+    </update>
+
+
+<!--게시글 삭제-->
+    <delete id="carDelete" parameterType="CarDetailDTO">
+        DELETE FROM TBL_CAR
+        WHERE CAR_NO =#{carNo}
+    </delete>
+
+<!--    게시글 신고-->
+    <insert id="carContentReport" parameterType="CarReportDTO">
+        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_REPORT (
+        REPORT_NO, REPORT_CATE, REPORT_CONTENT, REPORT_WRITER, REPORT_CONTENT_NO
+        ) VALUES (
+        #{reportNo}, '카풀', #{reportContent}, #{reportWriter},#{reportContentNo}
+        )
+    </insert>
+
+    <!--    댓글불러오기-->
+        <select id="carComment" parameterType="Long" resultType="CarCommentDTO">
+        SELECT
+            cc.CAR_COMMENT_NO,
+            cc.CAR_COMMENT,
+            cc.CAR_COMMENT_REGIDATE,
+            cc.CAR_COMMENT_WRITER,
+            CASE
+                WHEN MOD(cc.CAR_COMMENT_WRITER, 10) = 1 THEN m.MEMBER_NICKNAME
+                WHEN MOD(cc.CAR_COMMENT_WRITER, 10) = 2 THEN cm.CENTER_MEMBER_NAME
+                END AS CAR_COMMENT_WRITER_NAME
+        FROM
+            TBL_CAR_COMMENT cc
+                LEFT JOIN
+            TBL_MEMBER m ON MOD(cc.CAR_COMMENT_WRITER, 10) = 1 AND cc.CAR_COMMENT_WRITER = m.MEMBER_NO
+                LEFT JOIN
+            TBL_CENTER_MEMBER cm ON MOD(cc.CAR_COMMENT_WRITER, 10) = 2 AND cc.CAR_COMMENT_WRITER = cm.CENTER_MEMBER_NO
         WHERE
-            <if test="params.carTitle != null">
-            C.CAR_TITLE LIKE '%' || #{params.carTitle} || '%'
-            </if>
-            <if test="params.carWriter != null">
-            C.CAR_WRITER = #{params.carWriter}
-            </if>
-        ]]>
-</select>
-
-
-
-
-<!--    페이지네이션 시작-->
-<!--    카풀 전체 게시글 수-->
-    <select id="carTotal" resultType="int">
-        SELECT COUNT(CAR_NO) FROM TBL_CAR
+            cc.CAR_NO = #{carNo}
+        ORDER BY
+            cc.CAR_COMMENT_REGIDATE ASC
     </select>
 
-<!--    카풀 전체 게시글-->
-    <select id="carMain" resultType="CarDTO">
-        SELECT CAR_NO, CAR_CATE,CAR_TITLE,CAR_CONTENT, CAR_REGIDATE,CAR_UPDATEDATE,CAR_WRITER
-        FROM TBL_CAR
-        ORDER BY CAR_REGIDATE DESC
-    </select>
 
-<!--    카풀 페이지마다 표시할 게시글-->
-        <select id="selectCarPage" parameterType="Criteria" resultType="CarDTO">
-            <![CDATA[
-            SELECT c.CAR_NO, c.CAR_CATE, c.CAR_TITLE, c.CAR_CONTENT,
-                   c.CAR_REGIDATE, c.CAR_UPDATEDATE, c.CAR_WRITER,
-                   m.MEMBER_NICKNAME, cm.CENTER_MEMBER_NAME
-            FROM TBL_CAR c
-                     LEFT JOIN TBL_MEMBER m ON c.CAR_WRITER = m.MEMBER_NO
-                     LEFT JOIN TBL_CENTER_MEMBER cm ON c.CAR_WRITER = cm.CENTER_MEMBER_NO
-            WHERE ROWNUM > (#{page} - 1) * #{amount} AND ROWNUM <= #{page} * #{amount}
-            ORDER BY c.CAR_REGIDATE DESC
-            ]]>
-        </select>
-<!--페이지네이션 끝-->
+<!--    댓글 등록-->
+    <insert id="carCommentRegi" parameterType="CarCommentDTO">
+        <selectKey keyProperty="carCommentNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_CAR_COMMENT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_CAR_COMMENT (
+        CAR_COMMENT_NO,
+        CAR_COMMENT,
+        CAR_COMMENT_WRITER,
+        CAR_NO
+        ) VALUES (
+        #{carCommentNo},
+        #{carComment},
+        #{carCommentWriter},
+        #{carNo}
+        )
+    </insert>
+
+<!--    댓글 수정-->
+    <update id="carCommentModi" parameterType="CarCommentDTO">
+        UPDATE TBL_CAR_COMMENT
+        SET CAR_COMMENT = #{carComment}
+        WHERE CAR_COMMENT_WRITER = #{carCommentWriter}
+          AND CAR_COMMENT_NO = #{carCommentNo}
+          AND CAR_NO = #{carNo}
+    </update>
+
+<!--   댓글 삭제-->
+    <delete id="carCommentDelete" parameterType="CarCommentDTO">
+        DELETE FROM TBL_CAR_COMMENT
+        WHERE CAR_COMMENT_WRITER = #{carCommentWriter}
+          AND CAR_COMMENT_NO = #{carCommentNo}
+          AND CAR_NO = #{carNo}
+    </delete>
+
+<!--    댓글 신고-->
+    <insert id="carCommentReport" parameterType="CarReportDTO">
+        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_COMMENT_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_COMMENT_REPORT (
+        COMMENT_REPORT_NO, COMMENT_REPORT_CATE, COMMENT_REPORT, COMMENT_REPORT_WRITER, COMMENT_NO, CONTENT_NO
+        ) VALUES (
+        #{reportNo}, '카풀', #{reportComment}, #{reportWriter},#{reportCommentNo}, #{reportContentNo}
+        )
+    </insert>
+
+
+
 
     <!-- 일반회원 조회 -->
     <select id="selectMemberByNo" parameterType="long" resultType="MemberDTO">

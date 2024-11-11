@@ -14,9 +14,21 @@ public class RequestService {
     private final RequestMapper requestMapper;
 
 //    봉사 신청 목록 조회
-    public List<VolunRequestListDTO> volRequestList(Long centerMemberNo){
+    public List<VolunRequestListDTO> volunRequestList(Long centerMemberNo){
         return requestMapper.volunRequestList(centerMemberNo);
     }
+
+//    봉사 신청서 상세페이지
+    public VolunRequestDetailDTO volunRequestDetail(Long volunRequestNo){
+        return requestMapper.volunRequestDetailInfo(volunRequestNo);
+    }
+
+//    봉사 신청서 수락/거절 처리
+    public void updateVolunRequestStatus(Long volunRequestNo, String volunRequsetStatus){
+        VolunRequestChoiceDTO volunRequestChoiceDTO = new VolunRequestChoiceDTO(volunRequestNo, volunRequsetStatus);
+        requestMapper.volunRequestStatusChoice(volunRequestChoiceDTO);
+    }
+
 
 //    입양 신청 목록 조회
     public List<AdoptRequestListDTO> adoptRequestList(Long centerMemberNo){

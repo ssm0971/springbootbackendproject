@@ -58,7 +58,7 @@ function checkIntroduceInput() {
 function cancleClick() {
     if (confirm('작성중인 글은 저장되지 않습니다. 정말로 취소하시겠습니까?')) {
         console.log('취소되었습니다.');
-        location.href = '/adopt/adopt';
+        location.href = '/adopt/protect';
     } else {
         console.log('취소하지 않았습니다.');
     }
@@ -88,25 +88,6 @@ $(function () {
             ['view', ['fullscreen', 'codeview', 'help']]
         ],
         callbacks: {
-            onKeyup: function(e) {
-                // 현재 입력된 HTML 내용 가져오기
-                const contents = $('#contents').summernote('code');
-
-                // HTML 태그를 제외하고 텍스트만 추출하여 길이 확인
-                const textOnly = $('<div>').html(contents).text();
-
-                // 글자 수가 제한을 초과했을 때
-                if (textOnly.length > maxLength) {
-                    alert(`최대 ${maxLength}자까지 입력할 수 있습니다.`);
-
-                    // 텍스트 길이를 제한하여 자르고 HTML 구조 복원
-                    const trimmedText = textOnly.substring(0, maxLength);
-
-                    // 자른 텍스트를 다시 HTML 구조에 맞춰 설정
-                    const trimmedHTMLContent = $('<div>').text(trimmedText).html();
-                    $('#contents').summernote('code', trimmedHTMLContent);
-                }
-            }
         }
     });
 });

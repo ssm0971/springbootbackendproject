@@ -54,8 +54,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
-	// 추가된 의존성
-	implementation 'com.fasterxml.jackson.core:jackson-databind' // JSON 파싱을 위한 라이브러리
+	// 썸네일레이터
+	implementation 'net.coobird:thumbnailator:0.4.20'
+
+	//공공데이터 JSON 변환
+	implementation 'com.fasterxml.jackson.core:jackson-databind' // JSON 파싱을 위한 라이브러리 Jackson사용
 	implementation 'org.json:json:20210307'
 }
 

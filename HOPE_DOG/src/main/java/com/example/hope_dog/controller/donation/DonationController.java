@@ -42,8 +42,8 @@ public class DonationController {
     }
 
     // 글 상세
-    @GetMapping("/view/{donaNo}")
-    public String view(@PathVariable("donaNo") Long donaNo, Model model, HttpSession session) {
+    @GetMapping("/view")
+    public String view(@RequestParam("donaNo") Long donaNo, Model model, HttpSession session) {
         List<DonationViewDTO> donationViewList = donationService.getDonationViewList(donaNo);
 
         System.out.println("DonationViewList: " + donationViewList);  // 로그 추가
@@ -70,6 +70,7 @@ public class DonationController {
     @PostMapping("/writeRegi")
     public String registerDonation(DonationWriteDTO donationWriteDTO) {
         donationService.registerDonation(donationWriteDTO);
+
         return "redirect:/dona/list";
     }
 
@@ -89,25 +90,22 @@ public class DonationController {
     }
 
 
-    // 글 수정
-//    @GetMapping("/modify")
-//    public String donationUpdate(@RequestParam("donaNo") Long donaNo, Model model) {
-//
-//
-//        return "/donation/donation-modify";
-//    }
 
     // 글 수정 페이지 이동
-    @GetMapping("/modify/{donaNo}")
-    public String donationModify(@PathVariable Long donaNo, Model model, HttpSession session) {
+    @GetMapping("/modify")
+    public String donationModify(@RequestParam("donaNo") Long donaNo, Model model, HttpSession session) {
 
-        DonationViewDTO donation = donationService.findById(donaNo);
+        List<DonationViewDTO> donation = donationService.getDonationViewList(donaNo);
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+
+        System.out.println(donation + "확인");
+
+        model.addAttribute("centerMemberNo", centerMemberNo);
         model.addAttribute("donation", donation);
-        //        DonationWriteDTO donationWriteDTO = donationService.findById(donaNo);
-//        DonationWriteDTO donationWriteDTO = donationService.getDonationById(id);
-//        model.addAttribute("donation", donationWriteDTO);
+
         return "donation/donation-modify"; // 수정 페이지 템플릿 이름
     }
+
 
     // 글 수정 등록
     @PostMapping("/modifyRegi")

@@ -6,13 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>관리자 페이지- 공지사항 등록</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
   <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
   <link rel="stylesheet" th:href="@{/css/admin/admin-notice/admin-notice-write.css}"/>
   <link rel="stylesheet" th:href="@{/css/admin/summernote-lite.css}"/>
-  <script src="../../../js/admin/summernote-lite.js"></script>
-  <script src="../../../js/admin/lang/summernote-ko-KR.js"></script>
 </head>
 
 <body>
@@ -45,14 +42,14 @@
               </div>
               <!-- 글작성 박스 -->
               <div class="notice-write-area">
-                <form action="링크" method="post">
+                <form th:action="@{/admin/noticeWrite}" method="post" enctype="multipart/form-data">
                   <div>
-                    <input type="text" placeholder="제목을 입력해주세요" class="title">
+                    <input type="text" name="title" placeholder="제목을 입력해주세요" class="title">
                   </div>
                   <br>
                   <div>
                     <span style="margin-right: 5px;">카테고리 선택</span>
-                    <select name="languages" id="lang">
+                    <select name="cate" id="cate">
                       <option value="일반">일반</option>
                       <option value="봉사">봉사</option>
                       <option value="입양">입양</option>
@@ -60,13 +57,16 @@
                   </div>
                   <br>
                   <div> 
-                    <textarea id="summernote" name="editordata" class="content"></textarea>
+                    <textarea id="summernote" name="content" class="content"></textarea>
                 </div>
-
+                  <div class="mb-3">
+                    <label for="upload" class="form-label">첨부파일</label>
+                    <input type="file" class="form-control" id="upload" name="files" multiple>
+                  </div>
                   <!-- 등록/취소 버튼 -->
                   <div class="notice-write-button-box">
                     <button class="notice-write-button">등록</button>
-                    <button class="notice-cancle-button">취소</button>
+                    <button type="button" class="notice-cancel-button">취소</button>
                   </div>
                 </form>
               </div>
@@ -78,29 +78,5 @@
     </div>
   </div>
 </body>
-<script>
-  $(document).ready(function() {
-    $('#summernote').summernote({
-          height: 400,
-          width: 780,
-          minHeight: 400,
-          maxHeight: 400,
-          focus: true,
-          lang: "ko-KR",
-          placeholder: '최대3000자까지 쓸 수 있습니다',
-          toolbar: [
-                // [groupName, [list of button]]
-                ['fontname', ['fontname']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']]
-                ],
-            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-            fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-                
-      });
-  });
-</script>
+<script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
 </html>

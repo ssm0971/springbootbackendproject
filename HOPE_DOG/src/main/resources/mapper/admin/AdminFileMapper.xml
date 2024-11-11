@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.admin.AdminFileMapper">
+    <insert id="insertFile" parameterType="AdminFileDTO">
+        INSERT INTO TBL_NOTICE_FILE (file_no, notice_no, file_name, stored_file_name, file_uuid, file_path, upload_time)
+        VALUES (SEQ_NOTICE_FILE_NO.nextval, #{file.noticeNo}, #{file.fileName},
+                #{file.fileName}, #{file.fileUuid}, #{file.filePath}, SYSDATE)
+    </insert>
+
+    <select id="selectFileListByNoticeNo" resultType="AdminFileDTO">
+        SELECT
+            file_no, notice_no, file_name, stored_file_name, file_uuid, FILE_PATH, upload_time
+        FROM
+            TBL_NOTICE_FILE
+        WHERE
+            notice_no = #{noticeNo}
+    </select>
+
+    <select id="selectFileByNo" resultType="AdminFileDTO">
+        SELECT
+            file_no, notice_no, file_name, stored_file_name, file_uuid, FILE_PATH,upload_time
+        FROM
+            TBL_NOTICE_FILE
+        WHERE
+            file_no = #{fileNo}
+    </select>
+
+    <delete id="deleteFileByFileNo" parameterType="Long">
+        DELETE FROM TBL_NOTICE_FILE
+        WHERE FILE_NO = #{fileNo}
+    </delete>
+
+    <delete id="deleteFileByNoticeNo" parameterType="Long">
+        DELETE FROM TBL_NOTICE_FILE
+        WHERE notice_no = #{noticeNo}
+    </delete>
+
+    <select id="selectFileListByPostNo" parameterType="AdminPostDTO">
+        <choose>
+            <when test="post.postType == 'COMMU'">
+                SELECT FILE_NO, COMMU_NUMBER, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME
+                FROM TBL_COMMU_FILE
+                WHERE TBL_COMMU_FILE.COMMU_NUMBER = #{post.postNo}
+            </when>
+            <when test="post.postType == 'VOLUN'">
+                SELECT FILE_NO, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME, VOLUN_NO
+                FROM TBL_VOLUN_FILE
+                WHERE TBL_VOLUN_FILE.VOLUN_NO = #{post.postNo}
+            </when>
+            <when test="post.postType == 'DONA'">
+                SELECT FILE_NO, DONA_NO, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME
+                FROM TBL_DONA_FILE
+                WHERE TBL_DONA_FILE.DONA_NO = #{post.postNo}
+            </when>
+            <when test="post.postType == 'ADOPT'">
+                SELECT FILE_NO, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME, ADOPT_NO
+                FROM TBL_ADOPT_FILE
+                WHERE TBL_ADOPT_FILE.ADOPT_NO = #{post.postNo}
+            </when>
+            <when test="post.postType == 'CAR'">
+                SELECT FILE_NO, CAR_NO, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME
+                FROM TBL_CAR_FILE
+                WHERE  TBL_CAR_FILE.CAR_NO = #{post.postNo}
+            </when>
+            <when test="post.postType == 'PROTECT'">
+                SELECT FILE_NO, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME, PROTECT_NO
+                FROM TBL_PROTECT_FILE
+                WHERE TBL_PROTECT_FILE.PROTECT_NO = #{post.postNo}
+            </when>
+            <when test="post.postType == 'REVIEW'">
+                SELECT FILE_NO, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME, REVIEW_NO
+                FROM TBL_REVIEW_FILE
+                WHERE TBL_REVIEW_FILE.REVIEW_NO = #{post.postNo}
+            </when>
+        </choose>
+    </select>
+
+    <delete id="deleteFileByPostNo">
+        <choose>
+            <when test="post.postType == 'COMMU'">
+                DELETE FROM TBL_COMMU_FILE
+                WHERE TBL_COMMU_FILE.COMMU_NUMBER = #{post.postNo}
+            </when>
+            <when test="post.postType == 'VOLUN'">
+                DELETE FROM TBL_VOLUN_FILE
+                WHERE TBL_VOLUN_FILE.VOLUN_NO = #{post.postNo}
+            </when>
+            <when test="post.postType == 'DONA'">
+                DELETE FROM TBL_DONA_FILE
+                WHERE TBL_DONA_FILE.DONA_NO = #{post.postNo}
+            </when>
+            <when test="post.postType == 'ADOPT'">
+                DELETE FROM TBL_ADOPT_FILE
+                WHERE TBL_ADOPT_FILE.ADOPT_NO = #{post.postNo}
+            </when>
+            <when test="post.postType == 'CAR'">
+                DELETE FROM TBL_CAR_FILE
+                WHERE TBL_CAR_FILE.CAR_NO = #{post.postNo}
+            </when>
+            <when test="post.postType == 'PROTECT'">
+                DELETE FROM TBL_PROTECT_FILE
+                WHERE TBL_PROTECT_FILE.PROTECT_NO = #{post.postNo}
+            </when>
+            <when test="post.postType == 'REVIEW'">
+                DELETE FROM TBL_REVIEW_FILE
+                WHERE TBL_REVIEW_FILE.REVIEW_NO = #{post.postNo}
+            </when>
+        </choose>
+    </delete>
+    <select id="selectFileByCenterMemberNo" parameterType="Long">
+        SELECT CENTER_FILE_NO, CENTER_FILE_NAME, CENTER_FILE_UUID, CENTER_FILE_PATH, CENTER_MEMBER_NO
+        FROM TBL_CENTER_FILE
+        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+    </select>
+</mapper>

@@ -37,19 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // 모두 읽음 처리 버튼
-    document.querySelectorAll('.mark-all-read').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            const container = this.closest('.notification-container');
-            const unreadItems = container.querySelectorAll('.notification-item.unread');
-            unreadItems.forEach(item => item.classList.remove('unread'));
-
-            const badge = container.querySelector('.notification-badge');
-            if (badge) badge.textContent = '0';
-        });
-    });
+    // document.querySelectorAll('.mark-all-read').forEach(button => {
+    //     button.addEventListener('click', function(event) {
+    //         event.preventDefault();
+    //         event.stopPropagation();
+    //
+    //         const container = this.closest('.notification-container');
+    //         const unreadItems = container.querySelectorAll('.notification-item.unread');
+    //         unreadItems.forEach(item => item.classList.remove('unread'));
+    //
+    //         const badge = container.querySelector('.notification-badge');
+    //         if (badge) badge.textContent = '0';
+    //     });
+    // });
 
     // 개별 알림 클릭
     document.querySelectorAll('.notification-item').forEach(item => {

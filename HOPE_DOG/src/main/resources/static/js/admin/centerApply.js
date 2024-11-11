@@ -34,7 +34,7 @@ $(document).ready(function () {
         const itemList = [];
 
         itemList.push($(this).data("center-member-no"));
-
+        console.log("Center Member No:", $(this).data("center-member-no"));  // 로그로 값 확인
         // Ajax 요청을 통해 서버로 memberNo 전송
         $.ajax({
             url: '/admin/approveCenterMember',
@@ -43,7 +43,7 @@ $(document).ready(function () {
             data: JSON.stringify(itemList),  // 배열만 전송
             success: function (response) {
                 alert(response.message || "선택된 회원이 승인되었습니다.");
-                location.href='/admin/centerMemberList'; // 페이지 새로고침으로 삭제 반영
+                location.href='/admin/centerApplyList'; // 페이지 새로고침으로 삭제 반영
             },
             error: function (xhr, status, error) {
                 alert("회원 승인 중 오류가 발생했습니다.");
@@ -95,7 +95,7 @@ $(document).ready(function () {
             data: JSON.stringify(itemList),  // 배열만 전송
             success: function (response) {
                 alert(response.message || "선택된 회원이 거절되었습니다.");
-                location.href='/admin/centerMemberList'; // 페이지 새로고침으로 삭제 반영
+                location.href='/admin/centerApplyList'; // 페이지 새로고침으로 삭제 반영
             },
             error: function (xhr, status, error) {
                 alert("회원 승인 중 오류가 발생했습니다.");

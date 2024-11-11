@@ -1,11 +1,13 @@
 package com.example.hope_dog.mapper.volun.car;
 
 import com.example.hope_dog.dto.centerMember.CenterMemberDTO;
+import com.example.hope_dog.dto.commu.CommuReportDTO;
 import com.example.hope_dog.dto.member.MemberDTO;
 import com.example.hope_dog.dto.page.Criteria;
 import com.example.hope_dog.dto.volun.car.CarCommentDTO;
 import com.example.hope_dog.dto.volun.car.CarDTO;
 import com.example.hope_dog.dto.volun.car.CarDetailDTO;
+import com.example.hope_dog.dto.volun.car.CarReportDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,41 +17,48 @@ import java.util.Map;
 @Mapper
 public interface CarMapper {
     //카풀 게시판 목록
-   List<CarDTO> selectAllCars();
+   List<CarDTO>selectAllCars();
 
-    // 카테고리 분류별 게시글 조회 (페이지네이션 포함)
-    List<CarDTO> selectCate(@Param("cate") String cate, @Param("criteria") Criteria criteria);
+    // 카테고리 분류별 게시글 조회
+    List<CarDTO> findCarByCate(@Param("cate") String cate);
 
-    //카풀 전체 게시판(페이지네이션)
-    List<CarDTO> selectCarMain();
-    // 카테고리별 게시글 수를 카운트
-    int countCarsByCategory(@Param("cate") String cate);
-
-    //전체 게시글 수 조회
-    int carTotal();
-    //페이지별 게시글 조회
-    List<CarDTO> selectCarPage(Criteria criteria);
 
    // 게시글 상세페이지 조회 (게시글과 댓글 정보 포함)
-   CarDetailDTO selectCarDetail(@Param("carNo") Long carNo);
+ List<CarDetailDTO> selectCarDetail(Long carNo);
+
+ //카풀 검색
+    List<CarDetailDTO> carSearch(@Param("carTitle") String carTitle,
+                                 @Param("memberNickname")String memberNickname,
+                                 @Param("centerMemberName") String centerMemberName);
+
+
+    //게시글 작성
+    void carWriter(CarDTO carDTO);
+
+    //게시글 수정
+    void carModify(CarDetailDTO carDetailDTO);
+
+
+    //게시글 삭제
+    void carDelete(CarDetailDTO carDetailDTO);
+
+    //게시글 신고
+    void carContentReport(CarReportDTO carReportDTO);
 
     // 댓글 조회 (특정 게시글의 댓글 리스트)
-    List<CarCommentDTO> selectCommentsByCarNo(@Param("carNo") Long carNo);
+    List<CarCommentDTO> carComment(Long carNo);
 
-    // 검색 결과 조회
-    List<CarDTO> searchCars(@Param("params") Map<String, Object> params);
+    //댓글 등록
+    void carCommentRegi(CarCommentDTO carCommentDTO);
 
-    // 검색 조건에 따른 총 게시글 수 조회
-//    int countCarsBySearch(@Param("params") Map<String, Object> params);
+//    댓글 수정
+    void carCommentModi(CarCommentDTO carCommentDTO);
 
-    // 검색 조건을 기반으로 총 개수 조회
-//    int countCars(@Param("params") Map<String, Object> params);
+//    댓글 삭제
+    void carCommentDelete(CarCommentDTO carCommentDTO);
 
- int countCarsByTitle(@Param("keyword") String keyword);
- int countCarsByNickname(@Param("keyword") String keyword);
-
- List<CarDTO> searchCarsByTitle(@Param("carTitle") String carTitle, @Param("criteria") Criteria criteria);
- List<CarDTO> searchCarsByNickname(@Param("nickname") String nickname, @Param("criteria") Criteria criteria);
+    //댓글 신고
+    void carCommentReport(CarReportDTO carReportDTO);
 
     //일반회원 조회
     MemberDTO selectMemberByNo(Long memberNo);

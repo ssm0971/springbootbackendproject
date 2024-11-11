@@ -24,43 +24,28 @@ $(function () {
   });
 });
 
-// 게시글 등록 confirm 창
-function registration() {
-  const subject = document.getElementById('subject').value.trim();
-  const contents = $('#contents').summernote('code'); // Summernote의 내용을 가져옴
 
-  if (subject === '' || contents === '<p><br></p>') { // 빈 내용 체크
-    alert('작성된 글이 없습니다.');
-    return false; // 입력 내용이 없을 경우
-  }
-
-  // 내용이 있을 때 확인 창
-  if (confirm('게시글을 등록하시겠습니까?')) {
-    alert('등록이 완료되었습니다.');
-    location.href = '../../html/volun/volun-car-main.html'; // 카풀 메인으로 이동
-  } else {
-    // 확인 창에서 취소했을 때 아무 동작도 하지 않음
-    return false; // 입력 내용이 그대로 유지됨
-  }
-
-  return true; // 내용이 있을 경우
-}
 
 // 취소
 function Cancel() {
-  const subject = document.getElementById('subject').value.trim();
-  const contents = $('#contents').summernote('code'); // Summernote의 내용을 가져옴
-
-  if (subject === '' && contents === '<p><br></p>') { // 빈 내용 체크
-    // 아무 내용도 입력되지 않은 경우
-    location.href = '../../html/volun/volun-car-main.html'; // 바로 이동
-  } else {
-    // 내용이 입력된 경우 알림창
-    const confirmResult = confirm('작성된 내용이 저장되지 않습니다. 취소하시겠습니까?');
-    if (confirmResult) {
-      location.href = '../../html/volun/volun-car-main.html'; // 확인 시 이동
+    if (confirm('작성중인 글은 저장되지 않습니다. 정말로 취소하시겠습니까?')) {
+        console.log('취소되었습니다.');
+        location.href = '/car/main';
+    } else {
+        console.log('취소하지 않았습니다.');
     }
-    // 아니요 버튼을 누르면 페이지 그대로 유지
-  }
 }
 
+// 폼 제출 시 제목이나 내용이 비었을 경우 경고창 표시
+function validatePostForm() {
+    var title = document.getElementById("subject").value;
+    var content = document.getElementById("contents").value;
+
+    // 제목 또는 내용이 비어 있을 경우 경고창을 띄우고, 폼 제출을 막음
+    if (title.trim() === "" || content.trim() === "") {
+        alert("제목과 내용을 모두 입력해주세요.");
+        return false; // 폼 제출을 막음
+    }
+
+    return true; // 폼 제출 허용
+}

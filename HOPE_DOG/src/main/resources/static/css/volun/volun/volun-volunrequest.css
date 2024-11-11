@@ -33,6 +33,10 @@ main{
   text-align: center;
 }
 
+.volunrequest-navList:hover{
+  cursor: pointer;
+}
+
 .volunrequest-wirtebanner{
   background-color: #F5EAD9;
   width: 1080px;
@@ -175,3 +179,4 @@ a {
   text-decoration: none;
   color: inherit; 
 }
+

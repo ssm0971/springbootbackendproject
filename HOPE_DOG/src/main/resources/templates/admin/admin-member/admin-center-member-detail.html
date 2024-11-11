@@ -51,8 +51,10 @@
 
                 <div class="center-form-group">
                   <label for="center-name">사업자 등록증 <span class="center-required">*</span></label>
-                  <input type="text" id="center-file" name="center-file" readonly th:value="${centerMember.centerFileName}" required>
-
+                  <a th:if="${file != null}" th:href="@{/download(from='center', fileName=${file.centerFileName}, filePath=${file.centerFilePath}, fileUuid=${file.centerFileUuid})}">
+                    <input type="text" id="center-file" name="center-file" readonly th:value="${centerMember.centerFileName}" required>
+                  </a>
+                  <span th:if="${file == null}">파일이 없습니다.</span>
                 </div>
 
                 <div class="center-form-group">

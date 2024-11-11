@@ -1,14 +1,18 @@
 package com.example.hope_dog.controller.admin;
 
 import com.example.hope_dog.dto.admin.*;
+import com.example.hope_dog.service.admin.AdminFileService;
 import com.example.hope_dog.service.admin.AdminService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +22,7 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminController {
     private final AdminService adminService;
+    private final AdminFileService adminFileService;
 
     private boolean isAdminLoggedIn(HttpSession session) {
         return session.getAttribute("adminNo") != null;
@@ -135,9 +140,11 @@ public class AdminController {
 
         AdminPostDTO post = adminService.selectPostDetail(postType, postNo);
         List<AdminCommentDTO> commentList = adminService.selectCommentListByPostNo(postType, postNo);
+        List<AdminFileDTO> fileList = adminFileService.selectFileListByPostNo(post);
 
         model.addAttribute("post", post);
         model.addAttribute("commentList", commentList);
+        model.addAttribute("fileList", fileList);
 
         return "admin/admin-post/admin-post-detail";
     }
@@ -200,6 +207,63 @@ public class AdminController {
         return "admin/admin-comment/admin-comment-search-list";
     }
 
+    @GetMapping("/noticeWrite")
+    public String noticeWrite(HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        return "admin/admin-notice/admin-notice-write";
+    }
+
+    @PostMapping("/noticeWrite")
+    public String noticeWrite(@RequestParam("files") List<MultipartFile> files, @RequestParam("cate") String cate, @RequestParam("title") String title, @RequestParam("content") String content, Model model, HttpSession session) throws IOException {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        AdminNoticeDTO notice = new AdminNoticeDTO();
+        notice.setNoticeCate(cate);
+        notice.setNoticeTitle(title);
+        notice.setNoticeContent(content);
+
+        adminService.insertNotice(notice, files);
+
+        return "redirect:/admin/noticeList";
+    }
+
+    @GetMapping("/noticeModify")
+    public String noticeModify(@RequestParam("noticeNo") Long noticeNo, Model model, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        AdminNoticeDTO notice = adminService.selectNoticeDetail(noticeNo);
+        List<AdminFileDTO> fileList = adminFileService.selectFileByNoticeNo(noticeNo);
+
+        model.addAttribute("notice", notice);
+        model.addAttribute("fileList", fileList);
+
+        return "admin/admin-notice/admin-notice-modify";
+    }
+
+    @PostMapping("/noticeModify")
+    public String noticeModify(@RequestParam("noticeNo") Long noticeNo, @RequestParam("cate") String cate, @RequestParam("title") String title, @RequestParam("content") String content, Model model, HttpSession session) {
+        if (!isAdminLoggedIn(session)) {
+            return "redirect:/admin/login";
+        }
+
+        AdminNoticeDTO notice = new AdminNoticeDTO();
+        notice.setNoticeNo(noticeNo);
+        notice.setNoticeCate(cate);
+        notice.setNoticeTitle(title);
+        notice.setNoticeContent(content);
+
+        adminService.modifyNotice(notice);
+
+        return "redirect:/admin/noticeDetail?noticeNo=" + noticeNo;
+    }
+
     @GetMapping("/noticeList")
     public String noticeList(Model model, HttpSession session) {
         if (!isAdminLoggedIn(session)) {
@@ -245,8 +309,10 @@ public class AdminController {
         }
 
         AdminNoticeDTO notice = adminService.selectNoticeDetail(noticeNo);
+        List<AdminFileDTO> files = adminFileService.selectFileByNoticeNo(noticeNo);
 
         model.addAttribute("notice", notice);
+        model.addAttribute("fileList", files);
 
         return "admin/admin-notice/admin-notice-detail";
     }
@@ -345,8 +411,10 @@ public class AdminController {
             return "redirect:/admin/login";
         }
         AdminCenterMemberDTO centerMember = adminService.selectPassedCenterMemberByNo(centerMemberNo);
+        AdminCenterFileDTO file = adminFileService.selectFileByCenterMemberNo(centerMemberNo);
 
         model.addAttribute("centerMember", centerMember);
+        model.addAttribute("file", file);
 
         return "admin/admin-member/admin-center-member-detail";
     }
@@ -394,9 +462,11 @@ public class AdminController {
         }
 
         AdminCenterMemberDTO centerMember = adminService.selectNotPassedCenterMemberByNo(centerMemberNo);
+        AdminCenterFileDTO file = adminFileService.selectFileByCenterMemberNo(centerMemberNo);
 
         model.addAttribute("centerMember", centerMember);
-
+        model.addAttribute("file", file);
+        
         return "admin/admin-center-apply/admin-center-apply-detail";
     }
 

@@ -22,6 +22,47 @@
         WHERE tvr.CENTER_MEMBER_NO = #{centerMemberNo}
     </select>
 
+<!--    봉사신청서 상세 조회-->
+    <select id="volunRequestDetailInfo" parameterType="Long" resultType="VolunRequestDetailDTO">
+        SELECT
+            tvr.VOLUN_REQUEST_NO,
+            tvr.VOLUN_REQUEST_NAME,
+            tvr.VOLUN_REQUEST_PHONE,
+            tvr.VOLUN_REQUEST_PHONE_SUB,
+            tvr.VOLUN_REQUEST_EMAIL,
+            tvr.VOLUN_REQUEST_GENDER,
+            tvr.VOLUN_REQUEST_AGE,
+            tvr.VOLUN_REQUEST_ZIPCODE,
+            tvr.VOLUN_REQUEST_ADDRESS,
+            tvr.VOLUN_REQUEST_ADDRESS_DETAIL,
+            tvr.VOLUN_REQUEST_JOB,
+            tvr.VOLUN_REQUEST_AGREEMENT ,
+            tvr.VOLUN_REQUEST_Q1 ,
+            tvr.VOLUN_REQUEST_Q2 ,
+            tvr.VOLUN_REQUEST_Q3 ,
+            tvr.VOLUN_REQUEST_Q4 ,
+            tvr.VOLUN_NO ,
+            tvr.MEMBER_NO ,
+            tvr.CENTER_MEMBER_NO ,
+            tv.VOLUN_TITLE,
+            tv.VOLUN_REGIDATE,
+            tm.MEMBER_NICKNAME ,
+            tcm.CENTER_MEMBER_NAME ,
+            tvr.VOLUN_REQUEST_STATUS
+        FROM TBL_VOLUN_REQUEST tvr
+                 LEFT JOIN TBL_VOLUN tv ON tvr.VOLUN_NO = tv.VOLUN_NO
+                 LEFT JOIN TBL_MEMBER tm ON tm.MEMBER_NO = tm.MEMBER_NO
+                 LEFT JOIN TBL_CENTER_MEMBER tcm ON tvr.CENTER_MEMBER_NO =tcm.CENTER_MEMBER_NO
+        WHERE tvr.VOLUN_REQUEST_NO = #{volunRequestNo}
+    </select>
+
+<!--    봉사 신청서 승인/거절-->
+    <update id="volunRequestStatusChoice" parameterType="VolunRequestChoiceDTO">
+        UPDATE TBL_VOLUN_REQUEST
+        SET VOLUN_REQUEST_STATUS = #{volunRequestStatus} -- 'Y'는 승인
+        WHERE VOLUN_REQUEST_NO = #{volunRequestNo} -- 특정 신청서 번호로 조건 설정
+    </update>
+
 <!--    입양신청서 조회-->
     <select id="adoptRequestList" parameterType="Long" resultType="AdoptRequestListDTO">
         SELECT

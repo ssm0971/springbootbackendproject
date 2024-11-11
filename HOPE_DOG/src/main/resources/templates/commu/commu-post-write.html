@@ -47,7 +47,7 @@
 
       <!-- 글작성 박스 -->
       <div class="protect-write-area">
-        <form action="/commu/commurequestRegi" method="post">
+        <form action="/commu/commurequestRegi" method="post" onsubmit="return validatePostForm()">
           <br>
           <div class="input-group">
             <!-- 카테고리 선택 -->
@@ -64,8 +64,8 @@
             <!-- 썸머노트 -->
             <div class="contents">
 <!--              <form method="post" action="">-->
-                <input id="subject" name="commuTitle" class="adoptwrite-title" placeholder="제목을 입력해주세요" required>
-                <textarea id="contents" name="commuContent" required></textarea>
+                <input id="subject" name="commuTitle" class="adoptwrite-title" placeholder="제목을 입력해주세요">
+                <textarea id="contents" name="commuContent"></textarea>
 <!--              </form>-->
             </div>
 

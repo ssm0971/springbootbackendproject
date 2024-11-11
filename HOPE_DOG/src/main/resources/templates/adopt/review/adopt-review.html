@@ -38,7 +38,7 @@
           <div th:text="${review.reviewNo}" style="display: none" class="adoptNo"></div>
           <div class="adopt-post-title" th:text="${review.reviewTitle}"></div>
         </div>
-        <div class="adopt-post-content" th:utext="${review.reviewContent}"></div>
+<!--        <div class="adopt-post-content" th:utext="${review.reviewContent}"></div>-->
         <div class="adopt-post-content2">등록일 : <span th:text="${#dates.format(review.reviewRegidate, 'yyyy-MM-dd')}"></div>
         <div class="adopt-post-content2">작성자 : <span th:text="${review.memberName}"></div>
       </div>

@@ -108,4 +108,10 @@ public interface AdminMapper {
     String findCenterMemberNameByNo(@Param("centerMemberNo") Long centerMemberNo);
 
     void deleteNotice (@Param("noticeNoList") List<Long> noticeNoList);
+
+    void insertNotice (@Param("notice") AdminNoticeDTO notice);
+
+    void modifyNotice (@Param("notice") AdminNoticeDTO notice);
+
+    Long selectCurNoticeNo ();
 }

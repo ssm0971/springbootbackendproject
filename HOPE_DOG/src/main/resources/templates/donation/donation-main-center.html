@@ -35,14 +35,15 @@
         </div>
         <!--게시글-->
         <div class="dona-ul-all" th:each="donation : ${donationList}">
-          <a th:href="@{/dona/view/{donaNo}(donaNo=${donation.donaNo})}">
+<!--          <a th:href="@{/dona/view/{donaNo}(donaNo=${donation.donaNo})}">-->
             <div class="dona-ul-main">
               <div class="dona-title" th:text="${donation.donaTitle}"></div>
               <div class="dona-author" th:text="${donation.centerMemberName}"></div>
               <div class="dona-date" th:text="${#dates.format(donation.donaRegidate, 'yyyy-MM-dd')}"></div>
 
               <div class="donaNo" th:text="${donation.donaNo}" style="display: none;"></div>
-            </div></a>
+            </div>
+<!--          </a>-->
         </div>
 
 <!--        <div class="dona-ul-all">-->

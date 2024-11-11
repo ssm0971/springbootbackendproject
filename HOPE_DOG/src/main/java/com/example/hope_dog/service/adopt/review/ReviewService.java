@@ -1,5 +1,6 @@
 package com.example.hope_dog.service.adopt.review;
 
+import com.example.hope_dog.dto.adopt.adopt.AdoptWriteDTO;
 import com.example.hope_dog.dto.adopt.protect.*;
 import com.example.hope_dog.dto.adopt.review.*;
 import com.example.hope_dog.dto.page.Criteria;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -38,6 +40,11 @@ public class ReviewService {
     //게시글 작성
     public void registerReviewtion(ReviewWriteDTO reviewWriteDTO) {
         reviewMapper.reviewWrite(reviewWriteDTO);
+    }
+
+    //후기글 수정 처리
+    public void reviewModify(ReviewWriteDTO reviewWriteDTO) {
+        reviewMapper.reviewModify(reviewWriteDTO); // 매퍼 호출
     }
 
     //후기글 마감처리

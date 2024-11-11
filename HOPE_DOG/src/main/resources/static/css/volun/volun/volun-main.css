@@ -1,0 +1,138 @@
+main{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.volun-main-size{
+  width: 1080px;
+  min-height: 1800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.volun-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  width: 1080px;
+  height: 60px;
+  background-color: white;
+  border-top: solid 2px #9B805D;
+  border-bottom: solid 2px #9B805D;
+}
+volun-banner3-list:hover{
+  cursor: pointer;
+}
+
+.volun-navList{
+  font-size: 18px;
+  font-weight: bold;
+  width: 180px;
+  text-align: center;
+}
+
+.volun-navList:hover {
+  cursor: pointer; /* 마우스 오버 시 커서를 포인터로 변경 */
+}
+
+.volun-banner1{
+  width: 1080px;
+  height: 220px;
+  background-color: #F5EAD9;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.volun-banner2 {
+  width: 1080px;
+  height: 180px;
+  background-color: white;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.volun-banner3{
+  width: 1000px;
+  height: 1300px;
+  background-color: #F5EAD9;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.volun-banner3-notice{
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  position: relative;
+  right: 330px;
+  bottom: 100px;
+}
+
+.volun-banner3-inner{
+  width: 850px;
+  height: 400px;
+  background-color: white;
+  border: 1px solid #9B805D;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+
+.volun-banner3-list{
+  display: flex;
+  height: 35px;
+  border-bottom: 1px solid #F5EAD9;
+}
+
+.volun-banner3-list:hover {
+  cursor: pointer;
+}
+
+
+.volun-banner3-cate{
+  width: 100px;
+  text-align: center;
+}
+
+.volun-banner3-title{
+  width: 500px;
+  text-align: left;
+}
+
+.volun-banner3-nickname{
+  width: 100px;
+  text-align: center;
+}
+
+.volun-banner3-date{
+  width: 100px;
+  text-align: center;
+}
+
+.volun-banner3-status{
+  width: 100px;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; 
+}
+

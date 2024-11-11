@@ -11,6 +11,13 @@
         WHERE PROTECT_NO = #{protecttNo}
     </select>
 
+    <!--회원상태조회-->
+    <select id="centerMemberStatus" resultType="ProtectMainDTO">
+        select CENTER_MEMBER_STATUS
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+    </select>
+
     <!-- 여기서 부터 페이지네이션 관련 쿼리문-->
     <!-- 임시보호 전체게시글 수 -->
     <select id="selectTotal" resultType="int">
@@ -109,6 +116,24 @@
         #{protectBirth}, #{protectIntroduce}, #{protectTitle}, #{protectContent}, #{centerMemberNo}
         )
     </insert>
+
+    <!-- 게시글 수정 -->
+    <update id="protectModify" parameterType="ProtectWriteDTO">
+        UPDATE TBL_PROTECT
+        SET PROTECT_PERIODSTART = #{protectPeriodstart},
+            PROTECT_PERIODEND = #{protectPeriodend},
+            PROTECT_NAME = #{protectName},
+            PROTECT_BREED = #{protectBreed},
+            PROTECT_NEUTERING = #{protectNeutering},
+            PROTECT_GENDER = #{protectGender},
+            PROTECT_WEIGHT = #{protectWeight},
+            PROTECT_BIRTH = #{protectBirth},
+            PROTECT_INTRODUCE = #{protectIntroduce},
+            PROTECT_TITLE = #{protectTitle},
+            PROTECT_CONTENT = #{protectContent},
+            PROTECT_UPDATEDATE = SYSDATE
+        WHERE PROTECT_NO = #{protectNo}
+    </update>
 
     <!-- 게시글 마감 처리 -->
     <update id="protectEnd" parameterType="ProtectDetailDTO">

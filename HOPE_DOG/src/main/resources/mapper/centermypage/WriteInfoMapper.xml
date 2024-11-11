@@ -42,6 +42,24 @@
             tc.COMMU_REGIDATE DESC
     </select>
 
+<!--    기부 작성글 조회-->
+    <select id="writeInfoDonaList" parameterType="Long" resultType="WriteInfoDonaListDTO">
+        SELECT
+            tv.DONA_NO,
+            tv.DONA_TITLE,
+            tv.DONA_CONTENT,
+            tv.DONA_REGIDATE,
+            COUNT(tvc.DONA_COMMENT_NO) AS commentCount
+        FROM
+            TBL_DONA tv
+                LEFT JOIN
+            TBL_DONA_COMMENT tvc ON tv.DONA_NO = tvc.DONA_NO
+        WHERE tv.CENTER_MEMBER_NO = #{centerMemberNo}
+        GROUP BY
+            tv.DONA_NO, tv.DONA_TITLE, tv.DONA_CONTENT, tv.DONA_REGIDATE
+    </select>
+
+
 <!--    봉사 작성글 조회-->
     <select id="writeInfoVolList" parameterType="Long" resultType="WriteInfoVolListDTO">
         SELECT

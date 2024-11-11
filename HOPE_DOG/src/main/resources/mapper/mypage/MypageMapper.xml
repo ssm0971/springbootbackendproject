@@ -56,16 +56,18 @@
 
 <!--    회원정보수정-->
     <update id="updateProfile" parameterType="MypageUpdateProfileDTO">
-        UPDATE TBL_CENTER_MEMBER
+        UPDATE TBL_MEMBER
         SET
             MEMBER_NAME = #{memberName},
+            MEMBER_NICKNAME = #{memberNickname},
             MEMBER_EMAIL = #{memberEmail},
             MEMBER_PHONE_NUMBER = #{memberPhoneNumber},
-            MEMBER_ADDRESS = #{centerMemberAddress},
-            MEMBER_DETAIL_ADDRESS = #{memberDetailAddress}
+            MEMBER_ADDRESS = #{memberAddress},
+            MEMBER_DETAIL_ADDRESS = #{memberDetailAddress},
+            MEMBER_AGREE = #{memberAgree},
             MEMBER_PW = COALESCE(NULLIF(#{memberNewPw}, #{memberPw}), MEMBER_PW)
-        WHERE CENTER_MEMBER_NO = #{memberNo}
-          AND CENTER_MEMBER_PW = #{memberPw}
+        WHERE MEMBER_NO = #{memberNo}
+          AND MEMBER_PW = #{memberPw}
     </update>
 
 <!--    입양게시글조회-->
@@ -83,7 +85,8 @@
         SELECT
             P.PROTECT_TITLE,
             P.PROTECT_STATUS,
-            P.PROTECT_PERIODEND
+            P.PROTECT_PERIODEND,
+            PR.PROTECT_REQUEST_NO
         FROM TBL_PROTECT P
                  JOIN TBL_PROTECT_REQUEST PR ON P.PROTECT_NO = PR.PROTECT_NO
         WHERE PR.MEMBER_NO = #{memberNo}
@@ -104,7 +107,8 @@
             'CAR' AS TYPE,
             C.CAR_TITLE AS TITLE,
             M.MEMBER_NICKNAME AS WRITER,
-            C.CAR_REGIDATE AS REGIDATE
+            C.CAR_REGIDATE AS REGIDATE,
+            C.CAR_NO
         FROM
             TBL_CAR C
                 JOIN
@@ -115,7 +119,8 @@
             'COMMU' AS TYPE,
             CO.COMMU_TITLE AS TITLE,
             M.MEMBER_NICKNAME AS WRITER,
-            CO.COMMU_REGIDATE AS REGIDATE
+            CO.COMMU_REGIDATE AS REGIDATE,
+            CO.COMMU_NO
         FROM
             TBL_COMMU CO
                 JOIN
@@ -126,7 +131,8 @@
             'REVIEW' AS TYPE,
             R.REVIEW_TITLE AS TITLE,
             M.MEMBER_NICKNAME AS WRITER,
-            R.REVIEW_REGIDATE AS REGIDATE
+            R.REVIEW_REGIDATE AS REGIDATE,
+            R.REVIEW_NO
         FROM
             TBL_REVIEW R
                 JOIN
@@ -217,6 +223,89 @@
 <!--        WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount}-->
 <!--        ]]>-->
 <!--</select>-->
+
+    <!--    임시보호 신청서 상세페이지-->
+    <select id="protectRequestInfo" parameterType="Long" resultType="MpProtectRequestDTO">
+        SELECT
+            tpr.PROTECT_REQUEST_NO,
+            tpr.PROTECT_REQUEST_NAME,
+            tpr.PROTECT_REQUEST_PHONE,
+            tpr.PROTECT_REQUEST_PHONE_SUB,
+            tpr.PROTECT_REQUEST_EMAIL,
+            tpr.PROTECT_REQUEST_GENDER,
+            tpr.PROTECT_REQUEST_AGE,
+            tpr.PROTECT_REQUEST_ZIPCODE,
+            tpr.PROTECT_REQUEST_ADDRESS,
+            tpr.PROTECT_REQUEST_ADDRESS_DETAIL,
+            tpr.PROTECT_REQUEST_JOB,
+            tpr.PROTECT_REQUEST_MARRY,
+            tpr.PROTECT_REQUEST_INFO_AGREEMENT,
+            tpr.PRO_REQUEST_Q1,
+            tpr.PRO_REQUEST_Q2,
+            tpr.PRO_REQUEST_Q3,
+            tpr.PRO_REQUEST_Q4,
+            tpr.PRO_REQUEST_Q5,
+            tpr.PRO_REQUEST_Q6,
+            tpr.PRO_REQUEST_Q7,
+            tpr.PRO_REQUEST_Q8,
+            tpr.PRO_REQUEST_Q9,
+            tpr.PRO_REQUEST_Q10,
+            tpr.PRO_REQUEST_Q11,
+            tpr.PRO_REQUEST_Q12,
+            tpr.PRO_REQUEST_Q13,
+            tpr.PRO_REQUEST_Q14,
+            tpr.PRO_REQUEST_Q15,
+            tpr.PROTECT_REQUEST_AGREEMENT,
+            tpr.PROTECT_NO,
+            tpr.MEMBER_NO,
+            tpr.CENTER_MEMBER_NO,
+            tp.PROTECT_TITLE ,
+            tp.PROTECT_REGIDATE ,
+            tm.MEMBER_NICKNAME ,
+            tcm.CENTER_MEMBER_NAME,
+            tpr.PRO_REQUEST_STATUS
+        FROM TBL_PROTECT_REQUEST tpr
+                 LEFT JOIN TBL_PROTECT tp ON tpr.PROTECT_NO = tp.PROTECT_NO
+                 LEFT JOIN TBL_MEMBER tm ON tpr.MEMBER_NO = tm.MEMBER_NO
+                 LEFT JOIN TBL_CENTER_MEMBER tcm ON tpr.CENTER_MEMBER_NO =tcm.CENTER_MEMBER_NO
+        WHERE tpr.PROTECT_REQUEST_NO = #{protectRequestNo}
+    </select>
+
+<!--    임시보호 신청서 수정-->
+    <update id="updateProtectRequest" parameterType="MpProtectRequestDTO">
+        UPDATE TBL_PROTECT_REQUEST tpr
+        SET
+            tpr.PROTECT_REQUEST_NO = #{protectRequestNo},
+            tpr.PROTECT_REQUEST_NAME = #{protectRequestName},
+            tpr.PROTECT_REQUEST_PHONE = #{protectRequestPhone},
+            tpr.PROTECT_REQUEST_PHONE_SUB = #{protectRequestPhoneSub},
+            tpr.PROTECT_REQUEST_EMAIL = #{protectRequestEmail},
+            tpr.PROTECT_REQUEST_GENDER = #{protectRequestGender},
+            tpr.PROTECT_REQUEST_AGE = #{protectRequestAge},
+            tpr.PROTECT_REQUEST_ZIPCODE = #{protectRequestZipcode},
+            tpr.PROTECT_REQUEST_ADDRESS = #{protectRequestAddress},
+            tpr.PROTECT_REQUEST_ADDRESS_DETAIL = #{protectRequestAddressDetail},
+            tpr.PROTECT_REQUEST_JOB = #{protectRequestJob},
+            tpr.PROTECT_REQUEST_MARRY = #{protectRequestMarry},
+            tpr.PROTECT_REQUEST_INFO_AGREEMENT = #{protectRequestInfoAgreement},
+            tpr.PRO_REQUEST_Q1 = #{proRequestQ1},
+            tpr.PRO_REQUEST_Q2 = #{proRequestQ2},
+            tpr.PRO_REQUEST_Q3 = #{proRequestQ3},
+            tpr.PRO_REQUEST_Q4 = #{proRequestQ4},
+            tpr.PRO_REQUEST_Q5 = #{proRequestQ5},
+            tpr.PRO_REQUEST_Q6 = #{proRequestQ6},
+            tpr.PRO_REQUEST_Q7 = #{proRequestQ7},
+            tpr.PRO_REQUEST_Q8 = #{proRequestQ8},
+            tpr.PRO_REQUEST_Q9 = #{proRequestQ9},
+            tpr.PRO_REQUEST_Q10 = #{proRequestQ10},
+            tpr.PRO_REQUEST_Q11 = #{proRequestQ11},
+            tpr.PRO_REQUEST_Q12 = #{proRequestQ12},
+            tpr.PRO_REQUEST_Q13 = #{proRequestQ13},
+            tpr.PRO_REQUEST_Q14 = #{proRequestQ14},
+            tpr.PRO_REQUEST_Q15 = #{proRequestQ15},
+            tpr.PROTECT_REQUEST_AGREEMENT = #{protectRequestAgreement}
+        WHERE tpr.PROTECT_REQUEST_NO = #{protectRequestNo}
+    </update>
 
 
 </mapper>

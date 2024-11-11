@@ -6,6 +6,7 @@ import com.example.hope_dog.dto.commu.CommuDTO;
 import com.example.hope_dog.dto.commu.CommuDetailDTO;
 import com.example.hope_dog.dto.commu.CommuReportDTO;
 import com.example.hope_dog.dto.member.MemberDTO;
+import com.example.hope_dog.dto.page.Criteria;
 import com.example.hope_dog.mapper.commu.CommuMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -95,9 +96,16 @@ public class CommuService {
     }
 
     //검색
-    public List<CommuDTO> searchCommu(String memberNickName, String centerMemberName,String title) {
-        return commuMapper.searchCommu(memberNickName,centerMemberName,title);
+    public List<CommuDetailDTO> commuSearch(String commuTitle, String memberNickname, String centerMemberName) {
+        return commuMapper.commuSearch(commuTitle, memberNickname, centerMemberName);
     }
+
+
+
+
+
+
+
 
     //게시글 상세
     public List<CommuDetailDTO> selectCommuByNo(Long commuNo) {
@@ -151,6 +159,11 @@ public class CommuService {
 
         // DB에 게시글 저장
         commuMapper.insertWrite(commuDTO);
+    }
+
+    //게시글 수정
+    public void commuModify(CommuDetailDTO commuDetailDTO){
+        commuMapper.commuModify(commuDetailDTO);
     }
 
     //게시글 삭제

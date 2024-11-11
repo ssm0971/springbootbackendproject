@@ -21,6 +21,8 @@
 
 
 
+
+
     <!-- 카테고리별 커뮤니티 게시글 조회 -->
     <select id="findCate" parameterType="string" resultType="CommuDTO">
         SELECT
@@ -71,29 +73,43 @@
         ORDER BY C.COMMU_GOOD DESC -- 조회수 기준으로 정렬
     </select>
 
-    <!-- 커뮤니티 게시글 검색 -->
-    <select id="searchCommu" parameterType="map" resultType="CommuDTO">
+    <!--    커뮤니티 검색-->
+    <select id="commuSearch" resultType="CommuDetailDTO">
         SELECT
-            C.COMMU_NO,
-            C.COMMU_CATE,
-            C.COMMU_TITLE,
-            C.COMMU_CONTENT,
-            C.COMMU_REGIDATE,
-            C.COMMU_UPDATEDATE,
-            C.COMMU_GOOD,
-            C.COMMU_WRITER,
-            M.MEMBER_NICKNAME AS MEMBER_NICKNAME,
-            CM.CENTER_MEMBER_NAME AS CENTER_MEMBER_NAME
+        c.COMMU_NO,
+        c.COMMU_CATE,
+        c.COMMU_TITLE,
+        c.COMMU_CONTENT,
+        c.COMMU_REGIDATE,
+        c.COMMU_UPDATEDATE,
+        c.COMMU_GOOD,
+        c.COMMU_WRITER,
+        m.MEMBER_NICKNAME AS memberNickname,
+        cm.CENTER_MEMBER_NAME AS centerMemberName
         FROM
-            TBL_COMMU C
-                LEFT JOIN TBL_MEMBER M ON C.COMMU_WRITER = M.MEMBER_NO
-                LEFT JOIN TBL_CENTER_MEMBER CM ON C.COMMU_WRITER = CM.CENTER_MEMBER_NO
+        TBL_COMMU c
+        LEFT JOIN
+        TBL_MEMBER m ON c.COMMU_WRITER = m.MEMBER_NO
+        LEFT JOIN
+        TBL_CENTER_MEMBER cm ON c.COMMU_WRITER = cm.CENTER_MEMBER_NO
         WHERE
-            (M.MEMBER_NICKNAME LIKE '%' || #{memberNickName} || '%' OR
-             CM.CENTER_MEMBER_NAME LIKE '%' || #{centerMemberName} || '%')
-          AND (C.COMMU_TITLE LIKE '%' || #{title} || '%' OR C.COMMU_CONTENT LIKE '%' || #{title} || '%')
-        ORDER BY C.COMMU_REGIDATE DESC
+        <choose>
+            <!-- 제목 검색 -->
+            <when test="commuTitle != null">
+                c.COMMU_TITLE LIKE '%' || #{commuTitle} || '%'
+            </when>
+
+            <!-- 닉네임 검색 -->
+            <when test="memberNickname != null">
+                (m.MEMBER_NICKNAME LIKE '%' || #{memberNickname} || '%'
+                OR cm.CENTER_MEMBER_NAME LIKE '%' || #{memberNickname} || '%')
+            </when>
+
+        </choose>
+        ORDER BY c.COMMU_REGIDATE DESC
     </select>
+
+
 
 
 
@@ -134,6 +150,19 @@
         )
     </insert>
 
+<!--    게시글 수정-->
+    <update id="commuModify" parameterType="CommuDetailDTO">
+        UPDATE TBL_COMMU
+        SET
+            COMMU_CATE = #{commuCate},
+            COMMU_TITLE = #{commuTitle},
+            COMMU_CONTENT = #{commuContent},
+            COMMU_UPDATEDATE = SYSDATE,
+            COMMU_WRITER = #{commuWriter}
+        WHERE COMMU_NO = #{commuNo}
+    </update>
+
+
 <!--    게시글 삭제-->
     <delete id="commuDelete" parameterType="CommuDetailDTO">
         DELETE FROM TBL_COMMU
@@ -157,7 +186,7 @@
         SELECT
             cc.COMMU_COMMENT_NO,
             cc.COMMU_COMMENT,
-            cc.COMMU_COMMET_REGIDATE,
+            cc.COMMU_COMMENT_REGIDATE,
             cc.COMMU_COMMENT_WRITER,
             CASE
                 WHEN MOD(cc.COMMU_COMMENT_WRITER, 2) != 0 THEN m.MEMBER_NAME
@@ -179,7 +208,7 @@
             SELECT SEQ_COMMU_COMMENT.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO TBL_COMMU_COMMENT(
-        COMMU_COMMENT_NO,COMMU_COMMENT,COMMU_COMMET_REGIDATE,
+        COMMU_COMMENT_NO,COMMU_COMMENT,COMMU_COMMENT_REGIDATE,
         COMMU_UPDATEDATE,COMMU_COMMENT_WRITER,COMMU_NO
         )VALUES(
         #{commuCommentNo},#{commuComment},SYSDATE,SYSDATE,#{commuCommentWriter},#{commuNo}

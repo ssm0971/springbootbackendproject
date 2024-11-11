@@ -22,38 +22,128 @@
         </div>
       </nav>
     </div>
+
     <!-- 보호소 목록 -->
     <div class="doghouse-main">
       <div class="doghouse-box">
-
-        <form action="/api/dogmap" method="post">
-          <button type="submit">데이터 가져오기</button>
-        </form>
-
-        <div th:if="${dogMapApiDTO != null and !#lists.isEmpty(dogMapApiDTO.row)}">
-          <div class="doghouse-item" th:each="row : ${dogMapApiDTO.row}">
+        <div th:if="${shelters != null and !#lists.isEmpty(shelters)}">
+          <div class="doghouse-item" th:each="row : ${shelters}">
             <div class="doghouse-list-title">
-              <div class="doghouse-name"><span th:text="${row.entrpsNm}">센터명</span></div>
-              <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">
+              <div class="doghouse-name">
+                <span th:text="${row.careNm}">센터명</span> <!-- 보호소 이름 -->
+              </div>
+              <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image"> <!-- 이미지 경로 수정 -->
             </div>
             <div class="doghouse-list-info">
               <div class="doghouse">
                 <div class="doghouse-information">
-                  <span th:text="'주소 : ' + ${row.refineLotnoAddr}">주소</span>
-                  <span th:text="'전화번호 : ' + ${row.entrpsTelno}">전화번호</span>
+                  <span th:text="'주소 : ' + ${row.careAddr}">주소</span> <!-- 보호소 주소 -->
+                  <span th:text="'전화번호 : ' + ${row.careTel}">전화번호</span> <!-- 보호소 전화번호 -->
                 </div>
               </div>
               <div class="doghouse-map">
-                지도 보여줄거야
+                <div style="display: none" th:text="${row.lat} + ',' + ${row.lng}"> <!-- 위도, 경도 값 저장 -->
+                  <!-- 위도, 경도 값은 JavaScript에서 사용하기 위해 숨김 처리 -->
+                </div>
+                <!-- 여기서 지도를 표시할 수 있는 JavaScript 코드 추가 -->
+                <div id="map-${row.careNm.replaceAll(' ', '_')}" style="width: 100%; height: 300px;"></div> <!-- 각 보호소마다 고유한 ID -->
               </div>
             </div>
           </div>
         </div>
-        <div th:if="${dogMapApiDTO == null or #lists.isEmpty(dogMapApiDTO.row)}">
+        <div th:if="${shelters == null or #lists.isEmpty(shelters)}">
           <p>데이터를 가져올 수 없습니다.</p>
         </div>
       </div>
     </div>
+
+
+<!--    <div class="doghouse-main">-->
+<!--      <div class="doghouse-box">-->
+<!--        <div th:if="${shelters != null and !#lists.isEmpty(shelters)}">-->
+<!--          <div class="doghouse-item" th:each="row : ${shelters}">-->
+<!--            <div class="doghouse-list-title">-->
+<!--              <div class="doghouse-name"><span th:text="${row.careNm}">센터명</span></div>-->
+<!--              <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">-->
+<!--            </div>-->
+<!--            <div class="doghouse-list-info">-->
+<!--              <div class="doghouse">-->
+<!--                <div class="doghouse-information">-->
+<!--                  <span th:text="'주소 : ' + ${row.careAddr}">주소</span>-->
+<!--                  <span th:text="'전화번호 : ' + ${row.careTel}">전화번호</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="doghouse-map">-->
+<!--                <div style="display: none" th:text="${row.lat}, ${row.lng}"> &lt;!&ndash; 위도, 경도 값 저장 &ndash;&gt; </div>-->
+<!--                지도 보여줄거야-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div th:if="${shelters == null or #lists.isEmpty(shelters)}">-->
+<!--          <p>데이터를 가져올 수 없습니다.</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <!--    <div class="doghouse-main">-->
+<!--      <div class="doghouse-box">-->
+<!--        <div th:if="${dogMapApiDTOList != null and !#lists.isEmpty(dogMapApiDTOList)}">-->
+<!--          <div class="doghouse-item" th:each="row : ${dogMapApiDTOList}">-->
+<!--            <div class="doghouse-list-title">-->
+<!--              <div class="doghouse-name"><span th:text="${row.careNm}">센터명</span></div>-->
+<!--              <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">-->
+<!--            </div>-->
+<!--            <div class="doghouse-list-info">-->
+<!--              <div class="doghouse">-->
+<!--                <div class="doghouse-information">-->
+<!--                  <span th:text="'주소 : ' + ${row.careAddr}">주소</span>-->
+<!--                  <span th:text="'전화번호 : ' + ${row.careTel}">전화번호</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="doghouse-map">-->
+<!--                <div style="display: none" th:text="${row.lat}, ${row.lng}"> &lt;!&ndash; 위도, 경도 값 저장 &ndash;&gt; </div>-->
+<!--                지도 보여줄거야-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div th:if="${dogMapApiDTOList == null or #lists.isEmpty(dogMapApiDTOList)}">-->
+<!--          <p>데이터를 가져올 수 없습니다.</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+
+    <!--    <div class="doghouse-main">-->
+<!--      <div class="doghouse-box">-->
+
+<!--        <div th:if="${dogMapApiDTO != null and !#lists.isEmpty(dogMapApiDTO.row)}">-->
+<!--          <div class="doghouse-item" th:each="row : ${dogMapApiDTO.row}">-->
+<!--            <div class="doghouse-list-title">-->
+<!--              <div class="doghouse-name"><span th:text="${row.entrpsNm}">센터명</span></div>-->
+<!--              <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">-->
+<!--            </div>-->
+<!--            <div class="doghouse-list-info">-->
+<!--              <div class="doghouse">-->
+<!--                <div class="doghouse-information">-->
+<!--                  <span th:text="'주소 : ' + ${row.refineLotnoAddr}">주소</span>-->
+<!--                  <span th:text="'전화번호 : ' + ${row.entrpsTelno}">전화번호</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="doghouse-map">-->
+<!--                <div style="display: none" th:text=""> &lt;!&ndash;위도, 경도 값 저장&ndash;&gt; </div>-->
+<!--                지도 보여줄거야-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div th:if="${dogMapApiDTO == null or #lists.isEmpty(dogMapApiDTO.row)}">-->
+<!--          <p>데이터를 가져올 수 없습니다.</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
 
 

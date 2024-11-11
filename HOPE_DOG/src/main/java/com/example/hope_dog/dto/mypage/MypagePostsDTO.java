@@ -17,5 +17,8 @@ public class MypagePostsDTO {
     private String title;
     private String writer;
     private Date regidate;
+    private Long commuNo;
+    private Long carNo;
+    private Long reviewNo;
 //    private String subquery;
 }

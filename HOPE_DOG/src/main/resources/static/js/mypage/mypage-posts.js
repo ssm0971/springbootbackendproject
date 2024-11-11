@@ -1,3 +1,6 @@
+
+
+
 //   페이지네이션
 $(function() {
     const items = $('.member-profile-cumuboard-contentbox');  // 게시글 항목 선택

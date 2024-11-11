@@ -5,7 +5,21 @@
   margin: 0 auto;
 }
 
-/* 봉사,카풀 게시판 바 */
+a {
+  text-decoration: none;
+  color: black;
+}
+
+ul{
+  display: flex; /* 가로로 나열 */
+  list-style-type: none;
+  justify-content: center; /* 가운데 정렬 */
+  padding: 0; /* 기본 패딩 제거 */
+  margin: 0 auto; /* 중앙 정렬 */
+  width: fit-content; /* 내용에 맞춰 너비 조정 */
+}
+
+/* 봉사, 카풀 게시판 바 */
 .volun-nav{
   display: flex;
   justify-content: center;
@@ -17,14 +31,14 @@
   border-bottom: solid 2px #9B805D;
 }
 
-.volun-navList{
+.volun-nav li{
   font-size: 18px;
   font-weight: bold;
   width: 300px;
   text-align: center;
 }
 
-.volun-navList1{
+.volun-nav li{
   font-size: 18px;
   font-weight: bold;
   width: 300px;
@@ -116,3 +130,4 @@ textarea::placeholder {
   color: black; /* 원하는 색상으로 변경 */
   font-weight: bold;
 }
+

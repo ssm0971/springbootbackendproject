@@ -1,19 +1,34 @@
 package com.example.hope_dog.service.admin;
 
 import com.example.hope_dog.dto.admin.*;
+import com.example.hope_dog.mapper.admin.AdminFileMapper;
 import com.example.hope_dog.mapper.admin.AdminMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import net.coobird.thumbnailator.Thumbnails;
 
-import java.util.List;
-import java.util.Map;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class AdminService {
     private final AdminMapper adminMapper;
+    private final AdminFileMapper adminFileMapper;
+
+    @Value("C:/upload/notice")
+    private String fileDir;
 
 //    public Long selectId(String adminId, String adminPw) {
 //        return adminMapper.selectId(adminId, adminPw).orElseThrow(() -> new IllegalStateException("존재하지 않는 관리자 정보"));
@@ -135,5 +150,110 @@ public class AdminService {
 
     public String findCenterMemberNameByNo(Long centerMemberNo){ return adminMapper.findCenterMemberNameByNo(centerMemberNo); }
 
-    public void deleteNotice(List<Long> noticeNoList){adminMapper.deleteNotice(noticeNoList);}
+    public void deleteNotice(List<Long> noticeNoList){
+        for(Long noticeNo : noticeNoList){
+            adminFileMapper.deleteFileByNoticeNo(noticeNo);
+        }
+        adminMapper.deleteNotice(noticeNoList);
+    }
+
+    public void insertNotice(AdminNoticeDTO notice, List<MultipartFile> files) throws IOException {
+        adminMapper.insertNotice(notice);
+
+        for(MultipartFile file : files){
+            if(file.isEmpty()){
+                break;
+            }
+
+            AdminFileDTO adminFileDTO = saveFile(file);
+            adminFileMapper.insertFile(adminFileDTO);
+        }
+    }
+
+    public AdminFileDTO saveFile(MultipartFile file) throws IOException {
+        // 파일명, uuid 생성
+        String originalFilename = file.getOriginalFilename();
+        UUID uuid = UUID.randomUUID();
+        String systemName = uuid.toString() + "_" + originalFilename;
+
+        // 파일 업로드 경로 설정 및 디렉터리 생성
+        String uploadPath = fileDir + "/" + getUploadPath();  // fileDir과 getUploadPath()를 결합
+        File uploadDir = new File(uploadPath);
+
+        // 경로가 존재하지 않는다면(폴더가 없다면)
+        if (!uploadDir.exists()) {
+            // 경로에 필요한 모든 폴더를 생성한다
+            uploadDir.mkdirs();
+        }
+
+        // 파일 저장
+        File uploadFile = new File(uploadDir, systemName);
+        file.transferTo(uploadFile); // 최종적으로 저장될 파일 객체
+
+        // 이미지 파일인 경우 썸네일 생성
+        String contentType = Files.probeContentType(uploadFile.toPath());
+        try {
+            if (contentType != null && contentType.startsWith("image")) {
+                BufferedImage bufferedImage = ImageIO.read(uploadFile);
+                if (bufferedImage != null) {
+                    // Thumbnails 라이브러리 사용하여 이미지 썸네일 생성하고 th_ 접두사를 붙여 저장
+                    Thumbnails.of(bufferedImage).size(300, 200).outputFormat("jpg")
+                            .toFile(new File(uploadDir, "th_" + systemName + ".jpg"));
+                }
+            } else {
+                // 이미지가 아닌 파일일 경우 처리 (이미지 파일이 아니면 IOException을 던짐)
+                throw new IOException("The file is not an image.");
+            }
+        } catch (IOException e) {
+            // 이미지는 아니지만 다른 예외가 발생한 경우 처리
+            System.err.println("Error while processing image file: " + e.getMessage());
+            throw new RuntimeException("Error while processing the file.", e);
+        }
+
+        // FileDTO 객체 생성 및 반환
+        AdminFileDTO fileDTO = new AdminFileDTO();
+        fileDTO.setNoticeNo(selectCurNoticeNo());
+        fileDTO.setFileUuid(uuid.toString());
+        fileDTO.setFileName(originalFilename);
+        fileDTO.setFilePath(getUploadPath());  // 날짜 형식 경로만 저장 (상대 경로)
+
+        return fileDTO;
+    }
+
+
+    //여러개의 파일을 처리하여 각각 저장하는 메소드
+    private void saveFiles(List<MultipartFile> files) throws IOException{
+        for(MultipartFile file : files){
+            if(!file.isEmpty()){
+                AdminFileDTO fileDTO = saveFile(file);
+                fileDTO.setNoticeNo(selectCurNoticeNo());
+                adminFileMapper.insertFile(fileDTO);
+            }
+        }
+    }
+
+    private String getUploadPath(){
+        LocalDate date = LocalDate.now();
+        return date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    }
+
+    private void deleteFileByFileNo(Long fileNo){
+        // 데이터베이스에서 파일 정보 삭제 (존재하지 않으면 예외 발생 가능)
+        adminFileMapper.deleteFileByFileNo(fileNo);
+
+        // 파일 시스템에서 파일 삭제 로직
+        Optional<AdminFileDTO> fileOptional = Optional.ofNullable(adminFileMapper.selectFileByNo(fileNo));
+        if (fileOptional.isPresent()) {
+            AdminFileDTO file = fileOptional.get();
+            File fileToDelete = new File(file.getFilePath());
+
+            if (fileToDelete.exists()) {
+                fileToDelete.delete();
+            }
+        }
+    }
+
+    public void modifyNotice(AdminNoticeDTO notice){adminMapper.modifyNotice(notice);}
+
+    public Long selectCurNoticeNo(){return adminMapper.selectCurNoticeNo();}
 }

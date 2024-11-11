@@ -60,6 +60,9 @@ a{
   font-weight: bold;
   display: flex;
   align-items: center;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .volun-detail-info{
@@ -112,6 +115,7 @@ a{
   align-items: center;
 }
 
+
 /* 수정 */
 .volun-modify-button{
   width: 100px;
@@ -163,37 +167,36 @@ a{
   color: white;
 }
 
-/* 댓글창 */
-.volun-detail-box4{
+/*댓글 수정삭제신고 추가*/
+.car-detail-commentbox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 745px;
-  height: auto;
+  min-height: 95px;
 }
 
-
-.volun-detail-commentbox{
-  width: 745px;
-  height: auto;
-}
-
-.volun-detail-name{
+.car-detail-name{
   font-size: 14px;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
 }
 
-.volun-detail-comment{
+.car-detail-comment{
   font-size: 14px;
 }
 
-.volun-detail-date{
+.car-detail-date{
   font-size: 12px;
 }
 
-.volun-detail-commentregi{
+.car-detail-commentregi{
   width: 620px;
   height: 50px;
 }
 
-.volun-commentregi-button{
+.car-commentregi-button{
   width: 100px;
   height: 50px;
   background-color: #F5EAD9;
@@ -204,7 +207,52 @@ a{
   cursor: pointer;
 }
 
-.volun-commentregi-button:hover {
+.car-commentregi-button:hover {
   background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
   color: white;
 }
+
+/* 댓글버튼 */
+.car-comment-button{
+  width: 50px;
+  height: 25px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.car-comment-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+/* 댓글수정 input 박스 */
+.review-modify-comment{
+  width: 300px;
+  height: 30px;
+}
+
+.car-detail-commentregi{
+  width: 620px;
+  height: 50px;
+}
+
+.car-commentregi-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.car-commentregi-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+

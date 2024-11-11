@@ -10,7 +10,6 @@ function cancleClick() {
 }
 
 
-
 // 썸머노트 크기 및 튜닝
 $(function () {
     $("#donaContent").summernote({

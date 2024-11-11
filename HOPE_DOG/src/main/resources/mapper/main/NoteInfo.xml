@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.note.NoteInfoMapper">
+    <select id="getUnreadCount" parameterType="Long" resultType="Long">
+        SELECT COUNT(*) AS unreadCount
+        FROM TBL_NOTEBOX_RECEIVE tnr
+        WHERE tnr.NOTEBOX_RECEIVE_R = #{userNo}
+          AND tnr.NOTEBOX_RECEIVE_READ = 'N'
+    </select>
+
+    <update id="markAllAsRead" parameterType="Long">
+        UPDATE TBL_NOTEBOX_RECEIVE
+        SET NOTEBOX_RECEIVE_READ = 'Y'
+        WHERE NOTEBOX_RECEIVE_R = #{userNo} -- 회원번호(쪽지받은사람)
+          AND NOTEBOX_RECEIVE_READ = 'N' -- 읽지 않은 쪽지만 업데이트
+    </update>
+
+</mapper>

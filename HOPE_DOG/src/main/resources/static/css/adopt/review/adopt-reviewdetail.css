@@ -54,6 +54,9 @@ main{
   font-weight: bold;
   display: flex;
   align-items: center;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .adopt-detail-info{
@@ -100,7 +103,7 @@ main{
   width: 745px;
   height: auto;
   display: flex;
-  justify-content: right;
+  justify-content: left;
   align-items: center;
 }
 
@@ -265,3 +268,4 @@ a {
   text-decoration: none;
   color: inherit;
 }
+

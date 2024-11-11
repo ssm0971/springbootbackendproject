@@ -11,6 +11,7 @@
                 FROM TBL_ADOPT) a
                 JOIN TBL_CENTER_MEMBER c ON a.CENTER_MEMBER_NO = c.CENTER_MEMBER_NO
         WHERE a.row_num <= 10
+        ORDER BY a.ADOPT_REGIDATE DESC
         ]]>
     </select>
 
@@ -61,6 +62,13 @@
         WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount}
         ]]>
 </select>
+
+<!--회원상태조회-->
+    <select id="centerMemberStatus" resultType="AdoptMainDTO">
+        select CENTER_MEMBER_STATUS
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+    </select>
     <!-- 여기까지 페이지네이션+게시글목록불러오기 -->
 
 
@@ -125,9 +133,18 @@
     <!-- 게시글 수정 -->
     <update id="adoptModify" parameterType="AdoptWriteDTO">
         UPDATE TBL_ADOPT
-        SET ADOPT_PERIODSTART = #{adoptPeriodstart}, ADOPT_PERIODEND = #{adoptPeriodend}, ADOPT_NAME = #{adoptName}, ADOPT_BREED = #{adoptBreed},
-            ADOPT_NEUTERING = #{adoptNeutering}, ADOPT_GENDER = #{adoptGender}, ADOPT_WEIGHT = #{adoptWeight}, ADOPT_BIRTH = #{adoptBirth},
-            ADOPT_INTRODUCE = #{adoptIntroduce}, ADOPT_TITLE = #{adoptTitle}, ADOPT_CONTENT = #{adoptContent}, ADOPT_UPDATEDATE
+        SET ADOPT_PERIODSTART = #{adoptPeriodstart},
+            ADOPT_PERIODEND = #{adoptPeriodend},
+            ADOPT_NAME = #{adoptName},
+            ADOPT_BREED = #{adoptBreed},
+            ADOPT_NEUTERING = #{adoptNeutering},
+            ADOPT_GENDER = #{adoptGender},
+            ADOPT_WEIGHT = #{adoptWeight},
+            ADOPT_BIRTH = #{adoptBirth},
+            ADOPT_INTRODUCE = #{adoptIntroduce},
+            ADOPT_TITLE = #{adoptTitle},
+            ADOPT_CONTENT = #{adoptContent},
+            ADOPT_UPDATEDATE = SYSDATE
         WHERE ADOPT_NO = #{adoptNo}
     </update>
 

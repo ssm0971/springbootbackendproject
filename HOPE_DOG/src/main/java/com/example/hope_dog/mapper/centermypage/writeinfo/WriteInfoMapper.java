@@ -14,6 +14,9 @@ public interface WriteInfoMapper {
     //커뮤니티 게시판 조회
     List<WriteInfoCommuListDTO> writeInfoCommuList(Long centerMemberNo);
 
+    //기부 게시판 조회
+    List<WriteInfoDonaListDTO> writeInfoDonaList(Long centerMemberNo);
+
     //봉사 게시판 조회
     List<WriteInfoVolListDTO> writeInfoVolList(Long centerMemberNo);
 

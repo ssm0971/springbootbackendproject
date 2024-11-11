@@ -1,42 +1,30 @@
-console.log("제이에스 들어왔는지 확인");
-function searchCars() {
-    console.log("제이에스 들어왔을까");
-    const searchType = document.getElementById("search-type").value;
-    const keyword = document.getElementById("keyword").value;
+document.addEventListener("DOMContentLoaded", function() {
+    const items = $('.volun-catalog-all ul'); // 게시글 항목들을 li로 선택
 
-    console.log("js searchType: ", searchType, "keyword: ", keyword);
-
-    fetch(`/car/main/search?searchType=${encodeURIComponent(searchType)}&keyword=${encodeURIComponent(keyword)}`)
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            console.log("검색 결과:", data);
-            // 검색 결과를 업데이트하는 코드 추가
-            displayResults(data); // 새로운 함수 호출
-        })
-        .catch(error => console.error("Error fetching search results:", error));
-}
-
-// 검색 결과를 화면에 표시하는 함수
-function displayResults(data) {
-    const resultsDiv = document.getElementById("search-results");
-    resultsDiv.innerHTML = ""; // 이전 결과 초기화
-
-    if (data.length === 0) {
-        resultsDiv.innerHTML = "<p>검색 결과가 없습니다.</p>";
-        return;
+    // 게시글 수가 10개 이하인 경우 페이지네이션 처리
+    if (items.length <= 10) {
+        items.show(); // 모든 항목 표시
+        return; // 페이지네이션 초기화 중지
     }
 
-    data.forEach(car => {
-        const carElement = document.createElement("div");
-        carElement.innerHTML = `
-            <h3>${car.carTitle}</h3>
-            <p>카테고리: ${car.carCate}</p>
-            <p>내용: ${car.carContent}</p>
-            <p>등록일: ${new Date(car.carRegiDate).toLocaleString()}</p>
-        `;
-        resultsDiv.appendChild(carElement);
+    // 처음 10개 항목만 보이게 하고 나머지는 숨김
+    items.hide().slice(0, 10).show(); // 첫 10개 항목만 표시
+
+    // 페이지네이션 설정
+    const container = $('#pagination');
+    const pageSize = 10; // 한 페이지에 보여줄 항목 수
+
+    container.pagination({
+        dataSource: items.toArray(), // 게시글 항목을 배열로 변환
+        pageSize: pageSize,
+        callback: function (data, pagination) {
+            items.hide(); // 기존에 보여진 항목 숨김
+            $.each(data, function (index, item) {
+                $(item).show(); // 현재 페이지에 해당하는 항목만 표시
+            });
+        }
     });
-}
+
+    // 페이지네이션 플러그인이 초기화된 후에 첫 번째 페이지로 이동
+    container.pagination('goToPage', 1);
+});

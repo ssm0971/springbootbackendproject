@@ -58,6 +58,19 @@
                   <br>
                   <div class="content"><span th:text="${post.postContent}"></span></div>
 
+                  <div class="post-images" th:each="file, iterStat : ${fileList}">
+                    <a th:href="@{/download(from='post', fileName=${file.fileName}, filePath=${file.filePath}, fileUuid=${file.fileUuid})}">
+                      <!-- 이미지 파일인지 확인하고, 이미지로 표시 -->
+                      <span th:if="${file.fileName.endsWith('.jpg') or file.fileName.endsWith('.png') or file.fileName.endsWith('.jpeg')}">
+                      <img width="500px" th:src="@{/v1/files(from='post', fileName=${file.fileName}, filePath=${file.filePath}, fileUuid=${file.fileUuid})}" alt="Image" class="file-image" />
+                    </span>
+                      <!-- 이미지가 아닌 파일은 파일명만 표시 -->
+                      <span th:if="${not (file.fileName.endsWith('.jpg') or file.fileName.endsWith('.png') or file.fileName.endsWith('.jpeg'))}">
+                      <span th:text="${file.fileName}">File Name</span>
+                    </span>
+                    </a>
+                  </div>
+
                   <!-- 수정/취소 버튼 -->
                   <div class="post-write-button-box">
                     <button th:data-post-type="${post.postType}" th:data-post-no="${post.postNo}" class="post-delete-button">삭제</button>

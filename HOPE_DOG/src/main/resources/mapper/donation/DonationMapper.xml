@@ -110,7 +110,7 @@
 
     <update id="donationUpdate" parameterType="DonationWriteDTO">
         UPDATE TBL_DONA
-        SET DONA_TITLE = #{donaTitle}, DONA_CONTENT = #{donaContent}, DONA_REGIDATE = SYSDATE
+        SET DONA_TITLE = #{donaTitle}, DONA_CONTENT = #{donaContent}, DONA_UPDATEDATE = SYSDATE
         WHERE DONA_NO = #{donaNo}
     </update>
 

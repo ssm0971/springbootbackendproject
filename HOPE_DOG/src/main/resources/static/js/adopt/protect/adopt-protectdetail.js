@@ -5,7 +5,7 @@ function modifyClick() {
 
   if (confirm('정말 수정하시겠습니까?')) {
     console.log('수정페이지로 이동합니다.');
-    location.href = `/adopt/protect/protectmodify?adoptNo=${adoptNo}&centerMemberNo=${centerMemberNo}`;
+    location.href = `/adopt/protect/protectmodify?protectNo=${adoptNo}&centerMemberNo=${centerMemberNo}`;
   } else {
     console.log('신청서페이지로 이동하지 않습니다.');
   }
@@ -155,3 +155,13 @@ function CommentReportClick() {
   });
 }
 
+// 댓글 미입력 방지
+function validateCommentForm() {
+  const commentInput = document.querySelector('.adopt-detail-commentregi');
+
+  if (!commentInput.value.trim()) { // 입력 값이 비어 있거나 공백만 있을 때
+    alert("댓글을 입력해 주세요.");
+    return false; // 폼 제출 중단
+  }
+  return true; // 폼 제출 허용
+}

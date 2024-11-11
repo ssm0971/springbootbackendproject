@@ -256,3 +256,45 @@ p{
 .Error{
   display: flex;
 }
+
+.adoptrequest-search-button{
+  width: 70px;
+  height: 28px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 10px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.adoptrequest-buttonbox{
+  width: 680px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+}
+
+.adoptrequest-button{
+  width: 100px;
+  height: 50px;
+  background-color: #F5EAD9;
+  border: none;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.adoptrequest-button:hover {
+  background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
+  color: white;
+}
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

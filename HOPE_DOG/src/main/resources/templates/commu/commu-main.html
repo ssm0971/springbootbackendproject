@@ -13,7 +13,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
   <script defer th:src="@{/js/commu/commu-main.js}"></script>
-<!--  <script defer th:src="@{/js/main/main.js}"></script>-->
 </head>
 
 <body>
@@ -70,15 +69,15 @@
             </li>
           </ul>
         </div>
-        <div id="pagination"></div>
+
 
 
       <!-- 검색 창-->
       <div class="bottom-search">
-        <form method="get" action="commu/main/commuSearch" name="search">
-          <select name="searchtype" id="search-type">
-            <option value="nickname">닉네임</option>
-            <option value="title">제목</option>
+        <form method="get" action="/commu/main/search" name="search">
+          <select name="searchType" id="search-type">
+            <option value="commuTitle">제목</option>
+            <option value="memberNickname">닉네임</option>
           </select>
           <span class="default">
             <input type="text" name="keyword" id="keyword" value="" placeholder="검색어를 입력하세요">
@@ -91,10 +90,12 @@
         <div id="search-results"></div>
 
         <div class="commu-admain-btuall">
-          <a class="commu-admain-btu" th:href="@{/commu/commuWrite}">
+          <a class="commu-admain-btu" th:href="@{/commu/commuWrite}" th:if="${(memberNo != null or centerMemberNo != null)}">
             <span class="commu-admain-btu-sp">글쓰기</span>
           </a>
         </div>
+
+        <div id="pagination"></div>
       </div>
     </div>
   </main>

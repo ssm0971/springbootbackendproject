@@ -60,7 +60,7 @@
 
 .delete-button {
 	box-shadow: 2px 2px 7px -2px grey;
-	font-family: 'GmarketSansMedium';
+	font-family: 'gangwonEdu';
 	border: none;
 	width: 120px;
 	height: 50px;
@@ -120,7 +120,7 @@
 	border: none;
 	background: none;
 	font-size: inherit;
-	font-family: 'GmarketSansMedium';
+	font-family: 'gangwonEdu';
 	font-weight: 500;
 	margin-left: 5px;
 }
@@ -133,7 +133,7 @@
 .register-button {
 	margin-right: 10px;
 	box-shadow: 2px 2px 7px -2px grey;
-	font-family: 'GmarketSansMedium';
+	font-family: 'gangwonEdu';
 	border: none;
 	width: 120px;
 	height: 50px;
@@ -250,7 +250,7 @@ div#paging-wrap {
   color: white;
 }
 
-.notice-cancle-button{
+.notice-cancel-button{
   width: 60px;
   height: 30px;
   background-color: #F5EAD9;
@@ -261,7 +261,7 @@ div#paging-wrap {
   cursor: pointer;
 }
 
-.notice-cancle-button:hover {
+.notice-cancel-button:hover {
   background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
   color: white;
 }

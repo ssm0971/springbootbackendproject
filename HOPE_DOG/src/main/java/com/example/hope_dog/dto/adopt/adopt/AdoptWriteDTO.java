@@ -2,11 +2,11 @@ package com.example.hope_dog.dto.adopt.adopt;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class AdoptWriteDTO {
     private Long adoptNo;
     private LocalDate adoptPeriodstart;

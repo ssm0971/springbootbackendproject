@@ -15,7 +15,6 @@ public class AdminNoteReceiveDTO {
     private String noteboxReceiveContent;
     private String noteboxReceiveRegiDate;
     private String noteboxReceiveRead;
-    private String noteboxReceiveReadDate;
     private Long noteboxReceiveS;
     private String noteboxReceiveSname;
 }

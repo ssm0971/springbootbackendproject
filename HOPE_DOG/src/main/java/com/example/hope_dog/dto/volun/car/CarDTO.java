@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,9 @@ public class CarDTO {
     private String carCate;     // 게시글 분류
     private String carTitle;    // 게시글 제목
     private String carContent;  // 게시글 내용
-    private Date carRegiDate;   // 게시글 작성일
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date carRegiDate;   // 게시글 등록일
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date carUpdateDate; // 수정일
     private Long carWriter;      // 게시글 작성자
 

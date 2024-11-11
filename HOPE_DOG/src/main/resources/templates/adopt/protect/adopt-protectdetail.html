@@ -127,7 +127,7 @@
 
     <!-- 댓글입력 -->
     <div th:if="${memberNo != null or centerMemberNo != null}">
-      <form action="/adopt/protect/protectCommentRegi" method="get" th:each="protect : ${protectDetailList}">
+      <form action="/adopt/protect/protectCommentRegi" method="get" th:each="protect : ${protectDetailList}" onsubmit="return validateCommentForm()">
         <input class="adopt-detail-commentregi" type="text" name="protectComment" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요" maxlength="1000">
         <input th:value="${protect.protectNo}" style="display: none" name="protectNo">
         <button class="adopt-commentregi-button" type="submit">등록</button>
@@ -135,6 +135,25 @@
     </div>
 
     <br>
+
+    <!-- 게시글신고완료시 -->
+    <div th:if="${ContentreportSuccess}">
+      <script>
+        alert('신고가 완료되었습니다.');
+      </script>
+    </div>
+
+    <div th:if="${CommentreportSuccess}">
+      <script>
+        alert('신고가 완료되었습니다.');
+      </script>
+    </div>
+    <!-- 신청성공시 -->
+    <div th:if="${requestSuccess}">
+      <script>
+        alert('신청이 완료되었습니다.');
+      </script>
+    </div>
 </main>
 
 </body>

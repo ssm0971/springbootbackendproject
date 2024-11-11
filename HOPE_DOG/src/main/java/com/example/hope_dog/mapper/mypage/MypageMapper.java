@@ -1,15 +1,6 @@
 package com.example.hope_dog.mapper.mypage;
 
-import com.example.hope_dog.dto.adopt.adopt.AdoptDetailDTO;
-import com.example.hope_dog.dto.centermypage.CenterProfileDTO;
-import com.example.hope_dog.dto.centermypage.CenterUpdateProfileDTO;
-import com.example.hope_dog.dto.centermypage.CenterViewProfileDTO;
-import com.example.hope_dog.dto.member.MemberDTO;
-import com.example.hope_dog.dto.member.MemberSessionDTO;
 import com.example.hope_dog.dto.mypage.*;
-import com.example.hope_dog.dto.notice.NoticeListDTO;
-import com.example.hope_dog.dto.notice.NoticeViewDTO;
-import com.example.hope_dog.dto.page.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -61,6 +52,12 @@ public interface MypageMapper {
 
 //    List<NoticeViewDTO> noticeView(Long noticeNo);
 
+    //    임시보호신청서 상세페이지 정보 조회
+    MpProtectRequestDTO protectRequestInfo(Long protectRequestNo);
 
+    // 임시보호신청서 수정
+//    void updateProtectRequest(UpdateProtectRequestDTO updateProtectRequestDTO);
+
+    void updateProtectRequest(MpProtectRequestDTO mpProtectRequestDTO);
 }
 

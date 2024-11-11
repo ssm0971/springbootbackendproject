@@ -109,7 +109,7 @@ ul{
   font-weight: bold;
 }
 
-/* 글쓰기 */
+/* 글 수정,삭제,신고 버튼 */
 .comm-detail-box3{
   width: 745px;
   height: auto;
@@ -118,6 +118,7 @@ ul{
   align-items: center;
 }
 
+/*수정*/
 .comm-modify-button{
   width: 100px;
   height: 50px;
@@ -133,7 +134,7 @@ ul{
   background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
   color: white;
 }
-
+/*삭제*/
 .comm-delete-button{
   width: 100px;
   height: 50px;
@@ -150,6 +151,7 @@ ul{
   color: white;
 }
 
+/*신고*/
 .comm-end-button{
   width: 100px;
   height: 50px;
@@ -172,7 +174,7 @@ ul{
   height: auto;
 }
 
-
+/*댓글 수정삭제신고*/
 .comm-detail-commentbox{
   width: 745px;
   height: auto;
@@ -300,3 +302,4 @@ ul{
   background-color: #9B805D; /* 마우스를 올렸을 때 변경될 색상 */
   color: white;
 }
+

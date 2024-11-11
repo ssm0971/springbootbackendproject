@@ -46,9 +46,26 @@
                   <br>
                   <div class="content"><span th:text="${notice.noticeContent}"></span></div>
 
+                <div style="display: flex">
+                <div class="post-images" th:each="file, iterStat : ${fileList}">
+                  <a th:href="@{/download(from='notice', fileName=${file.fileName}, filePath=${file.filePath}, fileUuid=${file.fileUuid})}">
+                    <!-- 이미지 파일인지 확인하고, 이미지로 표시 -->
+                    <span th:if="${file.fileName.endsWith('.jpg') or file.fileName.endsWith('.png') or file.fileName.endsWith('.jpeg')}">
+                      <img style="max-width: 100px" th:src="@{/v1/files(from='notice', fileName=${file.fileName}, filePath=${file.filePath}, fileUuid=${file.fileUuid})}" alt="Image" class="file-image" />
+                    </span>
+                    <!-- 이미지가 아닌 파일은 파일명만 표시 -->
+                    <span th:if="${not (file.fileName.endsWith('.jpg') or file.fileName.endsWith('.png') or file.fileName.endsWith('.jpeg'))}">
+                      <span th:text="${file.fileName}">File Name</span>
+                    </span>
+                  </a>
+                </div>
+                </div>
+
+
+
                   <!-- 수정/취소 버튼 -->
                   <div class="notice-write-button-box">
-                    <button class="notice-write-button"><a href="./admin-notice-modify.html">수정</a></button>
+                    <button class="notice-write-button"><a th:href="@{/admin/noticeModify(noticeNo=${notice.noticeNo})}">수정</a></button>
                     <button class="deleteOneButton notice-cancel-button" th:data-notice-no="${notice.noticeNo}">삭제</button>
                   </div>
               </div>

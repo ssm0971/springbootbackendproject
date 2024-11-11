@@ -24,7 +24,7 @@ public class CommuDetailDTO {
 
     private Long commuCommentNo;      // 댓글 번호
     private String commuComment;      // 댓글 내용
-    private Date commuCommetRegiDate; // 댓글 작성일 //commet로 오타
+    private Date commuCommentRegiDate; // 댓글 작성일 //commet로 오타
     private Long commuCommentWriter;  // 댓글 작성자
     private String commentWriterName;    //작성자 이름
 

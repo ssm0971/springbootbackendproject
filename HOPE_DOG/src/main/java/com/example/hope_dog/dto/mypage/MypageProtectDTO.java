@@ -12,9 +12,11 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 public class MypageProtectDTO {
+    private Long protectNo;
     private Long adoptNo;
     private String protectTitle;
     private String protectStatus;
     private Date protectPeriodend;
     private Long memberNo;
+    private Long protectRequestNo;
 }

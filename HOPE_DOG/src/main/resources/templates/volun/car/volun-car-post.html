@@ -8,6 +8,7 @@
   <link rel="stylesheet" th:href="@{/css/volun/car/volun-car-post-member.css}" />
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+    <script defer th:src="@{/js/volun/car/volun-car-post-member.js}"></script>
 </head>
 
 <body>
@@ -22,22 +23,22 @@
     </div>
 
     <!-- 제목/작성자/등록일 크기 -->
-    <div class="volun-detail-box1">
-      <div class="volun-detail-title" th:text="${carDetail.carTitle}"></div>
+    <div class="volun-detail-box1" th:each="car : ${carDetailList}">
+      <div class="volun-detail-title" th:text="${car.carTitle}"></div>
       <div class="volun-detail-info"><span>작성자 :
-          <span th:if="${carDetail.carWriter % 2 != 0}" th:text="${carDetail.memberNickname}"></span>
-          <span th:if="${carDetail.carWriter % 2 == 0}" th:text="${carDetail.centerMemberName}"></span>
+          <span th:if="${car.carWriter % 2 != 0}" th:text="${car.memberNickname}"></span>
+          <span th:if="${car.carWriter % 2 == 0}" th:text="${car.centerMemberName}"></span>
         </span>
-        <span >등록일 : <span th:text="${#dates.format(carDetail.carRegiDate, 'yyyy-MM-dd')}"></span></span>
+        <span >등록일 : <span th:text="${#dates.format(car.carRegiDate, 'yyyy-MM-dd')}"></span></span>
       </div>
     </div>
 
     <!-- 글내용 크기 -->
-    <div class="volun-detail-box2">
+    <div class="volun-detail-box2" th:each="car: ${carDetailList}">
       <div class="volun-detail-content">
         <div class="volun-detail-basicinfo">
           <div class="volun-detail-basicinfo-title"></div>
-          <div th:text="${carDetail.carContent}"></div>
+          <div th:utext="${car.carContent}"></div>
 
         </div>
 
@@ -46,48 +47,109 @@
 
     <br>
 
-    <!-- 수정 , 삭제 , 신고 버튼 -->
-    <div class="volun-detail-box3">
-      <div>
-        <button class="volun-modify-button" onclick="modifyAlert()">수정</button>　
-        <button class="volun-delete-button" onclick="deleteAlert()">삭제</button>
-      </div>
-      <button class="volun-end-button" onclick="endAlert()">신고</button>
-    </div>
+      <!-- 글 작성에서 수정,삭제,신고 버튼 -->
+      <div class="volun-detail-box3" th:each="car : ${carDetailList}">
+          <div class="modify-button">
+            <div style="display: none" class="carNo" th:text="${car.carNo}"></div>
+            <div style="display: none" class="carWriter" th:text="${memberNo != null?memberNo : centerMemberNo}"></div>
+              <!-- 작성자 ID가 일치할 때만 수정 버튼과 삭제 버튼 표시 -->
+              <button class="volun-modify-button" type="button" onclick="modifyClick()"
+                      th:if="${(memberNo != null or centerMemberNo != null) and (car.carWriter == memberNo or car.carWriter == centerMemberNo)}">
+                  수정</button>
 
-    <br>
+              <button class="volun-delete-button" type="button" onclick="deleteAlert()"
+                      th:if="${(memberNo != null or centerMemberNo != null) and (car.carWriter == memberNo or car.carWriter == centerMemberNo)}">
+                  삭제</button>
+          </div>
 
-    <!-- 댓글창 -->
-    <div class="volun-detail-box4">
-      <div  th:each="comment : ${carDetail.comments}">
-<!--        댓글 작성자-->
-        <div class="volun-detail-name">
-          <span th:if="${comment.carCommentWriter% 2 != 0}" th:text="${comment.memberNickname}"></span>
-          <span th:if="${comment.carCommentWriter % 2 == 0}" th:text="${comment.centerMemberName}"></span>
-        </div>
-<!--        댓글-->
-        <div class="volun-detail-comment" th:text="${comment.carComment}"></div>
-<!--        작성일-->
-        <div class="volun-detail-date" th:text="${#dates.format(comment.carCommentRegiDate, 'yyyy-MM-dd')}"></div>
+          <!-- 작성자 ID가 일치하지 않을 때 신고 버튼 표시 -->
+          <div class="report-button">
+            <button class="volun-end-button" type="button" onclick="ReportAlert()"
+                  th:if="${memberNo != car.memberNo and centerMemberNo != car.centerMemberNo}">신고</button>
+          </div>
       </div>
+
+
       <br>
-    </div>
 
-    <br>
+      <br>
 
-    <!-- 댓글입력 -->
-    <form onsubmit="return Comment()">
-      <input class="volun-detail-commentregi" type="text" id="commentInput" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요">　
-      <button type="submit" class="volun-commentregi-button">등록</button>
-    </form>
+      <!-- 댓글 수정/삭제/신고 -->
+      <div th:with="carNo=${carDetailList[0]?.carNo}">
+          <div class="car-detail-commentbox" th:each="carComment, iterStat : ${carCommentList}">
+              <div class="car-detail-name">
+                  <div class="car-detail-name" th:text="${carComment.carCommentWriterName}"></div>
+                  <div class="carCommentNo" th:text="${carComment.carCommentNo}" style="display: none"></div>
+                  <div class="car-comment-buttonBox" th:id="'car-comment-buttonBox-' + ${iterStat.index}">
+                      <button class="car-comment-button" type="button"
+                              th:onclick="'modifyCommentBtnClick(' + ${iterStat.index} + ')'"
+                              th:if="${(centerMemberNo != null and centerMemberNo == carComment.carCommentWriter)
+                   or (memberNo != null and memberNo == carComment.carCommentWriter)}">수정</button>
+                      <button class="car-comment-button" type="button"
+                              th:onclick="'CommentDeleteClick(' + ${carComment.carCommentNo} + ', ' + ${carNo} + ')'"
+                              th:if="${(centerMemberNo != null and centerMemberNo == carComment.carCommentWriter)
+               or (memberNo != null and memberNo == carComment.carCommentWriter)}">삭제</button>
+                      <button class="car-comment-button" type="button"
+                              th:onclick="'CommentReportClick(' + ${carComment.carCommentNo} + ', ' + ${carNo} + ')'"
+                              th:if="${(centerMemberNo != null or memberNo != null)
+                   and (centerMemberNo != carComment.carCommentWriter)
+                   and (memberNo != carComment.carCommentWriter)}">신고</button>
+                  </div>
+              </div>
 
-    <br>
+              <div class="car-detail-comment" th:id="'car-comment-' + ${iterStat.index}" th:text="${carComment.carComment}"></div>
+
+              <!-- 댓글 수정 form 추가 -->
+              <form th:action="@{/car/carCommentModi(carNo=${carNo})}" method="post"
+                    th:id="'car-modifyInput-' + ${iterStat.index}" style="display:none;">
+                  <input type="hidden" name="carCommentNo" th:value="${carComment.carCommentNo}">
+                  <input type="hidden" name="carNo" th:value="${carNo}">
+                  <input type="text" name="carComment" class="car-modify-comment" th:value="${carComment.carComment}">
+                  <button type="submit" class="car-comment-button">등록</button>
+              </form>
+
+              <div class="car-detail-date" th:text="${#dates.format(carComment.carCommentRegiDate, 'yyyy-MM-dd')}"></div>
+          </div>
+      </div>
+
+
+
+
+      <br>
+
+
+      <!-- 댓글입력 -->
+      <div th:if="${memberNo != null or centerMemberNo != null}">
+          <form action="/car/carCommentRegi" method="post">
+              <input class="car-detail-commentregi" type="text" name="carComment" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요" maxlength="1000">
+              <input th:value="${carDetailList[0].carNo}" style="display: none" name="carNo">　
+              <button class="car-commentregi-button" type="submit" onclick="return validateCommentForm()">등록</button>
+          </form>
+      </div>
+
+      <!-- 게시글신고완료시 -->
+      <div th:if="${ContentreportSuccess}">
+          <script>
+              alert('신고가 완료되었습니다.');
+          </script>
+      </div>
+
+      <!-- 댓글신고완료시 -->
+      <div th:if="${CommentreportSuccess}">
+          <script>
+              alert('신고가 완료되었습니다.');
+          </script>
+      </div>
+
+
+
+      <br>
   </div>
 </main>
 </body>
 
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 
-<!--<script defer src="../../js/main/header.js"></script>-->
-<!--<script defer src="../../js/volun/volun-car-post-member.js"></script>-->
+
+
 </html>

@@ -20,7 +20,7 @@ public class FileService {
 //    }
 //
 //    public void removeFile(Long boardId) {
-//        fileMapper.deleteFile(boardId);
+//        fileMapper.deleteFileByFileNo(boardId);
 //    }
 //
 //    public List<FileDTO> findList(Long boardId) {

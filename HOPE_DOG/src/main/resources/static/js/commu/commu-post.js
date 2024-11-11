@@ -1,43 +1,4 @@
-// // 댓글등록 알터창
-// function Comment() {
-//   const comment = document.getElementById('commentInput').value.trim();
-//
-//   if (comment === '') {
-//     alert('입력한 내용이 없습니다.');
-//     return false; // 입력 내용이 없을 경우
-//   }
-//   return true; // 입력 내용이 있을 경우
-// }
-//
-// //게시글
-//
-// // 수정, 삭제,신고 confirm창
-// function modifyAlert() {
-//   const userConfirmed = confirm("수정하시겠습니까?");
-//   if (userConfirmed) {
-//       window.location.href ='../../html/commu/commu-post-rewrite.html'; // 수정페이지로 이동
-//   }
-// }
-//
-// function deleteAlert() {
-//   const userConfirmed = confirm("삭제하시겠습니까?");
-//   if (userConfirmed) {
-//       alert("삭제가 완료되었습니다."); // 확인 눌렀을 때 알림 창 표시
-//       window.location.href = "../../html/commu/commu-main.html"; // 커뮤 메인으로 이동
-//   }
-// }
-//
-// function endAlert() {
-//   const contentReport = prompt('신고사유를 100글자 이내로 입력해주세요');
-//
-//   if (contentReport !== null) { // 사용자가 확인을 누르면
-//     console.log('게시글이 신고되었습니다');
-//     alert('게시글이 신고되었습니다'); // 알림창 추가
-//
-//   } else {
-//     console.log('게시글 신고가 취소되었습니다.');
-//     alert('게시글 신고가 취소되었습니다.'); // 알림창 추가
-//   }
+
 //게시글 삭제
 function deleteAlert() {
     const commuNo = document.querySelector('.commuNo').textContent.trim();
@@ -62,6 +23,22 @@ function deleteAlert() {
                 console.error('Error:', error); // 오류 메시지 출력
                 alert('삭제 중 오류가 발생했습니다.'); // 오류 발생 시 알림 표시
             });
+    }
+}
+
+//게시글 수정버튼
+function modifyClick() {
+    const commuNo = document.querySelector('.commuNo').textContent.trim(); // carNo를 HTML에서 가져옵니다.
+    const commuWriter = document.querySelector('.commuWriter').textContent.trim(); // carNo를 HTML에서 가져옵니다.
+    console.log(commuNo);
+    console.log(commuWriter);
+
+    if (confirm('정말 수정하시겠습니까?')) {
+        console.log('수정페이지로 이동합니다.');
+        // centerMemberNo와 memberNo를 둘 다 URL에 포함
+        location.href = `/commu/commuModify?commuNo=${commuNo}&carWriter=${commuWriter}`;
+    } else {
+        console.log('신청서페이지로 이동하지 않습니다.');
     }
 }
 
@@ -170,31 +147,15 @@ function editCommentBtnClick(index) {
     }
 
 
+// 댓글 미입력 방지
+function validateCommentForm() {
+    const commentInput = document.querySelector('.comm-detail-commentregi');
 
-
-    // {
-    //     let commuPageBtn = document.getElementById('commuPage');
-    //     commuPageBtn.addEventListener('click', function(){
-    //         location.href='/commu/commu';
-    //     });
-    // }
-
-    // {
-    //     let protectPageBtn = document.getElementById('protectPage');
-    //     protectPageBtn.addEventListener('click', function(){
-    //         location.href='/commu/protect';
-    //     });
-    // }
-    //
-    // {
-    //     let reviewPageBtn = document.getElementById('reviewPage');
-    //     reviewPageBtn.addEventListener('click', function () {
-    //         location.href = '/commu/review';
-    //     });
-    // }
-    //
-
-
-
+    if (!commentInput.value.trim()) { // 입력 값이 비어 있거나 공백만 있을 때
+        alert("댓글을 입력해 주세요.");
+        return false; // 폼 제출 중단
+    }
+    return true; // 폼 제출 허용
+}
 
 

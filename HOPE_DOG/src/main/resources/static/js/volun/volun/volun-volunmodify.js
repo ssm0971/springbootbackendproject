@@ -75,3 +75,18 @@ function modifyCancle() {
     console.log('봉사모집 글수정이 취소되지 않았습니다.');
   }
 }
+
+//상단헤더이동
+{
+    let volunPageBtn = document.getElementById('volunPage');
+    volunPageBtn.addEventListener('click', function(){
+        location.href='/volun/volun';
+    });
+}
+
+{
+    let carPageBtn = document.getElementById('carPage');
+    carPageBtn.addEventListener('click', function(){
+        location.href='/car/main';
+    });
+}

@@ -1,10 +1,11 @@
 package com.example.hope_dog.service;
 
 import com.example.hope_dog.dto.ShelterInfo;
+import com.example.hope_dog.dto.ShelterResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -19,15 +20,18 @@ public class ShelterService {
 //    private final String SERVICE_KEY = "YHW1P%2F57dgSSQi1EHu1NvPwRjRhbDQSsVMiA%2BwstM1aQkH0mt0JIwg7%2FdPAZgu1UE8x6oHCtoM9Z%2BEicawOZDw%3D%3D"; // 실제 서비스 키로 변경
 // postman 에서 서비스키 YHW1P%2F57dgSSQi1EHu1NvPwRjRhbDQSsVMiA%2BwstM1aQkH0mt0JIwg7%2FdPAZgu1UE8x6oHCtoM9Z%2BEicawOZDw%3D%3D
     // application.properties에서 서비스 키를 읽어옵니다.
+
+
     @Value("${api.service.key}")
     private String serviceKey;
 
     public List<ShelterInfo> getShelterInfo() {
         String baseurl = "http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
         String subType = "&numOfRows=3&pageNo=1&_type=json";
+        String Type = "&_type=json";
 
         // 이미 인코딩된 serviceKey를 그대로 사용
-        String url = baseurl + "?serviceKey=" + serviceKey + subType;
+        String url = baseurl + "?serviceKey=" + serviceKey + Type;
         log.info("URL 확인 : " + url);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -36,6 +40,7 @@ public class ShelterService {
 
         try {
             // API 호출
+
             response = restTemplate.getForObject(url, String.class);
             log.info(url);
             log.info("API Response: " + response); // 응답 내용 출력
@@ -43,7 +48,7 @@ public class ShelterService {
             log.error("API 호출 중 오류 발생: " + e.getMessage());
             return new ArrayList<>(); // 오류 발생 시 빈 리스트 반환
         }
-
+        List<ShelterResponse> shelterResponses = new ArrayList<>();
         List<ShelterInfo> shelters = new ArrayList<>();
 
         // JSON 응답이 예상한 형식인지 확인
@@ -92,3 +97,44 @@ public class ShelterService {
     }
 
 }
+
+
+//@Value("${api.service.key}")
+//    private String serviceKey;
+//
+//    private final RestTemplate restTemplate;
+//
+//    public ShelterService(RestTemplate restTemplate) {
+//        this.restTemplate = restTemplate;
+//    }
+//
+//    public List<ShelterInfo> getShelterInfo() {
+//        String baseurl = "http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
+//        String url = baseurl + "?serviceKey=" + serviceKey + "&numOfRows=3&pageNo=1&_type=json";
+//        log.info("URL 확인 : " + url);
+//
+//        ShelterResponse response = new RestTemplate().getForObject(url, ShelterResponse.class);
+//
+//        try {
+//            // API 호출
+//            response = restTemplate.getForObject(url, ShelterResponse.class);
+//            log.info("API Response: " + response); // 응답 내용 출력
+//        } catch (RestClientException e) {
+//            log.error("API 호출 중 오류 발생: " + e.getMessage());
+//            log.info("API Response: " + response); // 응답 내용 출력
+//            return new ArrayList<>(); // 오류 발생 시 빈 리스트 반환
+//
+//        }
+//
+//        List<ShelterInfo> shelters = new ArrayList<>();
+//
+//        // JSON 응답이 예상한 형식인지 확인
+//        if (response != null && response.getResponse() != null && response.getResponse().getBody() != null) {
+//            List<ShelterInfo> shelterList = response.getResponse().getBody().getItems().getItem();
+//            shelters.addAll(shelterList); // 리스트에 추가
+//        } else {
+//            log.error("응답이 예상한 형식이 아닙니다.");
+//        }
+//        log.info("왜 안돼? : " + url);
+//        return shelters;
+//    }

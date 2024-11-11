@@ -11,7 +11,14 @@ public interface RequestMapper {
 //    봉사신청서 목록 조회
     List<VolunRequestListDTO> volunRequestList(Long centerMemberNo);
 
-//    입양신청서 목록 조회
+//    입양신청서 상세페이지 정보 조회
+    VolunRequestDetailDTO volunRequestDetailInfo(Long volunRequestNo);
+
+//    입양신청서 수락/거절
+    void volunRequestStatusChoice(VolunRequestChoiceDTO volunRequestChoiceDTO);
+
+
+    //    입양신청서 목록 조회
     List<AdoptRequestListDTO> adoptRequestList(Long centerMemberNo);
 
 //    입양신청서 상세페이지 정보 조회

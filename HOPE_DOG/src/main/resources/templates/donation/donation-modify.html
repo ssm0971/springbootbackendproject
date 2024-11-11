@@ -17,8 +17,7 @@
   <link rel="stylesheet" th:href="@{/css/dona/donation-modify.css}" />
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
-  <script defer th:src="@{/js/main/main.js}"></script>
-  <script defer th:src="@{/js/dona/donation-write.js}" ></script>
+  <script defer th:src="@{/js/dona/donation-modify.js}" ></script>
 </head>
 
 <body>
@@ -32,21 +31,21 @@
       <br>
 
       <!-- 글작성 박스 -->
-      <div class="dona-write-area">
-        <form action="링크" method="post" th:action="@{/dona/modify}"  th:object="${donation}" enctype="multipart/form-data">
+      <div class="dona-write-area" th:each="donation : ${donation}">
+        <form method="post" th:action="@{/dona/modifyRegi}">
           <br>
-          <input type="hidden" th:field="*{donaNo}">
-          <input th:value="${centerMemberNo}" style="display: none" name="centerMemberNo">
+          <input type="hidden" name="donaNo" th:value="${donation.donaNo}">
+          <input th:value="${donation.centerMemberNo}" style="display: none" name="centerMemberNo">
           <!-- 썸머노트 -->
           <div class="content">
-              <input id="donaTitle" name="donaTitle"  th:field="*{donaTitle}" class="donawrite-title" placeholder="제목을 입력해주세요" required />
-              <textarea id="donaContent" name="donaContent"  th:field="*{donaContent}" required></textarea>
+              <input id="donaTitle" name="donaTitle"  th:value="${donation.donaTitle}" class="donawrite-title" placeholder="제목을 입력해주세요" required />
+              <textarea id="donaContent" name="donaContent"  th:utext="${donation.donaContent}" required></textarea>
           </div>
 
           <!-- 등록/취소 버튼 -->
           <div class="dona-write-button-box">
             <button class="dona-cancle-button" type="button" onclick="cancleClick()">취소</button>
-            <button class="dona-write-button" type="button">등록</button>
+            <button class="dona-write-button" type="submit">등록</button>
           </div>
         </form>
       </div>

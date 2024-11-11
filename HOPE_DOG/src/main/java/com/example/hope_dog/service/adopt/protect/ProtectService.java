@@ -35,6 +35,11 @@ public class ProtectService {
         return protectMapper.selectAllPage(criteria);
     }
 
+    //센터회원상태조회
+    public List<ProtectMainDTO> centerMemberStatus(Long centerMemberNo){
+        return protectMapper.centerMemberStatus(centerMemberNo);
+    }
+
     //임시보호 모집중 게시글 조회 + 페이지네이션 포함
     public List<ProtectMainDTO> findAllKeep() {
         return protectMapper.selectAllKeep();
@@ -59,6 +64,15 @@ public class ProtectService {
         // protectWriteDTO에 값을 설정할 필요 없음
         // 이미 LocalDate로 저장되어 있으므로 그대로 사용
         protectMapper.protectWrite(protectWriteDTO);
+    }
+
+    //임시보호글 수정 처리
+    public void protectModify(ProtectWriteDTO protectWriteDTO) {
+        LocalDate periodStart = protectWriteDTO.getProtectPeriodstart();
+        LocalDate periodEnd = protectWriteDTO.getProtectPeriodend();
+        LocalDate adoptBirth = protectWriteDTO.getProtectBirth();
+
+        protectMapper.protectModify(protectWriteDTO); // 매퍼 호출
     }
 
     //임시보호글 마감처리

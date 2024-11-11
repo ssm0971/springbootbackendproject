@@ -132,6 +132,9 @@ function CommentReportClick() {
   location.href = `/adopt/adopt/adoptCommentReport?adoptNo=${adoptNo}&reportComment=${encodeURIComponent(reportComment)}&adoptCommentNo=${adoptCommentNo}`;
 } // 아가다가 댓글 신고 만들었어 대박이지 헤헤
 
+
+
+//상단헤더이동
 {
   let adoptPageBtn = document.getElementById('adoptPage');
   adoptPageBtn.addEventListener('click', function(){
@@ -153,3 +156,14 @@ function CommentReportClick() {
   });
 }
 
+
+// 댓글 미입력 방지
+function validateCommentForm() {
+  const commentInput = document.querySelector('.adopt-detail-commentregi');
+
+  if (!commentInput.value.trim()) { // 입력 값이 비어 있거나 공백만 있을 때
+    alert("댓글을 입력해 주세요.");
+    return false; // 폼 제출 중단
+  }
+  return true; // 폼 제출 허용
+}

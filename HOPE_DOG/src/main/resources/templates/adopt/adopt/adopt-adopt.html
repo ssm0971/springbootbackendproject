@@ -53,10 +53,10 @@
               <div class="adopt-post-title" th:text="${adopt.adoptTitle}"></div>
             </div>
             <div class="adopt-post-content" th:text="${adopt.adoptIntroduce}"></div>
-            <div class="adopt-post-content" th:text="${adopt.adoptName}"></div>
+            <div class="adopt-post-content" th:text="이름 + ':' + ${adopt.adoptName}"></div>
             <div class="adopt-post-content">
-              <span th:if="${adopt.adoptGender == 'M'}" th:text="남자"></span>
-              <span th:if="${adopt.adoptGender == 'F'}" th:text="남자"></span>
+              <span th:if="${adopt.adoptGender == 'M'}" th:text=" 성별 +':' + 남자"></span>
+              <span th:if="${adopt.adoptGender == 'F'}" th:text=" 성별 +':' + 남자"></span>
               /
               <span th:if="${adopt.adoptNeutering == 'Y'}" th:text="'중성화(O)'"></span>
               <span th:if="${adopt.adoptNeutering == 'N'}" th:text="'중성화(X)'"></span>
@@ -69,10 +69,12 @@
       <br>
 
       <!-- 입양 등록 버튼 -->
-      <div class="adopt-button-box" th:if="${centerMemberNo != null}">
-        <a href="/adopt/adopt/adoptwrite">
-          <button class="adopt-button">등록</button>
-        </a>
+      <div th:each="centerMemberStatus : ${centerMemberStatus}">
+        <div class="adopt-button-box" th:if="${centerMemberNo != null and centerMemberStatus.centerMemberStatus == 'Y'}">
+          <a href="/adopt/adopt/adoptwrite">
+            <button class="adopt-button">등록</button>
+          </a>
+        </div>
       </div>
 
       <!-- 페이지네이션 -->

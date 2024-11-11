@@ -22,6 +22,9 @@ public interface ReviewMapper {
     //후기글작성
     void reviewWrite(ReviewWriteDTO reviewWriteDTO);
 
+    //후기글수정
+    void reviewModify(ReviewWriteDTO reviewWriteDTO);
+
     //후기글삭제처리
     void reviewDelete(ReviewDetailDTO reviewDetailDTO);
 

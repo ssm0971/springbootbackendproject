@@ -51,7 +51,7 @@
             <ul class="center-member-profile-cumuboard-contentbox">
               <li>
                 <span th:text="'[' + ${volRequest.volunStatus} + ']'">[심사중]</span>
-                <a th:href="@{/#(requestNo=${volRequest.volunRequestNo})}" th:text="${volRequest.volunTitle}">봉사신청서 제목</a>
+                <a th:href="@{/centerMypage/volRequestDetail(volunRequestNo=${volRequest.volunRequestNo})}" th:text="${volRequest.volunTitle}">봉사신청서 제목</a>
               </li>
               <li>
                 <span th:text="${volRequest.volunRequestName}">신청자</span>

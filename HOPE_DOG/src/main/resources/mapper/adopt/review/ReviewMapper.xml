@@ -34,14 +34,13 @@
                  FROM (
                           SELECT REVIEW_NO, REVIEW_TITLE, REVIEW_REGIDATE, REVIEW_CONTENT, MEMBER_NO
                           FROM TBL_REVIEW
-                          ORDER BY REVIEW_REGIDATE DESC
+                          ORDER BY REVIEW_REGIDATE DESC -->
                       ) R
                           JOIN TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO
              )
         WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount}
         ]]>
 </select>
-
 
     <!-- 게시글 작성 -->
     <insert id="reviewWrite" parameterType="ReviewWriteDTO">
@@ -54,6 +53,15 @@
         #{reviewNo}, #{reviewTitle}, #{reviewContent}, #{memberNo}
         )
     </insert>
+
+    <!-- 게시글 수정 -->
+    <update id="reviewModify" parameterType="ReviewWriteDTO">
+        UPDATE TBL_REVIEW
+        SET REVIEW_TITLE = #{reviewTitle},
+            REVIEW_CONTENT = #{reviewContent},
+            REVIEW_UPDATEDATE = SYSDATE
+        WHERE REVIEW_NO = #{reviewNo}
+    </update>
 
 
     <!-- 게시글 삭제 처리 -->

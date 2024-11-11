@@ -28,6 +28,9 @@ public interface AdoptMapper {
     int selectTotalKeep();
 
     List<AdoptMainDTO> selectAllPageKeep(Criteria criteria);
+    
+    //센터회원 상태조회
+    List<AdoptMainDTO> centerMemberStatus(Long centerMemberNo);
 
     //입양글작성
     void adoptWrite(AdoptWriteDTO adoptWriteDTO);

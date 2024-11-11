@@ -33,6 +33,10 @@ main{
   text-align: center;
 }
 
+.volun-navList:hover{
+  cursor: pointer;
+}
+
 .volun-wirtebanner{
   background-color: #F5EAD9;
   width: 1080px;
@@ -162,7 +166,4 @@ a {
   color: inherit; 
 }
 
-.volun-nav a:hover {
-  text-decoration: none; 
-  color: inherit; 
-}
+

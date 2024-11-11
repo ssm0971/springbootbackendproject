@@ -53,7 +53,7 @@
 
 .search-text {
 	box-shadow: 2px 2px 7px -2px grey;
-	font-family: 'GmarketSansMedium';
+	font-family: 'gangwonEdu';
 	border: none;
 	background-color: #fff;
 	font-weight: bold;
@@ -64,7 +64,7 @@
 
 .search-btn {
 	box-shadow: 2px 2px 7px -2px grey;
-	font-family: 'GmarketSansMedium';
+	font-family: 'gangwonEdu';
 	border: none;
 	width: 120px;
 	height: 50px;
@@ -89,7 +89,7 @@
 
 .delete-button {
 	box-shadow: 2px 2px 7px -2px grey;
-	font-family: 'GmarketSansMedium';
+	font-family: 'gangwonEdu';
 	border: none;
 	width: 120px;
 	height: 50px;
@@ -149,7 +149,7 @@
 	border: none;
 	background: none;
 	font-size: inherit;
-	font-family: 'GmarketSansMedium';
+	font-family: 'gangwonEdu';
 	font-weight: 500;
 	margin-left: 5px;
 }
@@ -162,7 +162,7 @@
 .register-button {
 	margin-right: 10px;
 	box-shadow: 2px 2px 7px -2px grey;
-	font-family: 'GmarketSansMedium';
+	font-family: 'gangwonEdu';
 	border: none;
 	width: 120px;
 	height: 50px;

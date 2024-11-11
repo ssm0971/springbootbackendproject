@@ -165,7 +165,7 @@ main{
 /* 썸머노트 크기 js에서도 설정해야함 */
 .content{
   width: 780px;
-  height: 670px;
+  height: 710px;
 }
 
 .adoptwrite-title{
@@ -182,3 +182,4 @@ a {
   text-decoration: none;
   color: inherit;
 }
+

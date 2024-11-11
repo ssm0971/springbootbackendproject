@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.volun.volun.VolunMapper">
+    <!-- 메인에서 봉사 게시글 불러오기 -->
+    <select id="main" resultType="VolunMainDTO">
+    <![CDATA[
+        SELECT a.VOlUN_NO, a.VOlUN_TITLE, a.VOlUN_REGIDATE, a.CENTER_MEMBER_NO, a.VOlUN_STATUS, c.CENTER_MEMBER_NAME
+        FROM(
+                SELECT VOlUN_NO, VOlUN_TITLE, VOlUN_REGIDATE, CENTER_MEMBER_NO, VOlUN_STATUS,
+                       ROW_NUMBER() OVER ( ORDER BY VOlUN_REGIDATE DESC) AS row_num
+                FROM TBL_VOlUN) a
+                JOIN TBL_CENTER_MEMBER c ON a.CENTER_MEMBER_NO = c.CENTER_MEMBER_NO
+        WHERE a.row_num <= 10
+        ORDER BY a.VOLUN_REGIDATE DESC
+        ]]>
+    </select>
+
+    <!-- 여기서 부터 페이지네이션 관련 쿼리문-->
+    <!-- 봉사 전체게시글 수 -->
+    <select id="selectTotal" resultType="int">
+        SELECT COUNT(VOLUN_NO) FROM TBL_VOLUN
+    </select>
+
+    <!-- 봉사 전체게시글-->
+    <select id="volunMain" resultType="VolunMainDTO">
+        SELECT VOLUN_NO, VOLUN_PERIODSTART, VOLUN_PERIODEND, VOLUN_START, VOLUN_END,
+               VOLUN_LOCAL, VOLUN_TIME, VOLUN_PEOPLE, VOLUN_TITLE, VOLUN_CONTENT,
+               VOLUN_REGIDATE, VOLUN_STATUS, CENTER_MEMBER_NO
+        FROM TBL_VOLUN
+        ORDER BY VOLUN_REGIDATE DESC;
+    </select>
+
+
+    <!-- 봉사 페이지마다 표시할 게시글-->
+    <select id="selectAllPage" parameterType="Criteria" resultType="VolunMainDTO">
+    <![CDATA[
+        SELECT VOLUN_NO, VOLUN_PERIODSTART, VOLUN_PERIODEND, VOLUN_START, VOLUN_END,
+               VOLUN_LOCAL, VOLUN_TIME, VOLUN_PEOPLE, VOLUN_TITLE, VOLUN_CONTENT,
+               VOLUN_REGIDATE, VOLUN_STATUS, CENTER_MEMBER_NO
+        FROM (
+                 SELECT VOLUN_NO, VOLUN_PERIODSTART, VOLUN_PERIODEND, VOLUN_START, VOLUN_END,
+                        VOLUN_LOCAL, VOLUN_TIME, VOLUN_PEOPLE, VOLUN_TITLE, VOLUN_CONTENT,
+                        VOLUN_REGIDATE, VOLUN_STATUS, CENTER_MEMBER_NO,
+                        ROWNUM AS RNUM
+                 FROM (
+                          SELECT VOLUN_NO, VOLUN_PERIODSTART, VOLUN_PERIODEND, VOLUN_START, VOLUN_END,
+                                 VOLUN_LOCAL, VOLUN_TIME, VOLUN_PEOPLE, VOLUN_TITLE, VOLUN_CONTENT,
+                                 VOLUN_REGIDATE, VOLUN_STATUS, CENTER_MEMBER_NO
+                          FROM TBL_VOLUN
+                          ORDER BY VOLUN_REGIDATE DESC
+                      )
+             )
+        WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount}
+        ]]>
+</select>
+    <!-- 여기까지 페이지네이션+게시글목록불러오기 -->
+
+    <!--회원상태조회-->
+    <select id="centerMemberStatus" resultType="VolunMainDTO">
+        select CENTER_MEMBER_STATUS
+        FROM TBL_CENTER_MEMBER
+        WHERE CENTER_MEMBER_NO = #{centerMemberNo}
+    </select>
+
+    <!-- 봉사모집 진행중인 게시글-->
+    <select id="selectTotalKeep" resultType="int">
+        SELECT COUNT(VOLUN_NO) FROM TBL_VOLUN WHERE VOLUN_STATUS = 'T'
+    </select>
+
+
+    <select id="volunMainKeep" resultType="VolunMainDTO">
+        SELECT VOLUN_NO, VOLUN_PERIODSTART, VOLUN_PERIODEND, VOLUN_START, VOLUN_END,
+               VOLUN_LOCAL, VOLUN_TIME, VOLUN_PEOPLE, VOLUN_TITLE, VOLUN_CONTENT,
+               VOLUN_REGIDATE, VOLUN_STATUS, CENTER_MEMBER_NO
+        FROM TBL_VOLUN
+        WHERE VOLUN_STATUS = 'T'
+        ORDER BY VOLUN_REGIDATE DESC;
+    </select>
+
+
+    <!-- 봉사 페이지마다 표시할 게시글-->
+    <select id="selectAllPageKeep" parameterType="Criteria" resultType="VolunMainDTO">
+    <![CDATA[
+        SELECT VOLUN_NO, VOLUN_PERIODSTART, VOLUN_PERIODEND, VOLUN_START, VOLUN_END,
+               VOLUN_LOCAL, VOLUN_TIME, VOLUN_PEOPLE, VOLUN_TITLE, VOLUN_CONTENT,
+               VOLUN_REGIDATE, VOLUN_STATUS, CENTER_MEMBER_NO
+        FROM (
+                 SELECT VOLUN_NO, VOLUN_PERIODSTART, VOLUN_PERIODEND, VOLUN_START, VOLUN_END,
+                        VOLUN_LOCAL, VOLUN_TIME, VOLUN_PEOPLE, VOLUN_TITLE, VOLUN_CONTENT,
+                        VOLUN_REGIDATE, VOLUN_STATUS, CENTER_MEMBER_NO,
+                        ROWNUM AS RNUM
+                 FROM (
+                          SELECT VOLUN_NO, VOLUN_PERIODSTART, VOLUN_PERIODEND, VOLUN_START, VOLUN_END,
+                                 VOLUN_LOCAL, VOLUN_TIME, VOLUN_PEOPLE, VOLUN_TITLE, VOLUN_CONTENT,
+                                 VOLUN_REGIDATE, VOLUN_STATUS, CENTER_MEMBER_NO
+                          FROM TBL_VOLUN
+                          ORDER BY VOLUN_REGIDATE DESC
+                      )
+             )
+        WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount} AND VOLUN_STATUS = 'T'
+        ]]>
+</select>
+    <!-- 여기까지 페이지네이션+게시글목록불러오기 -->
+
+    <!-- 게시글 상세페이지 불러오기 -->
+    <select id="volunDetail" resultType="VolunDetailDTO">
+        SELECT a.VOLUN_NO, a.VOLUN_PERIODSTART, a.VOLUN_PERIODEND, a.VOLUN_START, a.VOLUN_END,
+               a.VOLUN_LOCAL, a.VOLUN_TIME, a.VOLUN_PEOPLE, a.VOLUN_TITLE, a.VOLUN_CONTENT,
+               a.VOLUN_REGIDATE, a.VOLUN_STATUS, a.CENTER_MEMBER_NO, c.CENTER_MEMBER_NAME
+        FROM TBL_VOLUN a JOIN TBL_CENTER_MEMBER c ON a.CENTER_MEMBER_NO = c.CENTER_MEMBER_NO
+        WHERE VOLUN_NO = #{volunNo}
+    </select>
+
+    <!-- 댓글불러오기 -->
+    <select id="volunComment" parameterType="Long" resultType="VolunCommentDTO">
+        SELECT
+            ac.VOLUN_COMMENT_NO,
+            ac.VOLUN_COMMENT,
+            ac.VOLUN_COMMENT_REGIDATE,
+            ac.VOLUN_COMMENT_WRITER,
+            CASE
+                WHEN MOD(ac.VOLUN_COMMENT_WRITER, 10) = 1 THEN m.MEMBER_NICKNAME
+                WHEN MOD(ac.VOLUN_COMMENT_WRITER, 10) = 2 THEN cm.CENTER_MEMBER_NAME
+                END AS COMMENT_WRITER_NAME
+        FROM
+            TBL_VOLUN_COMMENT ac
+                LEFT JOIN
+            TBL_MEMBER m ON MOD(ac.VOLUN_COMMENT_WRITER, 10) = 1 AND ac.VOLUN_COMMENT_WRITER = m.MEMBER_NO
+                LEFT JOIN
+            TBL_CENTER_MEMBER cm ON MOD(ac.VOLUN_COMMENT_WRITER, 10) = 2 AND ac.VOLUN_COMMENT_WRITER = cm.CENTER_MEMBER_NO
+        WHERE
+            ac.VOLUN_NO = #{VOLUNNo}
+        ORDER BY
+            ac.VOLUN_COMMENT_REGIDATE ASC
+    </select>
+
+
+    <!-- 게시글 작성 -->
+    <insert id="volunWrite" parameterType="VolunWriteDTO">
+        <selectKey keyProperty="volunNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_VOLUN.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_VOLUN (
+        VOLUN_NO, VOLUN_PERIODSTART, VOLUN_PERIODEND, VOLUN_START,
+        VOLUN_END, VOLUN_LOCAL, VOLUN_TIME, VOLUN_PEOPLE,
+        VOLUN_TITLE, VOLUN_CONTENT, CENTER_MEMBER_NO
+        ) VALUES (
+        #{volunNo}, #{volunPeriodstart}, #{volunPeriodend}, #{volunStart},
+        #{volunEnd}, #{volunLocal}, #{volunTime}, #{volunPeople},
+        #{volunTitle}, #{volunContent}, #{centerMemberNo}
+        )
+    </insert>
+
+    <!-- 게시글 삭제 처리 -->
+    <delete id="volunDelete" parameterType="VolunDetailDTO">
+        DELETE FROM TBL_Volun
+        WHERE VOLUN_NO = #{volunNo}
+    </delete>
+
+    <!-- 게시글 수정 -->
+    <update id="volunModify" parameterType="VolunWriteDTO">
+        UPDATE TBL_VOLUN
+        SET VOLUN_PERIODSTART = #{volunPeriodstart},
+            VOLUN_PERIODEND = #{volunPeriodend},
+            VOLUN_START = #{volunStart},
+            VOLUN_END = #{volunEnd},
+            VOLUN_LOCAL = #{volunLocal},
+            VOLUN_TIME = #{volunTime},
+            VOLUN_PEOPLE = #{volunPeople},
+            VOLUN_TITLE = #{volunTitle},
+            VOLUN_CONTENT = #{volunContent},
+            VOLUN_UPDATEDATE = SYSDATE
+        WHERE VOLUN_NO = #{volunNo}
+    </update>
+
+    <!-- 게시글 마감 처리 -->
+    <update id="volunEnd" parameterType="VolunDetailDTO">
+        UPDATE TBL_VOLUN
+        SET VOLUN_STATUS = 'F'
+        WHERE VOLUN_NO = #{volunNo}
+    </update>
+
+    <!-- 게시글 신고 처리 -->
+    <insert id="volunContentReport" parameterType="VolunReportDTO">
+        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_REPORT (
+        REPORT_NO, REPORT_CATE, REPORT_CONTENT, REPORT_WRITER, REPORT_CONTENT_NO
+        ) VALUES (
+        #{reportNo}, '봉사', #{reportContent}, #{reportWriter},#{reportContentNo}
+        )
+    </insert>
+
+    <!-- 자원봉사 신청서 등록 -->
+    <insert id="volunRequest" parameterType="VolunRequestDTO">
+        <selectKey keyProperty="volunRequestNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_VOLUN_REQUEST.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_VOLUN_REQUEST (
+        VOLUN_REQUEST_NO,
+        VOLUN_REQUEST_NAME,
+        VOLUN_REQUEST_PHONE,
+        VOLUN_REQUEST_PHONE_SUB,
+        VOLUN_REQUEST_EMAIL,
+        VOLUN_REQUEST_GENDER,
+        VOLUN_REQUEST_AGE,
+        VOLUN_REQUEST_ZIPCODE,
+        VOLUN_REQUEST_ADDRESS,
+        VOLUN_REQUEST_ADDRESS_DETAIL,
+        VOLUN_REQUEST_JOB,
+        VOLUN_REQUEST_AGREEMENT,
+        VOLUN_REQUEST_Q1,
+        VOLUN_REQUEST_Q2,
+        VOLUN_REQUEST_Q3,
+        VOLUN_REQUEST_Q4,
+        VOLUN_NO,
+        MEMBER_NO,
+        CENTER_MEMBER_NO,
+        VOLUN_REQUEST_STATUS
+        ) VALUES (
+        #{volunRequestNo},
+        #{volunRequestName},
+        #{volunRequestPhone},
+        #{volunRequestPhoneSub},
+        #{volunRequestEmail},
+        #{volunRequestGender},
+        #{volunRequestAge},
+        #{volunRequestZipcode},
+        #{volunRequestAddress},
+        #{volunRequestAddressDetail},
+        #{volunRequestJob},
+        #{volunRequestAgreement},
+        #{volunRequestQ1},
+        #{volunRequestQ2},
+        #{volunRequestQ3},
+        #{volunRequestQ4},
+        #{volunNo},
+        #{memberNo},
+        #{centerMemberNo},
+        #{volunRequestStatus}
+        )
+    </insert>
+
+    <!-- 댓글 등록 -->
+    <insert id="volunCommentRegi" parameterType="VolunCommentDTO">
+        <selectKey keyProperty="volunCommentNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_VOLUN_COMMENT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_VOLUN_COMMENT (
+        VOLUN_COMMENT_NO, VOLUN_COMMENT, VOLUN_COMMENT_WRITER, VOLUN_NO
+        ) VALUES (
+        #{volunCommentNo}, #{volunComment}, #{volunCommentWriter}, #{volunNo}
+        )
+    </insert>
+
+    <!-- 댓글 수정 -->
+    <update id="volunCommentModi" parameterType="VolunCommentDTO">
+        UPDATE TBL_VOLUN_COMMENT
+        SET VOLUN_COMMENT = #{volunComment}
+        WHERE VOLUN_COMMENT_WRITER = #{volunCommentWriter} AND VOLUN_COMMENT_NO = #{volunCommentNo} AND VOLUN_NO = #{volunNo}
+    </update>
+
+    <!-- 댓글 삭제 -->
+    <delete id="volunCommentDelete" parameterType="VolunCommentDTO">
+        DELETE FROM TBL_VOLUN_COMMENT
+        WHERE VOLUN_COMMENT_WRITER = #{volunCommentWriter} AND VOLUN_COMMENT_NO = #{volunCommentNo} AND VOLUN_NO = #{volunNo}
+    </delete>
+
+    <!-- 댓글 신고 처리 -->
+    <insert id="volunCommentReport" parameterType="VolunReportDTO">
+        <selectKey keyProperty="reportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_COMMENT_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_COMMENT_REPORT (
+        COMMENT_REPORT_NO, COMMENT_REPORT_CATE, COMMENT_REPORT, COMMENT_REPORT_WRITER, COMMENT_NO, CONTENT_NO
+        ) VALUES (
+        #{reportNo}, '봉사', #{reportComment}, #{reportWriter},#{reportCommentNo}, #{reportContentNo}
+        )
+    </insert>
+
+</mapper>

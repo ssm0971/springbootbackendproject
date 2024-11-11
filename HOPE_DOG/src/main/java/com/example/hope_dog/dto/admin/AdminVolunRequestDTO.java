@@ -21,7 +21,6 @@ public class AdminVolunRequestDTO {
     private String volunRequestAddress;
     private String volunRequestAddressDetail;
     private String volunRequestJob;
-    private String volunRequestMarry;
     private char volunRequestAgreement;
     private String volunRequestQ1;
     private String volunRequestQ2;

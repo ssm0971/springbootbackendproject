@@ -1,11 +1,7 @@
 package com.example.hope_dog.controller.mypage;
 
-import com.example.hope_dog.dto.centermypage.CenterViewProfileDTO;
-import com.example.hope_dog.dto.centermypage.notebox.*;
-import com.example.hope_dog.dto.member.MemberSessionDTO;
+
 import com.example.hope_dog.dto.mypage.*;
-import com.example.hope_dog.dto.notice.NoticeViewDTO;
-import com.example.hope_dog.service.centermypage.NoteBoxService;
 import com.example.hope_dog.service.mypage.MpNoteBoxService;
 import com.example.hope_dog.service.mypage.MypageService;
 import lombok.RequiredArgsConstructor;
@@ -77,7 +73,6 @@ public class MypageController {
         return ResponseEntity.ok(Map.of("available", available));
 
     }
-
 
     // 이메일 중복 체크
     @GetMapping("/checkEmail")
@@ -176,32 +171,6 @@ public class MypageController {
 
         return "mypage/mypage-posts";
     }
-
-//    @GetMapping("/profile")
-//    public String viewProfile(HttpSession session, Model model) {
-//        // 세션에서 사용자 정보를 가져옴
-//        String memberNo = (String) session.getAttribute("memberNo");
-//        String memberId = (String) session.getAttribute("memberId");
-//        String memberName = (String) session.getAttribute("memberName");
-//        String memberNickname = (String) session.getAttribute("memberNickname");
-//        String memberEmail = (String) session.getAttribute("memberEmail");
-//
-//        // 로그인 상태 확인
-//        if (memberId == null) {
-//            return "redirect:/member/login"; // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
-//        }
-//
-//        MemberSessionDTO memberInfo = mypageService.getMemberInfo(memberId);
-//
-//        // 모델에 사용자 정보를 추가하여 프로필 페이지에 표시
-//        model.addAttribute("memberNo", memberNo);
-//        model.addAttribute("memberId", memberId);
-//        model.addAttribute("memberName", memberName);
-//        model.addAttribute("memberNickname", memberNickname);
-//        model.addAttribute("memberEmail", memberEmail);
-//
-//        return "mypage/mypage-profile";
-//    }
 
 
     //쪽지함
@@ -361,7 +330,66 @@ public class MypageController {
         }
     }
 
+    @GetMapping("/updateProtectRequest")
+    public String updateProtectRequest(@RequestParam("protectRequestNo") Long protectRequestNo, Model model) {
+        MpProtectRequestDTO protectRequest = mypageService.protectRequestInfo(protectRequestNo);
+        Long memberNo = (Long) session.getAttribute("memberNo");
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
 
+        model.addAttribute("memberNo", memberNo);
+        model.addAttribute("centerMemberNo", centerMemberNo);
+
+        model.addAttribute("protectRequest", protectRequest);
+        return "mypage/mypage-protect-form";
+
+    }
+    @PostMapping("/updateProtectRequestOk")
+    public String updateProtectRequestOk(@RequestParam("protectRequestNo") Long protectRequestNo, MpProtectRequestDTO mpProtectRequestDTO, Model model) {
+        MpProtectRequestDTO protectRequest = mypageService.protectRequestInfo(protectRequestNo);
+        model.addAttribute("protectRequest", protectRequest);
+
+        mypageService.updateProtectRequest(mpProtectRequestDTO);
+
+        return "redirect:/mypage/updateProtectRequest?protectRequestNo=" + protectRequestNo;
+    }
+
+
+//    @PostMapping("/updateProfileOk")
+//    public String updateProfile(@ModelAttribute CenterUpdateProfileDTO centerUpdateProfileDTO, RedirectAttributes redirectAttributes) {
+//        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+//        if (centerMemberNo == null) {
+//            redirectAttributes.addFlashAttribute("errorMessage", "로그인이 필요합니다.");
+//            return "redirect:/login";
+//        }
+//
+//        // centerMemberNo를 DTO에 설정
+//        centerUpdateProfileDTO.setCenterMemberNo(centerMemberNo);
+//
+//        // 프로필 업데이트 시도
+//        try {
+//            int updateCount = centerMypageService.updateCenterProfile(centerUpdateProfileDTO);
+//            if (updateCount > 0) {
+//                redirectAttributes.addFlashAttribute("successMessage", "프로필이 성공적으로 업데이트되었습니다.");
+//            } else {
+//                redirectAttributes.addFlashAttribute("errorMessage", "프로필 업데이트에 실패했습니다.");
+//            }
+//        } catch (Exception e) {
+//            log.error("프로필 업데이트 중 오류 발생", e);
+//            redirectAttributes.addFlashAttribute("errorMessage", "프로필 업데이트 중 오류가 발생했습니다.");
+//        }
+//
+//        return "redirect:/centerMypage/centerProfile"; // 업데이트 후 리다이렉트할 페이지
+//    }
+
+    @GetMapping("/withdrawal")
+    public String withdrawal(Model model) {
+        Long memberNo = (Long) session.getAttribute("memberNo");
+        if (memberNo == null) {
+            return "redirect:/login";
+        }
+
+        return "mypage/mypage-quit";
+    }
 
 
 

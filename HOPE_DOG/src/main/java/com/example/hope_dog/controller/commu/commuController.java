@@ -10,14 +10,17 @@ import com.example.hope_dog.service.commu.CommuService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -27,6 +30,7 @@ import java.util.List;
 public class commuController {
     private final CommuService commuService;
 
+    //게시글 목록
     @GetMapping("/main") // /commu/list 경로로 GET 요청을 받을 때
     public String getCommuList(HttpSession session, Model model) {
         // 세션에서 memberNo와 centerMemberNo를 가져옴
@@ -49,6 +53,8 @@ public class commuController {
         }
 
         model.addAttribute("commuList", commuList); // 모델에 데이터 추가
+        model.addAttribute("memberNo", memberNo);
+        model.addAttribute("centerMemberNo", centerMemberNo);
 
         System.out.println("컨트롤러 글목록회원" + memberNo + ", 센터회원" + centerMemberNo);
         return "commu/commu-main"; // 뷰 이름을 반환
@@ -56,10 +62,14 @@ public class commuController {
 
     //카테고리 분류
     @GetMapping("/filter")
-    public String filterCommu(@RequestParam("cate") String cate, Model model) {
+    public String filterCommu(@RequestParam("cate") String cate, Model model,HttpSession session) {
         List<CommuDTO> commuList = commuService.getCommuListByCate(cate);
+        Long memberNo = (Long) session.getAttribute("memberNo");
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
         model.addAttribute("commuList", commuList);
         model.addAttribute("selectedCate", cate);
+        model.addAttribute("memberNo", memberNo);
+        model.addAttribute("centerMemberNo", centerMemberNo);
 
         // 콘솔에 출력
         System.out.println("Selected Category: " + cate);
@@ -70,27 +80,44 @@ public class commuController {
 
     //인기게시글
     @GetMapping("/good")
-    public String getGoodCommuList(Model model) {
+    public String getGoodCommuList(Model model, @SessionAttribute(name = "memberNo", required = false) Long memberNo,
+                                   @SessionAttribute(name = "centerMemberNo", required = false) Long centerMemberNo) {
         List<CommuDTO> commuList = commuService.cateCommuGood();
         model.addAttribute("commuList", commuList);
 
+        // memberNo 또는 centerMemberNo가 있으면 글쓰기 버튼을 보이게 할 수 있도록 처리
+        model.addAttribute("memberNo", memberNo);
+        model.addAttribute("centerMemberNo", centerMemberNo);
 
         return "commu/commu-main";
     }
 
 
     //거지같은 검색 더럽게 안됨
-//    @GetMapping("/commu/main/commuSearch")
-//    public String commuSearch(@RequestParam("page") int page, @RequestParam("searchtype") String searchType, @RequestParam("keyword") String keyword, Model model) {
-//        Criteria criteria = new Criteria(page, 10);  // 페이지와 한 페이지당 게시글 수
-////        List<CommuDTO> commuList = commuService.searchCommuList(searchType, keyword, criteria);
-////        int totalItems = commuService.getTotalItems(searchType, keyword);
-//
-//        model.addAttribute("commuList", commuList);
-//        model.addAttribute("totalItems", totalItems);
-//
-//        return "commu/commu-mail";  // 검색 결과가 포함된 페이지를 반환
-//    }
+    @GetMapping("/main/search")
+    public String search(@RequestParam(value = "searchType") String searchType,
+                         @RequestParam(value = "keyword") String keyword,
+                         Model model) {
+        // 검색 조건에 맞는 결과 가져오기
+        List<CommuDetailDTO> commuList = null;
+
+        // 검색 조건에 따라 처리
+        if ("commuTitle".equals(searchType)) {
+            commuList = commuService.commuSearch(keyword, null, null);  // 제목 검색
+        } else if ("memberNickname".equals(searchType)) {
+            commuList = commuService.commuSearch(null, keyword, null);  // 닉네임 검색
+        } else if ("centerMemberName".equals(searchType)) {
+            commuList = commuService.commuSearch(null, null, keyword);  // 센터명 검색
+        }
+
+        // 모델에 결과 추가
+        model.addAttribute("commuList", commuList);
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("keyword", keyword);
+
+        return "commu/commu-main"; // search.html 페이지를 반환
+    }
+
 
     //게시글 상세
     @GetMapping("/post/{commuNo}")
@@ -152,18 +179,32 @@ public class commuController {
         commuDTO.setCommuWriter(writerNo);  // commuWriter에 세션에서 가져온 ID 설정
         System.out.println("컨트롤러 writerNo :" + writerNo);
         commuService.writePost(commuDTO);
-        return "redirect:/commu/main";
+        Long commuNo = commuDTO.getCommuNo();
+        return "redirect:/commu/post/" + commuNo;
     }
 
-//    //커뮤니티 글 수정
-//    @GetMapping("/rewrite/{commNO}")
-//    public String rewriteCommu(@PathVariable("commNO") Long commNO, Model model) {
-//        CommuDTO commuDTO = commuService.getCommuDetail(commNO);
-//
-//        model.addAttribute("commuDTO", commuDTO);
-//
-//        return "commu/commu-rewrite";
-//    }
+    //글 수정페이지로 이동
+    @GetMapping("/commuModify")
+    public String commuModify(@RequestParam("commuNo") Long commuNo, HttpSession session,Model model){
+        List<CommuDetailDTO> commuDetailList = commuService.selectCommuByNo(commuNo);
+        Long centerMemberNo =(Long) session.getAttribute("centerMemberNo");
+        Long memberNo =(Long) session.getAttribute("memberNo");
+        System.out.println("컨트롤러 글 수정 :" + commuDetailList);
+
+        model.addAttribute("commuDetailList", commuDetailList);
+        model.addAttribute("centerMemberNo",centerMemberNo);
+        model.addAttribute("memberNo", memberNo);
+
+        return "commu/commu-post-rewrite";
+    }
+
+
+//    //커뮤니티 글 수정등록
+    @PostMapping("/commuModifyRegi")
+    public String commuModify(@DateTimeFormat(pattern = "yyyy-MM-dd") CommuDetailDTO commuDetailDTO){
+        commuService.commuModify(commuDetailDTO);
+        return "redirect:/commu/main";
+    }
 
     //글 삭제
     @DeleteMapping("/commuDelete/{commuNo}")
@@ -187,7 +228,7 @@ public class commuController {
     public String postCommuReport(@RequestParam("commuNo") Long commuNo,
                                   @RequestParam("reportContent") String reportContent,
                                   HttpSession session,
-                                  Model model) {
+                                  RedirectAttributes redirectAttributes) {
         //@RequestParam -commuNo을 쉽게 파라미터에 전달할 수 있게 해줌
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
         Long memberNo = (Long) session.getAttribute("memberNo");
@@ -205,8 +246,11 @@ public class commuController {
         // 신고 서비스 호출
         commuService.commuReport(commuReportDTO);
 
-        // 신고 후 커뮤니티 메인 페이지로 리다이렉트
-        return "redirect:/commu/main";
+        // 게시글 신고 메시지를 플래시 속성으로 추가
+        redirectAttributes.addFlashAttribute("ContentreportSuccess", true);
+
+        return "redirect:/commu/post/" + commuNo; // 상세페이지로 이동
+
     }
 
     //댓글 등록
@@ -262,7 +306,7 @@ public class commuController {
     public String commuCommentReport(HttpSession session, CommuReportDTO commuReportDTO,
                                     @RequestParam("commuCommentNo") Long commuCommentNo,
                                     @RequestParam("commuNo") Long commuNo,
-                                    @RequestParam("reportComment") String reportComment) {
+                                    @RequestParam("reportComment") String reportComment,RedirectAttributes redirectAttributes) {
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
         Long memberNo = (Long) session.getAttribute("memberNo");
 
@@ -273,7 +317,10 @@ public class commuController {
 
         commuService.commuCommentReport(commuReportDTO);
 
-        return "redirect:/commu/post/" + commuNo;
+        // 게시글 신고 메시지를 플래시 속성으로 추가
+        redirectAttributes.addFlashAttribute("ContentreportSuccess", true);
+
+        return "redirect:/commu/post/" + commuNo; // 상세페이지로 이동
     }
 
 }

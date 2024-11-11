@@ -33,6 +33,11 @@ main{
   text-align: center;
 }
 
+.volun-navList:hover{
+  cursor: pointer;
+}
+
+
 .volun-detail-box1{
   width: 1080px;
   height: 100px;
@@ -50,6 +55,9 @@ main{
   font-weight: bold;
   display: flex;
   align-items: center;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .volun-detail-info{
@@ -258,3 +266,4 @@ a {
   text-decoration: none;
   color: inherit; 
 }
+

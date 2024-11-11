@@ -53,6 +53,11 @@ public class AdoptService {
         return adoptMapper.selectAllPageKeep(criteria);
     }
 
+    //센터회원상태조회
+    public List<AdoptMainDTO> centerMemberStatus(Long centerMemberNo){
+        return adoptMapper.centerMemberStatus(centerMemberNo);
+    }
+
     
     //게시글 작성
     public void registerAdoption(AdoptWriteDTO adoptWriteDTO) {
@@ -83,6 +88,10 @@ public class AdoptService {
 
     //입양글 수정 처리
     public void adoptModify(AdoptWriteDTO adoptWriteDTO) {
+        LocalDate periodStart = adoptWriteDTO.getAdoptPeriodstart();
+        LocalDate periodEnd = adoptWriteDTO.getAdoptPeriodend();
+        LocalDate adoptBirth = adoptWriteDTO.getAdoptBirth();
+
         adoptMapper.adoptModify(adoptWriteDTO); // 매퍼 호출
     }
 

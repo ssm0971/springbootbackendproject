@@ -2,6 +2,7 @@ package com.example.hope_dog.service.centermypage;
 
 import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoAdoptListDTO;
 import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoCommuListDTO;
+import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoDonaListDTO;
 import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoVolListDTO;
 import com.example.hope_dog.mapper.centermypage.writeinfo.WriteInfoMapper;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,18 @@ public class WriteInfoService {
         }
 
         return commuList;
+    }
+
+    // 기부 작성글 목록 조회
+    public List<WriteInfoDonaListDTO> donationList(Long centerMemberNO) {
+        List<WriteInfoDonaListDTO> donaList = writeInfoMapper.writeInfoDonaList(centerMemberNO);
+
+        String centerMemberName = writeInfoMapper.writerInfo(centerMemberNO);
+        for (WriteInfoDonaListDTO dto : donaList) {
+            dto.setCenterName(centerMemberName);
+        }
+
+        return donaList;
     }
 
     // 봉사 작성글 목록 조회

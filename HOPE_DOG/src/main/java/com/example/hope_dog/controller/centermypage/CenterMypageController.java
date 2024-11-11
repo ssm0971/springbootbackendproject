@@ -7,6 +7,7 @@ import com.example.hope_dog.dto.centermypage.notebox.*;
 import com.example.hope_dog.dto.centermypage.request.*;
 import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoAdoptListDTO;
 import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoCommuListDTO;
+import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoDonaListDTO;
 import com.example.hope_dog.dto.centermypage.writeinfo.WriteInfoVolListDTO;
 import com.example.hope_dog.service.centermypage.CenterMypageService;
 import com.example.hope_dog.service.centermypage.NoteBoxService;
@@ -323,6 +324,23 @@ class CenterMypageController {
     }
 
     //봉사 모집글 페이지
+    @GetMapping("/writeInfoDonaList")
+    public String centerWriteInfoDonaList(Model model) {
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo"); // 세션에서 센터회원 번호 가져오기
+
+        if (centerMemberNo == null) {
+            log.warn("세션에서 centerMemberNo가 존재하지 않습니다.");
+            return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
+        }
+
+        // 커뮤니티 작성글 조회
+        List<WriteInfoDonaListDTO> donaWriteInfoList = writeInfoService.donationList(centerMemberNo);
+        model.addAttribute("donaWriteInfoList", donaWriteInfoList);
+
+        return "centermypage/center-mypage-writeinfo-dona";
+    }
+
+    //봉사 모집글 페이지
     @GetMapping("/writeInfoVolList")
     public String centerWriteInfoVolList(Model model) {
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo"); // 세션에서 센터회원 번호 가져오기
@@ -370,10 +388,46 @@ class CenterMypageController {
             return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
         }
 
-        List<VolunRequestListDTO> volRequestList = requestService.volRequestList(centerMemberNo);
+        List<VolunRequestListDTO> volRequestList = requestService.volunRequestList(centerMemberNo);
         model.addAttribute("volRequestList", volRequestList);
 
         return "centermypage/center-mypage-volun-list";
+    }
+
+    //봉사 신청서 상세 조회
+    @GetMapping("/volunRequestDetail")
+    public String getVolunRequestDetail(@RequestParam("volunRequestNo") Long volunRequestNo, Model model) {
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+
+        if (centerMemberNo == null) {
+            log.warn("세션에서 centerMemberNo가 존재하지 않습니다.");
+            return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
+        }
+
+        VolunRequestDetailDTO volunRequestInfo = requestService.volunRequestDetail(volunRequestNo);
+        model.addAttribute("volunRequestInfo", volunRequestInfo);
+
+        return "centermypage/center-mypage-volun-signup";
+    }
+
+    //봉사 신청서 상태처리
+    @GetMapping("/volunStatus")
+    public String centerMypageVolunStatus(@RequestParam("volunRequestStatus") String volunRequestStatus,
+                                          @RequestParam("volunRequestNo") Long volunRequestNo, Model model) {
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+        if (centerMemberNo == null) {
+            log.warn("세션에서 centerMemberNo가 존재하지 않습니다.");
+            return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
+        }
+
+        try {
+            requestService.updateAdoptRequestStatus(volunRequestNo, volunRequestStatus);
+        } catch (Exception e) {
+            log.error("요청 상태 업데이트 중 오류 발생: ", e);
+            return "redirect:/error"; // 에러 페이지로 리다이렉트
+        }
+
+        return "redirect:/centerMypage/volunRequestList";
     }
 
 
@@ -412,7 +466,7 @@ class CenterMypageController {
         return "centermypage/center-mypage-adopt-adoptrequest";
     }
 
-    //임시보호 신청서 상태처리
+    //입양 신청서 상태처리
     @GetMapping("/adoptStatus")
     public String centerMypageAdoptStatus(@RequestParam("adoptRequestStatus") String adoptRequestStatus,
                                           @RequestParam("adoptRequestNo") Long adoptRequestNo, Model model) {
@@ -431,8 +485,6 @@ class CenterMypageController {
 
         return "redirect:/centerMypage/adoptRequestList";
     }
-
-
 
 
 //임시보호

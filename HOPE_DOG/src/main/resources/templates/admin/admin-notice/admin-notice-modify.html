@@ -45,26 +45,42 @@
               </div>
               <!-- 글작성 박스 -->
               <div class="notice-write-area">
-                <form action="링크" method="post">
-                  <div><input type="text" value="제목을 입력해주세요" class="title"></div>
+                <form th:action="@{/admin/noticeModify(noticeNo=${notice.noticeNo})}" method="post">
+                  <div><input type="text" name="title" value="제목을 입력해주세요" class="title" th:value="${notice.noticeTitle}"></div>
                   <br>
                   <div>
                     <span style="margin-right: 5px;">카테고리 선택</span>
-                    <select name="languages" id="lang">
-                      <option value="일반">일반</option>
-                      <option value="봉사">봉사</option>
-                      <option value="입양">입양</option>
+                    <select name="cate" id="cate">
+                      <option value="일반" th:selected="${notice.noticeCate == '일반'}">일반</option>
+                      <option value="봉사" th:selected="${notice.noticeCate == '봉사'}">봉사</option>
+                      <option value="입양" th:selected="${notice.noticeCate == '입양'}">입양</option>
                     </select>
                   </div>
                   <br>
-                  <div> 
-                    <textarea id="summernote" name="editordata" class="content"></textarea>
-                </div>
+                  <div>
+                    <textarea id="summernote" name="content" class="content" th:text="${notice.noticeContent}"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="upload" class="form-label">첨부파일</label>
+                    <input type="file" class="form-control" id="upload" name="files" multiple>
+                  </div>
+
+                  <!-- 기존에 첨부된 파일 목록 -->
+                  <div class="existing-files mt-2">
+                    <ul>
+                      <li th:each="file : ${fileList}" th:id="'file-' + ${file.fileNo}">
+                        <a th:href="@{${file.filePath}}" th:text="${file.fileName}" download></a>
+                        <button type="button" class="btn btn-danger btn-sm"
+                                th:onclick="'deleteFileByFileNo(' + ${file.fileNo} + ')'"
+                        >삭제</button>
+                      </li>
+                    </ul>
+                  </div>
 
                   <!-- 수정/취소 버튼 -->
                   <div class="notice-write-button-box">
                     <button class="notice-write-button">수정</button>
-                    <button class="notice-cancle-button">취소</button>
+                    <button type="button" class="notice-cancle-button">취소</button>
                   </div>
                 </form>
               </div>
@@ -101,4 +117,27 @@
       });
   });
   </script>
+
+<script>
+  function deleteFileByFileNo(fileNo) {
+    fetch(`/deleteFileByFileNo/${fileNo}`, {
+      method: 'DELETE'
+    })
+            .then(response => {
+              if (response.ok) {
+                alert("파일이 삭제되었습니다.");
+                location.reload(); // 페이지를 새로고침하여 목록을 업데이트
+              } else {
+                response.text().then(text => alert(text));
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert("파일 삭제 중 오류가 발생했습니다.");
+            });
+  }
+
+
+
+</script>
 </html>

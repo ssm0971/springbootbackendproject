@@ -4,12 +4,6 @@ import * as reply from "./comment.js";
 let page = 1;
 let hasNext = true;
 
-// URL에서 파라미터를 가져오는 함수
-function getParameter(name) {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get(name);
-}
-
 // 글 삭제 버튼
 function deleteClick() {
   // donaNo 가져오기
@@ -31,19 +25,35 @@ function deleteClick() {
   }
 }
 
-  // 버튼 처리
-  let $modifyBtn = document.querySelector('.btn-modify');
+window.deleteClick = deleteClick;
 
   // 수정 버튼 처리
-  $modifyBtn?.addEventListener('click', function (){
-    let donaNo = this.dataset.id; //클릭된 요소의 data-id 속성값 가져와 변수에 저장
-    //this : eventhandler 내에서 이벤트가 발생한 요소
-    //dataset : 요소의 모든 data-* 속성을 포함
-    //id : data-id 속성의 값 가져오기
-    console.log(donaNo);
-    location.href = `/dona/modify?donaNo=${donaNo}`;
-  });
+//
+// document.querySelectorAll('.btn-modify').forEach(function(element) {
+//   element.addEventListener('click', function() {
+//     const donaNo = element.querySelector('.donaNo').innerText;
+//     console.log(donaNo);
+//     location.href = `/dona/modify?donaNo=${donaNo}`;// 상세 페이지로 이동
+//   });
+// });
 
+// 게시글수정 버튼
+function modifyClick() {
+  const donaNo = document.querySelector('.donaNo').textContent.trim(); // adoptNo를 HTML에서 가져옵니다.
+  const centerMemberNo = document.querySelector('.centerMemberNo').textContent.trim(); // centerMemberNo를 HTML에서 가져옵니다.
+
+  console.log(donaNo);
+  // console.log(centerMemberNo);
+
+  if (confirm('정말 수정하시겠습니까?')) {
+    console.log('수정페이지로 이동합니다.');
+    location.href = `/dona/modify?donaNo=${donaNo}&centerMemberNo=${centerMemberNo}`;
+  } else {
+    console.log('신청서페이지로 이동하지 않습니다.');
+  }
+}
+
+window.modifyClick = modifyClick;
 
 // ------------------------댓글 메뉴 처리-------------------------------------------
 {

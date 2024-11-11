@@ -2,10 +2,11 @@ package com.example.hope_dog.dto.adopt.protect;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class ProtectWriteDTO {
     private Long protectNo;
     private LocalDate protectPeriodstart;

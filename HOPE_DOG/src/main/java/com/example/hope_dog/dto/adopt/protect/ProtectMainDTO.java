@@ -22,4 +22,5 @@ public class ProtectMainDTO {
     private Date  protectRegidate;
     private Date  protectPeriodEnd;
     private Long centerMemberNo;
+    private String centerMemberStatus;
 }

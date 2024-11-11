@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>후기 글상세</title>
-  <link rel="stylesheet" th:href="@{/css/adopt/review/adopt-reviewdetail.css}" />
+  <link rel="stylesheet" th:href="@{/css/adopt/review/adopt-reviewdetail.css}">
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
   <script defer th:src="@{/js/main/main.js}"></script>
@@ -25,6 +25,7 @@
 
     <!-- 제목/작성자/등록일 크기 -->
     <div class="adopt-detail-box1" th:each="review : ${reviewDetailList}">
+      <div class="memberNo" th:text="${review.reviewNo}" style="display: none"></div>
       <div class="adopt-detail-title" th:text="${review.reviewTitle}"></div>
       <div class="adopt-detail-info">
         <span th:text="'작성자 : ' + ${review.memberName}"></span>
@@ -103,7 +104,7 @@
 
     <!-- 댓글입력 -->
     <div th:if="${memberNo != null or centerMemberNo != null}">
-      <form action="/adopt/review/reviewCommentRegi" method="get" th:each="review : ${reviewDetailList}">
+      <form action="/adopt/review/reviewCommentRegi" method="get" th:each="review : ${reviewDetailList}" onsubmit="return validateCommentForm()">
         <input class="adopt-detail-commentregi" type="text" name="reviewComment" placeholder="욕설 및 혐오감을 주는 댓글은 삼가주세요" maxlength="1000">
         <input th:value="${review.reviewNo}" style="display: none" name="reviewNo">
         <button class="adopt-commentregi-button" type="submit">등록</button>
@@ -111,6 +112,19 @@
     </div>
 
     <br>
+
+    <!-- 게시글신고완료시 -->
+    <div th:if="${ContentreportSuccess}">
+      <script>
+        alert('신고가 완료되었습니다.');
+      </script>
+    </div>
+
+    <div th:if="${CommentreportSuccess}">
+      <script>
+        alert('신고가 완료되었습니다.');
+      </script>
+    </div>
 </main>
 
 </body>

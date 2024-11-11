@@ -38,14 +38,15 @@
     <br>
 
     <!-- 글작성 박스 -->
-    <form th:action="@{/adopt/protect/protectWriteRegi}" method="post">
+    <form th:action="@{/adopt/protect/protectModifyRegi}" method="post">
       <div class="adopt-write-area" th:each="protect : ${protectDetailList}">
+        <input th:value="${protect.protectNo}" style="display: none" name="protectNo">
         <br>
         <!-- 임시보호 기간 입력 -->
         <div class="adopt-write-box">
           <div class="adopt-write-subtitle">*입양 기한</div>
-          시작일 : 　<input class="adopt-write-period" type="date" name="protectPeriodstart" th:value="${protect.protectPeriodStart}">　　
-          종료일 : 　<input class="adopt-write-period" type="date" name="protectPeriodend" th:value="${protect.protectPeriodEnd}">
+          시작일 : 　<input class="adopt-write-period" type="date" name="protectPeriodstart" th:value="${#dates.format(protect.protectPeriodStart, 'yyyy-MM-dd')}">　　
+          종료일 : 　<input class="adopt-write-period" type="date" name="protectPeriodend" th:value="${#dates.format(protect.protectPeriodEnd, 'yyyy-MM-dd')}">
         </div>
         <input th:value="${centerMemberNo}" style="display: none" name="centerMemberNo">
         <!-- 이름입력 -->
@@ -71,14 +72,14 @@
         <!-- 중성화 여부 입력 -->
         <div class="adopt-write-box">
           <div class="adopt-write-subtitle">*중성화 여부</div>
-          <input class="adopt-write-sterilization" type="radio" name="protectNeutering" value="Y" checked>네　
-          <input class="adopt-write-sterilization" type="radio" name="protectNeutering" value="N">아니요
+          <input class="adopt-write-sterilization" type="radio" name="protectNeutering" value="Y" th:checked="${protect.protectNeutering == 'Y'}">네　
+          <input class="adopt-write-sterilization" type="radio" name="protectNeutering" value="N" th:checked="${protect.protectNeutering == 'N'}">아니요
         </div>
         <!-- 성별 입력 -->
         <div class="adopt-write-box">
           <div class="adopt-write-subtitle">*성별</div>
-          <input class="adopt-write-gender" type="radio" name="protectGender" value="M" checked> 남　
-          <input class="adopt-write-gender" type="radio" name="protectGender" value="F"> 여
+          <input class="adopt-write-gender" type="radio" name="protectGender" value="M" th:checked="${protect.protectGender == 'M'}"> 남　
+          <input class="adopt-write-gender" type="radio" name="protectGender" value="F" th:checked="${protect.protectGender == 'F'}"> 여
         </div>
         <!-- 몸무게 입력 -->
         <div class="adopt-write-box">
@@ -92,7 +93,7 @@
         </div>
         <!-- 생년월일 입력 -->
         <div class="adopt-write-box">
-          <div class="adopt-write-subtitle">*생년월일</div><input class="adopt-write-birth" type="date" name="protectBirth" th:value="${protect.protectBirth}">
+          <div class="adopt-write-subtitle">*생년월일</div><input class="adopt-write-birth" type="date" name="protectBirth" th:value="${#dates.format(protect.protectBirth, 'yyyy-MM-dd')}">
           <div class="adopt-brirth-ex">　*정확한 생년월일을 모를 시 예상 생년월일을 선택해주세요</div>
         </div>
         <!-- 한줄소개 입력 -->
@@ -112,7 +113,7 @@
         <!-- 썸머노트 -->
         <div class="content">
           <input id="subject" name="protectTitle" class="adoptwrite-title" placeholder="제목을 입력해주세요" th:value="${protect.protectTitle}">
-          <textarea id="contents" name="protectContent" maxlength="100" th:value="${protect.protectContent}"></textarea>
+          <textarea id="contents" name="protectContent" maxlength="100" th:text="${protect.protectContent}"></textarea>
         </div>
 
         <!-- 등록/취소 버튼 -->

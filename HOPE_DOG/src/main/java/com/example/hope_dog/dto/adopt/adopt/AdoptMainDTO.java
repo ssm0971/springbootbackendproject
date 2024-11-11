@@ -22,4 +22,5 @@ public class AdoptMainDTO {
     private Date adoptRegidate;
     private Date adoptPeriodEnd;
     private Long centerMemberNo;
+    private String centerMemberStatus;
 }

@@ -8,28 +8,25 @@
   <link rel="stylesheet" th:href="@{/css/mypage/mypage-volun-list.css}" />
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
-  <script defer th:src="@{/js/main/main.js}"></script>
-<!--  <script defer th:src="@{/js/mypage/mypage-volun-list.js}" ></script>-->
+  <script defer th:src="@{/js/mypage/mypage-volun-list.js}"></script>
 </head>
 
 <body>
-
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
-    <div class="member-profile-navbox">
-      <nav>
-        <ul class="member-profile-nav-ul">
-          <li id="profile"><a href="../../html/mypage/mypage-update.html">개인정보수정</li></a>
-          <li id="posts"><a href="../../html/mypage/mypage-posts.html">작성글조회</li></a>
-          <li id="volunteer"><a href="../../html/mypage/mypage-volunteer.html">봉사</li>
-          <div id="choice"></div></a>
-          <li id="adopt"><a href="../../html/mypage/mypage-adopt.html">입양</li></a>
-          <li id="inbox"><a href="../../html/mypage/mypage-inbox.html">쪽지함</li></a>
-          <li id="auth"><a href="../../html/mypage/mypage-auth.html">2차인증</li></a>
-          <li id="withdrawal"><a href="../../html/mypage/mypage-quit.html">회원탈퇴</li></a>
-        </ul>
-      </nav>
-    </div>
+<main>
+  <div class="member-profile-navbox">
+    <nav>
+      <ul class="member-profile-nav-ul">
+        <li id="profile"><a th:href="@{/mypage/update}">개인정보수정</li></a>
+        <li id="posts"><a th:href="@{/mypage/posts}">작성글조회</li></a>
+        <li id="volunteer"><a th:href="@{/mypage/volun}">봉사</li>
+        <div id="choice"></div></a>
+        <li id="adopt"><a th:href="@{/mypage/adopt}">입양</li></a>
+        <li id="inbox"><a th:href="@{/mypage/noteboxReceiveList}">쪽지함</li></a>
+        <li id="withdrawal"><a th:href="@{/mypage/withdrawal}">회원탈퇴</li></a>
+      </ul>
+    </nav>
+  </div>
     <div class="member-volun-navbox">
       <nav>
         <ul class="member-volun-nav-ul">

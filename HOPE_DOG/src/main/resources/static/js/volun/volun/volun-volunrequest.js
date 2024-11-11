@@ -150,27 +150,16 @@ function checkQuest4Input() {
 function validateInputs() {
   const inputs = [
     { id: 'nameInput', errors: ['nameError', 'nameError2'] },
-    { id: 'phoneInput', errors: ['phoneError', 'phoneError2'] },
-    { id: 'phone2Input', errors: ['phone2Error', 'phone2Error2'] },
-    { id: 'emailInput', errors: ['emailError', 'emailError2'] },
+    { id: 'phoneInput', errors: ['phoneError', 'phoneError2']},
+    { id: 'phone2Input', errors: ['phone2Error', 'phone2Error2']},
+    { id: 'emailInput', errors: ['emailError', 'emailError2']},
     { id: 'ageInput', errors: ['ageError', 'ageError2'] },
     { id: 'jobInput', errors: ['jobError', 'jobError2'] },
     { id: 'detailAddress', errors: ['addressError', 'addressError2'] },
     { id: 'quest1Input', errors: ['quest1Error'] },
     { id: 'quest2Input', errors: ['quest2Error'] },
     { id: 'quest3Input', errors: ['quest3Error'] },
-    { id: 'quest4Input', errors: ['quest4Error'] },
-    { id: 'quest5Input', errors: ['quest5Error'] },
-    { id: 'quest6Input', errors: ['quest6Error'] },
-    { id: 'quest7Input', errors: ['quest7Error'] },
-    { id: 'quest8Input', errors: ['quest8Error'] },
-    { id: 'quest9Input', errors: ['quest9Error'] },
-    { id: 'quest10Input', errors: ['quest10Error'] },
-    { id: 'quest11Input', errors: ['quest11Error'] },
-    { id: 'quest12Input', errors: ['quest12Error'] },
-    { id: 'quest13Input', errors: ['quest13Error'] },
-    { id: 'quest14Input', errors: ['quest14Error'] },
-    { id: 'quest15Input', errors: ['quest15Error'] }
+    { id: 'quest4Input', errors: ['quest4Error'] }
   ];
 
   let allValid = true;
@@ -190,18 +179,18 @@ function validateInputs() {
     });
   });
 
-  // 체크박스 확인 추가
+  // 체크박스 확인
   const checkbox1 = document.getElementById('info-agreement');
-  if (!checkbox1.checked || !checkbox2.checked) {
-    alert('약관에 동의해 주세요.'); // 체크되지 않은 경우 경고
+  if (!checkbox1.checked) {
+    alert('약관에 동의해 주세요.');
     allValid = false;
   }
 
+  // 모든 입력이 유효한지 확인
   if (!allValid) {
-    alert('모든 질문을 입력해 주세요.'); // 경고창 표시
+    alert('모든 질문을 입력해 주세요.');
   } else {
-    alert('신청이 완료되었습니다'); // 모든 입력이 유효한 경우
-    window.location.href = '../../html/volun/volun-volundetail.html';
+    document.getElementById('volunRequest').submit(); // 폼 제출
   }
 }
 
@@ -228,4 +217,19 @@ function requestcancle() {
   } else {
     console.log('입양신청이 취소되지 않았습니다.');
   }
+}
+
+//상단헤더이동
+{
+  let volunPageBtn = document.getElementById('volunPage');
+  volunPageBtn.addEventListener('click', function(){
+    location.href='/volun/volun';
+  });
+}
+
+{
+  let carPageBtn = document.getElementById('carPage');
+  carPageBtn.addEventListener('click', function(){
+    location.href='/car/main';
+  });
 }

@@ -38,15 +38,13 @@
     <br>
 
     <!-- 글작성 박스 -->
-    <form th:action="@{/adopt/review/reviewWriteRegi}" method="post">
+    <form th:action="@{/adopt/review/reviewWriteRegi}" method="post" onsubmit="return validatePostForm()">
       <div class="adopt-write-area">
         <br>
-        <!-- 임시보호 기간 입력 -->
-        <div class="adopt-write-box">
-        </div>
         <input th:value="${memberNo}" style="display: none" name="memberNo">
         <!-- 썸머노트 -->
         <div class="content">
+          <br>
           <input id="subject" name="reviewTitle" class="adoptwrite-title" placeholder="제목을 입력해주세요">
           <textarea id="contents" name="reviewContent" maxlength="100"></textarea>
         </div>
