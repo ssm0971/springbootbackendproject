@@ -19,27 +19,20 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class DogMapService {
-    @Value("${api.service.key}")
-    private String serviceKey;
+
+    @Value("${api.service.key1} ${api.service.key2}")
+    private String serviceKey1;
+    private String serviceKey2;
 
     public List<Item> getShelterInfo() {
-        String baseurl = "http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
-        String subType = "_type=json";
-        String numOfRows = "numOfRows=200";
-        String pageNo = "pageNo=1";
-        String KeyStr = "serviceKey=";
-
-        // URL 인코딩
-//        String encodedServiceKey;
-//        try {
-//            encodedServiceKey = URLEncoder.encode(serviceKey, StandardCharsets.UTF_8.toString());
-//        } catch (Exception e) {
-//            log.error("서비스 키 인코딩 중 오류 발생: " + e.getMessage());
-//            return new ArrayList<>(); // 인코딩 오류 발생 시 빈 리스트 반환
-//        }
+        String baseurl = "https://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
+        String subType = "json";
+        String numOfRows = "200";
+        String pageNo = "1";
+//        String serviceKey = "YHW1P%2F57dgSSQi1EHu1NvPwRjRhbDQSsVMiA%2BwstM1aQkH0mt0JIwg7%2FdPAZgu1UE8x6oHCtoM9Z%2BEicawOZDw%3D%3D&serviceKey=YHW1P/57dgSSQi1EHu1NvPwRjRhbDQSsVMiA+wstM1aQkH0mt0JIwg7/dPAZgu1UE8x6oHCtoM9Z+EicawOZDw==";
 
         // URL 생성
-        String url = baseurl + "?" + KeyStr + serviceKey + "&" + numOfRows + "&" + pageNo + "&" + subType;
+        String url = baseurl + "?serviceKey=" + serviceKey1 + "&serviceKey=" + serviceKey2 + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=" + subType;
         log.info("URL 확인 : " + url);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -48,8 +41,9 @@ public class DogMapService {
         try {
             // HTTP 요청 헤더 설정
             HttpHeaders headers = new HttpHeaders();
-
+            log.info("요청헤더 확인==============" + headers.toString());
             HttpEntity<String> entity = new HttpEntity<>(headers);
+            log.info("요청헤더 Entity확인==============" + entity.toString());
             ResponseEntity<AnimalShelterResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, AnimalShelterResponse.class);
 
             // 응답 상태 코드 확인
@@ -65,66 +59,100 @@ public class DogMapService {
             return new ArrayList<>(); // 오류 발생 시 빈 리스트 반환
         }
 
-        List<Item> item = new ArrayList<>();
+        List<Item> items = new ArrayList<>();
 
         // JSON 응답에서 items 항목을 가져옴
         if (response != null && response.getResponse() != null && response.getResponse().getBody() != null) {
-            item = response.getResponse().getBody().getItems().getItem(); // items 리스트 가져오기
+            // items 리스트 가져오기
+            items = response.getResponse().getBody().getItems().getItem();
         } else {
             log.error("응답이 유효하지 않거나 JSON 형식이 아닙니다: " + response);
             return new ArrayList<>(); // 유효하지 않은 응답 시 빈 리스트 반환
         }
 
-        return item;
+        return items;
     }
+
+    // 주소 필터링하는 메소드
+    public List<Item> filterByAddress(List<Item> dogmapDTOList, String addressPrefix) {
+        List<Item> filteredItems = dogmapDTOList.stream()
+                .filter(dto -> dto.getCareAddr().startsWith(addressPrefix))
+                .collect(Collectors.toList());
+
+        // 인덱스를 추가하면서 리스트에 저장
+        for (int i = 0; i < filteredItems.size(); i++) {
+            Item item = filteredItems.get(i);
+            item.setIndex(i + 1); // 인덱스를 설정 (1부터 시작)
+        }
+
+        return filteredItems;
+    }
+
 //    @Value("${api.service.key}")
 //    private String serviceKey;
 //
+//
+//
 //    public List<Item> getShelterInfo() {
-//        String baseurl = "http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
-//        String subType = "_type=json";
-//        String numOfRows = "numOfRows=250";
-//        String pageNo = "pageNo=1";
-//        String KeyStr = "serviceKey=";
+//        String baseurl = "https://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
+//        String subType = "json";
+//        String numOfRows = "200";
+//        String pageNo = "1";
 //
 //        // URL 생성
-////        String encodedServiceKey = URLEncoder.encode(serviceKey, StandardCharsets.UTF_8);
-//
-//        String url = baseurl + "?" + KeyStr + serviceKey + "&" + numOfRows + "&" + pageNo + "&" + subType;
+//        String url = baseurl + "?serviceKey=" + serviceKey + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=" + subType;
 //        log.info("URL 확인 : " + url);
+//
 //        RestTemplate restTemplate = new RestTemplate();
 //        AnimalShelterResponse response = null;
 //
 //        try {
-//            // API 호출
-//            response = restTemplate.getForObject(url, AnimalShelterResponse.class);
+//            // HTTP 요청 헤더 설정
+//            HttpHeaders headers = new HttpHeaders();
 //
-//            log.info("API Response: " + response); // 응답 내용 출력
+//            HttpEntity<String> entity = new HttpEntity<>(headers);
+//            ResponseEntity<AnimalShelterResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, AnimalShelterResponse.class);
+//
+//            // 응답 상태 코드 확인
+//            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+//                response = responseEntity.getBody();
+//                log.info("API Response: " + response); // 응답 내용 출력
+//            } else {
+//                log.error("API 호출 실패: " + responseEntity.getStatusCode());
+//                return new ArrayList<>(); // 실패 시 빈 리스트 반환
+//            }
 //        } catch (RestClientException e) {
 //            log.error("API 호출 중 오류 발생: " + e.getMessage());
-//            log.info("API Response: " + response);
 //            return new ArrayList<>(); // 오류 발생 시 빈 리스트 반환
 //        }
 //
-//        List<Item> dogmapDTOList = new ArrayList<>();
+//        List<Item> items = new ArrayList<>();
 //
 //        // JSON 응답에서 items 항목을 가져옴
 //        if (response != null && response.getResponse() != null && response.getResponse().getBody() != null) {
-//            dogmapDTOList = response.getResponse().getBody().getItems().getItem(); // items 리스트 가져오기
+//            // items 리스트 가져오기
+//            List<Item> apiItems = response.getResponse().getBody().getItems().getItem();
+//
+//            // 인덱스를 추가하면서 리스트에 저장
+//            for (int i = 0; i < apiItems.size(); i++) {
+//                Item item = apiItems.get(i);
+//                item.setIndex(i + 1); // 인덱스 설정 (1부터 시작)
+//                items.add(item); // 인덱스를 설정한 아이템을 새로운 리스트에 추가
+//            }
 //        } else {
 //            log.error("응답이 유효하지 않거나 JSON 형식이 아닙니다: " + response);
 //            return new ArrayList<>(); // 유효하지 않은 응답 시 빈 리스트 반환
 //        }
 //
-//        return dogmapDTOList;
+//        return items;
 //    }
-
-    // 주소 필터링하는 메소드
-    public List<Item> filterByAddress(List<Item> dogmapDTOList, String addressPrefix) {
-        return dogmapDTOList.stream()
-                .filter(dto -> dto.getCareAddr().startsWith(addressPrefix))
-                .collect(Collectors.toList());
-    }
+//
+//    // 주소 필터링하는 메소드
+//    public List<Item> filterByAddress(List<Item> dogmapDTOList, String addressPrefix) {
+//        return dogmapDTOList.stream()
+//                .filter(dto -> dto.getCareAddr().startsWith(addressPrefix))
+//                .collect(Collectors.toList());
+//    }
 
 //    private final String SERVICE_KEY = "YHW1P%2F57dgSSQi1EHu1NvPwRjRhbDQSsVMiA%2BwstM1aQkH0mt0JIwg7%2FdPAZgu1UE8x6oHCtoM9Z%2BEicawOZDw%3D%3D"; // 실제 서비스 키로 변경
 

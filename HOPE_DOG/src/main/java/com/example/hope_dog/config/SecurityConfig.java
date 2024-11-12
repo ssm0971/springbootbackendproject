@@ -1,7 +1,6 @@
 package com.example.hope_dog.config;
 
 import com.example.hope_dog.service.member.CustomOAuth2UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,6 +45,7 @@ public class SecurityConfig {
                 // CSRF 보호 비활성화
                 // - REST API 서버는 CSRF 공격으로부터 안전
                 // - 세션을 사용하지 않는 REST API의 경우 불필요
+
                 .csrf(csrf -> csrf.disable())
 
                 // HTTP 요청에 대한 인가 규칙 설정
@@ -107,4 +107,6 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
+
