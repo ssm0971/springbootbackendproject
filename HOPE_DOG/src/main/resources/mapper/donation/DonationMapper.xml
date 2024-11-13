@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.hope_dog.mapper.donation.DonationMapper">
-<!--    글 목록페이지-->
+    <!--    글 목록페이지-->
     <select id="donationList" resultType="DonationListDTO">
         SELECT
             D.DONA_NO,
@@ -19,7 +19,7 @@
             D.DONA_REGIDATE DESC
     </select>
 
-<!--    글 상세페이지-->
+    <!--    글 상세페이지-->
     <select id="donationView" resultType="DonationViewDTO">
         SELECT
             D.DONA_NO,
@@ -28,79 +28,23 @@
             D.DONA_CONTENT,
             D.DONA_REGIDATE,
             D.DONA_UPDATEDATE,
-            C.CENTER_MEMBER_ID,
             C.CENTER_MEMBER_NAME
         FROM
             TBL_DONA D
                 JOIN
             TBL_CENTER_MEMBER C ON D.CENTER_MEMBER_NO = C.CENTER_MEMBER_NO
         WHERE D.DONA_NO = #{donaNo}
-        ORDER BY
-            D.DONA_REGIDATE DESC
     </select>
-
-    <!-- 여기서 부터 페이지네이션 관련 쿼리문-->
-    <!-- 기부 전체게시글 수 -->
-    <select id="selectTotal" resultType="int">
-        SELECT COUNT(DONA_NO) FROM TBL_DONA
-    </select>
-
-    <!-- 기부 페이지마다 표시할 게시글-->
-    <select id="selectAllPage" parameterType="Criteria" resultType="DonationMainDTO">
-<![CDATA[
-        SELECT
-            D.DONA_NO,
-            D.CENTER_MEMBER_NO,
-            D.DONA_TITLE,
-            D.DONA_CONTENT,
-            D.DONA_REGIDATE,
-            D.DONA_UPDATEDATE,
-            C.CENTER_MEMBER_ID,
-            C.CENTER_MEMBER_NAME,
-            CM.DONA_COMMENT_NO,
-            CM.DONA_COMMENT_CONTENT,
-            CM.DONA_COMMENT_REGIDATE,
-            CM.DONA_COMMENT_WRITER
-        FROM (
-                 SELECT
-                     DONA_NO,
-                     CENTER_MEMBER_NO,
-                     DONA_TITLE,
-                     DONA_CONTENT,
-                     DONA_REGIDATE,
-                     DONA_UPDATEDATE,
-                     ROWNUM AS RNUM
-                 FROM (
-                          SELECT
-                              D.DONA_NO,
-                              D.CENTER_MEMBER_NO,
-                              D.DONA_TITLE,
-                              D.DONA_CONTENT,
-                              D.DONA_REGIDATE,
-                              D.DONA_UPDATEDATE
-                          FROM TBL_DONA D
-                          ORDER BY D.DONA_REGIDATE DESC
-                      )
-                 WHERE ROWNUM <= #{page} * #{amount}
-             )
-                 D
-                 JOIN TBL_CENTER_MEMBER C ON D.CENTER_MEMBER_NO = C.CENTER_MEMBER_NO
-                 LEFT JOIN TBL_DONA_COMMENT CM ON D.DONA_NO = CM.DONA_NO
-        WHERE D.RNUM > (#{page} - 1) * #{amount}
-        ]]>
-
-    </select>
-    <!-- 여기까지 페이지네이션+게시글목록불러오기 -->
 
     <insert id="donationWrite" parameterType="DonationWriteDTO">
         <selectKey keyProperty="donaNo" resultType="Long" order="BEFORE">
             SELECT SEQ_DONA_NO.NEXTVAL FROM DUAL
         </selectKey>
-            INSERT INTO TBL_DONA (
-                DONA_NO, DONA_TITLE, DONA_CONTENT, CENTER_MEMBER_NO, DONA_REGIDATE
-            ) VALUES (
-            #{donaNo}, #{donaTitle}, #{donaContent}, #{centerMemberNo}, SYSDATE
-            )
+        INSERT INTO TBL_DONA (
+        DONA_NO, DONA_TITLE, DONA_CONTENT, CENTER_MEMBER_NO, DONA_REGIDATE
+        ) VALUES (
+        #{donaNo}, #{donaTitle}, #{donaContent}, #{centerMemberNo}, SYSDATE
+        )
     </insert>
 
     <delete id="donationDelete" parameterType="Long">
@@ -110,9 +54,42 @@
 
     <update id="donationUpdate" parameterType="DonationWriteDTO">
         UPDATE TBL_DONA
-        SET DONA_TITLE = #{donaTitle}, DONA_CONTENT = #{donaContent}, DONA_UPDATEDATE = SYSDATE
+        SET DONA_TITLE = #{donaTitle}, DONA_CONTENT = #{donaContent}, DONA_REGIDATE = SYSDATE
         WHERE DONA_NO = #{donaNo}
     </update>
+
+
+    <!-- 기부 검색 -->
+    <select id="donaSearch" resultType="DonaDetailDTO">
+        SELECT
+        d.DONA_NO,
+        d.CENTER_MEMBER_NO,
+        d.DONA_TITLE,
+        d.DONA_CONTENT,
+        d.DONA_REGIDATE,
+        d.DONA_UPDATEDATE,
+        cm.CENTER_MEMBER_NAME AS centerMemberName
+        FROM
+        TBL_DONA d
+        LEFT JOIN
+        TBL_CENTER_MEMBER cm ON d.CENTER_MEMBER_NO = cm.CENTER_MEMBER_NO
+        <where>
+            <if test="donaTitle != null and donaTitle != ''">
+                AND d.DONA_TITLE LIKE '%' || #{donaTitle} || '%'
+            </if>
+            <if test="donaContent != null and donaContent != ''">
+                AND d.DONA_CONTENT LIKE '%' || #{donaContent} || '%'
+            </if>
+            <if test="centerMemberName != null and centerMemberName != ''">
+                AND cm.CENTER_MEMBER_NAME LIKE '%' || #{centerMemberName} || '%'
+            </if>
+        </where>
+        ORDER BY d.DONA_REGIDATE DESC
+    </select>
+
+
+
+
 
 </mapper>
 

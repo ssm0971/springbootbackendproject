@@ -88,6 +88,8 @@
         <a class="volun-write-botton" th:href="@{/car/carWrite}" th:if="${(memberNo != null or centerMemberNo != null)}">
           <span class="volun-write-botton-sp"  >글쓰기</span>
         </a>
+        <!-- 로그인하지 않은 경우 빈 요소로 높이 유지 -->
+        <div th:if="${(memberNo == null and centerMemberNo == null)}" style="height: 60px;"></div>
       </div>
 
       <div id="pagination"></div>

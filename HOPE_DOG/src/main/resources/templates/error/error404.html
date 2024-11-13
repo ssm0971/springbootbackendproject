@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 에러 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/error/error404.css}">
+</head>
+<body>
+<div class="error-container">
+    <div class="dog">
+        <div class="dog-face">
+            <div class="ear-left"></div>
+            <div class="ear-right"></div>
+            <div class="eye-left"></div>
+            <div class="eye-right"></div>
+            <div class="nose"></div>
+            <div class="mouth"></div>
+        </div>
+    </div>
+    <div class="error-text">
+        <h1>멍! 404 에러</h1>
+        <p>찾으시는 페이지가 존재하지 않습니다.</p>
+        <a th:href="@{/main/main}" class="home-button">홈으로 돌아가기</a>
+    </div>
+</div>
+<script th:src="@{/js/error/error404.js}"></script>
+</body>
+</html>

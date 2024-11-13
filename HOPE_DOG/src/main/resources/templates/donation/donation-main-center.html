@@ -2,101 +2,83 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>기부</title>
-  <link rel="stylesheet" th:href="@{/css/dona/donation-main-center.css}" />
-  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
-  <link rel="stylesheet" th:href="@{/css/main/main.css}">
-  <script defer th:src="@{/js/main/main.js}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기부</title>
+    <link rel="stylesheet" th:href="@{/css/dona/donation-main-center.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/main/main.css}">
+    <!-- 페이지네이션 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </head>
 
 <body>
 
 <header th:replace="~{fragment/header :: header}"></header>
-  
-  <main>
+
+<main>
     <div class="dona-main">
-      <div class="center-dona-navbox">
-        <nav>
-          <ul class="center-dona-nav-ul">
-            <li id="donation">기부</li>
-          </ul>
-        </nav>
-      </div>
-      <div id="line"></div>
-
-      <div class="dona">
-        <!--게시글 칼럼 구분-->
-        <div class="dona-container">
-          <div class="dona-container-title">제목</div>
-          <div class="dona-container-audate">센터명</div>
-          <div class="dona-container-audate">작성일</div>
+        <div class="center-dona-navbox">
+            <nav>
+                <ul class="center-dona-nav-ul">
+                    <li id="donation">기부</li>
+                </ul>
+            </nav>
         </div>
-        <!--게시글-->
-        <div class="dona-ul-all" th:each="donation : ${donationList}">
-<!--          <a th:href="@{/dona/view/{donaNo}(donaNo=${donation.donaNo})}">-->
-            <div class="dona-ul-main">
-              <div class="dona-title" th:text="${donation.donaTitle}"></div>
-              <div class="dona-author" th:text="${donation.centerMemberName}"></div>
-              <div class="dona-date" th:text="${#dates.format(donation.donaRegidate, 'yyyy-MM-dd')}"></div>
+        <div id="line"></div>
 
-              <div class="donaNo" th:text="${donation.donaNo}" style="display: none;"></div>
+        <div class="dona">
+            <!--게시글 칼럼 구분-->
+            <div class="dona-container">
+                <div class="dona-container-title">제목</div>
+                <div class="dona-container-audate">센터명</div>
+                <div class="dona-container-audate">작성일</div>
             </div>
-<!--          </a>-->
-        </div>
+            <!--게시글-->
 
-<!--        <div class="dona-ul-all">-->
-<!--          <div class="dona-ul-main">-->
-<!--            <div class="dona-title"><a href="../../html/donation/donation-detail.html">아픈 유기견을 도와주세요 [2]</div></a>-->
-<!--            <div class="dona-author">행복유기견센터</div>-->
-<!--            <div class="dona-date">2024-10-08</div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-      <!-- 검색 창-->
-        <div class="bottom-search">
-          <form method="get" name="search" action="/zboard/zboard.php">
-            <select name="search-type" id="search-type">
-            <option value="sub-memo">제목</option>
-            <option value="subject">센터명</option>
-            <option value="subject">제목 + 센터명</option>
-          </select><span class="default">
-            <input type="hidden" name="id" value="publictransport"><input type="hidden" name="page-num" value="25">
-            <input type="text" name="keyword" id="keyword" value="">
-            <input type="submit" value="검색">
-            <!-- </span> -->
-          </form>
-        </div>
-        <div class="dona-admain-btuall">
-          <button class="dona-admain-btu" type="button">
-            <span class="dona-admain-btu-sp">글쓰기</span>
-          </button>
-        </div>
-        <!-- 페이지네이션 -->
-        <div class="pagination">
-          <ul class="page-box">
-            <a th:href="@{/dona/list(page=${page.startPage - 1})}" class="page-a" th:if="${page.prev}">
-              <li class="page-num prev">&lt</li>
-            </a>
+            <div class="dona-ul-all" th:each="donation : ${donationList}">
+                <ul class="dona-ul-main">
+                    <li class="dona-title" th:text="${donation.donaTitle}"></li>
+                    <li class="dona-author" th:text="${donation.centerMemberName}"></li>
+                    <li class="dona-date" th:text="${#dates.format(donation.donaRegidate, 'yyyy-MM-dd')}"></li>
+                </ul>
+                <div class="dona-content" th:text="${donation.donaContent}" style="display: none;"></div>
+                <div class="donaNo" th:text="${donation.donaNo}" style="display: none;"></div>
+            </div>
 
-            <!--        th:block은 화면에 영향을 주지않는 가짜 태그
-                        타임리프 문법을 사용하기 위해 만들어 쓴다.
-            -->
-            <th:block th:each="i : ${#numbers.sequence(page.startPage, page.endPage)}">
-              <a th:href="@{/dona/list(page=${i})}" class="page-a">
-                <li class="page-num" th:classappend="${i == page.criteria.page ? 'active' : ''}" th:text="${i}"></li>
-              </a>
-            </th:block>
 
-            <a th:href="@{/dona/list(page=${page.endPage + 1})}" class="page-a" th:if="${page.next}">
-              <li class="page-num next">&gt</li>
-            </a>
-          </ul>
+            <!-- 검색 창-->
+            <div class="bottom-search">
+                <form method="get" name="search" action="/dona/list/search">
+                    <select name="searchType" id="search-type">
+                        <option value="donaTitle">제목</option>
+                        <option value="donaContent">내용</option>
+                        <option value="centerMemberName">센터명</option>
+                    </select>
+                    <span class="default">
+                <input type="text" name="keyword" id="keyword" value="" placeholder="검색어를 입력하세요">
+                <input type="submit" value="검색">
+             </span>
+                </form>
+            </div>
+
+            <!-- 검색 결과를 표시할 공간 -->
+            <div id="search-results"></div>
+
+            <div id="pagination"></div>
+            <div class="dona-admain-btuall"  th:if="${centerMemberNo != null}">
+                <!--          <a class="volun-write-botton" th:if="${centerMemberNo != null}">-->
+                <button class="dona-admain-btu" type="button">
+                    <span class="dona-admain-btu-sp">글쓰기</span>
+                </button>
+            </div>
+
         </div>
     </div>
-    </div>
-  </main>
+</main>
 </body>
 
 <footer th:replace="~{/fragment/footer :: footer}"></footer>

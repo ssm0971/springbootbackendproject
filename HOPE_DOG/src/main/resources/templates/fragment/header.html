@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
 </head>
 <body>
+<div class="header-container">
 <header class="header">
     <div class="logo-nav">
         <div class="logo">
@@ -16,7 +17,7 @@
         <nav>
             <ul class="nav-items">
                 <li class="nav-item">
-                    <a th:href="@{/dogmap/shelters}">유기견 보호소</a>
+                    <a th:href="@{/dogmap/sheltersStatic}">유기견 보호소</a>
                     <div class="dropdown-content">
                         <a th:href="@{/dogmap/shelters}">유기견 보호소</a>
                     </div>
@@ -25,7 +26,7 @@
                     <a th:href="@{/volun/main}">봉사</a>
                     <div class="dropdown-content">
                         <a th:href="@{/volun/main}">봉사 메인</a>
-                        <a th:href="@{/volun/apply}">봉사 신청</a>
+                        <a th:href="@{/volun/volun}">봉사 신청</a>
                         <a th:href="@{/car/main}">카풀</a>
                     </div>
                 </li>
@@ -38,8 +39,8 @@
                 <li class="nav-item">
                     <a th:href="@{/adopt/main}">입양</a>
                     <div class="dropdown-content">
-                        <a th:href="@{/adopt/safe}">안심 입양</a>
-                        <a th:href="@{/adopt/temp}">임시 보호</a>
+                        <a th:href="@{/adopt/adopt}">안심 입양</a>
+                        <a th:href="@{/adopt/protect}">임시 보호</a>
                         <a th:href="@{/adopt/review}">후기</a>
                     </div>
                 </li>
@@ -134,7 +135,8 @@
             <li class="user-action"><a th:href="@{/center/center-logout}">로그아웃</a></li>
         </ul>
     </div>
-</header>
 <script th:src="@{/js/fragment/header.js}"></script>
+</header>
+</div>
 </body>
 </html>

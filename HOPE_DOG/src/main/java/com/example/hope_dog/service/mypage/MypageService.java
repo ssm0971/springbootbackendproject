@@ -1,13 +1,18 @@
 package com.example.hope_dog.service.mypage;
 
+import com.example.hope_dog.dto.centermypage.CenterUpdateProfileDTO;
+import com.example.hope_dog.dto.member.MemberDTO;
 import com.example.hope_dog.dto.mypage.*;
 import com.example.hope_dog.mapper.mypage.MypageMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -24,6 +29,16 @@ public class MypageService {
         return mypageMapper.mypageAdoptList(memberNo);
     }
 
+    // 입양 신청서 조회
+    public MpAdoptRequestDTO adoptRequestInfo(Long adoptRequestNo) {
+        return mypageMapper.adoptRequestInfo(adoptRequestNo);
+    }
+
+    // 입양신청서 업데이트
+    public void updateAdoptRequest(MpAdoptRequestDTO mpAdoptRequestDTO) {
+        mypageMapper.updateAdoptRequest(mpAdoptRequestDTO);
+    }
+
     //protect
     public List<MypageProtectDTO> getMypageProtectProfile(Long memberNo) {
         return mypageMapper.mypageProtectList(memberNo);
@@ -35,10 +50,6 @@ public class MypageService {
     }
 
     // 임시보호 업데이트 메서드
-//    public void updateProtectRequest(UpdateProtectRequestDTO updateProtectRequestDTO) {
-//        mypageMapper.updateProtectRequest(updateProtectRequestDTO);
-//    }
-
     public void updateProtectRequest(MpProtectRequestDTO mpProtectRequestDTO) {
         mypageMapper.updateProtectRequest(mpProtectRequestDTO);
     }
@@ -46,6 +57,16 @@ public class MypageService {
     //volun
     public List<MypageVolunDTO> getMypageVolunProfile(Long memberNo) {
         return mypageMapper.mypageVolunList(memberNo);
+    }
+
+    // 봉사 신청서 조회
+    public MpVolunRequestDTO volunRequestInfo(Long volunRequestNo) {
+        return mypageMapper.volunRequestInfo(volunRequestNo);
+    }
+
+    // 봉사 신청서 업데이트
+    public void updateVolunRequest(MpVolunRequestDTO mpVolunRequestDTO) {
+        mypageMapper.updateVolunRequest(mpVolunRequestDTO);
     }
 
     //posts
@@ -86,20 +107,27 @@ public class MypageService {
         return mypageMapper.updateProfile(mypageUpdateProfileDTO);
     }
 
-    // 페이지네이션
-//    public List<MypagePostsDTO> findAll() {
-//        return mypageMapper.selectAll();
-//    }
-//
-//    public int findTotal(){
-//        return mypageMapper.selectTotal();
-//    }
-//
-//    public List<MypagePostsDTO> findAllPage(Criteria criteria) {
-//        return mypageMapper.selectAllPage(criteria);
-//    }
 
-
+    // 회원 탈퇴
+    public boolean withdrawal(Long memberNo) {
+        try {
+            // 회원 정보를 삭제합니다.
+            int rowsAffected = mypageMapper.deleteMember(memberNo);
+            if (rowsAffected > 0) {
+                log.info("회원 탈퇴 성공. 회원 번호: {}", memberNo);
+                return true; // 삭제 성공
+            } else {
+                log.warn("탈퇴할 회원이 존재하지 않음. 회원 번호: {}", memberNo);
+                return false; // 삭제할 회원이 없음
+            }
+        } catch (DataAccessException e) {
+            log.error("데이터베이스 오류 발생. 회원 번호: {}. 오류: {}", memberNo, e);
+            return false; // 데이터베이스 오류 발생
+        } catch (Exception e) {
+            log.error("회원 탈퇴 중 예기치 않은 오류 발생. 회원 번호: {}. 오류: {}", memberNo, e);
+            return false; // 일반 오류 발생
+        }
+    }
 
 
 

@@ -120,15 +120,22 @@ new Chart(yearlyTotalCtx, {
     },
     options: {
         responsive: true,
+        maintainAspectRatio: true,
         plugins: {
             title: {
-                display: true,
-                text: '연도별 유기동물 발생 현황'
+                display: false
+            },
+            legend: {
+                position: 'top'
             }
         },
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '동물 수'
+                }
             }
         }
     }
@@ -164,15 +171,22 @@ new Chart(yearlyDetailCtx, {
     },
     options: {
         responsive: true,
+        maintainAspectRatio: true,
         plugins: {
             title: {
-                display: true,
-                text: '연도별 처리 현황'
+                display: false
+            },
+            legend: {
+                position: 'top'
             }
         },
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '동물 수'
+                }
             }
         }
     }

@@ -6,9 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>마이페이지-입양</title>
   <link rel="stylesheet" th:href="@{/css/mypage/mypage-protect.css}" />
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
   <script defer th:src="@{/js/mypage/mypage-protect.js}"></script>
+    <!-- 페이지네이션 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </head>
 
 <body>
@@ -30,8 +35,8 @@
     <div class="member-protect-navbox">
       <nav>
         <ul class="member-protect-nav-ul">
-          <li id="adopt-list">입양신청</li>
-          <li id="protect-list"><a th:href="@{/mypage/protectRequest}">임시보호신청</li>
+          <li id="adopt-list"><a th:href="@{/mypage/adopt}">입양신청</li></a>
+          <li id="protect-list"><a th:href="@{/mypage/protect}">임시보호신청</li>
             <div id="protect-choice"></div></a>
         </ul>
       </nav>
@@ -56,8 +61,8 @@
               <ul class="member-profile-protect-contentbox">
 <!--                <a th:href="@{/mypage/updateProtectRequest(protectRequestNo=${myprotect.protectRequestNo})}"><li th:text="${myprotect.protectTitle}"></li></a>-->
                 <li th:text="${myprotect.protectTitle}"></li>
-                <li th:if="${myprotect.protectStatus} == 'T'" th:text="검토중"></li>
-                <li th:if="${myprotect.protectStatus} == 'F'" th:text="마감"></li>
+                <li th:if="${myprotect.protectStatus} == 'T'" th:text="[심사중]"></li>
+                <li th:if="${myprotect.protectStatus} == 'F'" th:text="[마감]"></li>
                 <li th:text="${#dates.format(myprotect.protectPeriodend, 'yyyy-MM-dd')}"></li>
               </ul>
               <div class="memberNo" th:text="${myprotect.memberNo}" style="display: none;"></div>
@@ -68,15 +73,7 @@
         </ul>
       </div>
       <!-- 페이지네이션 -->
-      <div class="pagination">
-        <button class="prev">◀</button>
-        <button class="page">1</button>
-        <button class="page">2</button>
-        <button class="page">3</button>
-        <button class="page">4</button>
-        <button class="page">5</button>
-        <button class="next">▶</button>
-      </div>
+        <div id="pagination"></div>
     </div>
 
   </main>

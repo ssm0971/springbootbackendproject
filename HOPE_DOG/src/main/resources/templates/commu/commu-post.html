@@ -77,7 +77,7 @@
         <div class="report-button">
           <button class="comm-end-button" type="button"
                 onclick="ReportAlert()"
-                th:if="${memberNo != commu.memberNo and centerMemberNo != commu.centerMemberNo}">신고</button>
+                  th:if="${(memberNo != null or centerMemberNo != null) and (commu.commuWriter != memberNo and commu.commuWriter != centerMemberNo)}">신고</button>
         </div>
         <div class="commuNo" th:text="${commu.commuNo}" style="display: none;"></div>
         <div class="commuWriter" th:text="${memberNo != null?memberNo : centerMemberNo}" style="display: none;"></div>

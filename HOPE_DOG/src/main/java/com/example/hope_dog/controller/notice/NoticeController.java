@@ -1,9 +1,13 @@
 package com.example.hope_dog.controller.notice;
 
+import com.example.hope_dog.dto.admin.AdminFileDTO;
+import com.example.hope_dog.dto.admin.AdminNoticeDTO;
 import com.example.hope_dog.dto.notice.NoticeListDTO;
 import com.example.hope_dog.dto.notice.NoticeViewDTO;
 import com.example.hope_dog.dto.page.Criteria;
 import com.example.hope_dog.dto.page.Page;
+import com.example.hope_dog.service.admin.AdminFileService;
+import com.example.hope_dog.service.admin.AdminService;
 import com.example.hope_dog.service.notice.NoticeService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,8 @@ import java.util.List;
 public class NoticeController {
 
     private final NoticeService noticeService;
+    private final AdminService adminService;
+    private final AdminFileService adminFileService;
 
 //    @GetMapping("/list")
 //    public String List(Model model) {
@@ -32,6 +38,30 @@ public class NoticeController {
 //
 //        return "notice/notice-list";
 //    }
+@GetMapping("/view")
+public String noticeDetail(@RequestParam("noticeNo") Long noticeNo, Model model, HttpSession session) {
+
+        List<NoticeViewDTO> noticeViewList = noticeService.getNoticeViewList(noticeNo);
+        model.addAttribute("noticeViewList", noticeViewList);
+    AdminNoticeDTO notice = adminService.selectNoticeDetail(noticeNo);
+    List<AdminFileDTO> files = adminFileService.selectFileByNoticeNo(noticeNo);
+
+    model.addAttribute("notice", notice);
+    model.addAttribute("fileList", files);
+
+    return "notice/notice-detail";
+}
+//
+//
+//    @GetMapping("/view")
+//    public String View(@RequestParam("noticeNo") Long noticeNo,Model model) {
+//        List<NoticeViewDTO> noticeViewList = noticeService.getNoticeViewList(noticeNo);
+//        model.addAttribute("noticeViewList", noticeViewList);
+//
+//        return "notice/notice-detail";
+//    }
+
+
 
     @GetMapping("/list")
     public String noticeList(Criteria criteria, Model model, HttpSession session) {
@@ -58,14 +88,6 @@ public class NoticeController {
 
 
 
-
-    @GetMapping("/view")
-    public String View(@RequestParam("noticeNo") Long noticeNo,Model model) {
-        List<NoticeViewDTO> noticeViewList = noticeService.getNoticeViewList(noticeNo);
-        model.addAttribute("noticeViewList", noticeViewList);
-
-        return "notice/notice-detail";
-    }
 
 
 //    @GetMapping("/write")

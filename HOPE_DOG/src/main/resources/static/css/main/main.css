@@ -80,7 +80,7 @@ main {
 .more-link {
     display: inline-block;
     margin-top: 15px;
-    color: #50ff90;
+    color: #8B6F5C;
     text-decoration: none;
     font-weight: bold;
     font-size: 14px;
@@ -231,7 +231,7 @@ main {
 .chat-icon {
     width: 60px;
     height: 60px;
-    background: #007bff;
+    background: #8B6F5C;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -269,7 +269,7 @@ main {
 
 .chat-header {
     padding: 15px;
-    background: #007bff;
+    background: #8B6F5C;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -308,7 +308,7 @@ main {
 }
 
 .bot-message {
-    background: #007bff;
+    background: #8B6F5C;
     color: white;
 }
 
@@ -322,16 +322,16 @@ main {
     width: 100%;
     padding: 8px;
     margin: 5px 0;
-    border: 1px solid #007bff;
+    border: 1px solid #8B6F5C;
     border-radius: 5px;
     background: white;
-    color: #007bff;
+    color: #8B6F5C;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .question-btn:hover {
-    background: #007bff;
+    background: #8B6F5C;
     color: white;
 }
 
@@ -351,7 +351,7 @@ main {
 
 .chat-input button {
     padding: 8px 15px;
-    background: #007bff;
+    background: #8B6F5C;
     color: white;
     border: none;
     border-radius: 5px;

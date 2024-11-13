@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유기견 보호소</title>
+    <link rel="stylesheet" th:href="@{/css/dogmap/dogmap.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+
+</head>
+
+<body>
+<header th:replace="~{fragment/header :: header}"></header>
+<main>
+    <!-- 메인페이지 목록 -->
+    <div class="doghouse-navbox">
+        <nav>
+            <div class="doghouse-nav">
+                <div id="doghouse"><a th:href="@{/dogmap/shelters}">유기견 보호소</a></div>
+                <div class="choice"></div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 보호소 목록 -->
+    <div class="doghouse-main">
+        <div class="doghouse-box">
+            <div th:each="shelter, iterStat : ${shelters}">
+                <div class="doghouse-item">
+                    <div class="doghouse-list-title">
+                        <div class="doghouse-name">
+                            <span th:text="${shelter.careNm}"></span>
+                            <!--<span th:text="${shelter.index}"></span>-->
+                        </div>
+                        <img th:src="@{/img/mapicon.jpg}" alt="보호소이미지" class="doghouse-image">
+                    </div>
+                    <div class="doghouse-list-info">
+                        <div class="doghouse">
+                            <div class="doghouse-information">
+                                <span>주소 : <span th:text="${shelter.careAddr}"></span></span>
+                                <span>전화번호 : <span th:text="${shelter.careTel}"></span></span>
+                            </div>
+                        </div>
+                        <div class="doghouse-map">
+                            <div
+                                    th:id="'map' + ${shelter.index}"
+                                    style="margin:5px;width:100%;height:290px;"
+                                    th:data-lat="${shelter.lat}"
+                                    th:data-lng="${shelter.lng}">
+                            </div>
+                            <div style="display: none">
+                                <img th:src="@{/img/dogmap-marker.png}" alt="Dog Map Marker" data-marker-src="/img/dogmap-marker.png"/>
+                                <!--                            <img th:src="@{/img/dogmap-marker.png}" alt="Dog Map Marker" data-marker-src="@{/img/dogmap-marker.png}"/>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer th:replace="~{/fragment/footer :: footer}"></footer>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=25d08d681602b7d3ae9a06f65fdefadb&autoload=false"></script>
+<script defer th:src="@{/js/dogmap/dogmap.js}"></script>
+
+
+</body>
+
+</html>

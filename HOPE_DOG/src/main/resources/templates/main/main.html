@@ -13,7 +13,7 @@
 <body>
 <div class="page-container">
     <!-- 헤더를 main 밖으로 이동 -->
-    <header th:replace="~{fragment/header :: header}"></header>
+    <div th:replace="~{fragment/header :: .header-container}"></div>
 
     <main>
         <section class="first-section">
@@ -30,7 +30,7 @@
                         <h2>커뮤니티</h2>
                         <p>커뮤니티에서 자유롭게 질문하며 소통하세요!</p>
                         <p>희멍의집 회원님들이 친절하게 답변해드릴겁니다!</p>
-                        <a th:href="@{/commu/commu-main-guest}" class="more-link">더 알아보기 →</a>
+                        <a th:href="@{/commu/main}" class="more-link">더 알아보기 →</a>
                     </div>
                 </div>
                 <div class="donation-card">
@@ -39,7 +39,7 @@
                         <h2>기부게시판</h2>
                         <p>기부게시판에서 센터에 기부를 할 수 있습니다.</p>
                         <p>유기동물을 위해 기부할동에 참여해주세요!</p>
-                        <a th:href="@{/donation/donation-main-guest}" class="more-link">더 알아보기 →</a>
+                        <a th:href="@{/dona/list}" class="more-link">더 알아보기 →</a>
                     </div>
                 </div>
             </div>
@@ -77,12 +77,12 @@
                         <p>유기동물에게 관심을 가져주세요!</p>
                         <p>봉사자가 되어 유기동물에게 함께하는 시간을 선물해주세요.</p>
                         <p class="note">※봉사 시간 인정 가능</p>
-                        <a th:href="@{/volun/volun-main}" class="more-link">더 알아보기 →</a>
+                        <a th:href="@{/volun/main}" class="more-link">더 알아보기 →</a>
                     </div>
                     <div class="participation-card">
                         <h3>유기동물의 새로운 가족이 되어주세요.</h3>
                         <p>임시보호 및 입양을 통해서 임시동물들의 새로운 가족이 되실 수 있습니다.</p>
-                        <a th:href="@{/adopt/adopt-adopt}" class="more-link">더 알아보기 →</a>
+                        <a th:href="@{/adopt/adopt}" class="more-link">더 알아보기 →</a>
                     </div>
                 </div>
             </div>
@@ -126,6 +126,7 @@
             </div>
         </div>
     </div>
+    </main>
 </div>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 </body>

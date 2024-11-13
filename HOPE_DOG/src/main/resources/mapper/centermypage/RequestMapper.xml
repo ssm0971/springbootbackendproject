@@ -150,10 +150,10 @@
             tp.PROTECT_REGIDATE,
             tpr.MEMBER_NO,
             tm.MEMBER_NICKNAME,
-            tpr.PROTECT_REQUEST_STATUS,
+            tpr.PRO_REQUEST_STATUS,
             CASE
-                WHEN tpr.PROTECT_REQUEST_STATUS = 'Y' THEN '수락'
-                WHEN tpr.PROTECT_REQUEST_STATUS = 'N' THEN '거절'
+                WHEN tpr.PRO_REQUEST_STATUS = 'Y' THEN '수락'
+                WHEN tpr.PRO_REQUEST_STATUS = 'N' THEN '거절'
                 ELSE '심사중'
                 END AS protectStatus
         FROM
@@ -205,7 +205,7 @@
             tp.PROTECT_REGIDATE ,
             tm.MEMBER_NICKNAME ,
             tcm.CENTER_MEMBER_NAME,
-            tpr.PROTECT_REQUEST_STATUS
+            tpr.PRO_REQUEST_STATUS
         FROM TBL_PROTECT_REQUEST tpr
                  LEFT JOIN TBL_PROTECT tp ON tpr.PROTECT_NO = tp.PROTECT_NO
                  LEFT JOIN TBL_MEMBER tm ON tpr.MEMBER_NO = tm.MEMBER_NO
@@ -216,7 +216,7 @@
 <!--    임시보호 신청서 승인/거절-->
     <update id="protectRequestStatusChoice" parameterType="ProtectRequestChoiceDTO">
         UPDATE TBL_PROTECT_REQUEST
-        SET PROTECT_REQUEST_STATUS = #{protectRequestStatus} -- 'Y'는 승인
+        SET PRO_REQUEST_STATUS = #{protectRequestStatus} -- 'Y'는 승인
         WHERE PROTECT_REQUEST_NO = #{protectRequestNo} -- 특정 신청서 번호로 조건 설정
     </update>
 

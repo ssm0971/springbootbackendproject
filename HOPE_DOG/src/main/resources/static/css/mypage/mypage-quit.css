@@ -1,7 +1,9 @@
+
 * {
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
+
 
 main{
   background-color: white;
@@ -80,7 +82,7 @@ main{
 
 /* 탈퇴 영역 */
 .withdrawal-container{
-  margin: 0 auto;
+  margin: 20px auto;
   width: 800px;
   height: 600px;
   border: 1px solid #9B805D;
@@ -112,8 +114,12 @@ main{
 
 .withdrawal-agreeinput{
   width: 200px;
-  height: 30px;
   margin: 30px 0 10px;
+}
+
+#agreement {
+  margin-top: 50px;
+  height: 30px;
 }
 
 

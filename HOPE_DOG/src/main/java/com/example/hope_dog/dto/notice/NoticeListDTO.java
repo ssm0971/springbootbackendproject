@@ -14,4 +14,6 @@ public class NoticeListDTO {
     private Date noticeRegidate;
     private String adminId;
     private Long adminNo;
+    private String noticeCate;
+    private String noticeUpdateDate;
 }

@@ -22,35 +22,57 @@
         FROM
             TBL_DONA_COMMENT dc
                 LEFT JOIN
-            TBL_MEMBER m ON dc.DONA
-         WHERE
+            TBL_MEMBER m ON dc.DONA_COMMENT_WRITER
+        WHERE
             dc.DONA_NO = #{donaNo}
     </select>
 
-    <select id="selectCommentSlice" resultType="DonaCommentListDTO">
-        <![CDATA[
-        SELECT RNUM, dc.DONA_COMMENT_NO, dc.DONA_COMMENT_CONTENT, dc.DONA_COMMENT_REGIDATE, COMMENT_WRITER_NAME
-        FROM (
-                 SELECT ROWNUM AS RNUM, dc.DONA_COMMENT_NO, dc.DONA_COMMENT_CONTENT, dc.DONA_COMMENT_REGIDATE,
-                        CASE
-                            WHEN MOD(dc.DONA_COMMENT_WRITER, 10) = 1 THEN m.MEMBER_NAME
-                            WHEN MOD(dc.DONA_COMMENT_WRITER, 10) = 2 THEN cm.CENTER_MEMBER_NAME
-                            END AS COMMENT_WRITER_NAME
-                 FROM TBL_DONA_COMMENT dc
-                          LEFT JOIN TBL_MEMBER m ON MOD(dc.DONA_COMMENT_WRITER, 10) = 1 AND dc.DONA_COMMENT_WRITER = m.MEMBER_NO
-                          LEFT JOIN TBL_CENTER_MEMBER cm ON MOD(dc.DONA_COMMENT_WRITER, 10) = 2 AND dc.DONA_COMMENT_WRITER = cm.CENTER_MEMBER_NO
-                 WHERE dc.DONA_NO = #{donaNo}
-                 ORDER BY dc.DONA_COMMENT_REGIDATE DESC
-             ) WHERE ROWNUM <= #{criteria.page} * #{criteria.amount} + 1
-            ) WHERE RNUM > (#{criteria.page} - 1) * #{criteria.amount}
+    <select id="selectCommentSlice" parameterType="Criteria" resultType="DonaCommentListDTO">
+    <![CDATA[
+        SELECT * FROM (
+                          SELECT ROWNUM AS RNUM,
+                                 dc.DONA_COMMENT_NO,
+                                 dc.DONA_COMMENT_CONTENT,
+                                 dc.DONA_COMMENT_REGIDATE,
+                                 dc.DONA_COMMENT_WRITER,
+                                 COALESCE(m.MEMBER_NICKNAME, cm.CENTER_MEMBER_NAME) AS COMMENT_WRITER_NAME
+                          FROM TBL_DONA_COMMENT dc
+                                   LEFT JOIN TBL_MEMBER m
+                                             ON dc.DONA_COMMENT_WRITER = m.MEMBER_NO
+                                                 AND MOD(dc.DONA_COMMENT_WRITER, 10) = 1
+                                   LEFT JOIN TBL_CENTER_MEMBER cm
+                                             ON dc.DONA_COMMENT_WRITER = cm.CENTER_MEMBER_NO
+                                                 AND MOD(dc.DONA_COMMENT_WRITER, 10) = 2
+                          WHERE dc.DONA_NO = #{donaNo}
+                            AND ROWNUM <= #{criteria.page} * #{criteria.amount}
+                          ORDER BY dc.DONA_COMMENT_REGIDATE DESC
+                      )
+        WHERE RNUM > (#{criteria.page} - 1) * #{criteria.amount}
         ]]>
-
     </select>
 
+
+    <!--    <select id="selectSlice" parameterType="Criteria" resultType="DonaCommentListDTO">-->
+    <!--    <![CDATA[-->
+    <!--        SELECT * FROM (-->
+    <!--                          SELECT ROWNUM AS RNUM, dc.DONA_COMMENT_NO, dc.DONA_COMMENT_CONTENT, dc.DONA_COMMENT_REGIDATE,-->
+    <!--                                 CASE-->
+    <!--                                     WHEN MOD(dc.DONA_COMMENT_WRITER, 10) = 1 THEN m.MEMBER_NAME-->
+    <!--                                     WHEN MOD(dc.DONA_COMMENT_WRITER, 10) = 2 THEN cm.CENTER_MEMBER_NAME-->
+    <!--                                     END AS COMMENT_WRITER_NAME-->
+    <!--                          FROM TBL_DONA_COMMENT dc-->
+    <!--                                   LEFT JOIN TBL_MEMBER m ON MOD(dc.DONA_COMMENT_WRITER, 10) = 1 AND dc.DONA_COMMENT_WRITER = m.MEMBER_NO-->
+    <!--                                   LEFT JOIN TBL_CENTER_MEMBER cm ON MOD(dc.DONA_COMMENT_WRITER, 10) = 2 AND dc.DONA_COMMENT_WRITER = cm.CENTER_MEMBER_NO-->
+    <!--                          WHERE dc.DONA_NO = #{donaNo}-->
+    <!--                            AND ROWNUM <= #{criteria.page} * #{criteria.amount}-->
+    <!--                          ORDER BY dc.DONA_COMMENT_REGIDATE DESC-->
+    <!--                      ) WHERE RNUM > (#{criteria.page} - 1) * #{criteria.amount}-->
+    <!--        ]]>-->
+    <!--    </select>-->
     <!--     댓글 수정-->
     <update id="updateComment" parameterType="DonaCommentUpdateDTO">
         UPDATE TBL_DONA_COMMENT
-        SET DONA_COMMENT_CONTENT = #{donaCommentContent}, DONA_COMMENT_REGIDATE = SYSDATE
+        SET DONA_COMMENT_CONTENT = #{donaCommentContent}, DONA_COMMENT_UPDATEDATE = SYSDATE
         WHERE DONA_COMMENT_NO = #{donaCommentNo}
     </update>
 
@@ -59,4 +81,38 @@
         DELETE FROM TBL_DONA_COMMENT
         WHERE DONA_COMMENT_NO = #{donaCommentNo}
     </delete>
+
+
+        <!-- 댓글 신고 내역 삽입 -->
+<!--        <insert id="insertCommentReport" parameterType="DonaCommentReportDTO">-->
+<!--            INSERT INTO TBL_COMMENT_REPORT (-->
+<!--                COMMENT_REPORT_NO,-->
+<!--                COMMENT_REPORT_CATE,-->
+<!--                COMMENT_REPORT,-->
+<!--                COMMENT_REPORT_WRITER,-->
+<!--                COMMENT_REPORT_REGIDATE,-->
+<!--                COMMENT_NO,-->
+<!--                CONTENT_NO-->
+<!--            ) VALUES (-->
+<!--                         #{commentReportNo},-->
+<!--                         #{commentReportCate},-->
+<!--                         #{commentReport},-->
+<!--                         #{commentReportWriter},-->
+<!--                         #{commentReportRegidate},-->
+<!--                         #{commentNo},-->
+<!--                         #{contentNo}-->
+<!--                     )-->
+<!--        </insert>-->
+
+    <!-- 댓글 신고 처리 -->
+    <insert id="insertCommentReport" parameterType="DonaCommentReportDTO">
+        <selectKey keyProperty="commentReportNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_COMMENT_REPORT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_COMMENT_REPORT (
+        COMMENT_REPORT_NO, COMMENT_REPORT_CATE, COMMENT_REPORT, COMMENT_REPORT_WRITER, COMMENT_NO, CONTENT_NO
+        ) VALUES (
+        #{commentReportNo}, '기부', #{commentReport}, #{commentReportWriter},#{reportCommentNo}, #{reportContentNo}
+        )
+    </insert>
 </mapper>

@@ -11,7 +11,6 @@ import lombok.ToString;
 @NoArgsConstructor
 public class MypageUpdateProfileDTO {
     private Long memberNo;
-    private String memberId;
     private String memberEmail;
     private String memberPw;
     private String memberName;
@@ -20,7 +19,6 @@ public class MypageUpdateProfileDTO {
     private String memberZipcode;
     private String memberAddress;
     private String memberDetailAddress;
-    private String memberAgree;
 
     private String memberNewPw;      // 새 비밀번호
 }

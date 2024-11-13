@@ -63,9 +63,13 @@ public class commuController {
     //카테고리 분류
     @GetMapping("/filter")
     public String filterCommu(@RequestParam("cate") String cate, Model model,HttpSession session) {
+
         List<CommuDTO> commuList = commuService.getCommuListByCate(cate);
+        //commuService에 있는 commuList cate 가져옴
         Long memberNo = (Long) session.getAttribute("memberNo");
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+        //session에서 회원no 가져옴
+        //가져온 게시글 목록,회원정보 모델에 추가
         model.addAttribute("commuList", commuList);
         model.addAttribute("selectedCate", cate);
         model.addAttribute("memberNo", memberNo);
@@ -83,9 +87,11 @@ public class commuController {
     public String getGoodCommuList(Model model, @SessionAttribute(name = "memberNo", required = false) Long memberNo,
                                    @SessionAttribute(name = "centerMemberNo", required = false) Long centerMemberNo) {
         List<CommuDTO> commuList = commuService.cateCommuGood();
+        //commuService에서 조회수 많은 게시글 가져옴
         model.addAttribute("commuList", commuList);
+        //모델에 추가
 
-        // memberNo 또는 centerMemberNo가 있으면 글쓰기 버튼을 보이게 할 수 있도록 처리
+        // memberNo 또는 centerMemberNo가 있으면 글쓰기 버튼을 보이게
         model.addAttribute("memberNo", memberNo);
         model.addAttribute("centerMemberNo", centerMemberNo);
 
@@ -110,7 +116,7 @@ public class commuController {
             commuList = commuService.commuSearch(null, null, keyword);  // 센터명 검색
         }
 
-        // 모델에 결과 추가
+        // 검색 결과 모델에 결과 추가
         model.addAttribute("commuList", commuList);
         model.addAttribute("searchType", searchType);
         model.addAttribute("keyword", keyword);
@@ -126,21 +132,23 @@ public class commuController {
         // 조회수 증가
         CommuDTO commuDTO = new CommuDTO();
         commuDTO.setCommuNo(commuNo);
-        commuService.commuGood(commuDTO);
+        commuService.commuGood(commuDTO); //commuService에서 조회수 증가 호출
 
         // 세션에서 memberNo 및 centerMemberNo 가져오기
         Long memberNo = (Long) session.getAttribute("memberNo");
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
         System.out.println("컨트롤러 게시글 멤버 : " + memberNo);
         System.out.println("컨트롤러 게시글 센터:" + centerMemberNo);
+        //commuDetailList에서 commuNo에 대한 정보 가져옴
         List<CommuDetailDTO> commuDetailList = commuService.selectCommuByNo(commuNo);
 
         //댓글
+        //게시글에 대한 댓글 목록 가져옴
         List<CommuCommentDTO> commuCommentList = commuService.getcommuComment(commuNo);
         System.out.println("컨트롤러 댓글 commuCommentList : " + commuCommentList);
 
 
-        // 사용자 정보 추가
+        // model에 추가
         model.addAttribute("memberNo", memberNo);
         model.addAttribute("centerMemberNo", centerMemberNo);
         model.addAttribute("commuDetailList", commuDetailList);
@@ -169,8 +177,9 @@ public class commuController {
     @PostMapping("/commurequestRegi")
     public String postCommuWrite(@SessionAttribute(name = "memberNo", required = false) Long memberNo,
                                  @SessionAttribute(name = "centerMemberNo", required = false) Long centerMemberNo,
-                                 //세션에 저장된 memberNo를 조회
+                                 //세션에 저장된 memberNo,centerMemberNo 조회
                                  CommuDTO commuDTO) {
+        //변수 writerNo으로 사용사 설정,centermemberNo또는 memberNo으로
         Long writerNo = memberNo != null ? memberNo : centerMemberNo;
         if (writerNo == null) {
             throw new IllegalArgumentException("로그인 상태가 필요합니다.");
@@ -178,6 +187,7 @@ public class commuController {
 
         commuDTO.setCommuWriter(writerNo);  // commuWriter에 세션에서 가져온 ID 설정
         System.out.println("컨트롤러 writerNo :" + writerNo);
+        //commuService 글 작성 호출
         commuService.writePost(commuDTO);
         Long commuNo = commuDTO.getCommuNo();
         return "redirect:/commu/post/" + commuNo;
@@ -186,11 +196,14 @@ public class commuController {
     //글 수정페이지로 이동
     @GetMapping("/commuModify")
     public String commuModify(@RequestParam("commuNo") Long commuNo, HttpSession session,Model model){
+        //commuNo에 해당하는 게시글 상세정보 가져오기
         List<CommuDetailDTO> commuDetailList = commuService.selectCommuByNo(commuNo);
+        //session에서 센터회원 , 일반회원 가져오기
         Long centerMemberNo =(Long) session.getAttribute("centerMemberNo");
         Long memberNo =(Long) session.getAttribute("memberNo");
         System.out.println("컨트롤러 글 수정 :" + commuDetailList);
 
+        //모델에 데이터 추가
         model.addAttribute("commuDetailList", commuDetailList);
         model.addAttribute("centerMemberNo",centerMemberNo);
         model.addAttribute("memberNo", memberNo);
@@ -202,6 +215,7 @@ public class commuController {
 //    //커뮤니티 글 수정등록
     @PostMapping("/commuModifyRegi")
     public String commuModify(@DateTimeFormat(pattern = "yyyy-MM-dd") CommuDetailDTO commuDetailDTO){
+        //수정된 게시글 정보를 commuService에 전달하여 처리
         commuService.commuModify(commuDetailDTO);
         return "redirect:/commu/main";
     }
@@ -211,9 +225,11 @@ public class commuController {
     public ResponseEntity<String> commuDelete(@PathVariable("commuNo") Long commuNo) {
         System.out.println("컨트롤러 글삭제:" + commuNo);
 
+        //삭제할 commuNo을 DTO에 설정
         CommuDetailDTO commuDetailDTO = new CommuDetailDTO();
         commuDetailDTO.setCommuNo(commuNo);
 
+        //commuService에서 삭제 처리
         boolean isDeleted = commuService.commuDelete(commuDetailDTO);  // 삭제 성공 여부 확인
 
         if (isDeleted) {

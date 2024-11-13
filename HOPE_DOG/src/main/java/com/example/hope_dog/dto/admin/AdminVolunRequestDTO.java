@@ -32,7 +32,6 @@ public class AdminVolunRequestDTO {
     private String memberPhoneNumber;
     private String memberEmail;
     private String centerMemberName;
-    private char volunRequestStatus;
     private String volunRequestRegiDate;
 
 }

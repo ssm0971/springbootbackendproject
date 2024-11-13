@@ -1,4 +1,53 @@
+// // 게시글 항목 클릭 시 상세 페이지로 이동
+// document.querySelectorAll('.member-profile-cumuboard-contentbox').forEach(function(element) {
+//     element.addEventListener('click', function() {
+//         // commuNo, carNo, reviewNo 값을 가져옴
+//         const commuNo = element.querySelector('.commuNo').innerText;
+//         const carNo = element.querySelector('.carNo').innerText;
+//         const reviewNo = element.querySelector('.reviewNo').innerText;
+//
+//         // commuNo가 존재하면 커뮤니티 상세 페이지로 이동
+//         if (commuNo) {
+//             window.location.href = '/commu/post/' + commuNo; // 커뮤니티 상세 페이지로 이동
+//         }
+//         // carNo가 존재하면 카풀 상세 페이지로 이동
+//         else if (carNo) {
+//             window.location.href = '/car/post/' + carNo; // 카풀 상세 페이지로 이동
+//         }
+//         // reviewNo가 존재하면 리뷰 상세 페이지로 이동
+//         else if (reviewNo) {
+//             window.location.href = '/review/reviewdetail?reviewNo=' + reviewNo; // 리뷰 상세 페이지로 이동
+//         }
+//     });
+// });
 
+// 게시글 항목 클릭 시 상세 페이지로 이동
+document.querySelectorAll('.member-profile-cumuboard-contentbox').forEach(function(element) {
+    element.addEventListener('click', function() {
+        // commuNo, carNo, reviewNo 값을 가져옴
+        const commuNo = element.querySelector('.commuNo').innerText;
+        const carNo = element.querySelector('.carNo').innerText;
+        const reviewNo = element.querySelector('.reviewNo').innerText;
+
+        // 게시글의 type 값을 data-type 속성에서 가져옴
+        const type = element.querySelector('li').getAttribute('data-type');
+
+        // type에 따라 이동할 페이지를 결정
+        if (type === 'COMMU') {
+            if (commuNo) {
+                window.location.href = '/commu/post/' + commuNo; // 커뮤니티 상세 페이지로 이동
+            }
+        } else if (type === 'CAR') {
+            if (carNo) {
+                window.location.href = '/car/post/' + carNo; // 카풀 상세 페이지로 이동
+            }
+        } else if (type === 'REVIEW') {
+            if (reviewNo) {
+                window.location.href = '/adopt/review/reviewdetail?reviewNo=' + reviewNo; // 리뷰 상세 페이지로 이동
+            }
+        }
+    });
+});
 
 
 //   페이지네이션

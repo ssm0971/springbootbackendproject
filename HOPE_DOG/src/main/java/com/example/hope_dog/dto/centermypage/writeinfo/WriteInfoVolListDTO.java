@@ -14,7 +14,7 @@ import java.util.Date;
 public class WriteInfoVolListDTO {
     private Long volunNo;
     private String volunTitle;
-    private String volunContent;
+//    private String volunContent;
     private Date volunRegiDate;
     private Long commentCount;
     private String centerName;

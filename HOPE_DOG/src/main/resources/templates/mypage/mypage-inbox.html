@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지-받은쪽지</title>
     <link rel="stylesheet" th:href="@{/css/mypage/mypage-inbox.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
     <link rel="stylesheet" th:href="@{/css/main/main.css}">
     <script defer th:src="@{/js/main/main.js}"></script>
     <script defer th:src="@{/js/mypage/mypage-inbox.js}"></script>
     <!-- 페이지네이션 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </head>
@@ -50,11 +51,11 @@
         <div>
             <ul class="member-notebox-titlebox">
                 <li><b>상태</b></li>
-<!--                <li><b>수신자</b></li>-->
                 <li><b>송신자</b></li>
                 <li><b>제목</b></li>
                 <li><b>내용</b></li>
                 <li><b>날짜</b></li>
+                <li><b>답장/삭제</b></li>
             </ul>
         </div>
         <div class="member-notebox-contentsbox" th:each="noteR : ${noteboxReceiveList}">
@@ -62,20 +63,17 @@
                 <li>
                     <div th:text="${noteR.readStatus}"></div>
                 </li>
-<!--                <li>-->
-<!--                    <div th:text="${noteR.noteboxReceiveS}"></div>-->
-<!--                </li>-->
                 <li>
                     <div th:text="${noteR.noteboxSenderName}"></div>
                 </li>
                 <li>
-                    <div th:text="${noteR.noteboxReceiveTitle}"></div>
+                    <div class="note-Rtitle" th:text="${noteR.noteboxReceiveTitle}"></div>
                 </li>
                 <li>
-                    <div th:text="${noteR.noteboxReceiveContent}"></div>
+                    <div class="note-Rcontent" th:text="${noteR.noteboxReceiveContent}"></div>
                 </li>
                 <li>
-                    <div th:text="${noteR.noteboxReceiveRegiDate != null ? #dates.format(noteR.noteboxReceiveRegiDate, 'yyyy.MM.dd HH:mm:ss') : ''}"></div>
+                    <div th:text="${noteR.noteboxReceiveRegiDate != null ? #dates.format(noteR.noteboxReceiveRegiDate, 'yy.MM.dd HH:mm') : ''}"></div>
                 </li>
                 <li>
                     <div class="button-box">

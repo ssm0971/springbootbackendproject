@@ -17,4 +17,6 @@ public class MypageVolunDTO {
     private String volunStatus;
     private Date volunPeriodend;
     private Long memberNo;
+
+    private Long volunRequestNo;
 }

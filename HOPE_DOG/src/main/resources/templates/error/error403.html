@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 에러 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/error/error403.css}">
+</head>
+<body>
+<div class="error-container">
+    <div class="dog">
+        <div class="dog-face">
+            <div class="ear-left"></div>
+            <div class="ear-right"></div>
+            <div class="eye-left"></div>
+            <div class="eye-right"></div>
+            <div class="nose"></div>
+            <div class="mouth"></div>
+        </div>
+    </div>
+    <div class="error-text">
+        <h1>멍! 403 에러</h1>
+        <p>접근 권한이 없는 페이지입니다.</p>
+        <a th:href="@{/main/main}" class="home-button">홈으로 돌아가기</a>
+    </div>
+</div>
+<script th:src="@{/js/error/error403.js}"></script>
+</body>
+</html>

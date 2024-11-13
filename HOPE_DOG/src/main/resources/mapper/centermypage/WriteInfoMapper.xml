@@ -15,7 +15,6 @@
             tc.COMMU_NO,
             tc.COMMU_CATE,
             tc.COMMU_TITLE,
-            tc.COMMU_CONTENT,
             tc.COMMU_REGIDATE,
             COUNT(tcc.COMMU_NO) AS commentCount  -- 댓글 수 계산
         FROM
@@ -24,22 +23,11 @@
             TBL_COMMU_COMMENT tcc ON tc.COMMU_NO = tcc.COMMU_NO
         WHERE
             tc.COMMU_WRITER = #{centerMemberNo}
-          AND tc.COMMU_CATE IN ('전체', '인기', '봉사후기', '질문', '자랑')
         GROUP BY
             tc.COMMU_NO,
             tc.COMMU_CATE,
             tc.COMMU_TITLE,
-            tc.COMMU_CONTENT,
             tc.COMMU_REGIDATE
-        ORDER BY
-            CASE tc.COMMU_CATE
-                WHEN '전체' THEN 1
-                WHEN '인기' THEN 2
-                WHEN '봉사후기' THEN 3
-                WHEN '질문' THEN 4
-                WHEN '자랑' THEN 5
-                END,
-            tc.COMMU_REGIDATE DESC
     </select>
 
 <!--    기부 작성글 조회-->
@@ -47,7 +35,6 @@
         SELECT
             tv.DONA_NO,
             tv.DONA_TITLE,
-            tv.DONA_CONTENT,
             tv.DONA_REGIDATE,
             COUNT(tvc.DONA_COMMENT_NO) AS commentCount
         FROM
@@ -56,7 +43,7 @@
             TBL_DONA_COMMENT tvc ON tv.DONA_NO = tvc.DONA_NO
         WHERE tv.CENTER_MEMBER_NO = #{centerMemberNo}
         GROUP BY
-            tv.DONA_NO, tv.DONA_TITLE, tv.DONA_CONTENT, tv.DONA_REGIDATE
+            tv.DONA_NO, tv.DONA_TITLE, tv.DONA_REGIDATE
     </select>
 
 
@@ -65,7 +52,6 @@
         SELECT
             tv.VOLUN_NO,
             tv.VOLUN_TITLE,
-            tv.VOLUN_CONTENT,
             tv.VOLUN_REGIDATE,
             COUNT(tvc.VOLUN_COMMENT_NO) AS commentCount
         FROM
@@ -74,14 +60,13 @@
             TBL_VOLUN_COMMENT tvc ON tv.VOLUN_NO = tvc.VOLUN_NO
         WHERE tv.CENTER_MEMBER_NO = #{centerMemberNo}
         GROUP BY
-            tv.VOLUN_NO, tv.VOLUN_TITLE, tv.VOLUN_CONTENT, tv.VOLUN_REGIDATE
+            tv.VOLUN_NO, tv.VOLUN_TITLE, tv.VOLUN_REGIDATE
     </select>
 
     <select id="writeInfoAdoptList" parameterType="Long" resultType="WriteInfoAdoptListDTO">
         SELECT
             ta.ADOPT_NO,
             ta.ADOPT_TITLE,
-            ta.ADOPT_CONTENT,
             ta.ADOPT_REGIDATE,
             COUNT(tac.ADOPT_COMMENT_NO) AS commentCount,
             CASE
@@ -97,7 +82,6 @@
         GROUP BY
             ta.ADOPT_NO,
             ta.ADOPT_TITLE,
-            ta.ADOPT_CONTENT,
             ta.ADOPT_REGIDATE,
             ta.ADOPT_STATUS
         ORDER BY

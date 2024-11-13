@@ -23,8 +23,9 @@ public class CommuService {
     private final CommuMapper commuMapper;
 
     //목록 조회 메서드
-    public List<CommuDTO> getCommuList(HttpSession session) {
+    public List<CommuDTO> getCommuList(HttpSession session) { //mapper의 getCommuList 메서드 호출
         List<CommuDTO> commuList = commuMapper.commuCatalog();
+        //List<CommuDTO>에 저장
 
         // 세션에서 로그인한 회원 정보를 가져옴
         Long memberNo = (Long) session.getAttribute("memberNo");
@@ -92,11 +93,12 @@ public class CommuService {
             }
         }
 
-        return commuList; // 작성자 정보가 설정된 결과 리스트 반환
+        return commuList; // commuList 반환
     }
 
     //검색
     public List<CommuDetailDTO> commuSearch(String commuTitle, String memberNickname, String centerMemberName) {
+        //커뮤니티 제목,작성사(일반회원,센터회원 닉네임 가져옴)
         return commuMapper.commuSearch(commuTitle, memberNickname, centerMemberName);
     }
 
@@ -108,7 +110,7 @@ public class CommuService {
 
 
     //게시글 상세
-    public List<CommuDetailDTO> selectCommuByNo(Long commuNo) {
+    public List<CommuDetailDTO> selectCommuByNo(Long commuNo) { //커뮤no 조회
         return commuMapper.selectCommuByNo(commuNo);
     }
 
@@ -118,15 +120,15 @@ public class CommuService {
     }
 
     // 작성자 정보 세팅 메소드
-    private void setWriterInfo(Long writerNo, CommuDetailDTO commuDetail) {
-        if (writerNo % 2 == 0) { // 짝수면 센터회원
-            CenterMemberDTO centerMember = commuMapper.commuCenterMemberByNo(writerNo);
-            commuDetail.setCenterMemberName(centerMember != null ? centerMember.getCenterMemberName() : null);
-        } else { // 홀수면 일반회원
-            MemberDTO member = commuMapper.commuMemberByNo(writerNo);
-            commuDetail.setMemberNickname(member != null ? member.getMemberNickname() : null);
-        }
-    }
+//    private void setWriterInfo(Long writerNo, CommuDetailDTO commuDetail) {
+//        if (writerNo % 2 == 0) { // 짝수면 센터회원
+//            CenterMemberDTO centerMember = commuMapper.commuCenterMemberByNo(writerNo);
+//            commuDetail.setCenterMemberName(centerMember != null ? centerMember.getCenterMemberName() : null);
+//        } else { // 홀수면 일반회원
+//            MemberDTO member = commuMapper.commuMemberByNo(writerNo);
+//            commuDetail.setMemberNickname(member != null ? member.getMemberNickname() : null);
+//        }
+//    }
 
 
 
@@ -137,12 +139,12 @@ public class CommuService {
             throw new IllegalArgumentException("작성자 ID가 필요합니다.");
         }
 
-        // 작성자가 일반회원인지 센터회원인지 확인하여 정보 세팅
-        Long writerNo = commuDTO.getCommuWriter(); // writerNo로 수정
+        // 작성자가 일반회원인지 센터회원인지 확인
+        Long writerNo = commuDTO.getCommuWriter(); // writerNo 변수 선언
 
         if (writerNo % 2 == 0) { // 짝수일 때 센터회원
             CenterMemberDTO centerMember = commuMapper.commuCenterMemberByNo(writerNo);
-            if (centerMember != null) {
+            if (centerMember != null) { //센터회원 정보가 존재하는 경우
                 commuDTO.setCenterMemberName(centerMember.getCenterMemberName());
             }
         } else { // 홀수일 때 일반회원
@@ -153,17 +155,18 @@ public class CommuService {
         }
 
         // 작성 날짜 및 수정 날짜 설정
+        //현재 날짜 생성 후 게시글 등록일과 수정일에 설정
         Date now = new Date();
-        commuDTO.setCommuRegiDate(now);
-        commuDTO.setCommuUpdateDate(now);
+        commuDTO.setCommuRegiDate(now); //등록날짜 설정
+        commuDTO.setCommuUpdateDate(now);//수정날짜 설정
 
         // DB에 게시글 저장
         commuMapper.insertWrite(commuDTO);
     }
 
     //게시글 수정
-    public void commuModify(CommuDetailDTO commuDetailDTO){
-        commuMapper.commuModify(commuDetailDTO);
+    public void commuModify(CommuDetailDTO commuDetailDTO){ //commuDetailDTO사용
+        commuMapper.commuModify(commuDetailDTO); //commuMapper 호출
     }
 
     //게시글 삭제

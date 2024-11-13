@@ -14,7 +14,6 @@
         MEMBER_NO = #{memberNo}
     </select>
 
-
     <!--    정보수정 페이지 조회-->
     <select id="viewProfile" parameterType="Long" resultType="MypageViewProfileDTO">
         SELECT MEMBER_NAME, MEMBER_NICKNAME, MEMBER_EMAIL,MEMBER_PHONE_NUMBER,MEMBER_ZIPCODE ,MEMBER_ADDRESS ,MEMBER_DETAIL_ADDRESS, MEMBER_PW
@@ -49,7 +48,7 @@
                  UNION ALL
                  SELECT MEMBER_EMAIL
                  FROM TBL_MEMBER
-                 WHERE MEMBER_EMAIL = #{centerMemberEmail}
+                 WHERE MEMBER_EMAIL = #{memberEmail}
                    AND MEMBER_EMAIL != #{currentEmail}  -- 현재 이메일 제외
              )
     </select>
@@ -62,20 +61,25 @@
             MEMBER_NICKNAME = #{memberNickname},
             MEMBER_EMAIL = #{memberEmail},
             MEMBER_PHONE_NUMBER = #{memberPhoneNumber},
+            MEMBER_ZIPCODE = #{memberZipcode},
             MEMBER_ADDRESS = #{memberAddress},
             MEMBER_DETAIL_ADDRESS = #{memberDetailAddress},
-            MEMBER_AGREE = #{memberAgree},
-            MEMBER_PW = COALESCE(NULLIF(#{memberNewPw}, #{memberPw}), MEMBER_PW)
+            MEMBER_PW = CASE
+                            WHEN #{memberNewPw} IS NOT NULL AND #{memberNewPw} != '' AND #{memberNewPw} != #{memberPw} THEN #{memberNewPw}
+            ELSE MEMBER_PW
+        END
         WHERE MEMBER_NO = #{memberNo}
-          AND MEMBER_PW = #{memberPw}
+        AND MEMBER_PW = #{memberPw}
+
     </update>
 
-<!--    입양게시글조회-->
+    <!--    입양게시글조회-->
     <select id="mypageAdoptList" resultType="MypageAdoptListDTO">
         SELECT
             A.ADOPT_TITLE,
             A.ADOPT_STATUS,
-            A.ADOPT_PERIODEND
+            A.ADOPT_PERIODEND,
+            AR.ADOPT_REQUEST_NO
         FROM TBL_ADOPT A
                  JOIN TBL_ADOPT_REQUEST AR ON A.ADOPT_NO = AR.ADOPT_NO
         WHERE AR.MEMBER_NO = #{memberNo}
@@ -96,7 +100,8 @@
         SELECT
             V.VOLUN_TITLE,
             V.VOLUN_STATUS,
-            V.VOLUN_PERIODEND
+            V.VOLUN_PERIODEND,
+            VR.VOLUN_REQUEST_NO
         FROM TBL_VOLUN V
             JOIN TBL_VOLUN_REQUEST VR ON V.VOLUN_NO = VR.VOLUN_NO
         WHERE VR.MEMBER_NO = #{memberNo}
@@ -108,121 +113,47 @@
             C.CAR_TITLE AS TITLE,
             M.MEMBER_NICKNAME AS WRITER,
             C.CAR_REGIDATE AS REGIDATE,
-            C.CAR_NO
+            C.CAR_NO AS CAR_NO,  -- CAR_NO 그대로 사용
+            NULL AS COMMU_NO,    -- COMMU_NO는 NULL
+            NULL AS REVIEW_NO    -- REVIEW_NO는 NULL
         FROM
             TBL_CAR C
-                JOIN
-            TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO
+                JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO
         WHERE M.MEMBER_NO = #{memberNo}
+
         UNION ALL
+
         SELECT
             'COMMU' AS TYPE,
             CO.COMMU_TITLE AS TITLE,
             M.MEMBER_NICKNAME AS WRITER,
             CO.COMMU_REGIDATE AS REGIDATE,
-            CO.COMMU_NO
+            NULL AS CAR_NO,      -- CAR_NO는 NULL
+            CO.COMMU_NO AS COMMU_NO,  -- COMMU_NO 그대로 사용
+            NULL AS REVIEW_NO    -- REVIEW_NO는 NULL
         FROM
             TBL_COMMU CO
-                JOIN
-            TBL_MEMBER M ON CO.COMMU_WRITER = M.MEMBER_NO
+                JOIN TBL_MEMBER M ON CO.COMMU_WRITER = M.MEMBER_NO
         WHERE M.MEMBER_NO = #{memberNo}
+
         UNION ALL
+
         SELECT
             'REVIEW' AS TYPE,
             R.REVIEW_TITLE AS TITLE,
-            M.MEMBER_NICKNAME AS WRITER,
+            M.MEMBER_NICKNAME AS WRTER,
             R.REVIEW_REGIDATE AS REGIDATE,
-            R.REVIEW_NO
+            NULL AS CAR_NO,      -- CAR_NO는 NULL
+            NULL AS COMMU_NO,    -- COMMU_NO는 NULL
+            R.REVIEW_NO AS REVIEW_NO  -- REVIEW_NO 그대로 사용
         FROM
             TBL_REVIEW R
-                JOIN
-            TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO
+                JOIN TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO
         WHERE M.MEMBER_NO = #{memberNo}
+
+
     </select>
 
-<!--    <select id="selectTotal" resultType="int">-->
-<!--        SELECT COUNT(*) AS TOTAL_COUNT-->
-<!--        FROM (-->
-<!--                 SELECT-->
-<!--                     'CAR' AS TYPE,-->
-<!--                     C.CAR_TITLE AS TITLE,-->
-<!--                     M.MEMBER_NICKNAME AS WRITER,-->
-<!--                     C.CAR_REGIDATE AS REGIDATE-->
-<!--                 FROM-->
-<!--                     TBL_CAR C-->
-<!--                         JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO-->
-<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
-
-<!--                 UNION ALL-->
-
-<!--                 SELECT-->
-<!--                     'COMMU' AS TYPE,-->
-<!--                     CO.COMMU_TITLE AS TITLE,-->
-<!--                     M.MEMBER_NICKNAME AS WRITER,-->
-<!--                     CO.COMMU_REGIDATE AS REGIDATE-->
-<!--                 FROM-->
-<!--                     TBL_COMMU CO-->
-<!--                         JOIN TBL_MEMBER M ON CO.COMMU_WRITER = M.MEMBER_NO-->
-<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
-
-<!--                 UNION ALL-->
-
-<!--                 SELECT-->
-<!--                     'REVIEW' AS TYPE,-->
-<!--                     R.REVIEW_TITLE AS TITLE,-->
-<!--                     M.MEMBER_NICKNAME AS WRITER,-->
-<!--                     R.REVIEW_REGIDATE AS REGIDATE-->
-<!--                 FROM-->
-<!--                     TBL_REVIEW R-->
-<!--                         JOIN TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO-->
-<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
-<!--             ) AS SUBQUERY-->
-<!--    </select>-->
-
-<!--    <select id="selectAllPage" parameterType="Criteria" resultType="MypagePostsDTO">-->
-<!--    <![CDATA[-->
-<!--        SELECT TYPE, TITLE, WRITER, REGIDATE-->
-<!--        FROM (-->
-<!--                 SELECT-->
-<!--                     'CAR' AS TYPE,-->
-<!--                     C.CAR_TITLE AS TITLE,-->
-<!--                     M.MEMBER_NICKNAME AS WRITER,-->
-<!--                     C.CAR_REGIDATE AS REGIDATE,-->
-<!--                     ROWNUM AS RNUM-->
-<!--                 FROM-->
-<!--                     TBL_CAR C-->
-<!--                         JOIN TBL_MEMBER M ON C.CAR_WRITER = M.MEMBER_NO-->
-<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
-
-<!--                 UNION ALL-->
-
-<!--                 SELECT-->
-<!--                     'COMMU' AS TYPE,-->
-<!--                     CO.COMMU_TITLE AS TITLE,-->
-<!--                     M.MEMBER_NICKNAME AS WRITER,-->
-<!--                     CO.COMMU_REGIDATE AS REGIDATE,-->
-<!--                     ROWNUM AS RNUM-->
-<!--                 FROM-->
-<!--                     TBL_COMMU CO-->
-<!--                         JOIN TBL_MEMBER M ON CO.COMMU_WRITER = M.MEMBER_NO-->
-<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
-
-<!--                 UNION ALL-->
-
-<!--                 SELECT-->
-<!--                     'REVIEW' AS TYPE,-->
-<!--                     R.REVIEW_TITLE AS TITLE,-->
-<!--                     M.MEMBER_NICKNAME AS WRITER,-->
-<!--                     R.REVIEW_REGIDATE AS REGIDATE,-->
-<!--                     ROWNUM AS RNUM-->
-<!--                 FROM-->
-<!--                     TBL_REVIEW R-->
-<!--                         JOIN TBL_MEMBER M ON R.MEMBER_NO = M.MEMBER_NO-->
-<!--                 WHERE M.MEMBER_NO = #{memberNo}-->
-<!--             ) AS SUBQUERY-->
-<!--        WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount}-->
-<!--        ]]>-->
-<!--</select>-->
 
     <!--    임시보호 신청서 상세페이지-->
     <select id="protectRequestInfo" parameterType="Long" resultType="MpProtectRequestDTO">
@@ -307,5 +238,148 @@
         WHERE tpr.PROTECT_REQUEST_NO = #{protectRequestNo}
     </update>
 
+    <delete id="deleteMember" parameterType="Long">
+        DELETE FROM TBL_MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </delete>
+
+    <select id="adoptRequestInfo" parameterType="Long" resultType="MpAdoptRequestDTO">
+        SELECT
+            tar.ADOPT_REQUEST_NO,                        -- 신청서 번호
+            tar.ADOPT_REQUEST_NAME,                      -- 신청인
+            tar.ADOPT_REQUEST_PHONE,                     -- 연락처
+            tar.ADOPT_REQUEST_PHONE_SUB,                 -- 대체 연락처
+            tar.ADOPT_REQUEST_EMAIL,                     -- 이메일
+            tar.ADOPT_REQUEST_GENDER,                    -- 신청자 성별
+            tar.ADOPT_REQUEST_AGE,                       -- 신청자 나이 (생일)
+            tar.ADOPT_REQUEST_ZIPCODE,                   -- 우편번호
+            tar.ADOPT_REQUEST_ADDRESS,                   -- 주소
+            tar.ADOPT_REQUEST_ADDRESS_DETAIL,            -- 상세주소
+            tar.ADOPT_REQUEST_JOB,                       -- 직업
+            tar.ADOPT_REQUEST_MARRY,                     -- 결혼여부
+            tar.ADOPT_REQUEST_INFO_AGREEMENT,            -- 개인정보 수집 동의
+            tar.ADOPT_REQUEST_Q1,                        -- 질문1
+            tar.ADOPT_REQUEST_Q2,                        -- 질문2
+            tar.ADOPT_REQUEST_Q3,                        -- 질문3
+            tar.ADOPT_REQUEST_Q4,                        -- 질문4
+            tar.ADOPT_REQUEST_Q5,                        -- 질문5
+            tar.ADOPT_REQUEST_Q6,                        -- 질문6
+            tar.ADOPT_REQUEST_Q7,                        -- 질문7
+            tar.ADOPT_REQUEST_Q8,                        -- 질문8
+            tar.ADOPT_REQUEST_Q9,                        -- 질문9
+            tar.ADOPT_REQUEST_Q10,                       -- 질문10
+            tar.ADOPT_REQUEST_Q11,                       -- 질문11
+            tar.ADOPT_REQUEST_Q12,                       -- 질문12
+            tar.ADOPT_REQUEST_Q13,                       -- 질문13
+            tar.ADOPT_REQUEST_Q14,                       -- 질문14
+            tar.ADOPT_REQUEST_Q15,                       -- 질문15
+            tar.ADOPT_REQUEST_ADOPT_AGREEMENT,                 -- 입양 동의
+            tar.ADOPT_NO,                                -- 신청한 게시글 번호
+            tar.MEMBER_NO,                               -- 일반회원 FK
+            tar.CENTER_MEMBER_NO,                        -- 센터 회원 FK
+            ta.ADOPT_TITLE,                              -- 입양 제목
+            ta.ADOPT_REGIDATE,                           -- 입양 게시글 등록일
+            tm.MEMBER_NICKNAME,                          -- 회원 닉네임
+            tcm.CENTER_MEMBER_NAME,                      -- 센터 회원 이름
+            tar.ADOPT_REQUEST_STATUS                     -- 신청서 상태
+        FROM
+            TBL_ADOPT_REQUEST tar
+                LEFT JOIN TBL_ADOPT ta ON tar.ADOPT_NO = ta.ADOPT_NO  -- 입양 게시글 관련 JOIN
+                LEFT JOIN TBL_MEMBER tm ON tar.MEMBER_NO = tm.MEMBER_NO  -- 회원 테이블 JOIN
+                LEFT JOIN TBL_CENTER_MEMBER tcm ON tar.CENTER_MEMBER_NO = tcm.CENTER_MEMBER_NO  -- 센터 회원 테이블 JOIN
+        WHERE
+            tar.ADOPT_REQUEST_NO = #{adoptRequestNo}   -- 특정 신청서 번호로 조회
+    </select>
+
+    <update id="updateAdoptRequest" parameterType="MpAdoptRequestDTO">
+        UPDATE TBL_ADOPT_REQUEST tar
+        SET
+            tar.ADOPT_REQUEST_NAME = #{adoptRequestName},
+            tar.ADOPT_REQUEST_PHONE = #{adoptRequestPhone},
+            tar.ADOPT_REQUEST_PHONE_SUB = #{adoptRequestPhoneSub},
+            tar.ADOPT_REQUEST_EMAIL = #{adoptRequestEmail},
+            tar.ADOPT_REQUEST_GENDER = #{adoptRequestGender},
+            tar.ADOPT_REQUEST_AGE = #{adoptRequestAge},
+            tar.ADOPT_REQUEST_ZIPCODE = #{adoptRequestZipcode},
+            tar.ADOPT_REQUEST_ADDRESS = #{adoptRequestAddress},
+            tar.ADOPT_REQUEST_ADDRESS_DETAIL = #{adoptRequestAddressDetail},
+            tar.ADOPT_REQUEST_JOB = #{adoptRequestJob},
+            tar.ADOPT_REQUEST_MARRY = #{adoptRequestMarry},
+            tar.ADOPT_REQUEST_INFO_AGREEMENT = #{adoptRequestInfoAgreement},
+            tar.ADOPT_REQUEST_Q1 = #{adoptRequestQ1},
+            tar.ADOPT_REQUEST_Q2 = #{adoptRequestQ2},
+            tar.ADOPT_REQUEST_Q3 = #{adoptRequestQ3},
+            tar.ADOPT_REQUEST_Q4 = #{adoptRequestQ4},
+            tar.ADOPT_REQUEST_Q5 = #{adoptRequestQ5},
+            tar.ADOPT_REQUEST_Q6 = #{adoptRequestQ6},
+            tar.ADOPT_REQUEST_Q7 = #{adoptRequestQ7},
+            tar.ADOPT_REQUEST_Q8 = #{adoptRequestQ8},
+            tar.ADOPT_REQUEST_Q9 = #{adoptRequestQ9},
+            tar.ADOPT_REQUEST_Q10 = #{adoptRequestQ10},
+            tar.ADOPT_REQUEST_Q11 = #{adoptRequestQ11},
+            tar.ADOPT_REQUEST_Q12 = #{adoptRequestQ12},
+            tar.ADOPT_REQUEST_Q13 = #{adoptRequestQ13},
+            tar.ADOPT_REQUEST_Q14 = #{adoptRequestQ14},
+            tar.ADOPT_REQUEST_Q15 = #{adoptRequestQ15},
+            tar.ADOPT_REQUEST_ADOPT_AGREEMENT = #{adoptRequestAdoptAgreement}
+        WHERE tar.ADOPT_REQUEST_NO = #{adoptRequestNo}  -- 특정 신청서 번호로 업데이트
+
+    </update>
+
+    <select id="volunRequestInfo" parameterType="Long" resultType="MpVolunRequestDTO">
+        SELECT
+            vr.VOLUN_REQUEST_NO,                        -- 신청서 번호
+            vr.VOLUN_REQUEST_NAME,                      -- 신청인
+            vr.VOLUN_REQUEST_PHONE,                     -- 연락처
+            vr.VOLUN_REQUEST_PHONE_SUB,                 -- 대체 연락처
+            vr.VOLUN_REQUEST_EMAIL,                     -- 이메일
+            vr.VOLUN_REQUEST_GENDER,                    -- 신청자 성별
+            vr.VOLUN_REQUEST_AGE,                       -- 신청자 나이 (생일)
+            vr.VOLUN_REQUEST_ZIPCODE,                   -- 우편번호
+            vr.VOLUN_REQUEST_ADDRESS,                   -- 주소
+            vr.VOLUN_REQUEST_ADDRESS_DETAIL,            -- 상세주소
+            vr.VOLUN_REQUEST_JOB,                       -- 직업
+            vr.VOLUN_REQUEST_AGREEMENT,            -- 개인정보 수집 동의
+            vr.VOLUN_REQUEST_Q1,                        -- 질문1
+            vr.VOLUN_REQUEST_Q2,                        -- 질문2
+            vr.VOLUN_REQUEST_Q3,                        -- 질문3
+            vr.VOLUN_REQUEST_Q4,                        -- 질문4
+            vr.VOLUN_NO,                                -- 신청한 게시글 번호
+            vr.MEMBER_NO,                               -- 일반회원 FK
+            vr.CENTER_MEMBER_NO,                        -- 센터 회원 FK
+            tv.VOLUN_TITLE,                              -- 자원봉사 제목
+            tv.VOLUN_REGIDATE,                           -- 자원봉사 게시글 등록일
+            tm.MEMBER_NICKNAME,                          -- 회원 닉네임
+            tcm.CENTER_MEMBER_NAME                    -- 센터 회원 이름
+        FROM
+            TBL_VOLUN_REQUEST vr
+                LEFT JOIN TBL_VOLUN tv ON vr.VOLUN_NO = tv.VOLUN_NO  -- 자원봉사 게시글 관련 JOIN
+                LEFT JOIN TBL_MEMBER tm ON vr.MEMBER_NO = tm.MEMBER_NO  -- 회원 테이블 JOIN
+                LEFT JOIN TBL_CENTER_MEMBER tcm ON vr.CENTER_MEMBER_NO = tcm.CENTER_MEMBER_NO  -- 센터 회원 테이블 JOIN
+        WHERE
+            vr.VOLUN_REQUEST_NO = #{volunRequestNo}   -- 특정 신청서 번호로 조회
+
+    </select>
+
+    <update id="updateVolunRequest" parameterType="MpVolunRequestDTO">
+        UPDATE TBL_VOLUN_REQUEST vr
+        SET
+            vr.VOLUN_REQUEST_NAME = #{volunRequestName},
+            vr.VOLUN_REQUEST_PHONE = #{volunRequestPhone},
+            vr.VOLUN_REQUEST_PHONE_SUB = #{volunRequestPhoneSub},
+            vr.VOLUN_REQUEST_EMAIL = #{volunRequestEmail},
+            vr.VOLUN_REQUEST_GENDER = #{volunRequestGender},
+            vr.VOLUN_REQUEST_AGE = #{volunRequestAge},
+            vr.VOLUN_REQUEST_ZIPCODE = #{volunRequestZipcode},
+            vr.VOLUN_REQUEST_ADDRESS = #{volunRequestAddress},
+            vr.VOLUN_REQUEST_ADDRESS_DETAIL = #{volunRequestAddressDetail},
+            vr.VOLUN_REQUEST_JOB = #{volunRequestJob},
+            vr.VOLUN_REQUEST_AGREEMENT = #{volunRequestAgreement},
+            vr.VOLUN_REQUEST_Q1 = #{volunRequestQ1},
+            vr.VOLUN_REQUEST_Q2 = #{volunRequestQ2},
+            vr.VOLUN_REQUEST_Q3 = #{volunRequestQ3},
+            vr.VOLUN_REQUEST_Q4 = #{volunRequestQ4}
+        WHERE vr.VOLUN_REQUEST_NO = #{volunRequestNo}  -- 특정 신청서 번호로 업데이트
+    </update>
 
 </mapper>

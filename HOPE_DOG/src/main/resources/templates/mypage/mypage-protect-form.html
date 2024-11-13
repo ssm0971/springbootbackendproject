@@ -30,8 +30,8 @@
     <div class="member-protect-navbox">
       <nav>
         <ul class="member-protect-nav-ul">
-          <li id="adopt"><a href="../../html/mypage/mypage-adopt.html">입양신청</li></a>
-          <li><a th:href="@{/mypage/protectRequest}"> 임시보호신청</a></li>
+          <li id="adopt"><a th:href="@{/mypage/adopt}">입양신청</li></a>
+          <li><a th:href="@{/mypage/protect}"> 임시보호신청</a></li>
           <div id="choice"></div>
         </ul>
       </nav>
@@ -110,7 +110,7 @@
                   <div class="protectrequest-content-title">우편번호</div>
                   <input id="zipcode" class="protectrequest-input-small2" type="text" name="protectRequestZipcode"
                          th:value="${protectRequest.protectRequestZipcode}" readonly>
-<!--                  <button id="addressSearch" class="adoptrequest-search-button" type="button">주소찾기</button>-->
+                  <button id="addressSearch" class="adoptrequest-search-button" type="button">주소찾기</button>
                 </div>
                 <div class="protectrequest-content-box">
                   <div class="protectrequest-content-title">주소</div>

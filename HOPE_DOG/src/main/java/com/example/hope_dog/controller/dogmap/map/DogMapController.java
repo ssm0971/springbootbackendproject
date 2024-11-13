@@ -34,6 +34,15 @@ public class DogMapController {
         return "dogmap/dogmap"; // Thymeleaf 템플릿 이름
     }
 
+    @GetMapping("/sheltersStatic")
+    public String getSheltersStatic(Model model) {
+        Item[] staticShelters = dogMapService.getStaticShelterInfo(); // 정적 데이터
+        model.addAttribute("shelters", staticShelters); // 모델에 정적 shelters 추가
+        return "dogmap/dogmap-static"; // Thymeleaf 템플릿 이름
+    }
+
+
+
 
 
 //    private final DogMapRestController dogMapRestController;

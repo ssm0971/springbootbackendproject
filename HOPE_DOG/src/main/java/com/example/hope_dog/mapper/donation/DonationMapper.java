@@ -1,5 +1,6 @@
 package com.example.hope_dog.mapper.donation;
 
+import com.example.hope_dog.dto.commu.CommuDetailDTO;
 import com.example.hope_dog.dto.donation.*;
 import com.example.hope_dog.dto.page.Criteria;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,15 +13,9 @@ import java.util.Optional;
 public interface DonationMapper {
 
     // 기부 글 목록
-//    List<DonationListDTO> donationList();
+    List<DonationListDTO> donationList();
     Optional<DonationViewDTO> selectById(Long donaNo);
 
-    //페이지네이션
-    List<DonationListDTO> selectAll();
-
-    int selectTotal();
-
-    List<DonationListDTO> selectAllPage(Criteria criteria);
 
     // 기부 글 상세
     List<DonationViewDTO> donationView(Long donaNo);
@@ -33,6 +28,12 @@ public interface DonationMapper {
 
     // 기부 글 수정
     void donationUpdate(DonationWriteDTO donationWriteDTO);
-//    void updateBoard(BoardUpdateDTO boardUpdateDTO);
+
+
+    // 커뮤니티 검색
+    List<DonaDetailDTO> donaSearch(@Param("donaTitle") String donaTitle,
+                                   @Param("donaContent") String donaContent,
+                                   @Param("centerMemberName") String centerMemberName);
+
 
 }

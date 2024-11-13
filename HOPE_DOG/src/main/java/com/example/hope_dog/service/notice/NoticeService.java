@@ -1,8 +1,10 @@
 package com.example.hope_dog.service.notice;
 
+import com.example.hope_dog.dto.admin.AdminFileDTO;
 import com.example.hope_dog.dto.notice.NoticeViewDTO;
 import com.example.hope_dog.dto.notice.NoticeListDTO;
 import com.example.hope_dog.dto.page.Criteria;
+import com.example.hope_dog.mapper.admin.AdminFileMapper;
 import com.example.hope_dog.mapper.notice.NoticeMapper;
 import lombok.RequiredArgsConstructor;
 //import net.coobird.thumbnailator.Thumbnails;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor // final 필드에 대한 생성자 자동 생성
 public class NoticeService {
     private final NoticeMapper noticeMapper;
+    private final AdminFileMapper adminFileMapper;
 
     //List
 //    public List<NoticeListDTO> getNoticeList() {
@@ -37,6 +40,9 @@ public class NoticeService {
     public List<NoticeViewDTO> getNoticeViewList(Long noticeNo) {
         return noticeMapper.noticeView(noticeNo);
     }
+
+    public List<AdminFileDTO> selectFileByNoticeNo(Long noticeNo){ return adminFileMapper.selectFileListByNoticeNo(noticeNo); }
+
 //    private final FileMapper fileMapper;
 //    private final FileService fileService;
 

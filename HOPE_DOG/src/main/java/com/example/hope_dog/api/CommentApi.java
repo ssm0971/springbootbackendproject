@@ -21,10 +21,9 @@ public class CommentApi {
 
     @PostMapping("/v1/donas/{donaNo}/comment")
     public void commentWrite(@RequestBody DonaCommentWriteDTO donaCommentWriteDTO,
-                           @PathVariable("donaNo") Long donaNo,
-                           @SessionAttribute("memberNo") Long memberNo){
-        donaCommentWriteDTO.setDonaNo(donaNo);
-        donaCommentWriteDTO.setMemberNo(memberNo);
+                             @PathVariable("donaNo") Long donaNo){
+        // donaCommentWriteDTO.setDonaNo(donaNo);
+        // donaCommentWriteDTO.setMemberNo(centerMemberNo);
 
         log.info("donaCommentWriteDTO = " + donaCommentWriteDTO + ", donaNo = " + donaNo);
 
@@ -39,14 +38,15 @@ public class CommentApi {
 
     @GetMapping("/v2/donas/{donaNo}/comments")
     public Slice<DonaCommentListDTO> replySlice(@PathVariable("donaNo") Long donaNo,
-                                          @RequestParam("page") int page){
-        Slice<DonaCommentListDTO> slice = donaCommentService.findSlice(new Criteria(page, 5), donaNo);
+                                                @RequestParam("page") int page){
+        log.info("/v2/donas/{donaNo}/comments donaNo번호 확인 : " + donaNo);
+        Slice<DonaCommentListDTO> slice = donaCommentService.findSlice(new Criteria(page, 50), donaNo);
         return slice;
     }
 
     @PatchMapping("/v1/comments/{donaCommentNo}")
     public void modifyComment(@RequestBody DonaCommentUpdateDTO donaCommentUpdateDTO,
-                            @PathVariable("donaCommentNo") Long donaCommentNo){
+                              @PathVariable("donaCommentNo") Long donaCommentNo){
 
         donaCommentUpdateDTO.setDonaCommentNo(donaCommentNo);
         donaCommentService.modifyComment(donaCommentUpdateDTO);

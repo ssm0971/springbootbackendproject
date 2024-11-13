@@ -98,28 +98,28 @@ function checkJobInput() {
 }
 
 // 주소 검색
-// document.addEventListener('DOMContentLoaded', function () {
-//     const addressSearchBtn = document.getElementById('addressSearch');
-//
-//     addressSearchBtn.addEventListener('click', function () {
-//         new daum.Postcode({
-//             oncomplete: function (data) {
-//                 document.getElementById('zipcode').value = data.zonecode; // 우편번호 입력
-//                 document.getElementById('address').value = data.address; // 주소 입력
-//                 document.getElementById('detailAddress').focus(); // 상세주소 입력란에 포커스
-//             }
-//         }).open();
-//     });
-// });
+document.addEventListener('DOMContentLoaded', function () {
+    const addressSearchBtn = document.getElementById('addressSearch');
 
-// setTimeout(function() {
-//     const addressSearchBtn = document.getElementById('addressSearch');
-//     if (addressSearchBtn) {
-//         addressSearchBtn.addEventListener('click', function () {
-//             alert('주소찾기 클릭!');
-//         });
-//     }
-// }, 50);
+    addressSearchBtn.addEventListener('click', function () {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                document.getElementById('zipcode').value = data.zonecode; // 우편번호 입력
+                document.getElementById('address').value = data.address; // 주소 입력
+                document.getElementById('detailAddress').focus(); // 상세주소 입력란에 포커스
+            }
+        }).open();
+    });
+});
+
+setTimeout(function() {
+    const addressSearchBtn = document.getElementById('addressSearch');
+    if (addressSearchBtn) {
+        addressSearchBtn.addEventListener('click', function () {
+            alert('주소찾기 클릭!');
+        });
+    }
+}, 50);
 
 
 // 질문사항에러

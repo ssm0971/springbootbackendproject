@@ -16,8 +16,9 @@ public class NoticeViewDTO {
     private String noticeTitle;
     private String noticeContent;
     private Date noticeRegidate;
-    private Date noticeUpdatedate;
     private String adminId;
     private Long adminNo;
+
+    private String noticeUpdateDate;
 }
 

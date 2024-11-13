@@ -1,6 +1,12 @@
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
 .post-guest-main{
   width: 1080px;
-  height: 600px;
+  height: auto;
   background-color:white;
   margin: 0 auto;
 }
@@ -54,7 +60,7 @@
 /* 게시글 상세 내용 파트 */
 .notice-addetail-maincont {
   padding: 30px 10px 100px;
-  height: 250px;
+  height: auto;
 }
 
 
@@ -76,32 +82,19 @@
 }
 
 
-.topTitle-mainbox{
-  justify-content: right;
-  align-items: center;
-}
-
-.topTitle-name {
-  text-align: right; /* 텍스트 정렬을 오른쪽으로 설정 (선택 사항) */
-  margin-top: 10px;
-}
-
-.post-textarea{
-  margin: 50px 0px;
-  line-height: 40px;
-  text-align: left;
-}
 
 /* 수정 , 취소,신고 버튼들*/
 .volun-button{
   display: flex; /* 수평 정렬을 위한 flexbox 사용 */
   justify-content: flex-end; /* 버튼들을 왼쪽으로 정렬 */
   gap: 10px; /* 버튼 간 간격 조절 */
-  /* margin-left: 136px; */
+   margin-left: 136px;
   border-top: 2px solid #9B805D; /* 아래쪽 경계선 추가 */
   padding-bottom: 10px; /* 여백 추가 */
   width: 800px;
-  height: 20px;
+  height: 100px;
+  /*background-color: #3c763d;*/
+  margin-top: 500px;
 }
 
 /* 버튼 */

@@ -12,7 +12,7 @@
         from TBL_ADMIN
         where ADMIN_ID=#{adminId} and ADMIN_PW=#{adminPw}
     </select>
-<!--회원 목록 조회-->
+    <!--회원 목록 조회-->
     <select id="selectMemberList" resultType="AdminMemberDTO">
         SELECT
             MEMBER_NO,
@@ -31,7 +31,7 @@
         ORDER BY
             MEMBER_NO DESC
     </select>
-<!--memberNo로 회원 정보 검색-->
+    <!--memberNo로 회원 정보 검색-->
     <select id="selectMemberByNo" resultType="AdminMemberDTO">
         SELECT
             MEMBER_NO,
@@ -51,7 +51,7 @@
         ORDER BY
             MEMBER_NO DESC
     </select>
-<!--검색어로 회원 검색-->
+    <!--검색어로 회원 검색-->
     <select id="searchMemberByKeyword" parameterType="String" resultType="AdminMemberDTO">
         SELECT
             MEMBER_NO,
@@ -69,11 +69,11 @@
             TBL_MEMBER
         WHERE
             MEMBER_ID LIKE '%' || #{keyword} || '%' OR MEMBER_NAME LIKE '%' || #{keyword} || '%'
-            OR MEMBER_NICKNAME LIKE '%' || #{keyword} || '%' OR MEMBER_EMAIL LIKE '%' || #{keyword} || '%'
+           OR MEMBER_NICKNAME LIKE '%' || #{keyword} || '%' OR MEMBER_EMAIL LIKE '%' || #{keyword} || '%'
         ORDER BY
             MEMBER_NO DESC
     </select>
-<!--회원 강제 탈퇴-->
+    <!--회원 강제 탈퇴-->
     <delete id="deleteMembers" parameterType="list">
         DELETE FROM TBL_MEMBER
         WHERE MEMBER_NO IN
@@ -81,7 +81,7 @@
             #{memberNo}
         </foreach>
     </delete>
-<!--센터 회원 목록 조회-->
+    <!--센터 회원 목록 조회-->
     <select id="selectCenterMemberList" resultType="AdminCenterMemberDTO">
         SELECT
             TBL_CENTER_MEMBER.CENTER_MEMBER_NO,
@@ -99,7 +99,7 @@
             CENTER_FILE_PATH
         FROM
             TBL_CENTER_MEMBER LEFT JOIN TBL_CENTER_FILE
-        ON TBL_CENTER_MEMBER.CENTER_MEMBER_NO = TBL_CENTER_FILE.CENTER_MEMBER_NO
+                                        ON TBL_CENTER_MEMBER.CENTER_MEMBER_NO = TBL_CENTER_FILE.CENTER_MEMBER_NO
         WHERE CENTER_MEMBER_STATUS = 'N'
         ORDER BY TBL_CENTER_MEMBER.CENTER_MEMBER_NO DESC
     </select>
@@ -150,11 +150,11 @@
             CENTER_FILE_PATH
         FROM
             TBL_CENTER_MEMBER LEFT JOIN TBL_CENTER_FILE
-                                   ON TBL_CENTER_MEMBER.CENTER_MEMBER_NO = TBL_CENTER_FILE.CENTER_MEMBER_NO
+                                        ON TBL_CENTER_MEMBER.CENTER_MEMBER_NO = TBL_CENTER_FILE.CENTER_MEMBER_NO
         WHERE CENTER_MEMBER_STATUS = 'Y'
         ORDER BY TBL_CENTER_MEMBER.CENTER_MEMBER_NO DESC
     </select>
-<!--센터 멤버 검색 목록 조회-->
+    <!--센터 멤버 검색 목록 조회-->
     <select id="searchPassedCenterMemberByKeyword" parameterType="String" resultType="AdminCenterMemberDTO">
         SELECT
             TBL_CENTER_MEMBER.CENTER_MEMBER_NO,
@@ -175,7 +175,7 @@
                                         ON TBL_CENTER_MEMBER.CENTER_MEMBER_NO = TBL_CENTER_FILE.CENTER_MEMBER_NO
         WHERE CENTER_MEMBER_STATUS = 'Y' AND
             (CENTER_MEMBER_ID LIKE '%' || #{keyword} || '%' OR CENTER_MEMBER_NAME LIKE '%' || #{keyword} || '%'
-           OR CENTER_MEMBER_EMAIL LIKE '%' || #{keyword} || '%')
+                OR CENTER_MEMBER_EMAIL LIKE '%' || #{keyword} || '%')
         ORDER BY
             TBL_CENTER_MEMBER.CENTER_MEMBER_NO DESC
     </select>
@@ -200,20 +200,20 @@
             TBL_CENTER_MEMBER LEFT JOIN TBL_CENTER_FILE
                                         ON TBL_CENTER_MEMBER.CENTER_MEMBER_NO = TBL_CENTER_FILE.CENTER_MEMBER_NO
         WHERE CENTER_MEMBER_STATUS = 'Y' AND
-              TBL_CENTER_MEMBER.CENTER_MEMBER_NO = #{centerMemberNo}
+            TBL_CENTER_MEMBER.CENTER_MEMBER_NO = #{centerMemberNo}
     </select>
-<!--신고 내역 조회-->
+    <!--신고 내역 조회-->
     <select id="selectReportList" resultType="AdminReportDTO">
         SELECT REPORT_NO, 'POST' AS REPORT_TYPE,
-            CASE
-                WHEN REPORT_CATE = '입양' THEN 'ADOPT'
-                WHEN REPORT_CATE = '임시보호' THEN 'PROTECT'
-                WHEN REPORT_CATE = '후기' THEN 'REVIEW'
-                WHEN REPORT_CATE = '봉사' THEN 'VOLUN'
-                WHEN REPORT_CATE = '기부' THEN 'DONA'
-                WHEN REPORT_CATE = '카풀' THEN 'CAR'
-                WHEN REPORT_CATE = '커뮤' THEN 'COMMU'
-            END AS REPORT_CATE, REPORT_CONTENT, TO_CHAR(REPORT_REGIDATE, 'YYYY-MM-DD') AS REPORT_REGIDATE,
+               CASE
+                   WHEN REPORT_CATE = '입양' THEN 'ADOPT'
+                   WHEN REPORT_CATE = '임시보호' THEN 'PROTECT'
+                   WHEN REPORT_CATE = '후기' THEN 'REVIEW'
+                   WHEN REPORT_CATE = '봉사' THEN 'VOLUN'
+                   WHEN REPORT_CATE = '기부' THEN 'DONA'
+                   WHEN REPORT_CATE = '카풀' THEN 'CAR'
+                   WHEN REPORT_CATE = '커뮤' THEN 'COMMU'
+                   END AS REPORT_CATE, REPORT_CONTENT, TO_CHAR(REPORT_REGIDATE, 'YYYY-MM-DD') AS REPORT_REGIDATE,
                CASE
                    WHEN MOD(REPORT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = REPORT_WRITER)
                    WHEN MOD(REPORT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = REPORT_WRITER)
@@ -244,7 +244,7 @@
 
         ORDER BY REPORT_REGIDATE DESC
     </select>
-<!--    신고 내역 검색 조회-->
+    <!--    신고 내역 검색 조회-->
     <select id="searchReportByKeyword" parameterType="String" resultType="AdminReportDTO">
         SELECT REPORT_NO, 'POST' AS REPORT_TYPE,
                CASE
@@ -291,7 +291,7 @@
 
         ORDER BY REPORT_REGIDATE DESC
     </select>
-<!--게시글 목록 조회-->
+    <!--게시글 목록 조회-->
     <select id="selectPostList" resultType="AdminPostDTO">
         WITH AllPosts AS (
             SELECT
@@ -374,7 +374,7 @@
         ORDER BY post_update_date DESC
     </select>
 
-<!--게시글 검색 목록 조회-->
+    <!--게시글 검색 목록 조회-->
     <select id="searchPostByKeyword" parameterType="String" resultType="AdminPostDTO">
         WITH AllPosts AS (
             SELECT
@@ -528,7 +528,7 @@
 
 
 
-<!--게시글 상세 조회-->
+    <!--게시글 상세 조회-->
     <select id="selectPostDetail" parameterType="map" resultType="AdminPostDTO">
         <choose>
             <when test="postType == 'COMMU'">
@@ -825,7 +825,7 @@
         </choose>
     </delete>
 
-<!--댓글 검색 조회 목록-->
+    <!--댓글 검색 조회 목록-->
     <select id="searchCommentByKeyword" parameterType="String" resultType="AdminCommentDTO">
         WITH AllComments AS (
             SELECT
@@ -1098,7 +1098,7 @@
         ORDER BY NOTICE_UPDATEDATE DESC
     </select>
 
-<!--공지사항 검색 목록 조회-->
+    <!--공지사항 검색 목록 조회-->
     <select id="searchNoticeByKeyword" parameterType="String" resultType="AdminNoticeDTO">
         SELECT NOTICE_NO, ADMIN_NO, NOTICE_CATE, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_UPDATEDATE
         FROM TBL_NOTICE
@@ -1114,13 +1114,13 @@
         </foreach>
     </delete>
 
-<!--    공지사항 상세 조회-->
+    <!--    공지사항 상세 조회-->
     <select id="selectNoticeDetail" resultType="AdminNoticeDTO">
         SELECT NOTICE_NO, ADMIN_NO, NOTICE_CATE, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_UPDATEDATE
         FROM TBL_NOTICE
         WHERE NOTICE_NO = #{noticeNo}
     </select>
-<!--입양 신청서 목록 조회-->
+    <!--입양 신청서 목록 조회-->
     <select id="selectAdoptRequestList" resultType="AdminAdoptRequestDTO">
         SELECT
             ADOPT_REQUEST_NO,
@@ -1251,7 +1251,7 @@
                 JOIN TBL_CENTER_MEMBER ON TBL_ADOPT_REQUEST.CENTER_MEMBER_NO = TBL_CENTER_MEMBER.CENTER_MEMBER_NO
         WHERE ADOPT_REQUEST_NAME LIKE '%' || #{keyword} || '%' OR MEMBER_NICKNAME LIKE '%' || #{keyword} || '%' OR ADOPT_REQUEST_EMAIL LIKE '%' || #{keyword} || '%'
     </select>
-<!--임시보호 신청서 목록 조회-->
+    <!--임시보호 신청서 목록 조회-->
     <select id="selectProtectRequestList" resultType="AdminProtectRequestDTO">
         SELECT
             PROTECT_REQUEST_NO,
@@ -1382,7 +1382,7 @@
                 JOIN TBL_CENTER_MEMBER ON TBL_PROTECT_REQUEST.CENTER_MEMBER_NO = TBL_CENTER_MEMBER.CENTER_MEMBER_NO
         WHERE PROTECT_REQUEST_NAME LIKE '%' || #{keyword} || '%' OR MEMBER_NICKNAME LIKE '%' || #{keyword} || '%' OR PROTECT_REQUEST_EMAIL LIKE '%' || #{keyword} || '%'
     </select>
-<!--    봉사 목록 조회-->
+    <!--    봉사 목록 조회-->
     <select id="selectVolunRequestList" resultType="AdminVolunRequestDTO">
         SELECT
             VOLUN_REQUEST_NO,

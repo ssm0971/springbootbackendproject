@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>마이페이지-봉사</title>
   <link rel="stylesheet" th:href="@{/css/mypage/mypage-volun-list.css}" />
+  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
-  <script defer th:src="@{/js/mypage/mypage-volun-list.js}"></script>
 </head>
 
 <body>
@@ -30,8 +30,7 @@
     <div class="member-volun-navbox">
       <nav>
         <ul class="member-volun-nav-ul">
-          <li id="hours"><a href="../../html/mypage/mypage-volunteer.html">봉사시간</li></a>
-          <li id="volun-list"><a href="#">봉사신청내역</li>          
+          <li id="volun-list"><a th:href="@{/mypage/volun}">봉사신청내역</li>
           <div id="volun-choice"></div></a>
         </ul>
       </nav>
@@ -55,58 +54,24 @@
             <div class="mypage-volun-list" th:each="myvolun : ${mypageVolunList}">
               <ul class="member-profile-volunboard-contentbox">
                 <li th:text="${myvolun.volunTitle}"></li>
-                <li th:if="${myvolun.volunStatus} == 'T'" th:text="수락"></li>
-                <li th:if="${myvolun.volunStatus} == 'F'" th:text="거절"></li>
+                <li th:if="${myvolun.volunStatus} == 'T'" th:text="[심사중]"></li>
+                <li th:if="${myvolun.volunStatus} == 'F'" th:text="[수락]"></li>
                 <li th:text="${#dates.format(myvolun.volunPeriodend, 'yyyy-MM-dd')}"></li>
               </ul>
               <div class="memberNo" th:text="${myvolun.memberNo}" style="display: none;"></div>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="member-profile-volunboard-contentbox">
-                <li><a href="../../html/mypage/mypage-volun-form.html">남양주 봉사 신청서</li></a>
-                <li>검토중</li>
-                <li>2024.07.28</li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="member-profile-volunboard-contentbox">
-                <li><a href="../../html/mypage/mypage-volun-form.html">행복한 유기견 봉사 신청서</li></a>
-                <li>검토중</li>
-                <li>2024.07.27</li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <div>
-              <ul class="member-profile-volunboard-contentbox">
-                <li><a href="../../html/mypage/mypage-volun-form.html">시흥 봉사 신청서</li></a>
-                <li>거절</li>
-                <li>2024.07.26</li>
-              </ul>
+              <div class="volunRequestNo" th:text="${myvolun.volunRequestNo}" style="display: none;"></div>
             </div>
           </li>
         </ul>
       </div>
-
-    </div>
       <!-- 페이지네이션 -->
-      <div class="pagination">
-        <button class="prev">◀</button>
-        <button class="page">1</button>
-        <button class="page">2</button>
-        <button class="page">3</button>
-        <button class="page">4</button>
-        <button class="page">5</button>
-        <button class="next">▶</button>
-      </div>
+      <div id="pagination"></div>
+    </div>
   </main>
 
 </body>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
-<script defer src="../../js/main/header.js"></script>
+
+<script defer th:src="@{/js/mypage/mypage-volun.js}"></script>
 
 </html>

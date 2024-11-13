@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지-보낸쪽지</title>
     <link rel="stylesheet" th:href="@{/css/mypage/mypage-outbox.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
     <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
     <link rel="stylesheet" th:href="@{/css/main/main.css}">
     <script defer th:src="@{/js/main/main.js}"></script>
@@ -49,9 +50,7 @@
         <!-- 게시글 제목 -->
         <div>
             <ul class="member-notebox-titlebox">
-                <!-- <li><b>상태</b></li> -->
                 <li><b>수신자</b></li>
-<!--                <li><b>송신자</b></li>-->
                 <li><b>제목</b></li>
                 <li><b>내용</b></li>
                 <li><b>날짜</b></li>
@@ -63,17 +62,14 @@
                     <li>
                         <div th:text="${noteS.noteboxReceiverName}"></div>
                     </li>
-<!--                    <li>-->
-<!--                        <div th:text="${noteS.noteboxSendR}"></div>-->
-<!--                    </li>-->
                     <li>
-                        <div th:text="${noteS.noteboxSendTitle}"></div>
+                        <div class="note-Stitle" th:text="${noteS.noteboxSendTitle}"></div>
                     </li>
                     <li>
-                        <div th:text="${noteS.noteboxSendContent}"></div>
+                        <div class="note-Scontent" th:text="${noteS.noteboxSendContent}"></div>
                     </li>
                     <li>
-                        <div th:text="${noteS.noteboxSendRegiDate != null ? #dates.format(noteS.noteboxSendRegiDate, 'yyyy.MM.dd HH:mm:ss') : ''}"></div>
+                        <div th:text="${noteS.noteboxSendRegiDate != null ? #dates.format(noteS.noteboxSendRegiDate, 'yy.MM.dd HH:mm') : ''}"></div>
                     </li>
                 </ul>
             <div class="noteboxSendNo" th:text="${noteS.noteboxSendNo}" style="display: none;"></div>
@@ -88,6 +84,7 @@
         </div>
         <!-- 페이지네이션 -->
         <div id="pagination"></div>
+    </div>
 </main>
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
 

@@ -20,6 +20,5 @@ public class DonaCommentWriteDTO {
     private Long donaCommentWriter;
     private String commentWriterName;
     private Long memberNo;
-    private Long CenterMemberNo;
-    private Long adminNo;
+    private Long centerMemberNo;
 }

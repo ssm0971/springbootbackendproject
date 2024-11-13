@@ -14,7 +14,7 @@ import java.util.Date;
 public class WriteInfoDonaListDTO {
     private Long donaNo;
     private String donaTitle;
-    private String donaContent;
+//    private String donaContent;
     private Date donaRegiDate;
     private Long commentCount;
     private String centerName;

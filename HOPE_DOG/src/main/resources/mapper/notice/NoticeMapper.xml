@@ -7,7 +7,8 @@
             N.NOTICE_TITLE,
             N.NOTICE_REGIDATE,
             A.ADMIN_ID,
-            N.NOTICE_NO
+            N.NOTICE_NO,
+            N.NOTICE_CATE
         FROM
             TBL_NOTICE N
                 JOIN
@@ -33,6 +34,15 @@
         WHERE N.NOTICE_NO = #{noticeNo}
     </select>
 
+    <select id="selectFileListByNoticeNo" resultType="AdminFileDTO">
+        SELECT
+            file_no, notice_no, file_name, stored_file_name, file_uuid, FILE_PATH, upload_time
+        FROM
+            TBL_NOTICE_FILE
+        WHERE
+            notice_no = #{noticeNo}
+    </select>
+
 
     <!-- 여기서 부터 페이지네이션 관련 쿼리문-->
     <!-- 기부 전체게시글 수 -->
@@ -47,19 +57,22 @@
             N.NOTICE_TITLE,
             N.NOTICE_REGIDATE,
             A.ADMIN_ID,
-            N.NOTICE_NO
+            N.NOTICE_NO,
+            N.NOTICE_CATE
         FROM (
                  SELECT
                      NOTICE_NO,
                      NOTICE_TITLE,
                      NOTICE_REGIDATE,
-                     ADMIN_NO,  -- ADMIN_NO를 추가합니다.
+                     ADMIN_NO,
+                     NOTICE_CATE,-- ADMIN_NO를 추가합니다.
                      ROWNUM AS RNUM
                  FROM (
                           SELECT
                               N.NOTICE_NO,
                               N.NOTICE_TITLE,
                               N.NOTICE_REGIDATE,
+                              N.NOTICE_CATE,
                               N.ADMIN_NO  -- ADMIN_NO를 선택합니다.
                           FROM TBL_NOTICE N
                           ORDER BY N.NOTICE_REGIDATE DESC

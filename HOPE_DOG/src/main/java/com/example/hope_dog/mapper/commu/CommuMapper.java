@@ -17,8 +17,9 @@ import java.util.Map;
 
 @Mapper
 public interface CommuMapper {
-    //커뮤니티 게시판 목록
+    //커뮤니티 게시판 목록 commuDTO 반환
     List<CommuDTO> commuCatalog();
+
 
     //카테고리별 게시글 조회
     List<CommuDTO> findCate(@Param("cate")String cate);

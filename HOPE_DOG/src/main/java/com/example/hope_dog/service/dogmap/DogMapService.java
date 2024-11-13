@@ -29,7 +29,6 @@ public class DogMapService {
         String subType = "json";
         String numOfRows = "250";
         String pageNo = "1";
-//        String serviceKey = "YHW1P%2F57dgSSQi1EHu1NvPwRjRhbDQSsVMiA%2BwstM1aQkH0mt0JIwg7%2FdPAZgu1UE8x6oHCtoM9Z%2BEicawOZDw%3D%3D&serviceKey=YHW1P/57dgSSQi1EHu1NvPwRjRhbDQSsVMiA+wstM1aQkH0mt0JIwg7/dPAZgu1UE8x6oHCtoM9Z+EicawOZDw==";
 
         // URL 생성
         String url = baseurl + "?serviceKey=" + serviceKey1 + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=" + subType;
@@ -88,170 +87,34 @@ public class DogMapService {
         return filteredItems;
     }
 
-//    @Value("${api.service.key}")
-//    private String serviceKey;
-//
-//
-//
-//    public List<Item> getShelterInfo() {
-//        String baseurl = "https://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
-//        String subType = "json";
-//        String numOfRows = "200";
-//        String pageNo = "1";
-//
-//        // URL 생성
-//        String url = baseurl + "?serviceKey=" + serviceKey + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=" + subType;
-//        log.info("URL 확인 : " + url);
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//        AnimalShelterResponse response = null;
-//
-//        try {
-//            // HTTP 요청 헤더 설정
-//            HttpHeaders headers = new HttpHeaders();
-//
-//            HttpEntity<String> entity = new HttpEntity<>(headers);
-//            ResponseEntity<AnimalShelterResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, AnimalShelterResponse.class);
-//
-//            // 응답 상태 코드 확인
-//            if (responseEntity.getStatusCode().is2xxSuccessful()) {
-//                response = responseEntity.getBody();
-//                log.info("API Response: " + response); // 응답 내용 출력
-//            } else {
-//                log.error("API 호출 실패: " + responseEntity.getStatusCode());
-//                return new ArrayList<>(); // 실패 시 빈 리스트 반환
-//            }
-//        } catch (RestClientException e) {
-//            log.error("API 호출 중 오류 발생: " + e.getMessage());
-//            return new ArrayList<>(); // 오류 발생 시 빈 리스트 반환
-//        }
-//
-//        List<Item> items = new ArrayList<>();
-//
-//        // JSON 응답에서 items 항목을 가져옴
-//        if (response != null && response.getResponse() != null && response.getResponse().getBody() != null) {
-//            // items 리스트 가져오기
-//            List<Item> apiItems = response.getResponse().getBody().getItems().getItem();
-//
-//            // 인덱스를 추가하면서 리스트에 저장
-//            for (int i = 0; i < apiItems.size(); i++) {
-//                Item item = apiItems.get(i);
-//                item.setIndex(i + 1); // 인덱스 설정 (1부터 시작)
-//                items.add(item); // 인덱스를 설정한 아이템을 새로운 리스트에 추가
-//            }
-//        } else {
-//            log.error("응답이 유효하지 않거나 JSON 형식이 아닙니다: " + response);
-//            return new ArrayList<>(); // 유효하지 않은 응답 시 빈 리스트 반환
-//        }
-//
-//        return items;
-//    }
-//
-//    // 주소 필터링하는 메소드
-//    public List<Item> filterByAddress(List<Item> dogmapDTOList, String addressPrefix) {
-//        return dogmapDTOList.stream()
-//                .filter(dto -> dto.getCareAddr().startsWith(addressPrefix))
-//                .collect(Collectors.toList());
-//    }
+    // 제한 데이터 페이지 메소드
+    public Item[] getStaticShelterInfo() {
+        Item[] staticShelters = new Item[10];
 
-//    private final String SERVICE_KEY = "YHW1P%2F57dgSSQi1EHu1NvPwRjRhbDQSsVMiA%2BwstM1aQkH0mt0JIwg7%2FdPAZgu1UE8x6oHCtoM9Z%2BEicawOZDw%3D%3D"; // 실제 서비스 키로 변경
+        staticShelters[0] = createItem(1, "24시아이동물메디컬", "경기도 부천시 오정구 소사로 779 (원종동) 201호", "032-677-5262", 37.52566, 126.804565);
+        staticShelters[1] = createItem(2, "가나동물병원", "경기도 부천시 소사구 경인로 72 (송내동)", "032-665-0075", 37.48555, 126.76318);
+        staticShelters[2] = createItem(3, "가평군유기동물보호소", "경기도 가평군 가평읍 아랫마장길 59 (가평읍, 농업기술센터)", "031-580-4794", 37.845997, 127.4987);
+        staticShelters[3] = createItem(4, "고양시동물보호센터", "경기도 고양시 덕양구 고양대로 1695 (원흥동, 고양시 농업기술센터)", "031-962-3232", 37.64964, 126.87027);
+        staticShelters[4] = createItem(5, "광주TNR동물병원송정", "경기도 광주시 경안천로 142 (송정동)", "031-798-7583", 37.41734, 127.275024);
+        staticShelters[5] = createItem(6, "광주TNR동물병원초월", "경기도 광주시 초월읍 현산로385번길 74-12 (초월읍)", "031-798-7581", 37.41589, 127.27616);
+        staticShelters[6] = createItem(7, "구리반려동물문화센터", "경기도 구리시 동구릉로136번길 57 (인창동) 2층", "031-566-0059", 37.61347, 127.14054);
+        staticShelters[7] = createItem(8, "남양동물보호센터", "경기도 화성시 남양읍 화성로 1483-27 (남양읍)", "031-356-2281", 37.22495, 126.84342);
+        staticShelters[8] = createItem(9, "남양주시동물보호센터", "경기도 남양주시 경강로163번길 32-27 (이패동)", "031-590-2785", 37.60878, 127.191536);
+        staticShelters[9] = createItem(10, "부천시수의사회", "경기도 부천시 원미구 중동로 100 (중동) 아이파크 상가동 213호", "032-661-7575", 37.488747, 126.76579);
 
-//    서비스키
-//    YHW1P%2F57dgSSQi1EHu1NvPwRjRhbDQSsVMiA%2BwstM1aQkH0mt0JIwg7%2FdPAZgu1UE8x6oHCtoM9Z%2BEicawOZDw%3D%3D
+        return staticShelters;
+    }
 
-//    @Value("${api.service.key}")
-//    private String serviceKey;
-//
-//    public List<DogMapApiDTO> getShelterInfo() {
-//        String baseurl = "http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
-//        String subType = "_type=" + "json";
-//        String numOfRows = "numOfRows=" + "250";
-//        String pageNo = "pageNo=" + "1";
-//        String KeyStr = "serviceKey=";
-//
-//        // URL 생성
-//        String url = (baseurl + "?" + KeyStr + serviceKey + "&" + numOfRows + "&" + pageNo + "&" + subType );
-//        log.info("URL 확인 : " + url);
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//        String response;
-//
-//        try {
-//            // API 호출
-//            response = restTemplate.getForObject(url, String.class);
-//            log.info("API Response: " + response); // 응답 내용 출력
-//        } catch (RestClientException e) {
-//            log.error("API 호출 중 오류 발생: " + e.getMessage());
-//            return new ArrayList<>(); // 오류 발생 시 빈 리스트 반환
-//        }
-//
-//        List<DogMapApiDTO> dogmapDTOList = new ArrayList<>();
-//
-//        // JSON 응답이 예상한 형식인지 확인
-//        if (response.startsWith("{")) {
-//            try {
-//                // JSON 응답 파싱
-//                JSONObject jsonResponse = new JSONObject(response);
-//                JSONArray shelterArray = jsonResponse.getJSONObject("response")
-//                        .getJSONObject("body")
-//                        .getJSONObject("items")
-//                        .getJSONArray("item"); // "items" 아래의 "item" 배열을 가져옴
-//
-//                for (int i = 0; i < shelterArray.length(); i++) {
-//                    JSONObject shelterJson = shelterArray.getJSONObject(i);
-//                    DogMapApiDTO dogMapApiDTOInfo = new DogMapApiDTO(); // ShelterInfo 객체 생성
-//
-//                    // JSON 필드에 맞춰 DTO 필드에 값 설정
-//                    dogMapApiDTOInfo.setCareNm(shelterJson.getString("careNm"));
-//                    dogMapApiDTOInfo.setOrgNm(shelterJson.getString("orgNm"));
-//                    dogMapApiDTOInfo.setDivisionNm(shelterJson.getString("divisionNm"));
-//                    dogMapApiDTOInfo.setSaveTrgtAnimal(shelterJson.getString("saveTrgtAnimal"));
-//                    dogMapApiDTOInfo.setCareAddr(shelterJson.getString("careAddr"));
-//                    dogMapApiDTOInfo.setJibunAddr(shelterJson.getString("jibunAddr"));
-//                    dogMapApiDTOInfo.setLat(shelterJson.getDouble("lat"));
-//                    dogMapApiDTOInfo.setLng(shelterJson.getDouble("lng"));
-//                    dogMapApiDTOInfo.setDsignationDate(shelterJson.getString("dsignationDate"));
-//                    dogMapApiDTOInfo.setWeekOprStime(shelterJson.getString("weekOprStime"));
-//                    dogMapApiDTOInfo.setWeekOprEtime(shelterJson.getString("weekOprEtime"));
-//                    dogMapApiDTOInfo.setCloseDay(shelterJson.getString("closeDay"));
-//                    dogMapApiDTOInfo.setVetPersonCnt(shelterJson.getInt("vetPersonCnt"));
-//                    dogMapApiDTOInfo.setSpecsPersonCnt(shelterJson.getInt("specsPersonCnt"));
-//                    dogMapApiDTOInfo.setCareTel(shelterJson.getString("careTel"));
-//                    dogMapApiDTOInfo.setDataStdDt(shelterJson.getString("dataStdDt"));
-//
-//                    dogmapDTOList.add(dogMapApiDTOInfo); // 리스트에 추가
-//                }
-//            } catch (Exception e) {
-//                log.error("JSON 파싱 중 오류 발생: " + e.getMessage());
-//                return new ArrayList<>(); // 오류 발생 시 빈 리스트 반환
-//            }
-//        } else {
-//            log.error("응답이 JSON 형식이 아닙니다: " + response);
-//        }
-//
-//        return dogmapDTOList;
-//    }
-//
-//    // 주소 필터링하는 메소드
-//    public List<DogMapApiDTO> filterByAddress(List<DogMapApiDTO> dogmapDTOList, String addressPrefix) {
-//        return dogmapDTOList.stream()
-//                .filter(dto -> dto.getCareAddr().startsWith(addressPrefix))
-//                .collect(Collectors.toList());
-//    }
+    private Item createItem(int index, String careNm, String careAddr, String careTel, double lat, double lng) {
+        Item item = new Item();
+        item.setIndex(index);
+        item.setCareNm(careNm);
+        item.setCareAddr(careAddr);
+        item.setCareTel(careTel);
+        item.setLat(lat);
+        item.setLng(lng);
+        return item;
+    }
 
-
-
-
-//    private final RestTemplate restTemplate;
-//
-//    // 생성자 주입을 통해 RestTemplate을 주입받음
-//    public DogMapService(RestTemplate restTemplate) {
-//        this.restTemplate = restTemplate;
-//    }
-//
-//    public DogMapApiDTO getDogMapList(String url) {
-//        // RestTemplate을 사용하여 API 호출
-//        return restTemplate.getForObject(url, DogMapApiDTO.class);
-//    }
 }
 

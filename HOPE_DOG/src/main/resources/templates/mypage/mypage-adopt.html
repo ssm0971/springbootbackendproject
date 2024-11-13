@@ -7,9 +7,14 @@
   <title>마이페이지-입양</title>
   <link rel="stylesheet" th:href="@{/css/mypage/mypage-adopt.css}" />
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
   <script defer th:src="@{/js/main/main.js}"></script>
   <script defer th:src="@{/js/mypage/mypage-adopt.js}"></script>
+  <!-- 페이지네이션 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </head>
 
 <body>
@@ -32,9 +37,9 @@
     <div class="member-adopt-navbox">
       <nav>
         <ul class="member-adopt-nav-ul">
-          <li id="member-adopt"><a href="#">입양신청</li>
+          <li id="member-adopt"><a th:href="@{/mypage/adopt}">입양신청</li>
           <div id="adopt-choice"></div></a>
-          <li id="protect-list">임시보호신청</li>
+          <li id="protect-list"><a th:href="@{/mypage/protect}">임시보호신청</li></a>
         </ul>
       </nav>
     </div>
@@ -57,35 +62,19 @@
             <div class="mypage-adopt-list" th:each="myadopt : ${mypageAdoptList}">
               <ul class="member-profile-adoptboard-contentbox">
                 <li th:text="${myadopt.adoptTitle}"></li>
-                <li th:if="${myadopt.adoptStatus} == 'T'" th:text="검토중"></li>
-                <li th:if="${myadopt.adoptStatus} == 'F'" th:text="마감"></li>
+                <li th:if="${myadopt.adoptStatus} == 'T'" th:text="[심사중]"></li>
+                <li th:if="${myadopt.adoptStatus} == 'F'" th:text="[마감]"></li>
                 <li th:text="${#dates.format(myadopt.adoptPeriodend, 'yyyy-MM-dd')}"></li>
               </ul>
               <div class="memberNo" th:text="${myadopt.memberNo}" style="display: none;"></div>
+              <div class="adoptRequestNo" th:text="${myadopt.adoptRequestNo}" style="display: none;"></div>
             </div>
           </li>
-          <li>
-            <div>
-              <ul class="member-profile-adoptboard-contentbox">
-                <li><a href="../../html/mypage/mypage-adopt-form.html">입양 신청서</li></a>
-                <li>검토중</li>
-                <li>2024.07.28</li>
-              </ul>
-            </div>
-          </li>
-          
         </ul>
       </div>
-      <!-- 페이지네이션 -->
-      <div class="pagination">
-        <button class="prev">◀</button>
-        <button class="page">1</button>
-        <button class="page">2</button>
-        <button class="page">3</button>
-        <button class="page">4</button>
-        <button class="page">5</button>
-        <button class="next">▶</button>
       </div>
+      <!-- 페이지네이션 -->
+        <div id="pagination"></div>
     </div>
 
   </main>

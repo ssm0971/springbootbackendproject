@@ -18,7 +18,7 @@
     <div class="doghouse-navbox">
         <nav>
             <div class="doghouse-nav">
-                <div id="doghouse"><a href="#">유기견 보호소</a></div>
+                <div id="doghouse"><a th:href="@{/dogmap/shelters}">유기견 보호소</a></div>
                 <div class="choice"></div>
             </div>
         </nav>
@@ -27,14 +27,18 @@
     <!-- 보호소 목록 -->
     <div class="doghouse-main">
         <div class="doghouse-box">
+            <!-- 데이터가 없을 경우 오류 메시지 표시 -->
+            <div th:if="${shelters == null or #lists.isEmpty(shelters)}" class="error-message" style="margin-bottom: 50px">
+                <span>서버로부터 데이터를 가져오는 데 실패했습니다.</span>
+            </div>
             <div th:each="shelter, iterStat : ${shelters}">
                 <div class="doghouse-item">
                     <div class="doghouse-list-title">
                         <div class="doghouse-name">
                             <span th:text="${shelter.careNm}"></span>
-                            <span th:text="${shelter.index}"></span>
+                            <!--<span th:text="${shelter.index}"></span>-->
                         </div>
-                        <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">
+                        <img th:src="@{/img/mapicon.jpg}" alt="보호소이미지" class="doghouse-image">
                     </div>
                     <div class="doghouse-list-info">
                         <div class="doghouse">
@@ -50,6 +54,10 @@
                                     th:data-lat="${shelter.lat}"
                                     th:data-lng="${shelter.lng}">
                             </div>
+                            <div style="display: none">
+                                <img th:src="@{/img/dogmap-marker.png}" alt="Dog Map Marker" data-marker-src="/img/dogmap-marker.png"/>
+                                <!--                            <img th:src="@{/img/dogmap-marker.png}" alt="Dog Map Marker" data-marker-src="@{/img/dogmap-marker.png}"/>-->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -57,41 +65,10 @@
         </div>
     </div>
 
-<!--    <div class="doghouse-main">-->
-<!--        <div class="doghouse-box">-->
-<!--            <div th:each="shelter, iterStat : ${shelters}">-->
-<!--                <div class="doghouse-item">-->
-<!--                    <div class="doghouse-list-title">-->
-<!--                        <div class="doghouse-name"><span th:text="${shelter.careNm}"></span><span-->
-<!--                                th:text="${shelter.index}"></span></div>-->
-<!--                        <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">-->
-<!--                    </div>-->
-<!--                    <div class="doghouse-list-info">-->
-<!--                        <div class="doghouse">-->
-<!--                            <div class="doghouse-information">-->
-<!--                                <span>주소 : <span th:text="${shelter.careAddr}"></span></span>-->
-<!--                                <span>전화번호 : <span th:text="${shelter.careTel}"></span></span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="doghouse-map">-->
-<!--                            &lt;!&ndash; 지도 컨테이너 &ndash;&gt;-->
-<!--                            <div th:id="'map' + ${shelter.index}" style="width:100%;height:250px;"-->
-<!--                                 th:data-lat="${shelter.lat}" th:data-lng="${shelter.lng}">-->
-<!--                            </div>-->
-<!--                            &lt;!&ndash; 동적으로 ID 설정 &ndash;&gt;-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 </main>
 
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
-<script type="text/javascript"
-        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=25d08d681602b7d3ae9a06f65fdefadb&autoload=false"></script>
-
-<!--<script  async src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=25d08d681602b7d3ae9a06f65fdefadb"></script>-->
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=25d08d681602b7d3ae9a06f65fdefadb&autoload=false"></script>
 <script defer th:src="@{/js/dogmap/dogmap.js}"></script>
 
 

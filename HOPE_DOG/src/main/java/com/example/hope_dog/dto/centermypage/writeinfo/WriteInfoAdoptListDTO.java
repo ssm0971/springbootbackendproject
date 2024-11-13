@@ -14,7 +14,7 @@ import java.util.Date;
 public class WriteInfoAdoptListDTO {
     private Long adoptNo;
     private String adoptTitle;
-    private String adoptContent;
+//    private String adoptContent;
     private Date adoptRegiDate;
     private String adoptStatus;
     private Long commentCount;

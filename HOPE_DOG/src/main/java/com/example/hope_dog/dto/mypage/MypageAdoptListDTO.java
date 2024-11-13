@@ -17,4 +17,5 @@ public class MypageAdoptListDTO {
     private String adoptStatus;
     private Date adoptPeriodend;
     private Long memberNo;
+    private Long adoptRequestNo;
 }

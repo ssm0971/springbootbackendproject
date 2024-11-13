@@ -194,8 +194,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     const verifiedPhoneInput = document.createElement('input');
                     verifiedPhoneInput.type = 'hidden';
                     verifiedPhoneInput.name = 'verifiedPhone';
-                    verifiedPhoneInput.value = phoneNumber;
+                    verifiedPhoneInput.value = phoneNumber;  // 인증된 전화번호
                     form.appendChild(verifiedPhoneInput);
+
+
                 } else {
                     document.getElementById('phonecheckError').textContent = '인증번호가 일치하지 않습니다.';
                     document.getElementById('phonecheckError').style.display = 'block';
@@ -370,10 +372,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 각 입력 필드에 blur 이벤트 리스너 추가
     document.getElementById('nickname').addEventListener('blur', checkNicknameInput);
     document.getElementById('email').addEventListener('blur', checkEmailInput);
-    document.getElementById('phonenumber').addEventListener('blur', checkPhoneInput);
+    document.getElementById(' ').addEventListener('blur', checkPhoneInput);
     document.getElementById('phonecheckInput').addEventListener('blur', checkPnumberInput);
     document.getElementById('addressInput').addEventListener('blur', checkAddressInput);
     document.getElementById('addInput').addEventListener('blur', checkAddInput);
     document.getElementById('passwordInput').addEventListener('blur', checkPasswordInput);
     document.getElementById('passwordcheck').addEventListener('blur', checkPcheckInput);
 });
+

@@ -89,14 +89,15 @@ public class MypageController {
     @PostMapping("/updateProfileOk")
     public String updateProfileOk(@ModelAttribute MypageUpdateProfileDTO mypageUpdateProfileDTO, RedirectAttributes redirectAttributes) {
         Long memberNo = (Long) session.getAttribute("memberNo");
-        if(memberNo == null) {
+        if (memberNo == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "로그인이 필요합니다.");
-            return "redirect:/login";
+            return "redirect:/main/main";
         }
 
         // memberNo를 DTO에 설정
         mypageUpdateProfileDTO.setMemberNo(memberNo);
 
+        // 프로필 업데이트 시도
         try {
             int updateCount = mypageService.updateProfile(mypageUpdateProfileDTO);
             if (updateCount > 0) {
@@ -109,7 +110,7 @@ public class MypageController {
             redirectAttributes.addFlashAttribute("errorMessage", "프로필 업데이트 중 오류가 발생했습니다.");
         }
 
-        return "redirect:/mypage/update";
+        return "redirect:/mypage/update"; // 업데이트 후 리다이렉트할 페이지
     }
 
     @GetMapping("/adopt")
@@ -142,11 +143,6 @@ public class MypageController {
     }
 
     @GetMapping("/volun")
-    public String volun() {
-        return "mypage/mypage-volunteer";
-    }
-
-    @GetMapping("/volunList")
     public String volunList(HttpSession session, Model model) {
         Long memberNo = (Long) session.getAttribute("memberNo");
         if (memberNo == null) {
@@ -353,33 +349,51 @@ public class MypageController {
         return "redirect:/mypage/updateProtectRequest?protectRequestNo=" + protectRequestNo;
     }
 
+    @GetMapping("/updateAdoptRequest")
+    public String updateAdoptRequest(@RequestParam("adoptRequestNo") Long adoptRequestNo, Model model) {
+        MpAdoptRequestDTO adoptRequest = mypageService.adoptRequestInfo(adoptRequestNo);
+        Long memberNo = (Long) session.getAttribute("memberNo");
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
 
-//    @PostMapping("/updateProfileOk")
-//    public String updateProfile(@ModelAttribute CenterUpdateProfileDTO centerUpdateProfileDTO, RedirectAttributes redirectAttributes) {
-//        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
-//        if (centerMemberNo == null) {
-//            redirectAttributes.addFlashAttribute("errorMessage", "로그인이 필요합니다.");
-//            return "redirect:/login";
-//        }
-//
-//        // centerMemberNo를 DTO에 설정
-//        centerUpdateProfileDTO.setCenterMemberNo(centerMemberNo);
-//
-//        // 프로필 업데이트 시도
-//        try {
-//            int updateCount = centerMypageService.updateCenterProfile(centerUpdateProfileDTO);
-//            if (updateCount > 0) {
-//                redirectAttributes.addFlashAttribute("successMessage", "프로필이 성공적으로 업데이트되었습니다.");
-//            } else {
-//                redirectAttributes.addFlashAttribute("errorMessage", "프로필 업데이트에 실패했습니다.");
-//            }
-//        } catch (Exception e) {
-//            log.error("프로필 업데이트 중 오류 발생", e);
-//            redirectAttributes.addFlashAttribute("errorMessage", "프로필 업데이트 중 오류가 발생했습니다.");
-//        }
-//
-//        return "redirect:/centerMypage/centerProfile"; // 업데이트 후 리다이렉트할 페이지
-//    }
+        model.addAttribute("memberNo", memberNo);
+        model.addAttribute("centerMemberNo", centerMemberNo);
+
+        model.addAttribute("adoptRequest", adoptRequest);
+        return "mypage/mypage-adopt-form";
+    }
+
+    @PostMapping("/updateAdoptRequestOk")
+    public String updateAdoptRequestOk(@RequestParam("adoptRequestNo") Long adoptRequestNo, MpAdoptRequestDTO mpAdoptRequestDTO, Model model) {
+        MpAdoptRequestDTO adoptRequest = mypageService.adoptRequestInfo(adoptRequestNo);
+        model.addAttribute("adoptRequest", adoptRequest);
+
+        mypageService.updateAdoptRequest(mpAdoptRequestDTO);
+
+        return "redirect:/mypage/updateAdoptRequest?adoptRequestNo=" + adoptRequestNo;
+    }
+
+    @GetMapping("/updateVolunRequest")
+    public String updateVolunRequest(@RequestParam("volunRequestNo") Long volunRequestNo, Model model) {
+        MpVolunRequestDTO volunRequest = mypageService.volunRequestInfo(volunRequestNo);
+        Long memberNo = (Long) session.getAttribute("memberNo");
+        Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
+
+        model.addAttribute("memberNo", memberNo);
+        model.addAttribute("centerMemberNo", centerMemberNo);
+
+        model.addAttribute("volunRequest", volunRequest);
+        return "mypage/mypage-volun-form";
+    }
+
+    @PostMapping("/updateVolunRequestOk")
+    public String updateVolunRequestOk(@RequestParam("volunRequestNo") Long volunRequestNo, MpVolunRequestDTO mpVolunRequestDTO, Model model) {
+        MpVolunRequestDTO volunRequest = mypageService.volunRequestInfo(volunRequestNo);
+        model.addAttribute("volunRequest", volunRequest);
+
+        mypageService.updateVolunRequest(mpVolunRequestDTO);
+
+        return "redirect:/mypage/updateVolunRequest?volunRequestNo=" + volunRequestNo;
+    }
 
     @GetMapping("/withdrawal")
     public String withdrawal(Model model) {
@@ -391,6 +405,27 @@ public class MypageController {
         return "mypage/mypage-quit";
     }
 
+    @PostMapping("/withdrawalOK")
+    public String withdrawalOK() {
+        Long memberNo = (Long) session.getAttribute("memberNo");
+
+        // 세션이 만료된 경우 로그인 페이지로 리다이렉트
+        if (memberNo == null) {
+            return "redirect:/login";
+        }
+
+        // 탈퇴 로직을 서비스에서 처리
+        boolean isWithdrawal = mypageService.withdrawal(memberNo);
+
+        if (isWithdrawal) {
+            session.invalidate(); // 세션 무효화
+            log.info("회원 탈퇴가 완료되었습니다. 회원 번호 : {}", memberNo);
+            return "redirect:/main/main"; // 메인 페이지로 리다이렉트
+        } else {
+            log.error("탈퇴 처리 중 오류 발생. 회원 번호 : {}", memberNo);
+            return "redirect:/login"; // 오류 발생 시 로그인 페이지로 리다이렉트
+        }
+    }
 
 
 }

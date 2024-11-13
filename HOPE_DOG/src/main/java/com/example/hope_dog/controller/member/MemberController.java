@@ -366,6 +366,7 @@ public class MemberController {
 
    // 아이디 찾기 완료
    // 일반적인 웹 페이지 반환을 위한 컨트롤러 메서드
+   @GetMapping("/find-idOk")
    public String findIdResult(@RequestParam(name = "memberName") String memberName,
                               @RequestParam(name = "memberId") String memberId,
                               Model model) {
