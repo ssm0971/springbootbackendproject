@@ -47,8 +47,8 @@ a {
 
 .doghouse-item {
   margin-bottom: 20px;
-  border: 2px solid #9B805D; 
-  border-radius: 15px; 
+  border: 2px solid #9B805D;
+  border-radius: 15px;
   position: relative; /*상대위치설정*/
 }
 
@@ -78,7 +78,7 @@ a {
 
 
 .doghouse {
-  height: 50px;
+  /*height: 50px;*/
   /* display: flex; */
   border-top: 2px solid #9B805D;
   border-bottom: 2px solid #9B805D;
@@ -95,7 +95,7 @@ a {
 
 .doghouse-map {
   width: 600px;
-  height: 400px;
+  height: 300px;
 }
 
 /* js */

@@ -2,135 +2,99 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>유기견 보호소</title>
-  <link rel="stylesheet" th:href="@{/css/dogmap/dogmap.css}">
-  <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
-  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유기견 보호소</title>
+    <link rel="stylesheet" th:href="@{/css/dogmap/dogmap.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+    <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
+
 </head>
 
 <body>
 <header th:replace="~{fragment/header :: header}"></header>
-  <main>
+<main>
     <!-- 메인페이지 목록 -->
     <div class="doghouse-navbox">
-      <nav>
-        <div class="doghouse-nav">
-          <div id="doghouse"><a href="#">유기견 보호소</a></div>
-          <div class="choice"></div>
-        </div>
-      </nav>
+        <nav>
+            <div class="doghouse-nav">
+                <div id="doghouse"><a href="#">유기견 보호소</a></div>
+                <div class="choice"></div>
+            </div>
+        </nav>
     </div>
 
     <!-- 보호소 목록 -->
-
     <div class="doghouse-main">
-<!--      지도api test-->
-      <div id="map1" style="width: 600px; height: 250px; margin-bottom: 20px;"></div>
-      <div id="map2" style="width: 600px; height: 250px; margin-bottom: 20px;"></div>
-      <div id="map3" style="width: 600px; height: 250px; margin-bottom: 20px;"></div>
-      <div class="doghouse-box" th:each="shelter, iterStat : ${shelters}">
-
-        <div class="doghouse-item">
-          <div class="doghouse-list-title">
-            <div class="doghouse-name"><span th:text="${shelter.careNm}"></span><span th:text="${shelter.index}"></span></div>
-            <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">
-          </div>
-          <div class="doghouse-list-info">
-            <div class="doghouse">
-              <div class="doghouse-information">
-                <span>주소 : <span th:text="${shelter.careAddr}"></span></span>
-                <span>전화번호 : <span th:text="${shelter.careTel}"></span></span>
-              </div>
+        <div class="doghouse-box">
+            <div th:each="shelter, iterStat : ${shelters}">
+                <div class="doghouse-item">
+                    <div class="doghouse-list-title">
+                        <div class="doghouse-name">
+                            <span th:text="${shelter.careNm}"></span>
+                            <span th:text="${shelter.index}"></span>
+                        </div>
+                        <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">
+                    </div>
+                    <div class="doghouse-list-info">
+                        <div class="doghouse">
+                            <div class="doghouse-information">
+                                <span>주소 : <span th:text="${shelter.careAddr}"></span></span>
+                                <span>전화번호 : <span th:text="${shelter.careTel}"></span></span>
+                            </div>
+                        </div>
+                        <div class="doghouse-map">
+                            <div
+                                    th:id="'map' + ${shelter.index}"
+                                    style="margin:5px;width:100%;height:290px;"
+                                    th:data-lat="${shelter.lat}"
+                                    th:data-lng="${shelter.lng}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="doghouse-map">
-              <div th:id="'map' + ${shelter.index}" style="width:100%;height:250px;"></div> <!-- 동적으로 ID 설정 -->
-            </div>
-          </div>
         </div>
-      </div>
     </div>
 
 <!--    <div class="doghouse-main">-->
-<!--      <div class="doghouse-box">-->
-<!--        <div class="doghouse-item">-->
-<!--          <div class="doghouse-list-title">-->
-<!--            <div class="doghouse-name"><span>아이조아요양보호소 동탄점</span></div>-->
-<!--            <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">-->
-<!--          </div>-->
-<!--          <div class="doghouse-list-info">-->
-<!--            <div class="doghouse">-->
-<!--              <div class="doghouse-information"><span>주소 : 경기 화성시 중리북길 39</span>-->
-<!--                <span> 전화번호 : 0507-1375-9331</span>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="doghouse-map">-->
-<!--              <div id="map1" style="width:100%;height:250px;"></div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="doghouse-item">-->
-<!--          <div class="doghouse-list-title">-->
-<!--            <div class="doghouse-name"><span>안다 동물보호소</span></div>-->
-<!--            <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">-->
-<!--          </div>-->
-<!--          <div class="doghouse-list-info">-->
-<!--            <div class="doghouse">-->
-<!--              <div class="doghouse-information"><span>주소 : 경기 평택시 오좌동길 47-48 안다 동물보호소</span>-->
-<!--                <span> 전화번호 : 0507-1333-0783</span>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="doghouse-map">-->
-<!--              <div id="map2" style="width:100%;height:250px;"></div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <div class="doghouse-main">-->
-<!--      <div class="doghouse-box">-->
-<!--&lt;!&ndash;        <div th:if="${shelters != null and !#lists.isEmpty(shelters)}">&ndash;&gt;-->
-<!--        <div>-->
-<!--          <div class="doghouse-item" th:each="row : ${shelters}">-->
-<!--            <div class="doghouse-list-title">-->
-<!--              <div class="doghouse-name">-->
-<!--                <span th:text="${row.careNm}">센터명</span> &lt;!&ndash; 보호소 이름 &ndash;&gt;-->
-<!--              </div>-->
-<!--              <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image"> &lt;!&ndash; 이미지 경로 수정 &ndash;&gt;-->
-<!--            </div>-->
-<!--            <div class="doghouse-list-info">-->
-<!--              <div class="doghouse">-->
-<!--                <div class="doghouse-information">-->
-<!--                  <span th:text="'주소 : ' + ${row.careAddr}">주소</span> &lt;!&ndash; 보호소 주소 &ndash;&gt;-->
-<!--                  <span th:text="'전화번호 : ' + ${row.careTel}">전화번호</span> &lt;!&ndash; 보호소 전화번호 &ndash;&gt;-->
+<!--        <div class="doghouse-box">-->
+<!--            <div th:each="shelter, iterStat : ${shelters}">-->
+<!--                <div class="doghouse-item">-->
+<!--                    <div class="doghouse-list-title">-->
+<!--                        <div class="doghouse-name"><span th:text="${shelter.careNm}"></span><span-->
+<!--                                th:text="${shelter.index}"></span></div>-->
+<!--                        <img src="../../img/map1.jpg" alt="보호소 이미지" class="doghouse-image">-->
+<!--                    </div>-->
+<!--                    <div class="doghouse-list-info">-->
+<!--                        <div class="doghouse">-->
+<!--                            <div class="doghouse-information">-->
+<!--                                <span>주소 : <span th:text="${shelter.careAddr}"></span></span>-->
+<!--                                <span>전화번호 : <span th:text="${shelter.careTel}"></span></span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="doghouse-map">-->
+<!--                            &lt;!&ndash; 지도 컨테이너 &ndash;&gt;-->
+<!--                            <div th:id="'map' + ${shelter.index}" style="width:100%;height:250px;"-->
+<!--                                 th:data-lat="${shelter.lat}" th:data-lng="${shelter.lng}">-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash; 동적으로 ID 설정 &ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
 <!--                </div>-->
-<!--              </div>-->
-<!--              <div class="doghouse-map">-->
-<!--                <div style="display: none" th:text="${row.lat} + ',' + ${row.lng}"> &lt;!&ndash; 위도, 경도 값 저장 &ndash;&gt;-->
-<!--                  &lt;!&ndash; 위도, 경도 값은 JavaScript에서 사용하기 위해 숨김 처리 &ndash;&gt;-->
-<!--                  <div id="map" style="width:100%;height:350px;"></div>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; 여기서 지도를 표시할 수 있는 JavaScript 코드 추가 &ndash;&gt;-->
-<!--&lt;!&ndash;                <div id="map-${row.careNm.replaceAll(' ', '_')}" style="width: 100%; height: 300px;"></div> &lt;!&ndash; 각 보호소마다 고유한 ID &ndash;&gt;&ndash;&gt;-->
-<!--              </div>-->
 <!--            </div>-->
-<!--          </div>-->
 <!--        </div>-->
-<!--        <div th:if="${shelters == null or #lists.isEmpty(shelters)}">-->
-<!--          <h1 th:if="${shelters == null}">null test</h1>-->
-<!--          <p>데이터를 가져올 수 없습니다.</p>-->
-<!--        </div>-->
-<!--      </div>-->
 <!--    </div>-->
-
-  </main>
+</main>
 
 <footer th:replace="~{/fragment/footer :: footer}"></footer>
-</body>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=25d08d681602b7d3ae9a06f65fdefadb"></script>
+<script type="text/javascript"
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=25d08d681602b7d3ae9a06f65fdefadb&autoload=false"></script>
+
+<!--<script  async src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=25d08d681602b7d3ae9a06f65fdefadb"></script>-->
 <script defer th:src="@{/js/dogmap/dogmap.js}"></script>
+
+
+</body>
 
 </html>

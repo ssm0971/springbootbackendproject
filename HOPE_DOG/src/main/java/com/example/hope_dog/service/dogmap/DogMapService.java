@@ -20,19 +20,19 @@ import java.util.stream.Collectors;
 @Service
 public class DogMapService {
 
-    @Value("${api.service.key1} ${api.service.key2}")
+    @Value("${api.service.key1}")
     private String serviceKey1;
     private String serviceKey2;
 
     public List<Item> getShelterInfo() {
         String baseurl = "https://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
         String subType = "json";
-        String numOfRows = "200";
+        String numOfRows = "250";
         String pageNo = "1";
 //        String serviceKey = "YHW1P%2F57dgSSQi1EHu1NvPwRjRhbDQSsVMiA%2BwstM1aQkH0mt0JIwg7%2FdPAZgu1UE8x6oHCtoM9Z%2BEicawOZDw%3D%3D&serviceKey=YHW1P/57dgSSQi1EHu1NvPwRjRhbDQSsVMiA+wstM1aQkH0mt0JIwg7/dPAZgu1UE8x6oHCtoM9Z+EicawOZDw==";
 
         // URL 생성
-        String url = baseurl + "?serviceKey=" + serviceKey1 + "&serviceKey=" + serviceKey2 + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=" + subType;
+        String url = baseurl + "?serviceKey=" + serviceKey1 + "&numOfRows=" + numOfRows + "&pageNo=" + pageNo + "&_type=" + subType;
         log.info("URL 확인 : " + url);
 
         RestTemplate restTemplate = new RestTemplate();
