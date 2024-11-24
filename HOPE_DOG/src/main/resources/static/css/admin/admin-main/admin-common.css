@@ -78,8 +78,8 @@ td.is_warning>hr {
     display: flex; /* 가로로 나열 */
     gap: 10px; /* 각 페이지 번호 간격 */
     padding: 0;
-    margin: 0;
     list-style: none; /* 리스트 스타일 제거 */
+    margin: 0 0 10px;
 }
 
 /* 페이지 링크 스타일 */

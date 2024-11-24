@@ -64,15 +64,20 @@ public class MypageController {
 
     // 닉네임 중복 체크
     @GetMapping("/checkNickname")
-    @ResponseBody
+    @ResponseBody  // JSON 형식으로 응답 본문을 반환하도록 설정
     public ResponseEntity<Map<String, Boolean>> checkedNickname(
+            // newNickname: 사용자가 입력한 새 닉네임, currentNickname: 현재 사용자가 가지고 있는 닉네임 (수정할 경우)
             @RequestParam(name = "newNickname") String newNickname,
             @RequestParam(name = "currentNickname") String currentNickname) {
 
+        // newNickname이 현재 닉네임과 다를 경우, 중복 여부를 확인
         boolean available = mypageService.checkedNickname(newNickname, currentNickname);
-        return ResponseEntity.ok(Map.of("available", available));
 
+        // 중복 여부(available)를 JSON 형태로 응답
+        return ResponseEntity.ok(Map.of("available", available));
+        // 'available' 값이 true이면 사용 가능, false이면 이미 사용 중인 닉네임
     }
+
 
     // 이메일 중복 체크
     @GetMapping("/checkEmail")

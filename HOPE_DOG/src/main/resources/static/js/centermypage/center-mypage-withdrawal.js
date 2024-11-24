@@ -16,9 +16,6 @@ function closeModal() {
   document.getElementById('modal').style.display = 'none';
 }
 
-// 탈퇴 확인
-// 탈퇴 확인 후 요청을 보내는 함수
-
 // 탈퇴 확인 후 서버 요청
 function confirmWithdrawal() {
   const agreement = document.getElementById('agreement').value.trim();

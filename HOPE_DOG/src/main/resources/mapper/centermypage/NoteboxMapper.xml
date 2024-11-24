@@ -5,11 +5,7 @@
 <!--    보낸쪽지함 조회-->
     <select id="sendList" parameterType="Long" resultType="NoteboxSendListDTO">
         SELECT
-            tns.NOTEBOX_SEND_NO,
-            tns.NOTEBOX_SEND_TITLE,
-            tns.NOTEBOX_SEND_CONTENT,
-            tns.NOTEBOX_SEND_REGIDATE,
-            tns.NOTEBOX_SEND_R,
+            tns.NOTEBOX_SEND_NO, tns.NOTEBOX_SEND_TITLE, tns.NOTEBOX_SEND_CONTENT, tns.NOTEBOX_SEND_REGIDATE, tns.NOTEBOX_SEND_R,
             CASE
                 WHEN MOD(tns.NOTEBOX_SEND_R, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = tns.NOTEBOX_SEND_R)
                 WHEN MOD(tns.NOTEBOX_SEND_R, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tns.NOTEBOX_SEND_R)
@@ -23,11 +19,7 @@
 <!--    받은쪽지함 조회-->
     <select id="receiveList" parameterType="Long" resultType="NoteboxReceiveListDTO">
         SELECT
-            tnr.NOTEBOX_RECEIVE_NO,
-            tnr.NOTEBOX_RECEIVE_TITLE,
-            tnr.NOTEBOX_RECEIVE_CONTENT,
-            tnr.NOTEBOX_RECEIVE_REGIDATE,
-            tnr.NOTEBOX_RECEIVE_S,
+            tnr.NOTEBOX_RECEIVE_NO, tnr.NOTEBOX_RECEIVE_TITLE, tnr.NOTEBOX_RECEIVE_CONTENT, tnr.NOTEBOX_RECEIVE_REGIDATE, tnr.NOTEBOX_RECEIVE_S,
             CASE
                 WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)
                 WHEN MOD(tnr.NOTEBOX_RECEIVE_S, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = tnr.NOTEBOX_RECEIVE_S)

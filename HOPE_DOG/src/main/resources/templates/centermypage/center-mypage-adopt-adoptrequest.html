@@ -155,7 +155,11 @@
           <p>개인정보의 보유 및 이용기간: 5년(관계법령에서 정한 일정한 기간)</p>
         </div>
         <div class="agreement-checkbox">
-          <input type="checkbox" id="info-agreement" th:checked="${adoptRequestInfo.adoptRequestInfoAgreement == 'Yes'}" disabled>
+          <input type="checkbox" id="info-agreement"
+                 th:field="${adoptRequestInfo.adoptRequestInfoAgreement}"
+                 th:value="'Y'"
+                 th:checked="${adoptRequestInfo.adoptRequestInfoAgreement == 'Y'}"
+                 disabled>
           <label for="info-agreement">위 약관에 동의합니다.</label>
         </div>
 

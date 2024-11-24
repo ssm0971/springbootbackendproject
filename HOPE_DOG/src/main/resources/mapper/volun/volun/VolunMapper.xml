@@ -52,7 +52,7 @@
              )
         WHERE RNUM > (#{page} - 1) * #{amount} AND RNUM <= #{page} * #{amount}
         ]]>
-</select>
+    </select>
     <!-- 여기까지 페이지네이션+게시글목록불러오기 -->
 
     <!--회원상태조회-->

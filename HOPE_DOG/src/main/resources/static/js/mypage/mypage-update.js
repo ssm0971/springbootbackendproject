@@ -256,23 +256,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value.trim();
         const currentEmail = document.getElementById('currentEmail').value.trim();
 
+        // 이메일이 현재 이메일과 같다면 중복 확인을 하지 않음
         if (email === currentEmail) {
             return;
         }
 
+        // 이메일 입력이 비어 있으면 에러 표시
         if (email === '') {
             document.getElementById('emailError').style.display = 'block';
             return;
         }
 
+        // 중복 확인 API 호출
         fetch('/member/check-email?email=' + encodeURIComponent(email))
             .then(response => response.json())
             .then(data => {
+                console.log(data);  // 데이터 확인을 위한 로그 추가
                 if (data.available) {
                     alert('사용 가능한 이메일입니다.');
+                    document.getElementById('emailError').style.display = 'none'; // 사용 가능하면 에러 메시지 숨김
                 } else {
                     document.getElementById('emailError').textContent = '이미 사용 중인 이메일입니다.';
-                    document.getElementById('emailError').style.display = 'block';
+                    document.getElementById('emailError').style.display = 'block'; // 에러 메시지 표시
                 }
             })
             .catch(error => {
@@ -281,30 +286,69 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     };
 
-    // 닉네임 중복 확인
+
+    // // 이메일 중복 확인
+    // window.checkEmail = function() {
+    //     const email = document.getElementById('email').value.trim();
+    //     const currentEmail = document.getElementById('currentEmail').value.trim();
+    //
+    //     if (email === currentEmail) {
+    //         return;
+    //     }
+    //
+    //     if (email === '') {
+    //         document.getElementById('emailError').style.display = 'block';
+    //         return;
+    //     }
+    //
+    //     fetch('/member/check-email?email=' + encodeURIComponent(email))
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             if (data.available) {
+    //                 alert('사용 가능한 이메일입니다.');
+    //             } else {
+    //                 document.getElementById('emailError').textContent = '이미 사용 중인 이메일입니다.';
+    //                 document.getElementById('emailError').style.display = 'block';
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.error('Error:', error);
+    //             alert('중복 확인 중 오류가 발생했습니다.');
+    //         });
+    // };
+
+// 닉네임 중복 확인 함수
     window.checkNickname = function() {
+        // 사용자 입력 값인 닉네임을 가져오고 앞뒤 공백을 제거
         const nickname = document.getElementById('nickname').value.trim();
 
+        // 닉네임이 빈 문자열인 경우, 즉 입력되지 않은 경우 에러 메시지 표시
         if (nickname === '') {
+            // 에러 메시지를 화면에 표시
             document.getElementById('nicknameError').style.display = 'block';
-            return;
+            return; // 빈 값일 경우 중복 확인 요청을 진행하지 않음
         }
 
+        // 닉네임 중복 확인을 위한 서버 요청 (GET 방식으로 닉네임을 전달)
         fetch('/member/check-nickname?nickname=' + encodeURIComponent(nickname))
-            .then(response => response.json())
+            .then(response => response.json())  // 응답을 JSON 형식으로 변환
             .then(data => {
+                // 서버로부터 받은 데이터에서 'available' 값이 true이면 사용 가능한 닉네임
                 if (data.available) {
-                    alert('사용 가능한 닉네임입니다.');
+                    alert('사용 가능한 닉네임입니다.');  // 사용 가능한 닉네임일 경우 알림 메시지 표시
                 } else {
+                    // 사용 중인 닉네임일 경우 에러 메시지 표시
                     document.getElementById('nicknameError').textContent = '이미 사용 중인 닉네임입니다.';
                     document.getElementById('nicknameError').style.display = 'block';
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('중복 확인 중 오류가 발생했습니다.');
+                // 요청 중 에러가 발생한 경우 에러 메시지 출력
+                console.error('Error:', error);  // 콘솔에 에러 출력
+                alert('중복 확인 중 오류가 발생했습니다.');  // 사용자에게 오류 메시지 알림
             });
     };
+
 
     // 전체 입력 검증
     window.validateInputs = function(e) {
@@ -372,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 각 입력 필드에 blur 이벤트 리스너 추가
     document.getElementById('nickname').addEventListener('blur', checkNicknameInput);
     document.getElementById('email').addEventListener('blur', checkEmailInput);
-    document.getElementById(' ').addEventListener('blur', checkPhoneInput);
+    document.getElementById('phonenumber').addEventListener('blur', checkPhoneInput);
     document.getElementById('phonecheckInput').addEventListener('blur', checkPnumberInput);
     document.getElementById('addressInput').addEventListener('blur', checkAddressInput);
     document.getElementById('addInput').addEventListener('blur', checkAddInput);

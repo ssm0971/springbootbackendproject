@@ -56,7 +56,7 @@
             <ul class="center-member-profile-cumuboard-contentbox">
               <li>
                 <span th:text="'['+ ${protectRequest.protectStatus} +']'">[심사중]</span>
-                <a th:href="@{/centerMypage/protectRequestDetail(protectRequestNo=${protectRequest.protectRequestNo})}" th:text="${protectRequest.protectTitle}">임시보호신청서 제목</a>
+                <a th:href="@{/centerMypage/protectRequestDetail(protectRequestNo=${protectRequest.protectRequestNo}, memberNo=${protectRequest.memberNo})}" th:text="${protectRequest.protectTitle}">임시보호신청서 제목</a>
               </li>
               <li>
                 <span th:text="${protectRequest.protectRequestName}">신청자</span>

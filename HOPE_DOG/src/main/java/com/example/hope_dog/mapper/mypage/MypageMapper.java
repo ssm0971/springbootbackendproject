@@ -41,18 +41,6 @@ public interface MypageMapper {
             @Param("currentEmail") String currentEmail
     );
 
-    //페이지네이션
-//    List<MypagePostsDTO> selectAll();
-//
-//    int selectTotal();
-//
-//    List<MypagePostsDTO> selectAllPage(Criteria criteria);
-
-    //
-//    MypageDTO mypageProfile(@Param("memberNo") Long memberNo);
-
-//    List<NoticeViewDTO> noticeView(Long noticeNo);
-
     //    임시보호신청서 상세페이지 정보 조회
     MpProtectRequestDTO protectRequestInfo(Long protectRequestNo);
 

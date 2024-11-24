@@ -1012,7 +1012,7 @@
                 SELECT
                 DONA_COMMENT_NO AS commentNo,
                 DONA_NO AS postNo,
-                DONA_COMMENT AS commentContent,
+                DONA_COMMENT_CONTENT AS commentContent,
                 CASE
                 WHEN MOD(DONA_COMMENT_WRITER, 10) = 1 THEN (SELECT MEMBER_NICKNAME FROM TBL_MEMBER WHERE MEMBER_NO = DONA_COMMENT_WRITER)
                 WHEN MOD(DONA_COMMENT_WRITER, 10) = 2 THEN (SELECT CENTER_MEMBER_NAME FROM TBL_CENTER_MEMBER WHERE CENTER_MEMBER_NO = DONA_COMMENT_WRITER)
@@ -1675,6 +1675,6 @@
     </select>
 
     <select id="selectCurNoticeNo" resultType="Long">
-        select seq_notice_no.currval from dual
+        select SEQ_NOTICE_NO.nextval - 1 from dual
     </select>
 </mapper>

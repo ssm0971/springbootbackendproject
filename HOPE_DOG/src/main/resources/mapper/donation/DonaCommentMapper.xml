@@ -83,28 +83,7 @@
     </delete>
 
 
-        <!-- 댓글 신고 내역 삽입 -->
-<!--        <insert id="insertCommentReport" parameterType="DonaCommentReportDTO">-->
-<!--            INSERT INTO TBL_COMMENT_REPORT (-->
-<!--                COMMENT_REPORT_NO,-->
-<!--                COMMENT_REPORT_CATE,-->
-<!--                COMMENT_REPORT,-->
-<!--                COMMENT_REPORT_WRITER,-->
-<!--                COMMENT_REPORT_REGIDATE,-->
-<!--                COMMENT_NO,-->
-<!--                CONTENT_NO-->
-<!--            ) VALUES (-->
-<!--                         #{commentReportNo},-->
-<!--                         #{commentReportCate},-->
-<!--                         #{commentReport},-->
-<!--                         #{commentReportWriter},-->
-<!--                         #{commentReportRegidate},-->
-<!--                         #{commentNo},-->
-<!--                         #{contentNo}-->
-<!--                     )-->
-<!--        </insert>-->
-
-    <!-- 댓글 신고 처리 -->
+    <!-- 댓글 신고 내역 삽입 -->
     <insert id="insertCommentReport" parameterType="DonaCommentReportDTO">
         <selectKey keyProperty="commentReportNo" resultType="Long" order="BEFORE">
             SELECT SEQ_COMMENT_REPORT.NEXTVAL FROM DUAL
@@ -112,7 +91,7 @@
         INSERT INTO TBL_COMMENT_REPORT (
         COMMENT_REPORT_NO, COMMENT_REPORT_CATE, COMMENT_REPORT, COMMENT_REPORT_WRITER, COMMENT_NO, CONTENT_NO
         ) VALUES (
-        #{commentReportNo}, '기부', #{commentReport}, #{commentReportWriter},#{reportCommentNo}, #{reportContentNo}
+        #{commentReportNo}, #{commentReportCate}, #{commentReport}, #{commentReportWriter}, #{reportCommentNo}, #{reportContentNo}
         )
     </insert>
 </mapper>

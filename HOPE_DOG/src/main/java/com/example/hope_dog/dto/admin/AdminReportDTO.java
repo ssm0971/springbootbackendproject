@@ -11,8 +11,8 @@ import lombok.ToString;
 @NoArgsConstructor
 public class AdminReportDTO {
     private Long reportNo;
-    private String reportType;
-    private String reportCate;
+    private String reportType;  //  post/comment 구분
+    private String reportCate;  //  commu/volun/... 구분
     private String reportContent;
     private String reportRegidate;
     private String reportWriter;

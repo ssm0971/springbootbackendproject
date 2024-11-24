@@ -7,6 +7,7 @@
   <title>봉사 글 상세</title>
   <link rel="stylesheet" th:href="@{/css/volun/volun/volun-volundetail.css}" />
   <link rel="stylesheet" th:href="@{/css/fragment/header.css}">
+  <link rel="stylesheet" th:href="@{/css/fragment/footer.css}">
   <link rel="stylesheet" th:href="@{/css/main/main.css}">
   <script defer th:src="@{/js/main/main.js}"></script>
 </head>
@@ -80,22 +81,40 @@
 
       <br>
 
-      <!-- 댓글 주석처리한건 백단할때 로그인/비로그인, 일반회원/센터회원, 본인작성/타인작성 if로 노출 결정 -->
-      <!-- 댓글창 / 자기댓글-->
+      <!-- 댓글-->
+      <!-- 현재 게시글 번호 불러오기 -->
       <div th:with="volunNo=${volunDetailList[0]?.volunNo}">
+
+        <!-- 댓글정보(댓글내용/작성자/입력날짜)를 불러오기 위한 div
+        iterStat을 사용하여 각 List마다 index번호를 부여 th:each를 사용하여 값을 불러오기 때문에 댓글List마다 구분이 필요하여 생성함-->
         <div class="volun-detail-commentbox" th:each="volunComment, iterStat : ${volunCommentList}">
           <div class="volun-detail-name">
+            <!-- 작성자 이름 -->
             <div class="volun-detail-name" th:text="${volunComment.commentWriterName}"></div>
+            <!-- 댓글 번호 추후에 수정/삭제/신고에 사용하기 위해 display:none으로 숨김처리 -->
             <div class="volunCommentNo" th:text="${volunComment.volunCommentNo}" style="display: none"></div>
+            <!-- 댓글 index번호 추후에 수정/삭제/신고에 사용하기 위해 id값에 부여함 -->
             <div class="volun-comment-buttonBox" th:id="'volun-comment-buttonBox-' + ${iterStat.index}">
+
+              <!-- 댓글 수정 버튼-->
+              <!-- 댓글 수정버튼 클릭시 index값을 포함하여 js로 전송하여 함수 실행-->
+              <!-- 현재 로그인된 세션값을 기준으로 작성자와 로그인된 회원이 동일인일때만 표시-->
               <button class="volun-comment-button" type="button"
                       th:onclick="'modifyCommentBtnClick(' + ${iterStat.index} + ')'"
                       th:if="${(centerMemberNo != null and centerMemberNo == volunComment.volunCommentWriter)
                    or (memberNo != null and memberNo == volunComment.volunCommentWriter)}">수정</button>
+
+              <!-- 댓글 삭제 버튼-->
+              <!-- 댓글 삭제버튼 클릭시 index값을 포함하여 js로 전송하여 함수 실행-->
+              <!-- 현재 로그인된 세션값을 기준으로 작성자와 로그인된 회원이 동일인일때만 표시-->
               <button class="volun-comment-button" type="button"
                       th:onclick="'CommentDeleteClick(' + ${volunComment.volunCommentNo} + ', ' + ${volunNo} + ')'"
                       th:if="${(centerMemberNo != null and centerMemberNo == volunComment.volunCommentWriter)
                    or (memberNo != null and memberNo == volunComment.volunCommentWriter)}">삭제</button>
+
+              <!-- 댓글 신고 버튼-->
+              <!-- 댓글 신고버튼 클릭시 index값을 포함하여 js로 전송하여 함수 실행-->
+              <!-- 현재 로그인된 세션값을 본인이 작성하지 않은 댓글일시에만 표시-->
               <button class="volun-comment-button" type="button"
                       th:onclick="'CommentReportClick(' + ${volunComment.volunCommentNo} + ', ' + ${volunNo} + ')'"
                       th:if="${(centerMemberNo != null or memberNo != null)
@@ -104,9 +123,12 @@
             </div>
           </div>
 
+          <!-- 댓글 내용 출력 -->
           <div class="volun-detail-comment" th:id="'volun-comment-' + ${iterStat.index}" th:text="${volunComment.volunComment}"></div>
 
-          <!-- 댓글 수정 form 추가 -->
+          <!-- 댓글 수정 form -->
+          <!-- 수정버튼 클릭시 댓글 내용 숨기고 화면에 표시 -->
+          <!-- volunNo(게시글번호)와 index(댓글번호)를 js에 전송하여 댓글 수정 -->
           <form th:action="@{/volun/volun/volunCommentModi(volunNo=${volunNo})}" method="post"
                 th:id="'volun-modifyInput-' + ${iterStat.index}" style="display:none;">
             <input type="hidden" name="volunCommentNo" th:value="${volunComment.volunCommentNo}">
@@ -115,6 +137,7 @@
             <button type="submit" class="volun-comment-button">등록</button>
           </form>
 
+          <!-- 댓글 작성 날짜 -->
           <div class="volun-detail-date" th:text="${#dates.format(volunComment.volunCommentRegidate, 'yyyy-MM-dd')}"></div>
         </div>
       </div>

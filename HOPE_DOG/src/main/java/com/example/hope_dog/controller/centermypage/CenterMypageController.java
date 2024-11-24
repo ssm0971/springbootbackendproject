@@ -378,7 +378,7 @@ class CenterMypageController {
     private final RequestService requestService;
 
 //봉사
-    //봉사 신청서 목록 조회
+    //봉사신청서 목록 조회
     @GetMapping("/volunRequestList")
     public String centerMypageVolunRequestList(Model model) {
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
@@ -394,23 +394,26 @@ class CenterMypageController {
         return "centermypage/center-mypage-volun-list";
     }
 
-    //봉사 신청서 상세 조회
+    //봉사신청서 상세 조회
     @GetMapping("/volunRequestDetail")
-    public String getVolunRequestDetail(@RequestParam("volunRequestNo") Long volunRequestNo, Model model) {
+    public String getVolunRequestDetail(@RequestParam("volunRequestNo") Long volunRequestNo,@RequestParam("memberNo") Long memberNo, Model model) {
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
 
         if (centerMemberNo == null) {
             log.warn("세션에서 centerMemberNo가 존재하지 않습니다.");
             return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
         }
+        VolunRequestListDTO volunRequestListDTO = new VolunRequestListDTO();
+        volunRequestListDTO.setVolunRequestNo(volunRequestNo);
+        volunRequestListDTO.setMemberNo(memberNo);
 
-        VolunRequestDetailDTO volunRequestInfo = requestService.volunRequestDetail(volunRequestNo);
+        VolunRequestDetailDTO volunRequestInfo = requestService.volunRequestDetail(volunRequestListDTO);
         model.addAttribute("volunRequestInfo", volunRequestInfo);
 
         return "centermypage/center-mypage-volun-signup";
     }
 
-    //봉사 신청서 상태처리
+    //봉사신청서 상태처리
     @GetMapping("/volunStatus")
     public String centerMypageVolunStatus(@RequestParam("volunRequestStatus") String volunRequestStatus,
                                           @RequestParam("volunRequestNo") Long volunRequestNo, Model model) {
@@ -421,7 +424,7 @@ class CenterMypageController {
         }
 
         try {
-            requestService.updateAdoptRequestStatus(volunRequestNo, volunRequestStatus);
+            requestService.updateVolunRequestStatus(volunRequestNo, volunRequestStatus);
         } catch (Exception e) {
             log.error("요청 상태 업데이트 중 오류 발생: ", e);
             return "redirect:/error"; // 에러 페이지로 리다이렉트
@@ -433,7 +436,7 @@ class CenterMypageController {
 
 
 //입양
-    //입양 신청서 목록 조회
+    //입양신청서 목록 조회
     @GetMapping("/adoptRequestList")
     public String centerMypageAdoptRequestList(Model model) {
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
@@ -450,23 +453,26 @@ class CenterMypageController {
     }
 
 
-    //입양 신청서 상세 조회
+    //입양신청서 상세 조회
     @GetMapping("/adoptRequestDetail")
-    public String getAdoptRequestDetail(@RequestParam("adoptRequestNo") Long adoptRequestNo, Model model) {
+    public String getAdoptRequestDetail(@RequestParam("adoptRequestNo") Long adoptRequestNo,@RequestParam("memberNo") Long memberNo, Model model) {
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
 
         if (centerMemberNo == null) {
             log.warn("세션에서 centerMemberNo가 존재하지 않습니다.");
             return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
         }
+        AdoptRequestListDTO adoptRequestListDTO = new AdoptRequestListDTO();
+        adoptRequestListDTO.setAdoptRequestNo(adoptRequestNo);
+        adoptRequestListDTO.setMemberNo(memberNo);
 
-        AdoptRequestDetailDTO adoptRequestInfo = requestService.adoptRequestDetail(adoptRequestNo);
+        AdoptRequestDetailDTO adoptRequestInfo = requestService.adoptRequestDetail(adoptRequestListDTO);
         model.addAttribute("adoptRequestInfo", adoptRequestInfo);
 
         return "centermypage/center-mypage-adopt-adoptrequest";
     }
 
-    //입양 신청서 상태처리
+    //입양신청서 상태처리
     @GetMapping("/adoptStatus")
     public String centerMypageAdoptStatus(@RequestParam("adoptRequestStatus") String adoptRequestStatus,
                                           @RequestParam("adoptRequestNo") Long adoptRequestNo, Model model) {
@@ -488,7 +494,7 @@ class CenterMypageController {
 
 
 //임시보호
-    //임시보호 신청서 목록 조회
+    //임시보호신청서 목록 조회
     @GetMapping("/protectRequestList")
     public String centerMypageProtectRequestList(Model model) {
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
@@ -504,23 +510,26 @@ class CenterMypageController {
         return "centermypage/center-mypage-adopt-protect-list";
     }
 
-    //임시보호 신청서 상세 조회
+    //임시보호신청서 상세 조회
     @GetMapping("/protectRequestDetail")
-    public String getProtectRequestDetail(@RequestParam("protectRequestNo") Long protectRequestNo, Model model) {
+    public String getProtectRequestDetail(@RequestParam("protectRequestNo") Long protectRequestNo,@RequestParam("memberNo") Long memberNo, Model model) {
         Long centerMemberNo = (Long) session.getAttribute("centerMemberNo");
 
         if (centerMemberNo == null) {
             log.warn("세션에서 centerMemberNo가 존재하지 않습니다.");
             return "redirect:/login"; // 세션이 없으면 로그인 페이지로 리다이렉트
         }
+        ProtectRequestListDTO protectRequestListDTO = new ProtectRequestListDTO();
+        protectRequestListDTO.setProtectRequestNo(protectRequestNo);
+        protectRequestListDTO.setMemberNo(memberNo);
 
-        ProtectRequestDetailDTO protectRequestInfo = requestService.protectRequestDetail(protectRequestNo);
+        ProtectRequestDetailDTO protectRequestInfo = requestService.protectRequestDetail(protectRequestListDTO);
         model.addAttribute("protectRequestInfo", protectRequestInfo);
 
         return "centermypage/center-mypage-adopt-protectrequest";
     }
 
-    //임시보호 신청서 상태처리
+    //임시보호신청서 상태처리
     @GetMapping("/protectStatus")
     public String centerMypageProtectStatus(@RequestParam("protectRequestStatus") String protectRequestStatus,
                                             @RequestParam("protectRequestNo") Long protectRequestNo, Model model) {
@@ -594,7 +603,7 @@ class CenterMypageController {
         return "centermypage/notebox/center-mypage-notebox-senddetail"; // 상세 페이지의 템플릿 이름
     }
 
-    // 보낸 쪽지 상세 페이지
+    // 받은 쪽지 상세 페이지
     @GetMapping("/noteboxReceiveDetail")
     public String getNoteboxReceiveDetail(@RequestParam("noteboxReceiveNo") Long noteboxReceiveNo, Model model) {
         NoteboxReceiveDetailDTO noteboxReceiveDetail = noteBoxService.getNoteboxReceiveDetail(noteboxReceiveNo);
@@ -649,6 +658,7 @@ class CenterMypageController {
         return "centermypage/notebox/center-mypage-notebox-write"; // 템플릿 경로
     }
 
+    //쪽지보내기
     @PostMapping("/sendingNote")
     public String sendingNote(@ModelAttribute NoteboxWriteDTO noteboxWriteDTO, RedirectAttributes redirectAttributes) {
         // 세션에서 센터회원 번호 가져오기

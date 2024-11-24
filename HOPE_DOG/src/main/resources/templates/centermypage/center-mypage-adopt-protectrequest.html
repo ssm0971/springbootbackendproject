@@ -108,7 +108,7 @@
 
                 <div class="protectrequest-content-box">
                     <div class="protectrequest-content-title">나이</div>
-                    <input class="protectrequest-input-small" type="text" id="ageInput"
+                    <input class="protectrequest-input-small" type="date" id="ageInput"
                            th:value="${#dates.format(protectRequestInfo.protectRequestAge,'yyyy-MM-dd')}" readonly>
                 </div>
                 <div class="Error">
@@ -159,7 +159,9 @@
                 </div>
                 <div class="agreement-checkbox">
                     <input type="checkbox" id="info-agreement"
-                           th:checked="${protectRequestInfo.protectRequestInfoAgreement}" disabled>
+                           th:checked="${protectRequestInfo.protectRequestInfoAgreement}"
+                           th:value="'Y'"
+                           disabled>
                     <label for="info-agreement">위 약관에 동의합니다.</label>
                 </div>
 
@@ -171,7 +173,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">임시보호를 희망하는 아이의 이름을 적어주세요.</div>
                     <input class="protectrequest-input-small" type="text" id="quest1Input"
-                           th:value="${protectRequestInfo.protectRequestQ1}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ1}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest1Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -183,7 +185,7 @@
                         설명해주세요.
                     </div>
                     <input class="protectrequest-input-small" type="text" id="quest2Input"
-                           th:value="${protectRequestInfo.protectRequestQ2}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ2}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest2Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -193,7 +195,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">임시보호를 결정하시기 까지 얼마나 오랜 시간을 고민하셨나요?</div>
                     <input class="protectrequest-input-small" type="text" id="quest3Input"
-                           th:value="${protectRequestInfo.protectRequestQ3}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ3}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest3Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -203,7 +205,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">임시보호를 원하시는 가장 큰 이유는 무엇인가요?</div>
                     <input class="protectrequest-input-big" type="text" id="quest4Input"
-                           th:value="${protectRequestInfo.protectRequestQ4}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ4}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest4Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -213,7 +215,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">가족구성원 및 거주하는 시간을 알려주세요.</div>
                     <input class="protectrequest-input-big" type="text" id="quest5Input"
-                           th:value="${protectRequestInfo.protectRequestQ5}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ5}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest5Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -223,7 +225,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">가족 모두가 임시보호에 동의하시나요?</div>
                     <input class="protectrequest-input-small" type="text" id="quest6Input"
-                           th:value="${protectRequestInfo.protectRequestQ6}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ6}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest6Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -233,7 +235,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">키우고 계신 반려동물이 있나요? 있다면 소개해주세요.</div>
                     <input class="protectrequest-input-big" type="text" id="quest7Input"
-                           th:value="${protectRequestInfo.protectRequestQ7}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ7}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest7Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -243,7 +245,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">주거의 형태는?</div>
                     <input class="protectrequest-input-big" type="text" id="quest8Input"
-                           th:value="${protectRequestInfo.protectRequestQ8}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ8}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest8Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -253,7 +255,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">입대한 주택의 경우 집주인의 동의를 얻으셨나요?</div>
                     <input class="protectrequest-input-big" type="text" id="quest9Input"
-                           th:value="${protectRequestInfo.protectRequestQ9}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ9}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest9Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -263,7 +265,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">소음이나 위생 등으로 인한 이웃과의 마찰로 보호가 불가능해질 경우 어떻게 하실건가요?</div>
                     <input class="protectrequest-input-big" type="text" id="quest10Input"
-                           th:value="${protectRequestInfo.protectRequestQ10}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ10}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest10Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -273,7 +275,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">이사 또는 해외로 이주 시 반려동물의 거취문제에 대해 어떻게 생각하십니까?</div>
                     <input class="protectrequest-input-big" type="text" id="quest11Input"
-                           th:value="${protectRequestInfo.protectRequestQ11}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ11}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest11Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -285,7 +287,7 @@
                         생각하십니까?
                     </div>
                     <input class="protectrequest-input-big" type="text" id="quest12Input"
-                           th:value="${protectRequestInfo.protectRequestQ12}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ12}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest12Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -295,7 +297,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">동물 관련 활동경험이 있으십니까? ex)봉사 및 구조경험</div>
                     <input class="protectrequest-input-big" type="text" id="quest13Input"
-                           th:value="${protectRequestInfo.protectRequestQ13}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ13}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest13Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -305,7 +307,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">임시보호희망 동물에 대해 어떻게 알게 되셨나요?</div>
                     <input class="protectrequest-input-big" type="text" id="quest14Input"
-                           th:value="${protectRequestInfo.protectRequestQ14}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ14}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest14Error" style="color: red; display: none;">필수입력사항입니다</div>
@@ -315,7 +317,7 @@
                 <div class="protectrequest-content-box2">
                     <div class="protectrequest-content-title2">센터방문 또는 전화상담이 가능한 날짜와 시간을 적어주세요.</div>
                     <input class="protectrequest-input-big" type="text" id="quest15Input"
-                           th:value="${protectRequestInfo.protectRequestQ15}" readonly>
+                           th:value="${protectRequestInfo.proRequestQ15}" readonly>
                 </div>
                 <div class="Error">
                     <div id="quest15Error" style="color: red; display: none;">필수입력사항입니다</div>

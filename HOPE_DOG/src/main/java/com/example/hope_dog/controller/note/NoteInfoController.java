@@ -31,8 +31,6 @@ public class NoteInfoController {
 
         model.addAttribute("unreadCount", unreadCount);
 
-        // count.html 페이지로 이동
-//        return "count"; // count.html로 이동
     }
 
     @GetMapping("/markAllAsRead")
@@ -47,7 +45,6 @@ public class NoteInfoController {
             Long unreadCount = noteInfoService.getUnreadCount(userNo); // 다시 읽지 않은 쪽지 개수 조회
             session.setAttribute("unreadCount", unreadCount); // 세션 업데이트
             log.info("Updated unread count for user {}: {}", userNo, unreadCount); // 로그 추가
-
         }
 
         // 현재 URL 가져오기

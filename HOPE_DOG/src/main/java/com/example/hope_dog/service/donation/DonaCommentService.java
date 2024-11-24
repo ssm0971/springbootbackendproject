@@ -20,6 +20,7 @@ import java.util.List;
 public class DonaCommentService {
     private final DonaCommentMapper donaCommentMapper;
 
+
     public void registerComment(DonaCommentWriteDTO donaCommentWriteDTO){
 //        Long memberNo = donaCommentWriteDTO.getMemberNo();
         if(donaCommentWriteDTO.getDonaCommentWriter() == null) {
@@ -54,11 +55,7 @@ public class DonaCommentService {
     }
 
     //댓글 신고
-//    public void commuCommentReport(CommuReportDTO commuReportDTO){
-//        commuMapper.commuCommentReport(commuReportDTO);
-//    }
-
-    public void donaCommentReport(DonaCommentReportDTO donaCommentReportDTO){
+    public void donaCommentReport(DonaCommentReportDTO donaCommentReportDTO) {
         donaCommentMapper.insertCommentReport(donaCommentReportDTO);
     }
 }

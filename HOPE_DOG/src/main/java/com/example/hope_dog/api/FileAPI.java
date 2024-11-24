@@ -26,7 +26,10 @@ public class FileAPI {
 
     //HTTP 요청 쿼리 파라미터에서 fileName 값을 받아와 fileName 변수에 저장
     @GetMapping("/v1/files")
-    public byte[] display(@RequestParam("from") String from, @RequestParam("fileName") String fileName, @RequestParam("filePath") String filePath, @RequestParam("fileUuid") String fileUuid) throws IOException {
+    public byte[] display(@RequestParam("from") String from,
+                          @RequestParam("fileName") String fileName,
+                          @RequestParam("filePath") String filePath,
+                          @RequestParam("fileUuid") String fileUuid) throws IOException {
         //지정된 파일 저장 경로와 요청받은 파일 이름을 사용하여 File 객체 생성
         File file = new File(fileDir + from + "/" + filePath, fileUuid + "_" + fileName);
         //FileCopyUtils를 사용하여 파일을 바이트배열로 복사 및 반환
@@ -37,7 +40,10 @@ public class FileAPI {
     @GetMapping("/download")
     //HttpServletResponse와 동일하게 ResponseEntity객체는 응답을 나타내는 객체이다
     //스프링에서 지원하는 응답객체이며 기존의 응답객체보다 간편하게 설정할 수 있다는 장점이 있다
-    public ResponseEntity<Resource> download(@RequestParam("from") String from, @RequestParam("fileName") String fileName, @RequestParam("filePath") String filePath, @RequestParam("fileUuid") String fileUuid) throws IOException {
+    public ResponseEntity<Resource> download(@RequestParam("from") String from,
+                                             @RequestParam("fileName") String fileName,
+                                             @RequestParam("filePath") String filePath,
+                                             @RequestParam("fileUuid") String fileUuid) throws IOException {
         // fileName 문자열 매개변수를 받고 파일을 다운로드 하는 기능을 수행하는 메소드
         // ResponseEntity<Resource> : 타입의 반환값은 HTTP 응답 데이터를 구성하는데 사용됨
 
@@ -45,7 +51,24 @@ public class FileAPI {
         //이미지 파일이라는 리소스를 다운로드 처리하기 위해 사용하고 있으며 File 객체보다 많은 종류의 리소스를 다룰수 있고
         //스프링과의 호환성이 좋다
         //Resource는 인터페이스이므로 객체화를 할 때는 자식 클래스를 사용한다
-        Resource resource = new FileSystemResource(fileDir + from + "/"+ filePath + "/" + fileUuid + "_" + fileName); //Resource의 구현체, fileDir + fileName을 통해 전체 파일 경로 구성하여 Resource 객체 생성
+
+        String filePath1 = fileDir + from + "/" + filePath + "/" + fileUuid + "_" + fileName;
+
+        File file1 = new File(filePath1);
+        File file2 = new File(filePath);
+
+        Resource resource;
+
+        if (file1.exists() && file1.isFile()) {
+            resource = new FileSystemResource(filePath1);  // 경로1이 존재하면 이 경로로 설정
+        } else if (file2.exists() && file2.isFile()) {
+            resource = new FileSystemResource(filePath);  // 경로1이 없으면 경로2로 설정
+        } else {
+            // 파일이 존재하지 않으면 에러 처리
+            resource = null;
+            // 예: throw new FileNotFoundException("파일을 찾을 수 없습니다.");
+        }
+        //Resource의 구현체, fileDir + fileName을 통해 전체 파일 경로 구성하여 Resource 객체 생성
 
         HttpHeaders headers = new HttpHeaders();
         //HttpHeaders 객체를 생성하여 HTTP 응답 헤더 설정

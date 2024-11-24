@@ -145,7 +145,8 @@ ul{
 .dona-author {
   text-align: center;
   padding: 20px 0px;
-  flex-basis: 130px;
+  flex-basis: 140px;
+  font-size: 13px;
 }
 
 /* 작성날짜 */
@@ -184,7 +185,7 @@ input[type="submit"]:hover{
   padding: 10px 0px;
   -webkit-box-pack: end;
   justify-content: flex-end;
-  margin-top: -60px; /* 위로 올리기 위해 음수 값 사용 */
+  margin-top: -120px; /* 위로 올리기 위해 음수 값 사용 */
 }
 
 /* '글쓰기' 버튼 */

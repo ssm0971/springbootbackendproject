@@ -34,8 +34,9 @@ public class AdminService {
 //        return adminMapper.selectId(adminId, adminPw).orElseThrow(() -> new IllegalStateException("존재하지 않는 관리자 정보"));
 //    }
 
-    public AdminSessionDTO findLoginInfo(String adminId, String adminPw) { return adminMapper.selectLoginInfo(adminId, adminPw).orElseThrow(() -> new IllegalStateException("존재하지 않는 관리자 정보")); }
-
+    public AdminSessionDTO findLoginInfo(String adminId, String adminPw) {
+        return adminMapper.selectLoginInfo(adminId, adminPw).orElse(null);
+    }
     public List<AdminMemberDTO> selectMemberList(){
         return adminMapper.selectMemberList();
     }
@@ -222,7 +223,7 @@ public class AdminService {
 
 
     //여러개의 파일을 처리하여 각각 저장하는 메소드
-    private void saveFiles(List<MultipartFile> files) throws IOException{
+    public void saveFiles(List<MultipartFile> files) throws IOException{
         for(MultipartFile file : files){
             if(!file.isEmpty()){
                 AdminFileDTO fileDTO = saveFile(file);
@@ -243,6 +244,22 @@ public class AdminService {
 
         // 파일 시스템에서 파일 삭제 로직
         Optional<AdminFileDTO> fileOptional = Optional.ofNullable(adminFileMapper.selectFileByNo(fileNo));
+        if (fileOptional.isPresent()) {
+            AdminFileDTO file = fileOptional.get();
+            File fileToDelete = new File(file.getFilePath());
+
+            if (fileToDelete.exists()) {
+                fileToDelete.delete();
+            }
+        }
+    }
+
+    public void deleteFileByNoticeNo(Long noticeNo){
+        // 데이터베이스에서 파일 정보 삭제 (존재하지 않으면 예외 발생 가능)
+        adminFileMapper.deleteFileByNoticeNo(noticeNo);
+
+        // 파일 시스템에서 파일 삭제 로직
+        Optional<AdminFileDTO> fileOptional = Optional.ofNullable(adminFileMapper.selectFileByNo(noticeNo));
         if (fileOptional.isPresent()) {
             AdminFileDTO file = fileOptional.get();
             File fileToDelete = new File(file.getFilePath());

@@ -52,3 +52,7 @@ input[type="password"] {
     background-color: #9B805D;
     color: white;
 }
+
+.error-message{
+    color: red;
+}

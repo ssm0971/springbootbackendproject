@@ -1,25 +1,19 @@
 
-//게시글로 이동
-document.querySelectorAll('.dona-ul-all').forEach(function(element) {
-    element.addEventListener('click', function() {
-        const donaNo = element.querySelector('.donaNo').innerText;
-        location.href = `/dona/view?donaNo=${donaNo}`; // 상세 페이지로 이동
-    });
-});
-
-
-document.querySelector('.dona-admain-btu').addEventListener('click', function() {
-    location.href = '/dona/write'; // 글작성 페이지로 이동
-});
-
-//페이지네이션
 document.addEventListener("DOMContentLoaded", function() {
-    const items = $('.dona-ul-all li'); // 게시글 항목들을 li로 선택
+    const items = $('.dona-ul-all ul'); // 게시글 항목들을 li로 선택
 
-    // 게시글 수가 10개 이하인 경우 페이지네이션 처리
+    // 게시글로 이동 처리
+    document.querySelectorAll('.dona-ul-all').forEach(function(element) {
+        element.addEventListener('click', function() {
+            const donaNo = element.querySelector('.donaNo').innerText;
+            location.href = `/dona/view?donaNo=${donaNo}`; // 상세 페이지로 이동
+        });
+    });
+
+    // 페이지네이션 처리
     if (items.length <= 10) {
-        items.show(); // 모든 항목 표시
-        return; // 페이지네이션 초기화 중지
+        items.show(); // 게시글 수가 10개 이하일 경우 모든 항목을 표시하고 페이지네이션 중지
+        return;
     }
 
     // 처음 10개 항목만 보이게 하고 나머지는 숨김
@@ -40,6 +34,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // 페이지네이션 플러그인이 초기화된 후에 첫 번째 페이지로 이동
+    // 페이지네이션 플러그인이 초기화된 후 첫 번째 페이지로 이동
     container.pagination('goToPage', 1);
 });
+
+document.querySelector('.dona-admain-btu').addEventListener('click', function() {
+    location.href = '/dona/write'; // 글작성 페이지로 이동
+});
+
+
+

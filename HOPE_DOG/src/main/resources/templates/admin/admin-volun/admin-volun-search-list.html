@@ -9,10 +9,7 @@
   <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
   <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
   <link rel="stylesheet" th:href="@{/css/admin/admin-volun/admin-volun-list.css}"/>
-  <!-- 페이지네이션 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
 </head>
 
 <body>
@@ -20,7 +17,7 @@
     <div class="info-title-box info-title-box-flex">
       <div class="logo-box-layout">
         <div class="logo-box">
-          <img src="../../../img/logo.jpg">
+          <img th:src="@{/img/header_logo.png}" alt="Logo">
         </div>
       </div>
       <div>
@@ -65,7 +62,7 @@
                 </div>
 
                 <!-- Data rows -->
-                <div th:each="volunRequest, iterStat : ${volunRequestList}" class="info-row" >
+                <div th:each="volunRequest, iterStat : ${volunRequestList}" class="info-row item" >
                   <a style="display: flex; justify-content: center" th:href="@{/admin/volunDetail(volunNo=${volunRequest.volunRequestNo})}">
                     <div class="info-cell-no info-cell" th:text="${volunRequest.volunRequestNo}"></div>
                   <div class="info-cell-stat info-cell" th:text="${volunRequest.volunRequestStatus}"></div>
@@ -74,8 +71,10 @@
                   <div class="info-cell-nickname info-cell" th:text="${volunRequest.memberNickName}"></div>
                   <div class="info-cell-phone info-cell" th:text="${volunRequest.memberPhoneNumber}"></div>
                   <div class="info-cell-email info-cell" th:text="${volunRequest.memberEmail}"></div>
+                  </a>
                 </div>
               </div>
+              <div id="pagination"></div>
             </div>
           </section>
 
@@ -86,4 +85,9 @@
 </body>
 <script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
 <script th:src="@{/js/admin/allCheck.js}"></script>
+<script th:src="@{/js/admin/pagination.js}"></script>
+<!-- 페이지네이션 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </html>

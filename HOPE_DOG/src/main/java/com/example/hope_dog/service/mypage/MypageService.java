@@ -81,12 +81,13 @@ public class MypageService {
 
     // 닉네임 중복체크
     public boolean checkedNickname(String newNickname, String currentNickname) {
+        // 입력한 닉네임이 현재 닉네임과 같다면 중복 검사 없이 사용 가능으로 처리
         if (newNickname.equals(currentNickname)) {
-            return true;
+            return true;  // 중복 검사 없이 사용 가능
         }
-
+        // 입력한 닉네임이 현재 닉네임과 다를 때만 중복 체크 수행
         int count = mypageMapper.checkedNickname(newNickname, currentNickname);
-        return count == 0;
+        return count == 0;  // 중복된 닉네임이 없으면 true 반환, 중복되면 false 반환
     }
 
     // 이메일 중복체크

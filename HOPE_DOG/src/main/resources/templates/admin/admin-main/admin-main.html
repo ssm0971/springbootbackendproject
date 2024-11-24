@@ -15,7 +15,7 @@
   <div class="info-title-box info-title-box-flex">
     <div class="logo-box-layout">
       <div class="logo-box">
-        <img src="../../../img/logo.jpg">
+        <img th:src="@{/img/header_logo.png}" alt="Logo">
       </div>
       <div class="logo-title">
         <span>Jar</span>
@@ -52,9 +52,9 @@
 
               <!-- Data rows -->
               <div th:each="member, iterStat : ${memberList}" class="info-row" th:if="${iterStat.index < 4}">
-                <div class="info-cell" th:text="${member.memberName}"></div>
-                <div class="info-cell" th:text="${member.memberNickname}"></div>
-                <div class="info-cell" style="justify-content: left;" th:text="${member.memberEmail}"></div>
+                <a th:href="@{/admin/memberDetail(memberNo=${member.memberNo})}" class="info-cell" th:text="${member.memberName}"></a>
+                <a th:href="@{/admin/memberDetail(memberNo=${member.memberNo})}" class="info-cell" th:text="${member.memberNickname}"></a>
+                <a th:href="@{/admin/memberDetail(memberNo=${member.memberNo})}" class="info-cell" style="justify-content: left;" th:text="${member.memberEmail}"></a>
               </div>
             </div>
           </div>
@@ -112,19 +112,28 @@
               </div>
               <div th:each="post, iterStat : ${postList}" class="info-row" th:if="${iterStat.index < 4}">
                 <div class="info-cell">
-                  <span th:switch="${post.postType}">
-                    <span th:case="'COMMU'">커뮤니티</span>
-                    <span th:case="'VOLUN'">봉사</span>
-                    <span th:case="'DONA'">기부</span>
-                    <span th:case="'ADOPT'">입양</span>
-                    <span th:case="'CAR'">카풀</span>
-                    <span th:case="'PROTECT'">임시보호</span>
-                    <span th:case="'REVIEW'">입양후기</span>
-                  </span>
+                  <a th:href="@{/admin/postDetail(postType=${post.postType}, postNo=${post.postNo})}">
+        <span th:switch="${post.postType}">
+            <span th:case="'COMMU'">커뮤니티</span>
+            <span th:case="'VOLUN'">봉사</span>
+            <span th:case="'DONA'">기부</span>
+            <span th:case="'ADOPT'">입양</span>
+            <span th:case="'CAR'">카풀</span>
+            <span th:case="'PROTECT'">임시보호</span>
+            <span th:case="'REVIEW'">입양후기</span>
+        </span>
+                  </a>
                 </div>
-                <div class="info-cell" style="justify-content: left; margin-right: 5px" th:text="${post.postTitle}"></div>
-                <div class="info-cell" style="justify-content: left; margin-right: 5px" th:text="${post.postContent}"></div>
-                <div class="info-cell" th:text="${post.postWriter}"></div>
+                <div class="info-cell" style="justify-content: left; margin-right: 5px">
+                  <a th:href="@{/admin/postDetail(postType=${post.postType}, postNo=${post.postNo})}" th:text="${post.postTitle}"></a>
+                </div>
+                <div class="info-cell" style="justify-content: left; margin-right: 5px">
+                  <a th:href="@{/admin/postDetail(postType=${post.postType}, postNo=${post.postNo})}" th:text="${post.postContent}"></a>
+                </div>
+                <div class="info-cell">
+                  <a th:href="@{/admin/postDetail(postType=${post.postType}, postNo=${post.postNo})}" th:text="${post.postWriter}"></a>
+                </div>
+
               </div>
 
             </div>
@@ -149,18 +158,25 @@
 
               <div th:each="comment, iterStat : ${commentList}" class="info-row" th:if="${iterStat.index < 4}">
                 <div class="info-cell">
-                  <span th:switch="${comment.commentType}">
-                    <span th:case="'COMMU'">커뮤니티</span>
-                    <span th:case="'VOLUN'">봉사</span>
-                    <span th:case="'DONA'">기부</span>
-                    <span th:case="'ADOPT'">입양</span>
-                    <span th:case="'CAR'">카풀</span>
-                    <span th:case="'PROTECT'">임시보호</span>
-                    <span th:case="'REVIEW'">입양후기</span>
-                  </span>
+                  <a th:href="@{/admin/postDetail(postType=${comment.commentType}, postNo=${comment.postNo})}">
+        <span th:switch="${comment.commentType}">
+            <span th:case="'COMMU'">커뮤니티</span>
+            <span th:case="'VOLUN'">봉사</span>
+            <span th:case="'DONA'">기부</span>
+            <span th:case="'ADOPT'">입양</span>
+            <span th:case="'CAR'">카풀</span>
+            <span th:case="'PROTECT'">임시보호</span>
+            <span th:case="'REVIEW'">입양후기</span>
+        </span>
+                  </a>
                 </div>
-                <div class="info-cell" style="justify-content: left; margin-right: 5px" th:text="${comment.commentContent}"></div>
-                <div class="info-cell" th:text="${comment.commentWriter}"></div>
+                <div class="info-cell" style="justify-content: left; margin-right: 5px">
+                  <a th:href="@{/admin/postDetail(postType=${comment.commentType}, postNo=${comment.postNo})}" th:text="${comment.commentContent}"></a>
+                </div>
+                <div class="info-cell">
+                  <a th:href="@{/admin/postDetail(postType=${comment.commentType}, postNo=${comment.postNo})}" th:text="${comment.commentWriter}"></a>
+                </div>
+
               </div>
             </div>
           </div>

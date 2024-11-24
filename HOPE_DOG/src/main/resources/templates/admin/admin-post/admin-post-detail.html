@@ -17,7 +17,7 @@
     <div class="info-title-box info-title-box-flex">
       <div class="logo-box-layout">
         <div class="logo-box">
-          <img src="../../../img/logo.jpg">
+          <img th:src="@{/img/header_logo.png}" alt="Logo">
         </div>
       </div>
       <div>
@@ -56,7 +56,7 @@
                     <span style="float:right">작성자 - <span th:text="${post.postWriter}"></span></span>
                   </div>
                   <br>
-                  <div class="content"><span th:text="${post.postContent}"></span></div>
+                  <div class="content"><span th:utext="${post.postContent}"></span></div>
 
                   <div class="post-images" th:each="file, iterStat : ${fileList}">
                     <a th:href="@{/download(from='post', fileName=${file.fileName}, filePath=${file.filePath}, fileUuid=${file.fileUuid})}">

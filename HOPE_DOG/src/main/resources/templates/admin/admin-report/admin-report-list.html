@@ -9,10 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-common.css}"/>
     <link rel="stylesheet" th:href="@{/css/admin/admin-main/admin-sidemenu.css}"/>
     <link rel="stylesheet" th:href="@{/css/admin/admin-report/admin-report-list.css}"/>
-<!-- 페이지네이션 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+
 </head>
 
 <body>
@@ -20,7 +17,7 @@
         <div class="info-title-box info-title-box-flex">
             <div class="logo-box-layout">
                 <div class="logo-box">
-                    <img src="../../../img/logo.jpg">
+                    <img th:src="@{/img/header_logo.png}" alt="Logo">
                 </div>
             </div>
             <div>
@@ -70,7 +67,7 @@
                                 </div>
 
                                 <!-- Data rows -->
-                                <div th:each="report, iterStat : ${reportList}" class="info-row" >
+                                <div th:each="report, iterStat : ${reportList}" class="info-row item" >
                                     <div class="info-cell checkbox-line">
                                         <input type="checkbox" class="checkbox" name="check">
                                     </div>
@@ -101,6 +98,7 @@
                                 </div>
 
                             </div>
+                            <div id="pagination"></div>
                         </div>
                     </section>
 
@@ -111,4 +109,9 @@
 </body>
 <script th:src="@{https://code.jquery.com/jquery-3.6.3.min.js}"></script>
 <script th:src="@{/js/admin/allCheck.js}"></script>
+<script th:src="@{/js/admin/pagination.js}"></script>
+<!-- 페이지네이션 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 </html>

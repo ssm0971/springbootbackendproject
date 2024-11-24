@@ -10,10 +10,10 @@
                 tv.VOLUN_REGIDATE,
                 tvr.MEMBER_NO,
                 tm.MEMBER_NICKNAME,
-                tvr.VOLUN_REQUEST_AGREEMENT ,
+                tvr.VOLUN_REQUEST_STATUS ,
                 CASE
-                    WHEN tvr.VOLUN_REQUEST_AGREEMENT  = 'Y' THEN '수락'
-                    WHEN tvr.VOLUN_REQUEST_AGREEMENT  = 'N' THEN '거절'
+                    WHEN tvr.VOLUN_REQUEST_STATUS  = 'Y' THEN '수락'
+                    WHEN tvr.VOLUN_REQUEST_STATUS  = 'N' THEN '거절'
                     ELSE '심사중'
                     END AS volunStatus
         FROM TBL_VOLUN_REQUEST tvr
@@ -23,7 +23,7 @@
     </select>
 
 <!--    봉사신청서 상세 조회-->
-    <select id="volunRequestDetailInfo" parameterType="Long" resultType="VolunRequestDetailDTO">
+    <select id="volunRequestDetailInfo" parameterType="VolunRequestListDTO" resultType="VolunRequestDetailDTO">
         SELECT
             tvr.VOLUN_REQUEST_NO,
             tvr.VOLUN_REQUEST_NAME,
@@ -53,7 +53,7 @@
                  LEFT JOIN TBL_VOLUN tv ON tvr.VOLUN_NO = tv.VOLUN_NO
                  LEFT JOIN TBL_MEMBER tm ON tm.MEMBER_NO = tm.MEMBER_NO
                  LEFT JOIN TBL_CENTER_MEMBER tcm ON tvr.CENTER_MEMBER_NO =tcm.CENTER_MEMBER_NO
-        WHERE tvr.VOLUN_REQUEST_NO = #{volunRequestNo}
+        WHERE tvr.VOLUN_REQUEST_NO = #{volunRequestNo} AND tm.MEMBER_NO = #{memberNo}
     </select>
 
 <!--    봉사 신청서 승인/거절-->
@@ -88,7 +88,8 @@
             tar.CENTER_MEMBER_NO = #{centerMemberNo}
     </select>
 
-    <select id="adoptRequestDetailInfo" parameterType="Long" resultType="AdoptRequestDetailDTO">
+<!--    입양신청서 상세 조회-->
+    <select id="adoptRequestDetailInfo" parameterType="AdoptRequestListDTO" resultType="AdoptRequestDetailDTO">
         SELECT
             tar.ADOPT_REQUEST_NO,
             tar.ADOPT_REQUEST_NAME,
@@ -131,7 +132,7 @@
                  LEFT JOIN TBL_ADOPT ta ON tar.ADOPT_NO = ta.ADOPT_NO
                  LEFT JOIN TBL_MEMBER tm ON tar.MEMBER_NO = tm.MEMBER_NO
                  LEFT JOIN TBL_CENTER_MEMBER tcm ON tar.CENTER_MEMBER_NO =tcm.CENTER_MEMBER_NO
-        WHERE tar.ADOPT_REQUEST_NO = #{adoptRequestNo}
+        WHERE tar.ADOPT_REQUEST_NO = #{adoptRequestNo} AND tar.MEMBER_NO = #{memberNo}
     </select>
 
 <!--    입양 신청서 승인/거절-->
@@ -167,7 +168,7 @@
     </select>
 
 <!--    임시보호 신청서 상세페이지-->
-    <select id="protectRequestDetailInfo" parameterType="Long" resultType="ProtectRequestDetailDTO">
+    <select id="protectRequestDetailInfo" parameterType="ProtectRequestListDTO" resultType="ProtectRequestDetailDTO">
         SELECT
             tpr.PROTECT_REQUEST_NO,
             tpr.PROTECT_REQUEST_NAME,
@@ -182,21 +183,21 @@
             tpr.PROTECT_REQUEST_JOB,
             tpr.PROTECT_REQUEST_MARRY,
             tpr.PROTECT_REQUEST_INFO_AGREEMENT,
-            tpr.PROTECT_REQUEST_Q1,
-            tpr.PROTECT_REQUEST_Q2,
-            tpr.PROTECT_REQUEST_Q3,
-            tpr.PROTECT_REQUEST_Q4,
-            tpr.PROTECT_REQUEST_Q5,
-            tpr.PROTECT_REQUEST_Q6,
-            tpr.PROTECT_REQUEST_Q7,
-            tpr.PROTECT_REQUEST_Q8,
-            tpr.PROTECT_REQUEST_Q9,
-            tpr.PROTECT_REQUEST_Q10,
-            tpr.PROTECT_REQUEST_Q11,
-            tpr.PROTECT_REQUEST_Q12,
-            tpr.PROTECT_REQUEST_Q13,
-            tpr.PROTECT_REQUEST_Q14,
-            tpr.PROTECT_REQUEST_Q15,
+            tpr.PRO_REQUEST_Q1,
+            tpr.PRO_REQUEST_Q2,
+            tpr.PRO_REQUEST_Q3,
+            tpr.PRO_REQUEST_Q4,
+            tpr.PRO_REQUEST_Q5,
+            tpr.PRO_REQUEST_Q6,
+            tpr.PRO_REQUEST_Q7,
+            tpr.PRO_REQUEST_Q8,
+            tpr.PRO_REQUEST_Q9,
+            tpr.PRO_REQUEST_Q10,
+            tpr.PRO_REQUEST_Q11,
+            tpr.PRO_REQUEST_Q12,
+            tpr.PRO_REQUEST_Q13,
+            tpr.PRO_REQUEST_Q14,
+            tpr.PRO_REQUEST_Q15,
             tpr.PROTECT_REQUEST_AGREEMENT,
             tpr.PROTECT_NO,
             tpr.MEMBER_NO,
@@ -210,7 +211,7 @@
                  LEFT JOIN TBL_PROTECT tp ON tpr.PROTECT_NO = tp.PROTECT_NO
                  LEFT JOIN TBL_MEMBER tm ON tpr.MEMBER_NO = tm.MEMBER_NO
                  LEFT JOIN TBL_CENTER_MEMBER tcm ON tpr.CENTER_MEMBER_NO =tcm.CENTER_MEMBER_NO
-        WHERE tpr.PROTECT_REQUEST_NO = #{protectRequestNo}
+        WHERE tpr.PROTECT_REQUEST_NO = #{protectRequestNo} AND tpr.MEMBER_NO = #{memberNo}
     </select>
 
 <!--    임시보호 신청서 승인/거절-->

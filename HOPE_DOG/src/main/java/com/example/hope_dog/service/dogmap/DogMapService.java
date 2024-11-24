@@ -24,6 +24,7 @@ public class DogMapService {
     private String serviceKey1;
     private String serviceKey2;
 
+    //openAPI 공공데이터를 URL로 데이터 로드하여 DTO에 저장하는 Service
     public List<Item> getShelterInfo() {
         String baseurl = "https://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo";
         String subType = "json";
@@ -72,7 +73,7 @@ public class DogMapService {
         return items;
     }
 
-    // 주소 필터링하는 메소드
+    // 주소값 필터링 ("경기도")
     public List<Item> filterByAddress(List<Item> dogmapDTOList, String addressPrefix) {
         List<Item> filteredItems = dogmapDTOList.stream()
                 .filter(dto -> dto.getCareAddr().startsWith(addressPrefix))
@@ -87,7 +88,7 @@ public class DogMapService {
         return filteredItems;
     }
 
-    // 제한 데이터 페이지 메소드
+    // 데이터 지정 하여 DTO 저장 Static페이지 사용
     public Item[] getStaticShelterInfo() {
         Item[] staticShelters = new Item[10];
 

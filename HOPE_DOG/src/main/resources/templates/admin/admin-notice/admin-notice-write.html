@@ -17,7 +17,7 @@
     <div class="info-title-box info-title-box-flex">
       <div class="logo-box-layout">
         <div class="logo-box">
-          <img src="../../../img/logo.jpg">
+          <img th:src="@{/img/header_logo.png}" alt="Logo">
         </div>
       </div>
       <div>
@@ -66,7 +66,7 @@
                   <!-- 등록/취소 버튼 -->
                   <div class="notice-write-button-box">
                     <button class="notice-write-button">등록</button>
-                    <button type="button" class="notice-cancel-button">취소</button>
+                    <button type="button" class="notice-cancel-button" onclick="window.location.href='/admin/noticeList'">취소</button>
                   </div>
                 </form>
               </div>

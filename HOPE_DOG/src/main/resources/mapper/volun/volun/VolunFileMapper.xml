@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hope_dog.mapper.volun.volun.VolunFileMapper">
+
+    <!-- 사진파일첨부 -->
+    <insert id="insertFile" parameterType="VolunFileDTO">
+        <selectKey keyProperty="fileNo" resultType="Long" order="BEFORE">
+            SELECT SEQ_VOLUN_FILE.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_Volun_FILE (FILE_NO, VOLUN_NO, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME)
+        VALUES (SEQ_VOLUN_FILE.nextval, #{file.noticeNo}, #{file.fileName},
+        #{file.fileName}, #{file.fileUuid}, #{file.filePath}, SYSDATE)
+    </insert>
+
+    <delete id="deleteFile" parameterType="Long">
+        DELETE FROM TBL_VOLUN_FILE
+        WHERE FILE_NO = #{fileNo}
+    </delete>
+
+    <select id="selectList" parameterType="Long" resultType="VolunFileDTO">
+        SELECT FILE_NO, VOLUN_NO, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME
+        FROM TBL_VOLUN_FILE
+        WHERE FILE_NO = #{fileNo}
+    </select>
+</mapper>

@@ -17,7 +17,7 @@
     <div class="info-title-box info-title-box-flex">
       <div class="logo-box-layout">
         <div class="logo-box">
-          <img src="../../../img/logo.jpg">
+          <img th:src="@{/img/header_logo.png}" alt="Logo">
         </div>
       </div>
       <div>
@@ -42,13 +42,13 @@
               <div class="note-write-wrap">
                 <div class="note-write">
                   <div class="note-title">
-                    <input id="note-board-title" name="title" type="text" placeholder="제목을 입력해 주세요" />
+                    <input id="note-board-title" name="title" type="text" placeholder="제목 입력" />
                   </div>
                   <div class="note-title">
-                    <input id="note-board-receiver" name="receiver" type="text" placeholder="보내실 분의 닉네임을 입력해 주세요" th:value="${noteSender}"/>
+                    <input id="note-board-receiver" name="receiver" type="text" placeholder="수신자 닉네임 입력" th:value="${noteSender}"/>
                   </div>
                   <div class="note-cont">
-                    <textarea id="note-board-content" name="content" placeholder="내용을 입력하세요"></textarea>
+                    <textarea id="note-board-content" name="content" placeholder="내용 입력"></textarea>
                   </div>
                 </div>
               </div>

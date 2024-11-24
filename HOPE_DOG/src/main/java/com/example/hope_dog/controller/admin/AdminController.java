@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,14 +35,23 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("adminId") String adminId, @RequestParam("adminPw") String adminPw, HttpSession session) {
+    public String login(@RequestParam("adminId") String adminId,
+                        @RequestParam("adminPw") String adminPw,
+                        HttpSession session) {
         AdminSessionDTO loginInfo = adminService.findLoginInfo(adminId, adminPw);
 
+        if (loginInfo == null) {
+            // 로그인 실패 시 error 파라미터를 URL에 직접 추가
+            return "redirect:/admin/login?error=true";
+        }
+
+        // 로그인 성공 시 세션에 관리자 정보 저장
         session.setAttribute("adminNo", loginInfo.getAdminNo());
         session.setAttribute("adminId", loginInfo.getAdminId());
 
         return "redirect:/admin/main";
     }
+
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
@@ -217,7 +227,11 @@ public class AdminController {
     }
 
     @PostMapping("/noticeWrite")
-    public String noticeWrite(@RequestParam("files") List<MultipartFile> files, @RequestParam("cate") String cate, @RequestParam("title") String title, @RequestParam("content") String content, Model model, HttpSession session) throws IOException {
+    public String noticeWrite(@RequestParam("files") List<MultipartFile> files,
+                              @RequestParam("cate") String cate,
+                              @RequestParam("title") String title,
+                              @RequestParam("content") String content,
+                              Model model, HttpSession session) throws IOException {
         if (!isAdminLoggedIn(session)) {
             return "redirect:/admin/login";
         }
@@ -248,7 +262,11 @@ public class AdminController {
     }
 
     @PostMapping("/noticeModify")
-    public String noticeModify(@RequestParam("noticeNo") Long noticeNo, @RequestParam("cate") String cate, @RequestParam("title") String title, @RequestParam("content") String content, Model model, HttpSession session) {
+    public String noticeModify(@RequestParam("noticeNo") Long noticeNo,
+                               @RequestParam("files") List<MultipartFile> files,
+                               @RequestParam("cate") String cate,
+                               @RequestParam("title") String title,
+                               @RequestParam("content") String content, Model model, HttpSession session) throws IOException {
         if (!isAdminLoggedIn(session)) {
             return "redirect:/admin/login";
         }
@@ -260,8 +278,10 @@ public class AdminController {
         notice.setNoticeContent(content);
 
         adminService.modifyNotice(notice);
+        adminService.deleteFileByNoticeNo(noticeNo);
+        adminService.saveFiles(files);
 
-        return "redirect:/admin/noticeDetail?noticeNo=" + noticeNo;
+        return "redirect:/admin/noticeDetail?noticeNo=" + (noticeNo);
     }
 
     @GetMapping("/noticeList")

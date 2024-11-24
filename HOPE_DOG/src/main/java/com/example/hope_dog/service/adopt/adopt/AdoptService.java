@@ -1,7 +1,6 @@
 package com.example.hope_dog.service.adopt.adopt;
 
 import com.example.hope_dog.dto.adopt.adopt.*;
-import com.example.hope_dog.dto.file.AdoptFileDTO;
 import com.example.hope_dog.dto.page.Criteria;
 import com.example.hope_dog.mapper.adopt.adopt.AdoptMapper;
 import lombok.RequiredArgsConstructor;
@@ -69,11 +68,6 @@ public class AdoptService {
         // adoptWriteDTO에 값을 설정할 필요 없음
         // 이미 LocalDate로 저장되어 있으므로 그대로 사용
         adoptMapper.adoptWrite(adoptWriteDTO);
-    }
-
-    //게시글 파일 첨부
-    public void aodptFileInsert(AdoptFileDTO adoptFileDTO) {
-        adoptMapper.adoptFileInsert(adoptFileDTO);
     }
 
     //입양글 마감처리

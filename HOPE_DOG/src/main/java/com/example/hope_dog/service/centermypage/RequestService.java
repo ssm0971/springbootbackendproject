@@ -19,8 +19,8 @@ public class RequestService {
     }
 
 //    봉사 신청서 상세페이지
-    public VolunRequestDetailDTO volunRequestDetail(Long volunRequestNo){
-        return requestMapper.volunRequestDetailInfo(volunRequestNo);
+    public VolunRequestDetailDTO volunRequestDetail(VolunRequestListDTO volunRequestListDTO){
+        return requestMapper.volunRequestDetailInfo(volunRequestListDTO);
     }
 
 //    봉사 신청서 수락/거절 처리
@@ -36,8 +36,8 @@ public class RequestService {
     }
 
 //    입양 신청서 상세페이지
-    public AdoptRequestDetailDTO adoptRequestDetail(Long adoptRequestNo){
-        return requestMapper.adoptRequestDetailInfo(adoptRequestNo);
+    public AdoptRequestDetailDTO adoptRequestDetail(AdoptRequestListDTO adoptRequestListDTO){
+        return requestMapper.adoptRequestDetailInfo(adoptRequestListDTO);
     }
 
 //    입양 신청서 수락/거절 처리
@@ -53,8 +53,8 @@ public class RequestService {
     }
 
 //    임시보호 신청서 상세페이지
-    public ProtectRequestDetailDTO protectRequestDetail(Long protectRequestNo){
-        return requestMapper.protectRequestDetailInfo(protectRequestNo);
+    public ProtectRequestDetailDTO protectRequestDetail(ProtectRequestListDTO protectRequestListDTO){
+        return requestMapper.protectRequestDetailInfo(protectRequestListDTO);
     }
 
 //    임시보호 신청서 수락/거절 처리

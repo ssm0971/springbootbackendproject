@@ -24,12 +24,11 @@ public class VolunRequestDetailDTO {
     private String volunRequestAddressDetail;
     private String volunRequestJob;
     private String volunRequestMarry;
-    private String volunRequestInfoAgreement;
+    private String volunRequestAgreement;
     private String volunRequestQ1;
     private String volunRequestQ2;
     private String volunRequestQ3;
     private String volunRequestQ4;
-    private String volunRequestAgreement;
     private Long volunNo;
     private Long memberNo;
     private Long centerMemberNo;

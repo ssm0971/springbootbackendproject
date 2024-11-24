@@ -38,9 +38,9 @@
     <select id="selectFileListByPostNo" parameterType="AdminPostDTO">
         <choose>
             <when test="post.postType == 'COMMU'">
-                SELECT FILE_NO, COMMU_NUMBER, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME
+                SELECT FILE_NO, COMMU_NO, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME
                 FROM TBL_COMMU_FILE
-                WHERE TBL_COMMU_FILE.COMMU_NUMBER = #{post.postNo}
+                WHERE TBL_COMMU_FILE.COMMU_NO = #{post.postNo}
             </when>
             <when test="post.postType == 'VOLUN'">
                 SELECT FILE_NO, FILE_NAME, STORED_FILE_NAME, FILE_UUID, FILE_PATH, UPLOAD_TIME, VOLUN_NO
@@ -79,7 +79,7 @@
         <choose>
             <when test="post.postType == 'COMMU'">
                 DELETE FROM TBL_COMMU_FILE
-                WHERE TBL_COMMU_FILE.COMMU_NUMBER = #{post.postNo}
+                WHERE TBL_COMMU_FILE.COMMU_NO = #{post.postNo}
             </when>
             <when test="post.postType == 'VOLUN'">
                 DELETE FROM TBL_VOLUN_FILE

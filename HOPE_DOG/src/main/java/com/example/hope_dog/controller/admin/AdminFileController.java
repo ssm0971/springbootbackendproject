@@ -17,38 +17,53 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@RestController // 이 클래스가 RESTful 웹 서비스의 엔드포인트임을 나타내는 어노테이션입니다.
-@RequestMapping("/file") // 이 컨트롤러의 URL 매핑을 "/download"로 설정합니다.
-public class AdminFileController { // 클래스 선언: 파일 다운로드를 처리하는 컨트롤러입니다.
+/**
+ * 파일 다운로드를 처리하는 관리자용 컨트롤러
+ */
+@RestController // RESTful API를 구현하는 클래스임을 나타냄
+@RequestMapping("/file") // "/file" 경로로 들어오는 요청을 처리하는 컨트롤러
+public class AdminFileController {
 
-    private final AdminFileService fileService; // FileService를 주입받기 위한 멤버 변수입니다.
+    private final AdminFileService fileService; // 파일 관련 서비스를 처리하는 Service 클래스
 
-    public AdminFileController(AdminFileService fileService) { // 생성자를 통해 FileService를 주입받습니다.
+    /**
+     * 생성자에서 AdminFileService를 주입받음
+     * @param fileService 파일 관련 비즈니스 로직을 처리하는 서비스
+     */
+    public AdminFileController(AdminFileService fileService) {
         this.fileService = fileService;
     }
 
-    @GetMapping("/{fileNo}") // HTTP GET 요청을 처리하기 위한 메서드입니다. URL 경로에서 fileId를 변수로 받습니다.
-    public ResponseEntity<Resource> downloadFile(@PathVariable Long fileNo) { // 파일 다운로드 로직을 처리하는 메서드입니다.
-        // 파일 정보 조회
-        AdminFileDTO fileDTO = fileService.selectFileByNo(fileNo); // FileService를 사용하여 파일 정보를 조회합니다.
+    /**
+     * 파일 다운로드 요청을 처리하는 메서드
+     * @param fileNo 다운로드할 파일의 번호
+     * @return 파일 다운로드를 위한 ResponseEntity
+     */
+    @GetMapping("/{fileNo}") // "/file/{fileNo}" 경로로 GET 요청을 처리
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long fileNo) {
 
-        // 실제 파일을 불러오는 로직 (FileSystemResource 사용 등)
-        Path filePath = Paths.get("C:/upload/notice/" + fileDTO.getStoredFileName()); // 파일이 저장된 경로를 찾습니다.
-        Resource resource = new FileSystemResource(filePath); // 파일 시스템에서 파일을 Resource 객체로 로드합니다.
+        // 파일 정보를 조회 (DB에서 파일 정보를 가져옴)
+        AdminFileDTO fileDTO = fileService.selectFileByNo(fileNo);
 
-        if (!resource.exists()) { // 파일이 존재하는지 확인합니다.
-            return ResponseEntity.notFound().build(); // 파일이 없으면 404 Not Found 응답을 반환합니다.
+        // 파일 경로 생성: 파일 저장 위치와 파일명을 결합하여 경로를 찾음
+        Path filePath = Paths.get("C:/upload/notice/" + fileDTO.getStoredFileName());
+        Resource resource = new FileSystemResource(filePath); // 파일을 시스템 리소스로 로딩
+
+        // 파일이 존재하지 않으면 404 Not Found 응답 반환
+        if (!resource.exists()) {
+            return ResponseEntity.notFound().build();
         }
 
-        // 파일명 인코딩 처리 등
-        String encodedFileName = URLEncoder.encode(fileDTO.getFileName(), StandardCharsets.UTF_8).replace("+", "%20"); // 파일명을 URL 인코딩합니다.
+        // 파일명 인코딩 처리 (URL에 적합한 형식으로 파일명을 변환)
+        String encodedFileName = URLEncoder.encode(fileDTO.getFileName(), StandardCharsets.UTF_8).replace("+", "%20");
 
-        // Content-Disposition 설정
-        String contentDisposition = "attachment; filename=\"" + encodedFileName + "\""; // Content-Disposition 헤더 설정하여 파일 다운로드로 처리합니다.
+        // Content-Disposition 헤더 설정 (다운로드 시 파일명 표시)
+        String contentDisposition = "attachment; filename=\"" + encodedFileName + "\"";
 
-        return ResponseEntity.ok() // 200 OK 응답을 생성합니다.
-                .contentType(MediaType.APPLICATION_OCTET_STREAM) // 응답의 콘텐츠 타입을 설정합니다.
-                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition) // Content-Disposition 헤더를 설정합니다.
-                .body(resource); // 파일 리소스를 응답 바디에 포함합니다.
+        // 파일 다운로드를 위한 응답 생성
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM) // 콘텐츠 타입을 "application/octet-stream"으로 설정 (파일 다운로드)
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition) // 다운로드할 파일명 설정
+                .body(resource); // 파일 리소스를 응답 바디에 포함하여 반환
     }
 }

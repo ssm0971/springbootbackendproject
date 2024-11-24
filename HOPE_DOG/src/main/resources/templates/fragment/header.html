@@ -123,7 +123,9 @@
                         </div>
                         <div class="notification-list" th:if="${unreadCount > 0}">
                             <div class="notification-item unread" >
-                                <div class="notification-content" ><a th:href="@{/centerMypage/noteboxReceiveList}">새로운 메시지가 있습니다.</a></div>
+                                <div class="notification-content" >
+                                    <a th:href="@{/centerMypage/noteboxReceiveList}">새로운 메시지가 있습니다.</a>
+                                </div>
                             </div>
                         </div>
                         <div class="notification-footer">
