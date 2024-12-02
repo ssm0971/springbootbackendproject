@@ -34,9 +34,10 @@
     <div class="note-title">
       <h1>쪽지</h1>
     </div>
-    <form method="get">
+<!--    <form method="get">-->
       <div class="note-write-wrap">
         <div class="note-write">
+          <div style="display: none" th:text="${noteboxReceiveDetail.noteboxReceiveNo}"></div>
           <div class="note-title" th:text="${noteboxReceiveDetail.noteboxReceiveTitle}">제목</div>
           <div class="note-title" th:text="${noteboxReceiveDetail.noteboxSenderName}">닉네임</div>
           <div class="note-cont" th:text="${noteboxReceiveDetail.noteboxReceiveRegiDate}">시간</div><br>
@@ -51,11 +52,14 @@
           </button>
         </a>
         <!-- 받은 쪽지일 경우에만 답장하기 버튼 표시 -->
-        <button class="volun-admain-btu" type="button">
-          <a href="#"><span class="volun-admain-btu-sp">답장하기</span></a>
+        <a th:href="@{/centerMypage/noteboxResponse(noteboxSenderName=${noteboxReceiveDetail.noteboxSenderName})}">
+        <button type="submit" class="volun-admain-btu">
+          답장하기
+<!--          <span class="volun-admain-btu-sp">답장하기</span>-->
         </button>
+        </a>
       </div>
-    </form>
+<!--    </form>-->
   </div>
 
 </main>
